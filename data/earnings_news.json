@@ -232,7 +232,7 @@
    "time": "after-hours"
   }
  ],
- "calendar_at": "2026-11-25T14:00:33Z",
+ "calendar_at": "2026-11-25T21:00:43Z",
  "kpi_reads": [
   {
    "at": "2026-11-07T03:49:31Z",
@@ -6487,9 +6487,89 @@
     "width": 685185.185185194
    },
    "sym": "COST"
+  },
+  {
+   "at": "2026-11-25T15:01:26Z",
+   "event": "KXCOST-26DECCARDS",
+   "read": {
+    "median": 151356250.0,
+    "rungs": 10,
+    "width": 685185.185185194
+   },
+   "sym": "COST"
+  },
+  {
+   "at": "2026-11-25T16:01:25Z",
+   "event": "KXCOST-26DECCARDS",
+   "read": {
+    "median": 151356250.0,
+    "rungs": 10,
+    "width": 685185.185185194
+   },
+   "sym": "COST"
+  },
+  {
+   "at": "2026-11-25T16:08:33Z",
+   "event": "KXCOST-26DECCARDS",
+   "read": {
+    "median": 151356250.0,
+    "rungs": 10,
+    "width": 685185.185185194
+   },
+   "sym": "COST"
+  },
+  {
+   "at": "2026-11-25T17:01:31Z",
+   "event": "KXCOST-26DECCARDS",
+   "read": {
+    "median": 151356250.0,
+    "rungs": 10,
+    "width": 685185.185185194
+   },
+   "sym": "COST"
+  },
+  {
+   "at": "2026-11-25T18:01:37Z",
+   "event": "KXCOST-26DECCARDS",
+   "read": {
+    "median": 151356250.0,
+    "rungs": 10,
+    "width": 685185.185185194
+   },
+   "sym": "COST"
+  },
+  {
+   "at": "2026-11-25T19:01:18Z",
+   "event": "KXCOST-26DECCARDS",
+   "read": {
+    "median": 151356250.0,
+    "rungs": 10,
+    "width": 685185.185185194
+   },
+   "sym": "COST"
+  },
+  {
+   "at": "2026-11-25T20:01:21Z",
+   "event": "KXCOST-26DECCARDS",
+   "read": {
+    "median": 151356250.0,
+    "rungs": 10,
+    "width": 685185.185185194
+   },
+   "sym": "COST"
+  },
+  {
+   "at": "2026-11-25T21:01:39Z",
+   "event": "KXCOST-26DECCARDS",
+   "read": {
+    "median": 151356250.0,
+    "rungs": 10,
+    "width": 685185.185185194
+   },
+   "sym": "COST"
   }
  ],
- "last_run": "2026-11-25T14:01:33Z",
+ "last_run": "2026-11-25T21:01:49Z",
  "predictions": [
   {
    "call": {
@@ -7461,23 +7541,44 @@
    "sym": "BLK"
   },
   {
+   "baselines": {
+    "random": {
+     "status": "no_fill"
+    },
+    "spy": {
+     "entry": 14.3128,
+     "entry_ts": 1795550520,
+     "exit": 14.3294,
+     "exit_ts": 1795637160,
+     "net": -0.00124,
+     "status": "settled"
+    },
+    "up": {
+     "status": "no_fill"
+    }
+   },
    "call": {
     "entry": 4.6826,
     "entry_ts": 1795551420,
-    "status": "open"
+    "exit": 4.8761,
+    "exit_ts": 1795637460,
+    "net": -0.043723,
+    "status": "settled"
    },
    "crowd_up": 0.264,
    "day": "2026-11-24",
    "entry_due": "2026-11-24T20:01:30Z",
    "exit_due": "2026-11-25T20:01:00Z",
    "family": "sentiment",
+   "graded_at": "2026-11-25T21:01:40Z",
    "id": "sentiment:IBM:2026-11-24",
    "logged_at": "2026-11-24T20:01:30Z",
+   "net": -0.043723,
    "perp": "KXIBMPERP",
    "random_side": 1,
    "reason": "Kalshi traders 26% Up on 24h taker volume.",
    "side": -1,
-   "status": "open",
+   "status": "settled",
    "sym": "IBM"
   },
   {
@@ -7515,6 +7616,66 @@
    "side": 1,
    "status": "no_fill",
    "sym": "UNH"
+  },
+  {
+   "call": {
+    "entry": 5.8492,
+    "entry_ts": 1795636920,
+    "status": "open"
+   },
+   "entry_due": "2026-11-25T20:01:22Z",
+   "exit_due": "2026-12-03T21:00:00Z",
+   "family": "post_drift",
+   "id": "post_drift:DELL:2026-11-24",
+   "logged_at": "2026-11-25T20:01:22Z",
+   "perp": "KXDELLPERP",
+   "random_side": -1,
+   "reaction": -0.02291,
+   "reason": "Reaction since the last close before the report: -2.3%.",
+   "report": "2026-11-24",
+   "report_time": "after-hours",
+   "side": -1,
+   "status": "open",
+   "sym": "DELL"
+  },
+  {
+   "call": {
+    "entry": 12.8354,
+    "entry_ts": 1795637220,
+    "status": "open"
+   },
+   "entry_due": "2026-11-25T20:01:22Z",
+   "exit_due": "2026-12-03T21:00:00Z",
+   "family": "post_drift",
+   "id": "post_drift:DE:2026-11-25",
+   "logged_at": "2026-11-25T20:01:22Z",
+   "perp": "KXDEPERP",
+   "random_side": 1,
+   "reaction": 0.04438,
+   "reason": "Reaction since the last close before the report: +4.4%.",
+   "report": "2026-11-25",
+   "report_time": "pre-market",
+   "side": 1,
+   "status": "open",
+   "sym": "DE"
+  },
+  {
+   "call": {
+    "status": "no_fill"
+   },
+   "crowd_up": 0.201,
+   "day": "2026-11-25",
+   "entry_due": "2026-11-25T20:01:22Z",
+   "exit_due": "2026-11-27T20:01:00Z",
+   "family": "sentiment",
+   "id": "sentiment:UNH:2026-11-25",
+   "logged_at": "2026-11-25T20:01:22Z",
+   "perp": "KXUNHPERP",
+   "random_side": -1,
+   "reason": "Kalshi traders 20% Up on 24h taker volume.",
+   "side": -1,
+   "status": "no_fill",
+   "sym": "UNH"
   }
  ],
  "registered": "2026-11-07",
@@ -7531,6 +7692,7 @@
   "2026-11-19",
   "2026-11-20",
   "2026-11-23",
-  "2026-11-24"
+  "2026-11-24",
+  "2026-11-25"
  ]
 }

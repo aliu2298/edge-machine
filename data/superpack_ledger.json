@@ -529,6 +529,10 @@
    "at": "2026-11-24T17:51:39.442364+00:00",
    "pool": "entered"
   },
+  "[\"finance_nc\", \"finance_nc\", [\"KXINXU-26NOV25H1600-T7184.9999\", \"no\"]]": {
+   "at": "2026-11-25T17:37:54.368468+00:00",
+   "pool": "entered"
+  },
   "[\"nfl_tt_ledger.json\", \"nfl_tt_over_3545\", [\"nfl_tt_over_3545:KXNFLTEAMTOTAL-26NOV05JACBAL:BAL\", \"yes\"]]": {
    "at": "2026-11-06T00:37:05.998371+00:00",
    "pool": "entered"
@@ -1045,6 +1049,23 @@
    "mirror": "entered",
    "pool": "entered"
   },
+  "[\"sandbox\", \"corners_fav_no\", [\"corners_fav_no:KXUCLCORNERS-26NOV25ATMVIK-12\", \"b\"]]": {
+   "at": "2026-11-25T16:04:47.733067+00:00",
+   "pool": "entered"
+  },
+  "[\"sandbox\", \"corners_fav_no\", [\"corners_fav_no:KXUCLCORNERS-26NOV25BRULFC-12\", \"b\"]]": {
+   "at": "2026-11-25T16:04:47.733067+00:00",
+   "mirror": "entered",
+   "pool": "entered"
+  },
+  "[\"sandbox\", \"corners_fav_no\", [\"corners_fav_no:KXUCLCORNERS-26NOV25INTVFB-11\", \"b\"]]": {
+   "at": "2026-11-25T16:04:47.733067+00:00",
+   "pool": "entered"
+  },
+  "[\"sandbox\", \"corners_fav_no\", [\"corners_fav_no:KXUCLCORNERS-26NOV25LILBMU-11\", \"b\"]]": {
+   "at": "2026-11-25T16:04:47.733067+00:00",
+   "pool": "entered"
+  },
   "[\"sandbox\", \"corners_total_under\", [\"corners_total_under:KXEPLCORNERS-26NOV07NFOMCI-7\", \"b\"]]": {
    "at": "2026-11-07T14:03:40.378413+00:00",
    "pool": "entered"
@@ -1106,6 +1127,10 @@
   "[\"sandbox\", \"corners_ucl_fade\", [\"corners_ucl_fade:KXUCLCORNERS-26NOV24RMAPSV-10\", \"a\"]]": {
    "at": "2026-11-24T16:04:46.952879+00:00",
    "mirror": "entered",
+   "pool": "entered"
+  },
+  "[\"sandbox\", \"corners_ucl_fade\", [\"corners_ucl_fade:KXUCLCORNERS-26NOV25SPOMUN-7\", \"a\"]]": {
+   "at": "2026-11-25T18:35:14.898508+00:00",
    "pool": "entered"
   },
   "[\"sandbox\", \"crypto_fav_band_below\", [\"crypto_fav_band_below:KXBTCD-26NOV0517-T76499.99\", \"b\"]]": {
@@ -1189,6 +1214,11 @@
    "entries": "entered",
    "pool": "entered"
   },
+  "[\"sandbox\", \"crypto_fav_band_below\", [\"crypto_fav_band_below:KXBTCD-26NOV2517-T59999.99\", \"b\"]]": {
+   "at": "2026-11-25T18:35:14.898508+00:00",
+   "entries": "entered",
+   "pool": "entered"
+  },
   "[\"sandbox\", \"crypto_fav_band_below\", [\"crypto_fav_band_below:KXETHD-26NOV0517-T2259.99\", \"b\"]]": {
    "at": "2026-11-05T19:09:22.391845+00:00",
    "pool": "entered"
@@ -1226,6 +1256,11 @@
    "entries": "entered",
    "pool": "entered"
   },
+  "[\"sandbox\", \"crypto_fav_band_below\", [\"crypto_fav_band_below:KXETHD-26NOV2517-T1689.99\", \"b\"]]": {
+   "at": "2026-11-25T18:35:14.898508+00:00",
+   "entries": "entered",
+   "pool": "entered"
+  },
   "[\"sandbox\", \"crypto_fav_band_below\", [\"crypto_fav_band_below:KXHYPED-26NOV0617-T78.9999\", \"b\"]]": {
    "at": "2026-11-06T18:39:06.373180+00:00",
    "pool": "entered"
@@ -1257,6 +1292,10 @@
    "at": "2026-11-23T19:10:33.111232+00:00",
    "pool": "entered"
   },
+  "[\"sandbox\", \"crypto_fav_band_below\", [\"crypto_fav_band_below:KXHYPED-26NOV2517-T60.9999\", \"b\"]]": {
+   "at": "2026-11-25T18:35:14.898508+00:00",
+   "pool": "entered"
+  },
   "[\"sandbox\", \"crypto_fav_band_below\", [\"crypto_fav_band_below:KXSOLD-26NOV0517-T89.9999\", \"b\"]]": {
    "at": "2026-11-05T18:35:00.864249+00:00",
    "pool": "entered"
@@ -1281,6 +1320,10 @@
    "at": "2026-11-24T19:21:47.933470+00:00",
    "pool": "entered"
   },
+  "[\"sandbox\", \"crypto_fav_band_below\", [\"crypto_fav_band_below:KXSOLD-26NOV2517-T69.9999\", \"b\"]]": {
+   "at": "2026-11-25T18:35:14.898508+00:00",
+   "pool": "entered"
+  },
   "[\"sandbox\", \"crypto_fav_band_below\", [\"crypto_fav_band_below:KXXRPD-26NOV0517-T1.2399\", \"b\"]]": {
    "at": "2026-11-05T18:35:00.864249+00:00",
    "pool": "entered"
@@ -1299,6 +1342,10 @@
   },
   "[\"sandbox\", \"crypto_fav_band_below\", [\"crypto_fav_band_below:KXXRPD-26NOV2117-T0.9399\", \"b\"]]": {
    "at": "2026-11-21T18:33:41.709726+00:00",
+   "pool": "entered"
+  },
+  "[\"sandbox\", \"crypto_fav_band_below\", [\"crypto_fav_band_below:KXXRPD-26NOV2517-T0.9399\", \"b\"]]": {
+   "at": "2026-11-25T19:11:19.628888+00:00",
    "pool": "entered"
   },
   "[\"sandbox\", \"crypto_fav_band_v2\", [\"crypto_fav_band_v2:KXBTCD-26NOV1217-T71499.99\", \"a\"]]": {
@@ -1434,6 +1481,10 @@
    "at": "2026-11-18T21:05:54.890191+00:00",
    "pool": "entered"
   },
+  "[\"sandbox\", \"ere_o15\", [\"ere_o15:KXEREDIVISIETOTAL-26NOV28EXCTEL-2\", \"a\"]]": {
+   "at": "2026-11-25T17:05:33.757949+00:00",
+   "pool": "entered"
+  },
   "[\"sandbox\", \"ftts_no_70_80\", [\"ftts_no_70_80:KXBUNDESLIGAFTTS-26NOV22SVWHSV-HSV\", \"b\"]]": {
    "at": "2026-11-22T15:04:21.859972+00:00",
    "pool": "entered"
@@ -1493,6 +1544,18 @@
   },
   "[\"sandbox\", \"ftts_no_70_80\", [\"ftts_no_70_80:KXUCLFTTS-26NOV24SLORBB-SLO\", \"b\"]]": {
    "at": "2026-11-24T15:05:08.681513+00:00",
+   "pool": "entered"
+  },
+  "[\"sandbox\", \"ftts_no_70_80\", [\"ftts_no_70_80:KXUCLFTTS-26NOV25INTVFB-VFB\", \"b\"]]": {
+   "at": "2026-11-25T15:12:39.956259+00:00",
+   "pool": "entered"
+  },
+  "[\"sandbox\", \"ftts_no_70_80\", [\"ftts_no_70_80:KXUCLFTTS-26NOV25LILBMU-LIL\", \"b\"]]": {
+   "at": "2026-11-25T15:12:39.956259+00:00",
+   "pool": "entered"
+  },
+  "[\"sandbox\", \"ftts_no_70_80\", [\"ftts_no_70_80:KXUCLFTTS-26NOV25PSGROM-ROM\", \"b\"]]": {
+   "at": "2026-11-25T15:33:28.554563+00:00",
    "pool": "entered"
   },
   "[\"sandbox\", \"liga_btts_even\", [\"liga_btts_even:KXLALIGABTTS-26NOV07OSAATH-BTTS\", \"a\"]]": {
@@ -1972,6 +2035,23 @@
    "entries": "entered",
    "pool": "entered"
   },
+  "[\"soccer_rules_ledger.json\", \"A7\", [\"A7:KXUCLTOTAL-26NOV25BRULFC\", \"yes\"]]": {
+   "at": "2026-11-25T18:49:16.289729+00:00",
+   "mirror": "entered",
+   "pool": "entered"
+  },
+  "[\"soccer_rules_ledger.json\", \"A7\", [\"A7:KXUCLTOTAL-26NOV25INTVFB\", \"yes\"]]": {
+   "at": "2026-11-25T18:49:16.289729+00:00",
+   "pool": "entered"
+  },
+  "[\"soccer_rules_ledger.json\", \"A7\", [\"A7:KXUCLTOTAL-26NOV25LILBMU\", \"yes\"]]": {
+   "at": "2026-11-25T18:49:16.289729+00:00",
+   "pool": "entered"
+  },
+  "[\"soccer_rules_ledger.json\", \"A7\", [\"A7:KXUCLTOTAL-26NOV25PSGROM\", \"yes\"]]": {
+   "at": "2026-11-25T18:49:16.289729+00:00",
+   "pool": "entered"
+  },
   "[\"soccer_rules_ledger.json\", \"B1\", [\"B1:KXMLSTOTAL-26NOV07ATXPOR\", \"no\"]]": {
    "at": "2026-11-07T23:04:03.124924+00:00",
    "pool": "entered"
@@ -2122,6 +2202,23 @@
    "at": "2026-11-24T18:49:18.091376+00:00",
    "pool": "entered"
   },
+  "[\"soccer_team_rules_ledger.json\", \"T1\", [\"T1:KXUCLTEAMTOTAL-26NOV25BRULFC:away\", \"yes\"]]": {
+   "at": "2026-11-25T18:49:16.289729+00:00",
+   "mirror": "entered",
+   "pool": "entered"
+  },
+  "[\"soccer_team_rules_ledger.json\", \"T1\", [\"T1:KXUCLTEAMTOTAL-26NOV25BRULFC:home\", \"yes\"]]": {
+   "at": "2026-11-25T18:49:16.289729+00:00",
+   "pool": "entered"
+  },
+  "[\"soccer_team_rules_ledger.json\", \"T1\", [\"T1:KXUCLTEAMTOTAL-26NOV25PSGROM:away\", \"yes\"]]": {
+   "at": "2026-11-25T18:49:16.289729+00:00",
+   "pool": "entered"
+  },
+  "[\"soccer_team_rules_ledger.json\", \"T1\", [\"T1:KXUCLTEAMTOTAL-26NOV25PSGROM:home\", \"yes\"]]": {
+   "at": "2026-11-25T18:49:16.289729+00:00",
+   "pool": "entered"
+  },
   "[\"soccer_team_rules_ledger.json\", \"T1H\", [\"T1H:KXBUNDESLIGATEAMTOTAL-26NOV07RBLFCA:home\", \"yes\"]]": {
    "at": "2026-11-07T14:03:40.378413+00:00",
    "pool": "duplicate"
@@ -2150,6 +2247,14 @@
   },
   "[\"soccer_team_rules_ledger.json\", \"T1H\", [\"T1H:KXUCLTEAMTOTAL-26NOV24RMAPSV:home\", \"yes\"]]": {
    "at": "2026-11-24T18:49:18.091376+00:00",
+   "pool": "duplicate"
+  },
+  "[\"soccer_team_rules_ledger.json\", \"T1H\", [\"T1H:KXUCLTEAMTOTAL-26NOV25BRULFC:home\", \"yes\"]]": {
+   "at": "2026-11-25T18:49:16.289729+00:00",
+   "pool": "duplicate"
+  },
+  "[\"soccer_team_rules_ledger.json\", \"T1H\", [\"T1H:KXUCLTEAMTOTAL-26NOV25PSGROM:home\", \"yes\"]]": {
+   "at": "2026-11-25T18:49:16.289729+00:00",
    "pool": "duplicate"
   },
   "[\"soccer_team_rules_ledger.json\", \"T3\", [\"T3:KXLALIGATEAMTOTAL-26NOV07ESPDEP:away\", \"yes\"]]": {
@@ -6688,11 +6793,185 @@
    "sport": "Soccer",
    "src": "soccer_rules_ledger.json",
    "status": "won"
+  },
+  {
+   "contract": "KXBTCD-26NOV2517-T59999.99",
+   "entered_at": "2026-11-25T18:35:14.898508+00:00",
+   "entities": [
+    "Bitcoin"
+   ],
+   "id": "superpack:[\"sandbox\", \"crypto_fav_band_below\", [\"crypto_fav_band_below:KXBTCD-26NOV2517-T59999.99\", \"b\"]]",
+   "lane": "crypto_fav_band_below",
+   "logged": "2026-11-25T18:34:17+00:00",
+   "matched": [
+    "Bitcoin"
+   ],
+   "pid": "[\"sandbox\", \"crypto_fav_band_below\", [\"crypto_fav_band_below:KXBTCD-26NOV2517-T59999.99\", \"b\"]]",
+   "price": 0.8,
+   "profit": null,
+   "scope": "crypto_fav",
+   "settled": null,
+   "side": "b",
+   "snapshot": {
+    "as_of": "2026-11-25T18:34:17+00:00",
+    "names": [
+     {
+      "bets": 53,
+      "name": "AAA gas",
+      "profit": 6.9187,
+      "sport": "Commodities"
+     },
+     {
+      "bets": 6,
+      "name": "AC Milan",
+      "profit": 5.4689,
+      "sport": "Soccer"
+     },
+     {
+      "bets": 35,
+      "name": "Bitcoin",
+      "profit": 5.1283,
+      "sport": "Crypto"
+     },
+     {
+      "bets": 6,
+      "name": "Hull City",
+      "profit": 4.8685,
+      "sport": "Soccer"
+     },
+     {
+      "bets": 5,
+      "name": "Charlotte FC",
+      "profit": 4.5293,
+      "sport": "Soccer"
+     },
+     {
+      "bets": 5,
+      "name": "AEK Athens",
+      "profit": 4.4399,
+      "sport": "Soccer"
+     },
+     {
+      "bets": 5,
+      "name": "Columbus Crew",
+      "profit": 4.221,
+      "sport": "Soccer"
+     },
+     {
+      "bets": 11,
+      "name": "Ethereum",
+      "profit": 3.6803,
+      "sport": "Crypto"
+     },
+     {
+      "bets": 5,
+      "name": "AFC Bournemouth",
+      "profit": 3.1006,
+      "sport": "Soccer"
+     },
+     {
+      "bets": 10,
+      "name": "Arsenal",
+      "profit": 3.0442,
+      "sport": "Soccer"
+     }
+    ]
+   },
+   "sport": "Crypto",
+   "src": "sandbox",
+   "status": "open"
+  },
+  {
+   "contract": "KXETHD-26NOV2517-T1689.99",
+   "entered_at": "2026-11-25T18:35:14.898508+00:00",
+   "entities": [
+    "Ethereum"
+   ],
+   "id": "superpack:[\"sandbox\", \"crypto_fav_band_below\", [\"crypto_fav_band_below:KXETHD-26NOV2517-T1689.99\", \"b\"]]",
+   "lane": "crypto_fav_band_below",
+   "logged": "2026-11-25T18:34:17+00:00",
+   "matched": [
+    "Ethereum"
+   ],
+   "pid": "[\"sandbox\", \"crypto_fav_band_below\", [\"crypto_fav_band_below:KXETHD-26NOV2517-T1689.99\", \"b\"]]",
+   "price": 0.74,
+   "profit": null,
+   "scope": "crypto_fav",
+   "settled": null,
+   "side": "b",
+   "snapshot": {
+    "as_of": "2026-11-25T18:34:17+00:00",
+    "names": [
+     {
+      "bets": 53,
+      "name": "AAA gas",
+      "profit": 6.9187,
+      "sport": "Commodities"
+     },
+     {
+      "bets": 6,
+      "name": "AC Milan",
+      "profit": 5.4689,
+      "sport": "Soccer"
+     },
+     {
+      "bets": 35,
+      "name": "Bitcoin",
+      "profit": 5.1283,
+      "sport": "Crypto"
+     },
+     {
+      "bets": 6,
+      "name": "Hull City",
+      "profit": 4.8685,
+      "sport": "Soccer"
+     },
+     {
+      "bets": 5,
+      "name": "Charlotte FC",
+      "profit": 4.5293,
+      "sport": "Soccer"
+     },
+     {
+      "bets": 5,
+      "name": "AEK Athens",
+      "profit": 4.4399,
+      "sport": "Soccer"
+     },
+     {
+      "bets": 5,
+      "name": "Columbus Crew",
+      "profit": 4.221,
+      "sport": "Soccer"
+     },
+     {
+      "bets": 11,
+      "name": "Ethereum",
+      "profit": 3.6803,
+      "sport": "Crypto"
+     },
+     {
+      "bets": 5,
+      "name": "AFC Bournemouth",
+      "profit": 3.1006,
+      "sport": "Soccer"
+     },
+     {
+      "bets": 10,
+      "name": "Arsenal",
+      "profit": 3.0442,
+      "sport": "Soccer"
+     }
+    ]
+   },
+   "sport": "Crypto",
+   "src": "sandbox",
+   "status": "open"
   }
  ],
  "first_run": "2026-11-05T03:09:04.962721+00:00",
  "lane": "superpack",
- "last_run": "2026-11-25T13:42:13.947111+00:00",
+ "last_run": "2026-11-25T21:35:05.671675+00:00",
  "mirror": [
   {
    "contract": "KXAAAGASD-26NOV06-4.0700",
@@ -9140,6 +9419,269 @@
    "sport": "Soccer",
    "src": "soccer_team_rules_ledger.json",
    "status": "lost"
+  },
+  {
+   "contract": "KXUCLCORNERS-26NOV25BRULFC-12",
+   "entered_at": "2026-11-25T16:04:47.733067+00:00",
+   "entities": [
+    "Club Brugge",
+    "Liverpool"
+   ],
+   "id": "superpack:[\"sandbox\", \"corners_fav_no\", [\"corners_fav_no:KXUCLCORNERS-26NOV25BRULFC-12\", \"b\"]]",
+   "lane": "corners_fav_no",
+   "logged": "2026-11-25T16:03:52+00:00",
+   "matched": [
+    "Liverpool"
+   ],
+   "pid": "[\"sandbox\", \"corners_fav_no\", [\"corners_fav_no:KXUCLCORNERS-26NOV25BRULFC-12\", \"b\"]]",
+   "price": 0.73,
+   "profit": null,
+   "scope": "soccer_corners",
+   "settled": null,
+   "side": "b",
+   "snapshot": {
+    "as_of": "2026-11-25T16:03:52+00:00",
+    "names": [
+     {
+      "bets": 9,
+      "name": "Feyenoord Rotterdam",
+      "profit": -7.0676,
+      "sport": "Soccer"
+     },
+     {
+      "bets": 8,
+      "name": "PSV Eindhoven",
+      "profit": -6.6111,
+      "sport": "Soccer"
+     },
+     {
+      "bets": 7,
+      "name": "Real Betis",
+      "profit": -4.0335,
+      "sport": "Soccer"
+     },
+     {
+      "bets": 6,
+      "name": "Rayo Vallecano",
+      "profit": -3.6491,
+      "sport": "Soccer"
+     },
+     {
+      "bets": 5,
+      "name": "SC Freiburg",
+      "profit": -3.1733,
+      "sport": "Soccer"
+     },
+     {
+      "bets": 10,
+      "name": "Brighton & Hove Albion",
+      "profit": -3.0498,
+      "sport": "Soccer"
+     },
+     {
+      "bets": 6,
+      "name": "St. Louis CITY SC",
+      "profit": -2.6584,
+      "sport": "Soccer"
+     },
+     {
+      "bets": 7,
+      "name": "Liverpool",
+      "profit": -2.0834,
+      "sport": "Soccer"
+     },
+     {
+      "bets": 8,
+      "name": "Sevilla",
+      "profit": -1.8251,
+      "sport": "Soccer"
+     },
+     {
+      "bets": 5,
+      "name": "Moldova",
+      "profit": -1.3576,
+      "sport": "Soccer"
+     }
+    ]
+   },
+   "sport": "Soccer",
+   "src": "sandbox",
+   "status": "open"
+  },
+  {
+   "contract": "KXUCLTOTAL-26NOV25BRULFC-4",
+   "entered_at": "2026-11-25T18:49:16.289729+00:00",
+   "entities": [
+    "Club Brugge",
+    "Liverpool"
+   ],
+   "id": "superpack:[\"soccer_rules_ledger.json\", \"A7\", [\"A7:KXUCLTOTAL-26NOV25BRULFC\", \"yes\"]]",
+   "lane": "A7",
+   "logged": "2026-11-25T18:31:38.950955+00:00",
+   "matched": [
+    "Liverpool"
+   ],
+   "pid": "[\"soccer_rules_ledger.json\", \"A7\", [\"A7:KXUCLTOTAL-26NOV25BRULFC\", \"yes\"]]",
+   "price": 0.54,
+   "profit": null,
+   "scope": null,
+   "settled": null,
+   "side": "yes",
+   "snapshot": {
+    "as_of": "2026-11-25T18:31:38.950955+00:00",
+    "names": [
+     {
+      "bets": 9,
+      "name": "Feyenoord Rotterdam",
+      "profit": -7.0676,
+      "sport": "Soccer"
+     },
+     {
+      "bets": 8,
+      "name": "PSV Eindhoven",
+      "profit": -6.6111,
+      "sport": "Soccer"
+     },
+     {
+      "bets": 7,
+      "name": "Real Betis",
+      "profit": -4.0335,
+      "sport": "Soccer"
+     },
+     {
+      "bets": 6,
+      "name": "Rayo Vallecano",
+      "profit": -3.6491,
+      "sport": "Soccer"
+     },
+     {
+      "bets": 5,
+      "name": "SC Freiburg",
+      "profit": -3.1733,
+      "sport": "Soccer"
+     },
+     {
+      "bets": 10,
+      "name": "Brighton & Hove Albion",
+      "profit": -3.0498,
+      "sport": "Soccer"
+     },
+     {
+      "bets": 6,
+      "name": "St. Louis CITY SC",
+      "profit": -2.6584,
+      "sport": "Soccer"
+     },
+     {
+      "bets": 7,
+      "name": "Liverpool",
+      "profit": -2.0834,
+      "sport": "Soccer"
+     },
+     {
+      "bets": 8,
+      "name": "Sevilla",
+      "profit": -1.8251,
+      "sport": "Soccer"
+     },
+     {
+      "bets": 5,
+      "name": "Moldova",
+      "profit": -1.3576,
+      "sport": "Soccer"
+     }
+    ]
+   },
+   "sport": "Soccer",
+   "src": "soccer_rules_ledger.json",
+   "status": "open"
+  },
+  {
+   "contract": "KXUCLTEAMTOTAL-26NOV25BRULFC-LFC2",
+   "entered_at": "2026-11-25T18:49:16.289729+00:00",
+   "entities": [
+    "Liverpool"
+   ],
+   "id": "superpack:[\"soccer_team_rules_ledger.json\", \"T1\", [\"T1:KXUCLTEAMTOTAL-26NOV25BRULFC:away\", \"yes\"]]",
+   "lane": "T1",
+   "logged": "2026-11-25T18:32:20.400759+00:00",
+   "matched": [
+    "Liverpool"
+   ],
+   "pid": "[\"soccer_team_rules_ledger.json\", \"T1\", [\"T1:KXUCLTEAMTOTAL-26NOV25BRULFC:away\", \"yes\"]]",
+   "price": 0.7,
+   "profit": null,
+   "scope": null,
+   "settled": null,
+   "side": "yes",
+   "snapshot": {
+    "as_of": "2026-11-25T18:32:20.400759+00:00",
+    "names": [
+     {
+      "bets": 9,
+      "name": "Feyenoord Rotterdam",
+      "profit": -7.0676,
+      "sport": "Soccer"
+     },
+     {
+      "bets": 8,
+      "name": "PSV Eindhoven",
+      "profit": -6.6111,
+      "sport": "Soccer"
+     },
+     {
+      "bets": 7,
+      "name": "Real Betis",
+      "profit": -4.0335,
+      "sport": "Soccer"
+     },
+     {
+      "bets": 6,
+      "name": "Rayo Vallecano",
+      "profit": -3.6491,
+      "sport": "Soccer"
+     },
+     {
+      "bets": 5,
+      "name": "SC Freiburg",
+      "profit": -3.1733,
+      "sport": "Soccer"
+     },
+     {
+      "bets": 10,
+      "name": "Brighton & Hove Albion",
+      "profit": -3.0498,
+      "sport": "Soccer"
+     },
+     {
+      "bets": 6,
+      "name": "St. Louis CITY SC",
+      "profit": -2.6584,
+      "sport": "Soccer"
+     },
+     {
+      "bets": 7,
+      "name": "Liverpool",
+      "profit": -2.0834,
+      "sport": "Soccer"
+     },
+     {
+      "bets": 8,
+      "name": "Sevilla",
+      "profit": -1.8251,
+      "sport": "Soccer"
+     },
+     {
+      "bets": 5,
+      "name": "Moldova",
+      "profit": -1.3576,
+      "sport": "Soccer"
+     }
+    ]
+   },
+   "sport": "Soccer",
+   "src": "soccer_team_rules_ledger.json",
+   "status": "open"
   }
  ],
  "pool": [
@@ -19722,14 +20264,14 @@
    ],
    "pid": "[\"daily\", \"econ_nc_yes\", [\"KXDIESELD-26NOV25-T5.760\", \"yes\"]]",
    "price": 0.97,
-   "profit": null,
+   "profit": 0.0288,
    "scope": null,
-   "settled": null,
+   "settled": "2026-11-25T15:43:13.994252+00:00",
    "side": "yes",
    "snapshot": null,
    "sport": "Commodities",
    "src": "daily",
-   "status": "open"
+   "status": "won"
   },
   {
    "contract": "KXRT-HEX-70",
@@ -19774,6 +20316,555 @@
    "side": "b",
    "snapshot": null,
    "sport": "Soccer",
+   "src": "sandbox",
+   "status": "open"
+  },
+  {
+   "contract": "KXUCLFTTS-26NOV25INTVFB-VFB",
+   "entered_at": "2026-11-25T15:12:39.956259+00:00",
+   "entities": [
+    "Stuttgart"
+   ],
+   "id": "superpack:[\"sandbox\", \"ftts_no_70_80\", [\"ftts_no_70_80:KXUCLFTTS-26NOV25INTVFB-VFB\", \"b\"]]",
+   "lane": "ftts_no_70_80",
+   "logged": "2026-11-25T15:11:34+00:00",
+   "matched": [
+    "Stuttgart"
+   ],
+   "pid": "[\"sandbox\", \"ftts_no_70_80\", [\"ftts_no_70_80:KXUCLFTTS-26NOV25INTVFB-VFB\", \"b\"]]",
+   "price": 0.73,
+   "profit": null,
+   "scope": "soccer_ftts",
+   "settled": null,
+   "side": "b",
+   "snapshot": null,
+   "sport": "Soccer",
+   "src": "sandbox",
+   "status": "open"
+  },
+  {
+   "contract": "KXUCLFTTS-26NOV25LILBMU-LIL",
+   "entered_at": "2026-11-25T15:12:39.956259+00:00",
+   "entities": [
+    "Lille"
+   ],
+   "id": "superpack:[\"sandbox\", \"ftts_no_70_80\", [\"ftts_no_70_80:KXUCLFTTS-26NOV25LILBMU-LIL\", \"b\"]]",
+   "lane": "ftts_no_70_80",
+   "logged": "2026-11-25T15:11:34+00:00",
+   "matched": [
+    "Lille"
+   ],
+   "pid": "[\"sandbox\", \"ftts_no_70_80\", [\"ftts_no_70_80:KXUCLFTTS-26NOV25LILBMU-LIL\", \"b\"]]",
+   "price": 0.72,
+   "profit": null,
+   "scope": "soccer_ftts",
+   "settled": null,
+   "side": "b",
+   "snapshot": null,
+   "sport": "Soccer",
+   "src": "sandbox",
+   "status": "open"
+  },
+  {
+   "contract": "KXUCLFTTS-26NOV25PSGROM-ROM",
+   "entered_at": "2026-11-25T15:33:28.554563+00:00",
+   "entities": [
+    "Roma"
+   ],
+   "id": "superpack:[\"sandbox\", \"ftts_no_70_80\", [\"ftts_no_70_80:KXUCLFTTS-26NOV25PSGROM-ROM\", \"b\"]]",
+   "lane": "ftts_no_70_80",
+   "logged": "2026-11-25T15:32:27+00:00",
+   "matched": [
+    "Roma"
+   ],
+   "pid": "[\"sandbox\", \"ftts_no_70_80\", [\"ftts_no_70_80:KXUCLFTTS-26NOV25PSGROM-ROM\", \"b\"]]",
+   "price": 0.7,
+   "profit": null,
+   "scope": "soccer_ftts",
+   "settled": null,
+   "side": "b",
+   "snapshot": null,
+   "sport": "Soccer",
+   "src": "sandbox",
+   "status": "open"
+  },
+  {
+   "contract": "KXUCLCORNERS-26NOV25ATMVIK-12",
+   "entered_at": "2026-11-25T16:04:47.733067+00:00",
+   "entities": [
+    "Atl\u00e9tico Madrid",
+    "Viking FK"
+   ],
+   "id": "superpack:[\"sandbox\", \"corners_fav_no\", [\"corners_fav_no:KXUCLCORNERS-26NOV25ATMVIK-12\", \"b\"]]",
+   "lane": "corners_fav_no",
+   "logged": "2026-11-25T16:03:52+00:00",
+   "matched": [
+    "Atl\u00e9tico Madrid",
+    "Viking FK"
+   ],
+   "pid": "[\"sandbox\", \"corners_fav_no\", [\"corners_fav_no:KXUCLCORNERS-26NOV25ATMVIK-12\", \"b\"]]",
+   "price": 0.67,
+   "profit": null,
+   "scope": "soccer_corners",
+   "settled": null,
+   "side": "b",
+   "snapshot": null,
+   "sport": "Soccer",
+   "src": "sandbox",
+   "status": "open"
+  },
+  {
+   "contract": "KXUCLCORNERS-26NOV25BRULFC-12",
+   "entered_at": "2026-11-25T16:04:47.733067+00:00",
+   "entities": [
+    "Club Brugge",
+    "Liverpool"
+   ],
+   "id": "superpack:[\"sandbox\", \"corners_fav_no\", [\"corners_fav_no:KXUCLCORNERS-26NOV25BRULFC-12\", \"b\"]]",
+   "lane": "corners_fav_no",
+   "logged": "2026-11-25T16:03:52+00:00",
+   "matched": [
+    "Club Brugge",
+    "Liverpool"
+   ],
+   "pid": "[\"sandbox\", \"corners_fav_no\", [\"corners_fav_no:KXUCLCORNERS-26NOV25BRULFC-12\", \"b\"]]",
+   "price": 0.73,
+   "profit": null,
+   "scope": "soccer_corners",
+   "settled": null,
+   "side": "b",
+   "snapshot": null,
+   "sport": "Soccer",
+   "src": "sandbox",
+   "status": "open"
+  },
+  {
+   "contract": "KXUCLCORNERS-26NOV25INTVFB-11",
+   "entered_at": "2026-11-25T16:04:47.733067+00:00",
+   "entities": [
+    "Internazionale",
+    "VfB Stuttgart"
+   ],
+   "id": "superpack:[\"sandbox\", \"corners_fav_no\", [\"corners_fav_no:KXUCLCORNERS-26NOV25INTVFB-11\", \"b\"]]",
+   "lane": "corners_fav_no",
+   "logged": "2026-11-25T16:03:52+00:00",
+   "matched": [
+    "Internazionale",
+    "VfB Stuttgart"
+   ],
+   "pid": "[\"sandbox\", \"corners_fav_no\", [\"corners_fav_no:KXUCLCORNERS-26NOV25INTVFB-11\", \"b\"]]",
+   "price": 0.62,
+   "profit": null,
+   "scope": "soccer_corners",
+   "settled": null,
+   "side": "b",
+   "snapshot": null,
+   "sport": "Soccer",
+   "src": "sandbox",
+   "status": "open"
+  },
+  {
+   "contract": "KXUCLCORNERS-26NOV25LILBMU-11",
+   "entered_at": "2026-11-25T16:04:47.733067+00:00",
+   "entities": [
+    "Lille",
+    "Bayern Munich"
+   ],
+   "id": "superpack:[\"sandbox\", \"corners_fav_no\", [\"corners_fav_no:KXUCLCORNERS-26NOV25LILBMU-11\", \"b\"]]",
+   "lane": "corners_fav_no",
+   "logged": "2026-11-25T16:03:52+00:00",
+   "matched": [
+    "Bayern Munich",
+    "Lille"
+   ],
+   "pid": "[\"sandbox\", \"corners_fav_no\", [\"corners_fav_no:KXUCLCORNERS-26NOV25LILBMU-11\", \"b\"]]",
+   "price": 0.65,
+   "profit": null,
+   "scope": "soccer_corners",
+   "settled": null,
+   "side": "b",
+   "snapshot": null,
+   "sport": "Soccer",
+   "src": "sandbox",
+   "status": "open"
+  },
+  {
+   "contract": "KXEREDIVISIETOTAL-26NOV28EXCTEL-2",
+   "entered_at": "2026-11-25T17:05:33.757949+00:00",
+   "entities": [
+    "Excelsior",
+    "Telstar"
+   ],
+   "id": "superpack:[\"sandbox\", \"ere_o15\", [\"ere_o15:KXEREDIVISIETOTAL-26NOV28EXCTEL-2\", \"a\"]]",
+   "lane": "ere_o15",
+   "logged": "2026-11-25T17:04:18+00:00",
+   "matched": [
+    "Excelsior",
+    "Telstar"
+   ],
+   "pid": "[\"sandbox\", \"ere_o15\", [\"ere_o15:KXEREDIVISIETOTAL-26NOV28EXCTEL-2\", \"a\"]]",
+   "price": 0.81,
+   "profit": null,
+   "scope": "soccer_o15",
+   "settled": null,
+   "side": "a",
+   "snapshot": null,
+   "sport": "Soccer",
+   "src": "sandbox",
+   "status": "open"
+  },
+  {
+   "contract": "KXINXU-26NOV25H1600-T7184.9999",
+   "entered_at": "2026-11-25T17:37:54.368468+00:00",
+   "entities": [
+    "S&P 500"
+   ],
+   "id": "superpack:[\"finance_nc\", \"finance_nc\", [\"KXINXU-26NOV25H1600-T7184.9999\", \"no\"]]",
+   "lane": "finance_nc",
+   "logged": "2026-11-25T17:31:11.414310+00:00",
+   "matched": [
+    "S&P 500"
+   ],
+   "pid": "[\"finance_nc\", \"finance_nc\", [\"KXINXU-26NOV25H1600-T7184.9999\", \"no\"]]",
+   "price": 0.94,
+   "profit": null,
+   "scope": null,
+   "settled": null,
+   "side": "no",
+   "snapshot": null,
+   "sport": "Finance",
+   "src": "finance_nc",
+   "status": "open"
+  },
+  {
+   "contract": "KXUCLCORNERS-26NOV25SPOMUN-7",
+   "entered_at": "2026-11-25T18:35:14.898508+00:00",
+   "entities": [
+    "Sporting CP",
+    "Manchester United"
+   ],
+   "id": "superpack:[\"sandbox\", \"corners_ucl_fade\", [\"corners_ucl_fade:KXUCLCORNERS-26NOV25SPOMUN-7\", \"a\"]]",
+   "lane": "corners_ucl_fade",
+   "logged": "2026-11-25T18:34:17+00:00",
+   "matched": [
+    "Manchester United",
+    "Sporting CP"
+   ],
+   "pid": "[\"sandbox\", \"corners_ucl_fade\", [\"corners_ucl_fade:KXUCLCORNERS-26NOV25SPOMUN-7\", \"a\"]]",
+   "price": 0.85,
+   "profit": null,
+   "scope": "soccer_corners",
+   "settled": null,
+   "side": "a",
+   "snapshot": null,
+   "sport": "Soccer",
+   "src": "sandbox",
+   "status": "open"
+  },
+  {
+   "contract": "KXBTCD-26NOV2517-T59999.99",
+   "entered_at": "2026-11-25T18:35:14.898508+00:00",
+   "entities": [
+    "Bitcoin"
+   ],
+   "id": "superpack:[\"sandbox\", \"crypto_fav_band_below\", [\"crypto_fav_band_below:KXBTCD-26NOV2517-T59999.99\", \"b\"]]",
+   "lane": "crypto_fav_band_below",
+   "logged": "2026-11-25T18:34:17+00:00",
+   "matched": [
+    "Bitcoin"
+   ],
+   "pid": "[\"sandbox\", \"crypto_fav_band_below\", [\"crypto_fav_band_below:KXBTCD-26NOV2517-T59999.99\", \"b\"]]",
+   "price": 0.8,
+   "profit": null,
+   "scope": "crypto_fav",
+   "settled": null,
+   "side": "b",
+   "snapshot": null,
+   "sport": "Crypto",
+   "src": "sandbox",
+   "status": "open"
+  },
+  {
+   "contract": "KXETHD-26NOV2517-T1689.99",
+   "entered_at": "2026-11-25T18:35:14.898508+00:00",
+   "entities": [
+    "Ethereum"
+   ],
+   "id": "superpack:[\"sandbox\", \"crypto_fav_band_below\", [\"crypto_fav_band_below:KXETHD-26NOV2517-T1689.99\", \"b\"]]",
+   "lane": "crypto_fav_band_below",
+   "logged": "2026-11-25T18:34:17+00:00",
+   "matched": [
+    "Ethereum"
+   ],
+   "pid": "[\"sandbox\", \"crypto_fav_band_below\", [\"crypto_fav_band_below:KXETHD-26NOV2517-T1689.99\", \"b\"]]",
+   "price": 0.74,
+   "profit": null,
+   "scope": "crypto_fav",
+   "settled": null,
+   "side": "b",
+   "snapshot": null,
+   "sport": "Crypto",
+   "src": "sandbox",
+   "status": "open"
+  },
+  {
+   "contract": "KXHYPED-26NOV2517-T60.9999",
+   "entered_at": "2026-11-25T18:35:14.898508+00:00",
+   "entities": [
+    "HYPE"
+   ],
+   "id": "superpack:[\"sandbox\", \"crypto_fav_band_below\", [\"crypto_fav_band_below:KXHYPED-26NOV2517-T60.9999\", \"b\"]]",
+   "lane": "crypto_fav_band_below",
+   "logged": "2026-11-25T18:34:17+00:00",
+   "matched": [
+    "HYPE"
+   ],
+   "pid": "[\"sandbox\", \"crypto_fav_band_below\", [\"crypto_fav_band_below:KXHYPED-26NOV2517-T60.9999\", \"b\"]]",
+   "price": 0.79,
+   "profit": null,
+   "scope": "crypto_fav",
+   "settled": null,
+   "side": "b",
+   "snapshot": null,
+   "sport": "Crypto",
+   "src": "sandbox",
+   "status": "open"
+  },
+  {
+   "contract": "KXSOLD-26NOV2517-T69.9999",
+   "entered_at": "2026-11-25T18:35:14.898508+00:00",
+   "entities": [
+    "Solana"
+   ],
+   "id": "superpack:[\"sandbox\", \"crypto_fav_band_below\", [\"crypto_fav_band_below:KXSOLD-26NOV2517-T69.9999\", \"b\"]]",
+   "lane": "crypto_fav_band_below",
+   "logged": "2026-11-25T18:34:17+00:00",
+   "matched": [
+    "Solana"
+   ],
+   "pid": "[\"sandbox\", \"crypto_fav_band_below\", [\"crypto_fav_band_below:KXSOLD-26NOV2517-T69.9999\", \"b\"]]",
+   "price": 0.75,
+   "profit": null,
+   "scope": "crypto_fav",
+   "settled": null,
+   "side": "b",
+   "snapshot": null,
+   "sport": "Crypto",
+   "src": "sandbox",
+   "status": "open"
+  },
+  {
+   "contract": "KXUCLTOTAL-26NOV25BRULFC-4",
+   "entered_at": "2026-11-25T18:49:16.289729+00:00",
+   "entities": [
+    "Club Brugge",
+    "Liverpool"
+   ],
+   "id": "superpack:[\"soccer_rules_ledger.json\", \"A7\", [\"A7:KXUCLTOTAL-26NOV25BRULFC\", \"yes\"]]",
+   "lane": "A7",
+   "logged": "2026-11-25T18:31:38.950955+00:00",
+   "matched": [
+    "Club Brugge",
+    "Liverpool"
+   ],
+   "pid": "[\"soccer_rules_ledger.json\", \"A7\", [\"A7:KXUCLTOTAL-26NOV25BRULFC\", \"yes\"]]",
+   "price": 0.54,
+   "profit": null,
+   "scope": null,
+   "settled": null,
+   "side": "yes",
+   "snapshot": null,
+   "sport": "Soccer",
+   "src": "soccer_rules_ledger.json",
+   "status": "open"
+  },
+  {
+   "contract": "KXUCLTOTAL-26NOV25INTVFB-4",
+   "entered_at": "2026-11-25T18:49:16.289729+00:00",
+   "entities": [
+    "Internazionale",
+    "VfB Stuttgart"
+   ],
+   "id": "superpack:[\"soccer_rules_ledger.json\", \"A7\", [\"A7:KXUCLTOTAL-26NOV25INTVFB\", \"yes\"]]",
+   "lane": "A7",
+   "logged": "2026-11-25T18:31:38.950955+00:00",
+   "matched": [
+    "Internazionale",
+    "VfB Stuttgart"
+   ],
+   "pid": "[\"soccer_rules_ledger.json\", \"A7\", [\"A7:KXUCLTOTAL-26NOV25INTVFB\", \"yes\"]]",
+   "price": 0.54,
+   "profit": null,
+   "scope": null,
+   "settled": null,
+   "side": "yes",
+   "snapshot": null,
+   "sport": "Soccer",
+   "src": "soccer_rules_ledger.json",
+   "status": "open"
+  },
+  {
+   "contract": "KXUCLTOTAL-26NOV25LILBMU-4",
+   "entered_at": "2026-11-25T18:49:16.289729+00:00",
+   "entities": [
+    "Lille",
+    "Bayern Munich"
+   ],
+   "id": "superpack:[\"soccer_rules_ledger.json\", \"A7\", [\"A7:KXUCLTOTAL-26NOV25LILBMU\", \"yes\"]]",
+   "lane": "A7",
+   "logged": "2026-11-25T18:31:38.950955+00:00",
+   "matched": [
+    "Bayern Munich",
+    "Lille"
+   ],
+   "pid": "[\"soccer_rules_ledger.json\", \"A7\", [\"A7:KXUCLTOTAL-26NOV25LILBMU\", \"yes\"]]",
+   "price": 0.33,
+   "profit": null,
+   "scope": null,
+   "settled": null,
+   "side": "yes",
+   "snapshot": null,
+   "sport": "Soccer",
+   "src": "soccer_rules_ledger.json",
+   "status": "open"
+  },
+  {
+   "contract": "KXUCLTOTAL-26NOV25PSGROM-4",
+   "entered_at": "2026-11-25T18:49:16.289729+00:00",
+   "entities": [
+    "Paris Saint-Germain",
+    "AS Roma"
+   ],
+   "id": "superpack:[\"soccer_rules_ledger.json\", \"A7\", [\"A7:KXUCLTOTAL-26NOV25PSGROM\", \"yes\"]]",
+   "lane": "A7",
+   "logged": "2026-11-25T18:31:38.950955+00:00",
+   "matched": [
+    "AS Roma",
+    "Paris Saint-Germain"
+   ],
+   "pid": "[\"soccer_rules_ledger.json\", \"A7\", [\"A7:KXUCLTOTAL-26NOV25PSGROM\", \"yes\"]]",
+   "price": 0.51,
+   "profit": null,
+   "scope": null,
+   "settled": null,
+   "side": "yes",
+   "snapshot": null,
+   "sport": "Soccer",
+   "src": "soccer_rules_ledger.json",
+   "status": "open"
+  },
+  {
+   "contract": "KXUCLTEAMTOTAL-26NOV25BRULFC-LFC2",
+   "entered_at": "2026-11-25T18:49:16.289729+00:00",
+   "entities": [
+    "Liverpool"
+   ],
+   "id": "superpack:[\"soccer_team_rules_ledger.json\", \"T1\", [\"T1:KXUCLTEAMTOTAL-26NOV25BRULFC:away\", \"yes\"]]",
+   "lane": "T1",
+   "logged": "2026-11-25T18:32:20.400759+00:00",
+   "matched": [
+    "Liverpool"
+   ],
+   "pid": "[\"soccer_team_rules_ledger.json\", \"T1\", [\"T1:KXUCLTEAMTOTAL-26NOV25BRULFC:away\", \"yes\"]]",
+   "price": 0.7,
+   "profit": null,
+   "scope": null,
+   "settled": null,
+   "side": "yes",
+   "snapshot": null,
+   "sport": "Soccer",
+   "src": "soccer_team_rules_ledger.json",
+   "status": "open"
+  },
+  {
+   "contract": "KXUCLTEAMTOTAL-26NOV25BRULFC-BRU2",
+   "entered_at": "2026-11-25T18:49:16.289729+00:00",
+   "entities": [
+    "Club Brugge"
+   ],
+   "id": "superpack:[\"soccer_team_rules_ledger.json\", \"T1\", [\"T1:KXUCLTEAMTOTAL-26NOV25BRULFC:home\", \"yes\"]]",
+   "lane": "T1",
+   "logged": "2026-11-25T18:32:20.400759+00:00",
+   "matched": [
+    "Club Brugge"
+   ],
+   "pid": "[\"soccer_team_rules_ledger.json\", \"T1\", [\"T1:KXUCLTEAMTOTAL-26NOV25BRULFC:home\", \"yes\"]]",
+   "price": 0.41,
+   "profit": null,
+   "scope": null,
+   "settled": null,
+   "side": "yes",
+   "snapshot": null,
+   "sport": "Soccer",
+   "src": "soccer_team_rules_ledger.json",
+   "status": "open"
+  },
+  {
+   "contract": "KXUCLTEAMTOTAL-26NOV25PSGROM-ROM2",
+   "entered_at": "2026-11-25T18:49:16.289729+00:00",
+   "entities": [
+    "AS Roma"
+   ],
+   "id": "superpack:[\"soccer_team_rules_ledger.json\", \"T1\", [\"T1:KXUCLTEAMTOTAL-26NOV25PSGROM:away\", \"yes\"]]",
+   "lane": "T1",
+   "logged": "2026-11-25T18:32:20.400759+00:00",
+   "matched": [
+    "AS Roma"
+   ],
+   "pid": "[\"soccer_team_rules_ledger.json\", \"T1\", [\"T1:KXUCLTEAMTOTAL-26NOV25PSGROM:away\", \"yes\"]]",
+   "price": 0.37,
+   "profit": null,
+   "scope": null,
+   "settled": null,
+   "side": "yes",
+   "snapshot": null,
+   "sport": "Soccer",
+   "src": "soccer_team_rules_ledger.json",
+   "status": "open"
+  },
+  {
+   "contract": "KXUCLTEAMTOTAL-26NOV25PSGROM-PSG2",
+   "entered_at": "2026-11-25T18:49:16.289729+00:00",
+   "entities": [
+    "Paris Saint-Germain"
+   ],
+   "id": "superpack:[\"soccer_team_rules_ledger.json\", \"T1\", [\"T1:KXUCLTEAMTOTAL-26NOV25PSGROM:home\", \"yes\"]]",
+   "lane": "T1",
+   "logged": "2026-11-25T18:32:20.400759+00:00",
+   "matched": [
+    "Paris Saint-Germain"
+   ],
+   "pid": "[\"soccer_team_rules_ledger.json\", \"T1\", [\"T1:KXUCLTEAMTOTAL-26NOV25PSGROM:home\", \"yes\"]]",
+   "price": 0.73,
+   "profit": null,
+   "scope": null,
+   "settled": null,
+   "side": "yes",
+   "snapshot": null,
+   "sport": "Soccer",
+   "src": "soccer_team_rules_ledger.json",
+   "status": "open"
+  },
+  {
+   "contract": "KXXRPD-26NOV2517-T0.9399",
+   "entered_at": "2026-11-25T19:11:19.628888+00:00",
+   "entities": [
+    "XRP"
+   ],
+   "id": "superpack:[\"sandbox\", \"crypto_fav_band_below\", [\"crypto_fav_band_below:KXXRPD-26NOV2517-T0.9399\", \"b\"]]",
+   "lane": "crypto_fav_band_below",
+   "logged": "2026-11-25T19:10:20+00:00",
+   "matched": [
+    "XRP"
+   ],
+   "pid": "[\"sandbox\", \"crypto_fav_band_below\", [\"crypto_fav_band_below:KXXRPD-26NOV2517-T0.9399\", \"b\"]]",
+   "price": 0.73,
+   "profit": null,
+   "scope": "crypto_fav",
+   "settled": null,
+   "side": "b",
+   "snapshot": null,
+   "sport": "Crypto",
    "src": "sandbox",
    "status": "open"
   }

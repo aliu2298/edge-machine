@@ -67,11 +67,39 @@
       "value": 1.0,
       "value_crypto": 1.0,
       "value_sp": 1.0
+    },
+    {
+      "cost": 0.790189,
+      "crypto": {
+        "ask": 0.8,
+        "gap_min": 1.0,
+        "label": "Bitcoin price on Nov 25, 2026?",
+        "logged": "2026-11-25T18:34:17+00:00",
+        "ticker": "KXBTCD-26NOV2517-T59999.99"
+      },
+      "day": "2026-11-25",
+      "fee": 0.012086,
+      "payout": 1.0,
+      "price": 0.778103,
+      "read_at": "2026-11-25T18:35:15+00:00",
+      "singles": {
+        "crypto": 0.8112,
+        "sp": 0.953325
+      },
+      "sp": {
+        "ask": 0.95,
+        "bid": 0.93,
+        "close": "2026-11-25T21:00:00Z",
+        "size": 100000.0,
+        "ticker": "KXINXU-26NOV25H1600-T7239.9999",
+        "title": "7,240 or above"
+      },
+      "status": "open"
     }
   ],
   "error": null,
   "key": "combo_crypto_sp_no",
-  "last_run": "2026-11-25T13:42:14+00:00",
+  "last_run": "2026-11-25T21:35:06+00:00",
   "registered": "2026-11-21",
   "version": "combo-v1"
 }

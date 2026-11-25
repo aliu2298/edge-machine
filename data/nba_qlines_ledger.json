@@ -8,9 +8,9 @@
  },
  "error": null,
  "games_through": "2026-11-24",
- "last_live_read": "2026-11-25T02:30:28.569067+00:00",
- "last_run": "2026-11-25T05:42:48.201689+00:00",
- "last_settle": "2026-11-25T05:42:48.201689+00:00",
+ "last_live_read": "2026-11-25T21:30:30.412929+00:00",
+ "last_run": "2026-11-25T21:30:30.412929+00:00",
+ "last_settle": "2026-11-25T21:30:30.412929+00:00",
  "looks": {
   "401909314": {
    "at": "2026-11-24T23:30:33.063986+00:00",
@@ -80,6 +80,32 @@
    "priced": 11,
    "skipped": {
     "3Q over: wide": 1
+   }
+  },
+  "401909317": {
+   "at": "2026-11-25T21:30:30.412929+00:00",
+   "entered": {
+    "1H over": 1,
+    "1H over blind": 1,
+    "1H under blind": 1,
+    "1Q over blind": 1,
+    "1Q under blind": 1,
+    "2H under blind": 1,
+    "2Q over": 1,
+    "2Q over blind": 1,
+    "2Q under blind": 1,
+    "3Q over blind": 1,
+    "3Q under blind": 1,
+    "4Q over": 1,
+    "4Q over blind": 1,
+    "4Q under blind": 1
+   },
+   "game": "MIA @ PHI",
+   "lead_min": 29.5,
+   "night": "2026-11-25",
+   "priced": 11,
+   "skipped": {
+    "2H over: wide": 1
    }
   },
   "401910036": {
@@ -538,6 +564,35 @@
       "SAC": "15/16"
      },
      "ticker": "KXNBA1HTOTAL-26NOV23SASSAC-106"
+    },
+    {
+     "ask": 0.95,
+     "bid": 0.92,
+     "direction": "over",
+     "entered": "2026-11-25T21:30:30.412929+00:00",
+     "game": "MIA @ PHI",
+     "game_id": "401909317",
+     "id": "qlines_1H_over:KXNBA1HTOTAL-26NOV25MIAPHI-105",
+     "lead_min": 29.5,
+     "line": 104.5,
+     "matches": "qlines_1H_over_blind:KXNBA1HTOTAL-26NOV25MIAPHI-105",
+     "night": "2026-11-25",
+     "offset": 0,
+     "price": 0.95,
+     "qualifying": [
+      "MIA"
+     ],
+     "rule": "qlines_1H_over",
+     "rung": 104.5,
+     "section": "1H",
+     "side": "yes",
+     "start": "2026-11-25T22:00:00+00:00",
+     "status": "open",
+     "teams": {
+      "MIA": "16/16",
+      "PHI": "15/18"
+     },
+     "ticker": "KXNBA1HTOTAL-26NOV25MIAPHI-105"
     }
    ]
   },
@@ -952,6 +1007,31 @@
       "DEN": "12/15"
      },
      "ticker": "KXNBA1HTOTAL-26NOV24DALDEN-106"
+    },
+    {
+     "ask": 0.95,
+     "bid": 0.92,
+     "direction": "over",
+     "entered": "2026-11-25T21:30:30.412929+00:00",
+     "game": "MIA @ PHI",
+     "game_id": "401909317",
+     "id": "qlines_1H_over_blind:KXNBA1HTOTAL-26NOV25MIAPHI-105",
+     "lead_min": 29.5,
+     "line": 104.5,
+     "night": "2026-11-25",
+     "offset": 0,
+     "price": 0.95,
+     "rule": "qlines_1H_over_blind",
+     "rung": 104.5,
+     "section": "1H",
+     "side": "yes",
+     "start": "2026-11-25T22:00:00+00:00",
+     "status": "open",
+     "teams": {
+      "MIA": "16/16",
+      "PHI": "15/18"
+     },
+     "ticker": "KXNBA1HTOTAL-26NOV25MIAPHI-105"
     }
    ]
   },
@@ -1369,6 +1449,31 @@
       "DEN": "9/15"
      },
      "ticker": "KXNBA1HTOTAL-26NOV24DALDEN-120"
+    },
+    {
+     "ask": 0.64,
+     "bid": 0.61,
+     "direction": "under",
+     "entered": "2026-11-25T21:30:30.412929+00:00",
+     "game": "MIA @ PHI",
+     "game_id": "401909317",
+     "id": "qlines_1H_under_blind:KXNBA1HTOTAL-26NOV25MIAPHI-119",
+     "lead_min": 29.5,
+     "line": 119.5,
+     "night": "2026-11-25",
+     "offset": 1,
+     "price": 0.39,
+     "rule": "qlines_1H_under_blind",
+     "rung": 118.5,
+     "section": "1H",
+     "side": "no",
+     "start": "2026-11-25T22:00:00+00:00",
+     "status": "open",
+     "teams": {
+      "MIA": "7/16",
+      "PHI": "11/18"
+     },
+     "ticker": "KXNBA1HTOTAL-26NOV25MIAPHI-119"
     }
    ]
   },
@@ -1786,6 +1891,31 @@
       "DEN": "11/15"
      },
      "ticker": "KXNBA1QTOTAL-26NOV24DALDEN-53"
+    },
+    {
+     "ask": 0.87,
+     "bid": 0.86,
+     "direction": "over",
+     "entered": "2026-11-25T21:30:30.412929+00:00",
+     "game": "MIA @ PHI",
+     "game_id": "401909317",
+     "id": "qlines_1Q_over_blind:KXNBA1QTOTAL-26NOV25MIAPHI-53",
+     "lead_min": 29.5,
+     "line": 51.5,
+     "night": "2026-11-25",
+     "offset": 1,
+     "price": 0.87,
+     "rule": "qlines_1Q_over_blind",
+     "rung": 52.5,
+     "section": "1Q",
+     "side": "yes",
+     "start": "2026-11-25T22:00:00+00:00",
+     "status": "open",
+     "teams": {
+      "MIA": "14/16",
+      "PHI": "14/18"
+     },
+     "ticker": "KXNBA1QTOTAL-26NOV25MIAPHI-53"
     }
    ]
   },
@@ -2240,6 +2370,31 @@
       "DEN": "9/15"
      },
      "ticker": "KXNBA1QTOTAL-26NOV24DALDEN-59"
+    },
+    {
+     "ask": 0.65,
+     "bid": 0.64,
+     "direction": "under",
+     "entered": "2026-11-25T21:30:30.412929+00:00",
+     "game": "MIA @ PHI",
+     "game_id": "401909317",
+     "id": "qlines_1Q_under_blind:KXNBA1QTOTAL-26NOV25MIAPHI-59",
+     "lead_min": 29.5,
+     "line": 59.5,
+     "night": "2026-11-25",
+     "offset": 1,
+     "price": 0.36,
+     "rule": "qlines_1Q_under_blind",
+     "rung": 58.5,
+     "section": "1Q",
+     "side": "no",
+     "start": "2026-11-25T22:00:00+00:00",
+     "status": "open",
+     "teams": {
+      "MIA": "8/16",
+      "PHI": "13/18"
+     },
+     "ticker": "KXNBA1QTOTAL-26NOV25MIAPHI-59"
     }
    ]
   },
@@ -2748,6 +2903,31 @@
       "DEN": "8/15"
      },
      "ticker": "KXNBA2HTOTAL-26NOV24DALDEN-115"
+    },
+    {
+     "ask": 0.52,
+     "bid": 0.48,
+     "direction": "under",
+     "entered": "2026-11-25T21:30:30.412929+00:00",
+     "game": "MIA @ PHI",
+     "game_id": "401909317",
+     "id": "qlines_2H_under_blind:KXNBA2HTOTAL-26NOV25MIAPHI-116",
+     "lead_min": 29.5,
+     "line": 115.5,
+     "night": "2026-11-25",
+     "offset": 0,
+     "price": 0.52,
+     "rule": "qlines_2H_under_blind",
+     "rung": 115.5,
+     "section": "2H",
+     "side": "no",
+     "start": "2026-11-25T22:00:00+00:00",
+     "status": "open",
+     "teams": {
+      "MIA": "8/16",
+      "PHI": "12/18"
+     },
+     "ticker": "KXNBA2HTOTAL-26NOV25MIAPHI-116"
     }
    ]
   },
@@ -2788,6 +2968,35 @@
       "PHX": "14/15"
      },
      "ticker": "KXNBA2QTOTAL-26NOV23PHXNOP-52"
+    },
+    {
+     "ask": 0.92,
+     "bid": 0.87,
+     "direction": "over",
+     "entered": "2026-11-25T21:30:30.412929+00:00",
+     "game": "MIA @ PHI",
+     "game_id": "401909317",
+     "id": "qlines_2Q_over:KXNBA2QTOTAL-26NOV25MIAPHI-51",
+     "lead_min": 29.5,
+     "line": 50.5,
+     "matches": "qlines_2Q_over_blind:KXNBA2QTOTAL-26NOV25MIAPHI-51",
+     "night": "2026-11-25",
+     "offset": 0,
+     "price": 0.92,
+     "qualifying": [
+      "MIA"
+     ],
+     "rule": "qlines_2Q_over",
+     "rung": 50.5,
+     "section": "2Q",
+     "side": "yes",
+     "start": "2026-11-25T22:00:00+00:00",
+     "status": "open",
+     "teams": {
+      "MIA": "16/16",
+      "PHI": "14/18"
+     },
+     "ticker": "KXNBA2QTOTAL-26NOV25MIAPHI-51"
     }
    ]
   },
@@ -3202,6 +3411,31 @@
       "DEN": "12/15"
      },
      "ticker": "KXNBA2QTOTAL-26NOV24DALDEN-51"
+    },
+    {
+     "ask": 0.92,
+     "bid": 0.87,
+     "direction": "over",
+     "entered": "2026-11-25T21:30:30.412929+00:00",
+     "game": "MIA @ PHI",
+     "game_id": "401909317",
+     "id": "qlines_2Q_over_blind:KXNBA2QTOTAL-26NOV25MIAPHI-51",
+     "lead_min": 29.5,
+     "line": 50.5,
+     "night": "2026-11-25",
+     "offset": 0,
+     "price": 0.92,
+     "rule": "qlines_2Q_over_blind",
+     "rung": 50.5,
+     "section": "2Q",
+     "side": "yes",
+     "start": "2026-11-25T22:00:00+00:00",
+     "status": "open",
+     "teams": {
+      "MIA": "16/16",
+      "PHI": "14/18"
+     },
+     "ticker": "KXNBA2QTOTAL-26NOV25MIAPHI-51"
     }
    ]
   },
@@ -3798,6 +4032,31 @@
       "DEN": "10/15"
      },
      "ticker": "KXNBA2QTOTAL-26NOV24DALDEN-63"
+    },
+    {
+     "ask": 0.44,
+     "bid": 0.39,
+     "direction": "under",
+     "entered": "2026-11-25T21:30:30.412929+00:00",
+     "game": "MIA @ PHI",
+     "game_id": "401909317",
+     "id": "qlines_2Q_under_blind:KXNBA2QTOTAL-26NOV25MIAPHI-63",
+     "lead_min": 29.5,
+     "line": 63.5,
+     "night": "2026-11-25",
+     "offset": 1,
+     "price": 0.61,
+     "rule": "qlines_2Q_under_blind",
+     "rung": 62.5,
+     "section": "2Q",
+     "side": "no",
+     "start": "2026-11-25T22:00:00+00:00",
+     "status": "open",
+     "teams": {
+      "MIA": "11/16",
+      "PHI": "11/18"
+     },
+     "ticker": "KXNBA2QTOTAL-26NOV25MIAPHI-63"
     }
    ]
   },
@@ -4294,6 +4553,31 @@
       "WSH": "11/18"
      },
      "ticker": "KXNBA3QTOTAL-26NOV24BOSWAS-54"
+    },
+    {
+     "ask": 0.69,
+     "bid": 0.65,
+     "direction": "over",
+     "entered": "2026-11-25T21:30:30.412929+00:00",
+     "game": "MIA @ PHI",
+     "game_id": "401909317",
+     "id": "qlines_3Q_over_blind:KXNBA3QTOTAL-26NOV25MIAPHI-55",
+     "lead_min": 29.5,
+     "line": 53.5,
+     "night": "2026-11-25",
+     "offset": 1,
+     "price": 0.69,
+     "rule": "qlines_3Q_over_blind",
+     "rung": 54.5,
+     "section": "3Q",
+     "side": "yes",
+     "start": "2026-11-25T22:00:00+00:00",
+     "status": "open",
+     "teams": {
+      "MIA": "10/16",
+      "PHI": "11/18"
+     },
+     "ticker": "KXNBA3QTOTAL-26NOV25MIAPHI-55"
     }
    ]
   },
@@ -4719,6 +5003,31 @@
       "DEN": "11/15"
      },
      "ticker": "KXNBA3QTOTAL-26NOV24DALDEN-64"
+    },
+    {
+     "ask": 0.25,
+     "bid": 0.22,
+     "direction": "under",
+     "entered": "2026-11-25T21:30:30.412929+00:00",
+     "game": "MIA @ PHI",
+     "game_id": "401909317",
+     "id": "qlines_3Q_under_blind:KXNBA3QTOTAL-26NOV25MIAPHI-65",
+     "lead_min": 29.5,
+     "line": 64.5,
+     "night": "2026-11-25",
+     "offset": 0,
+     "price": 0.78,
+     "rule": "qlines_3Q_under_blind",
+     "rung": 64.5,
+     "section": "3Q",
+     "side": "no",
+     "start": "2026-11-25T22:00:00+00:00",
+     "status": "open",
+     "teams": {
+      "MIA": "12/16",
+      "PHI": "15/18"
+     },
+     "ticker": "KXNBA3QTOTAL-26NOV25MIAPHI-65"
     }
    ]
   },
@@ -4760,6 +5069,35 @@
       "LAC": "14/15"
      },
      "ticker": "KXNBA4QTOTAL-26NOV23LACHOU-49"
+    },
+    {
+     "ask": 0.85,
+     "bid": 0.8,
+     "direction": "over",
+     "entered": "2026-11-25T21:30:30.412929+00:00",
+     "game": "MIA @ PHI",
+     "game_id": "401909317",
+     "id": "qlines_4Q_over:KXNBA4QTOTAL-26NOV25MIAPHI-49",
+     "lead_min": 29.5,
+     "line": 48.5,
+     "matches": "qlines_4Q_over_blind:KXNBA4QTOTAL-26NOV25MIAPHI-49",
+     "night": "2026-11-25",
+     "offset": 0,
+     "price": 0.85,
+     "qualifying": [
+      "MIA"
+     ],
+     "rule": "qlines_4Q_over",
+     "rung": 48.5,
+     "section": "4Q",
+     "side": "yes",
+     "start": "2026-11-25T22:00:00+00:00",
+     "status": "open",
+     "teams": {
+      "MIA": "16/16",
+      "PHI": "13/18"
+     },
+     "ticker": "KXNBA4QTOTAL-26NOV25MIAPHI-49"
     }
    ]
   },
@@ -5080,6 +5418,31 @@
       "DEN": "11/15"
      },
      "ticker": "KXNBA4QTOTAL-26NOV24DALDEN-49"
+    },
+    {
+     "ask": 0.85,
+     "bid": 0.8,
+     "direction": "over",
+     "entered": "2026-11-25T21:30:30.412929+00:00",
+     "game": "MIA @ PHI",
+     "game_id": "401909317",
+     "id": "qlines_4Q_over_blind:KXNBA4QTOTAL-26NOV25MIAPHI-49",
+     "lead_min": 29.5,
+     "line": 48.5,
+     "night": "2026-11-25",
+     "offset": 0,
+     "price": 0.85,
+     "rule": "qlines_4Q_over_blind",
+     "rung": 48.5,
+     "section": "4Q",
+     "side": "yes",
+     "start": "2026-11-25T22:00:00+00:00",
+     "status": "open",
+     "teams": {
+      "MIA": "16/16",
+      "PHI": "13/18"
+     },
+     "ticker": "KXNBA4QTOTAL-26NOV25MIAPHI-49"
     }
    ]
   },
@@ -5614,6 +5977,31 @@
       "DEN": "13/15"
      },
      "ticker": "KXNBA4QTOTAL-26NOV24DALDEN-63"
+    },
+    {
+     "ask": 0.27,
+     "bid": 0.23,
+     "direction": "under",
+     "entered": "2026-11-25T21:30:30.412929+00:00",
+     "game": "MIA @ PHI",
+     "game_id": "401909317",
+     "id": "qlines_4Q_under_blind:KXNBA4QTOTAL-26NOV25MIAPHI-63",
+     "lead_min": 29.5,
+     "line": 62.5,
+     "night": "2026-11-25",
+     "offset": 0,
+     "price": 0.77,
+     "rule": "qlines_4Q_under_blind",
+     "rung": 62.5,
+     "section": "4Q",
+     "side": "no",
+     "start": "2026-11-25T22:00:00+00:00",
+     "status": "open",
+     "teams": {
+      "MIA": "11/16",
+      "PHI": "15/18"
+     },
+     "ticker": "KXNBA4QTOTAL-26NOV25MIAPHI-63"
     }
    ]
   }
@@ -5702,6 +6090,18 @@
    "due": 0,
    "games": 1,
    "new": 0
+  },
+  {
+   "at": "2026-11-25T19:27:01.313865+00:00",
+   "due": 0,
+   "games": 0,
+   "new": 0
+  },
+  {
+   "at": "2026-11-25T21:30:30.412929+00:00",
+   "due": 1,
+   "games": 0,
+   "new": 14
   }
  ],
  "schedule": [

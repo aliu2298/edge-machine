@@ -1,7 +1,7 @@
 {
  "box_through": "2026-11-25",
  "error": null,
- "last_run": "2026-11-25T13:28:51.055705+00:00",
+ "last_run": "2026-11-25T20:45:25.830584+00:00",
  "looks": {
   "401909305": {
    "at": "2026-11-20T22:45:25.302540+00:00",
@@ -227,6 +227,25 @@
    },
    "spread": -8.5,
    "usable": 150
+  },
+  "401909317": {
+   "at": "2026-11-25T20:45:25.830584+00:00",
+   "batch": 1,
+   "entered": {
+    "spotter_fade": 4,
+    "spotter_hold": 0,
+    "spotter_spike": 4
+   },
+   "game": "MIA @ PHI",
+   "night": "2026-11-25",
+   "out": 53,
+   "skipped": {
+    "no quote": 2,
+    "outside 5-60c": 71,
+    "wide": 7
+   },
+   "spread": 1.5,
+   "usable": 137
   },
   "401910007": {
    "at": "2026-11-18T23:12:11.631686+00:00",
@@ -1667,6 +1686,54 @@
      [
       "5175647",
       "reb"
+     ]
+    ]
+   }
+  },
+  "2026-11-25": {
+   "spotter_fade": {
+    "n": 4,
+    "players": [
+     [
+      "3912848",
+      "pts"
+     ],
+     [
+      "3912848",
+      "ast"
+     ],
+     [
+      "3917376",
+      "pra"
+     ],
+     [
+      "3912848",
+      "pra"
+     ]
+    ]
+   },
+   "spotter_hold": {
+    "n": 0,
+    "players": []
+   },
+   "spotter_spike": {
+    "n": 4,
+    "players": [
+     [
+      "4278053",
+      "pts"
+     ],
+     [
+      "3032977",
+      "pts"
+     ],
+     [
+      "5124612",
+      "pts"
+     ],
+     [
+      "1966",
+      "pts"
      ]
     ]
    }
@@ -3162,6 +3229,106 @@
      "unit": "rebounds",
      "why": "fewer shots than last season",
      "yes_ask": 0.5
+    },
+    {
+     "bid": 0.52,
+     "edge": 0.1085,
+     "entered": "2026-11-25T20:45:25.830584+00:00",
+     "game": "MIA @ PHI",
+     "game_id": "401909317",
+     "id": "spotter_fade:KXNBAPTS-26NOV25MIAPHI-PHIDWADE45-5",
+     "lead_min": 74.6,
+     "night": "2026-11-25",
+     "p": 0.5685,
+     "pid": "3912848",
+     "player": "Dean Wade",
+     "price": 0.48,
+     "rule": "spotter_fade",
+     "rung": 5,
+     "side": "no",
+     "start": "2026-11-25T22:00:00+00:00",
+     "stat": "pts",
+     "status": "open",
+     "team": "PHI",
+     "ticker": "KXNBAPTS-26NOV25MIAPHI-PHIDWADE45-5",
+     "unit": "points",
+     "why": "minutes up on last season",
+     "yes_ask": 0.54
+    },
+    {
+     "bid": 0.49,
+     "edge": 0.0989,
+     "entered": "2026-11-25T20:45:25.830584+00:00",
+     "game": "MIA @ PHI",
+     "game_id": "401909317",
+     "id": "spotter_fade:KXNBAAST-26NOV25MIAPHI-PHIDWADE45-2",
+     "lead_min": 74.6,
+     "night": "2026-11-25",
+     "p": 0.5889,
+     "pid": "3912848",
+     "player": "Dean Wade",
+     "price": 0.51,
+     "rule": "spotter_fade",
+     "rung": 2,
+     "side": "no",
+     "start": "2026-11-25T22:00:00+00:00",
+     "stat": "ast",
+     "status": "open",
+     "team": "PHI",
+     "ticker": "KXNBAAST-26NOV25MIAPHI-PHIDWADE45-2",
+     "unit": "assists",
+     "why": "minutes up on last season",
+     "yes_ask": 0.51
+    },
+    {
+     "bid": 0.41,
+     "edge": 0.0941,
+     "entered": "2026-11-25T20:45:25.830584+00:00",
+     "game": "MIA @ PHI",
+     "game_id": "401909317",
+     "id": "spotter_fade:KXNBAPRA-26NOV25MIAPHI-PHIJBROWN7-35",
+     "lead_min": 74.6,
+     "night": "2026-11-25",
+     "p": 0.6541,
+     "pid": "3917376",
+     "player": "Jaylen Brown",
+     "price": 0.59,
+     "rule": "spotter_fade",
+     "rung": 35,
+     "side": "no",
+     "start": "2026-11-25T22:00:00+00:00",
+     "stat": "pra",
+     "status": "open",
+     "team": "PHI",
+     "ticker": "KXNBAPRA-26NOV25MIAPHI-PHIJBROWN7-35",
+     "unit": "points+rebounds+assists",
+     "why": "fewer shots than last season",
+     "yes_ask": 0.44
+    },
+    {
+     "bid": 0.28,
+     "edge": 0.0927,
+     "entered": "2026-11-25T20:45:25.830584+00:00",
+     "game": "MIA @ PHI",
+     "game_id": "401909317",
+     "id": "spotter_fade:KXNBAPRA-26NOV25MIAPHI-PHIDWADE45-15",
+     "lead_min": 74.6,
+     "night": "2026-11-25",
+     "p": 0.7927,
+     "pid": "3912848",
+     "player": "Dean Wade",
+     "price": 0.72,
+     "rule": "spotter_fade",
+     "rung": 15,
+     "side": "no",
+     "start": "2026-11-25T22:00:00+00:00",
+     "stat": "pra",
+     "status": "open",
+     "team": "PHI",
+     "ticker": "KXNBAPRA-26NOV25MIAPHI-PHIDWADE45-15",
+     "unit": "points+rebounds+assists",
+     "why": "minutes up on last season",
+     "yes_ask": 0.3
     }
    ]
   },
@@ -4669,6 +4836,106 @@
      "unit": "assists",
      "why": "drawn at random from this game's rungs at about the pick's price, NO side",
      "yes_ask": 0.5
+    },
+    {
+     "bid": 0.52,
+     "entered": "2026-11-25T20:45:25.830584+00:00",
+     "game": "MIA @ PHI",
+     "game_id": "401909317",
+     "id": "spotter_fade_blind:KXNBAAST-26NOV25MIAPHI-MIAGANTETOKOUNMPO7-6",
+     "lead_min": 74.6,
+     "matches": "spotter_fade:KXNBAPTS-26NOV25MIAPHI-PHIDWADE45-5",
+     "night": "2026-11-25",
+     "p": null,
+     "pid": "3032977",
+     "player": "Giannis Antetokounmpo",
+     "price": 0.48,
+     "rule": "spotter_fade_blind",
+     "rung": 6,
+     "side": "no",
+     "start": "2026-11-25T22:00:00+00:00",
+     "stat": "ast",
+     "status": "open",
+     "team": "MIA",
+     "ticker": "KXNBAAST-26NOV25MIAPHI-MIAGANTETOKOUNMPO7-6",
+     "unit": "assists",
+     "why": "drawn at random from this game's rungs at about the pick's price, NO side",
+     "yes_ask": 0.54
+    },
+    {
+     "bid": 0.48,
+     "entered": "2026-11-25T20:45:25.830584+00:00",
+     "game": "MIA @ PHI",
+     "game_id": "401909317",
+     "id": "spotter_fade_blind:KXNBAREB-26NOV25MIAPHI-PHITMAXEY0-4",
+     "lead_min": 74.6,
+     "matches": "spotter_fade:KXNBAAST-26NOV25MIAPHI-PHIDWADE45-2",
+     "night": "2026-11-25",
+     "p": null,
+     "pid": "4431678",
+     "player": "Tyrese Maxey",
+     "price": 0.52,
+     "rule": "spotter_fade_blind",
+     "rung": 4,
+     "side": "no",
+     "start": "2026-11-25T22:00:00+00:00",
+     "stat": "reb",
+     "status": "open",
+     "team": "PHI",
+     "ticker": "KXNBAREB-26NOV25MIAPHI-PHITMAXEY0-4",
+     "unit": "rebounds",
+     "why": "drawn at random from this game's rungs at about the pick's price, NO side",
+     "yes_ask": 0.49
+    },
+    {
+     "bid": 0.39,
+     "entered": "2026-11-25T20:45:25.830584+00:00",
+     "game": "MIA @ PHI",
+     "game_id": "401909317",
+     "id": "spotter_fade_blind:KXNBA3PT-26NOV25MIAPHI-PHILJAMES23-2",
+     "lead_min": 74.6,
+     "matches": "spotter_fade:KXNBAPRA-26NOV25MIAPHI-PHIJBROWN7-35",
+     "night": "2026-11-25",
+     "p": null,
+     "pid": "1966",
+     "player": "LeBron James",
+     "price": 0.61,
+     "rule": "spotter_fade_blind",
+     "rung": 2,
+     "side": "no",
+     "start": "2026-11-25T22:00:00+00:00",
+     "stat": "m3",
+     "status": "open",
+     "team": "PHI",
+     "ticker": "KXNBA3PT-26NOV25MIAPHI-PHILJAMES23-2",
+     "unit": "threes",
+     "why": "drawn at random from this game's rungs at about the pick's price, NO side",
+     "yes_ask": 0.4
+    },
+    {
+     "bid": 0.31,
+     "entered": "2026-11-25T20:45:25.830584+00:00",
+     "game": "MIA @ PHI",
+     "game_id": "401909317",
+     "id": "spotter_fade_blind:KXNBA3PT-26NOV25MIAPHI-PHIDWADE45-2",
+     "lead_min": 74.6,
+     "matches": "spotter_fade:KXNBAPRA-26NOV25MIAPHI-PHIDWADE45-15",
+     "night": "2026-11-25",
+     "p": null,
+     "pid": "3912848",
+     "player": "Dean Wade",
+     "price": 0.69,
+     "rule": "spotter_fade_blind",
+     "rung": 2,
+     "side": "no",
+     "start": "2026-11-25T22:00:00+00:00",
+     "stat": "m3",
+     "status": "open",
+     "team": "PHI",
+     "ticker": "KXNBA3PT-26NOV25MIAPHI-PHIDWADE45-2",
+     "unit": "threes",
+     "why": "drawn at random from this game's rungs at about the pick's price, NO side",
+     "yes_ask": 0.33
     }
    ]
   },
@@ -9652,6 +9919,102 @@
      "ticker": "KXNBAREB-26NOV24BOSWAS-BOSHGONZALEZ28-4",
      "unit": "rebounds",
      "why": "his projection is below the price"
+    },
+    {
+     "bid": 0.48,
+     "edge": 0.0698,
+     "entered": "2026-11-25T20:45:25.830584+00:00",
+     "game": "MIA @ PHI",
+     "game_id": "401909317",
+     "id": "spotter_spike:KXNBAPTS-26NOV25MIAPHI-MIADMITCHELL2-15",
+     "lead_min": 74.6,
+     "night": "2026-11-25",
+     "p": 0.5698,
+     "pid": "4278053",
+     "player": "Davion Mitchell",
+     "price": 0.49,
+     "rule": "spotter_spike",
+     "rung": 15,
+     "start": "2026-11-25T22:00:00+00:00",
+     "stat": "pts",
+     "status": "open",
+     "target": 0.98,
+     "team": "MIA",
+     "ticker": "KXNBAPTS-26NOV25MIAPHI-MIADMITCHELL2-15",
+     "unit": "points",
+     "why": "shots up on last season"
+    },
+    {
+     "bid": 0.45,
+     "edge": 0.0612,
+     "entered": "2026-11-25T20:45:25.830584+00:00",
+     "game": "MIA @ PHI",
+     "game_id": "401909317",
+     "id": "spotter_spike:KXNBAPTS-26NOV25MIAPHI-MIAGANTETOKOUNMPO7-30",
+     "lead_min": 74.6,
+     "night": "2026-11-25",
+     "p": 0.5612,
+     "pid": "3032977",
+     "player": "Giannis Antetokounmpo",
+     "price": 0.47,
+     "rule": "spotter_spike",
+     "rung": 30,
+     "start": "2026-11-25T22:00:00+00:00",
+     "stat": "pts",
+     "status": "open",
+     "target": 0.94,
+     "team": "MIA",
+     "ticker": "KXNBAPTS-26NOV25MIAPHI-MIAGANTETOKOUNMPO7-30",
+     "unit": "points",
+     "why": "a steady player in this stat"
+    },
+    {
+     "bid": 0.47,
+     "edge": 0.0559,
+     "entered": "2026-11-25T20:45:25.830584+00:00",
+     "game": "MIA @ PHI",
+     "game_id": "401909317",
+     "id": "spotter_spike:KXNBAPTS-26NOV25MIAPHI-PHIVEDGECOMBE77-15",
+     "lead_min": 74.6,
+     "night": "2026-11-25",
+     "p": 0.5559,
+     "pid": "5124612",
+     "player": "VJ Edgecombe",
+     "price": 0.48,
+     "rule": "spotter_spike",
+     "rung": 15,
+     "start": "2026-11-25T22:00:00+00:00",
+     "stat": "pts",
+     "status": "open",
+     "target": 0.96,
+     "team": "PHI",
+     "ticker": "KXNBAPTS-26NOV25MIAPHI-PHIVEDGECOMBE77-15",
+     "unit": "points",
+     "why": "a steady player in this stat"
+    },
+    {
+     "bid": 0.43,
+     "edge": 0.0277,
+     "entered": "2026-11-25T20:45:25.830584+00:00",
+     "game": "MIA @ PHI",
+     "game_id": "401909317",
+     "id": "spotter_spike:KXNBAPTS-26NOV25MIAPHI-PHILJAMES23-20",
+     "lead_min": 74.6,
+     "night": "2026-11-25",
+     "p": 0.5277,
+     "pid": "1966",
+     "player": "LeBron James",
+     "price": 0.45,
+     "rule": "spotter_spike",
+     "rung": 20,
+     "start": "2026-11-25T22:00:00+00:00",
+     "stat": "pts",
+     "status": "open",
+     "target": 0.9,
+     "team": "PHI",
+     "ticker": "KXNBAPTS-26NOV25MIAPHI-PHILJAMES23-20",
+     "unit": "points",
+     "why": "a steady player in this stat"
     }
    ]
   },
@@ -11451,23 +11814,107 @@
      "ticker": "KXNBAPTS-26NOV24BOSWAS-WASTYOUNG3-15",
      "unit": "points",
      "why": "drawn at random from this game's rungs at about the pick's price"
+    },
+    {
+     "bid": 0.46,
+     "entered": "2026-11-25T20:45:25.830584+00:00",
+     "game": "MIA @ PHI",
+     "game_id": "401909317",
+     "id": "spotter_spike_blind:KXNBAPTS-26NOV25MIAPHI-PHIASIMONS5-10",
+     "lead_min": 74.6,
+     "matches": "spotter_spike:KXNBAPTS-26NOV25MIAPHI-MIADMITCHELL2-15",
+     "night": "2026-11-25",
+     "p": null,
+     "pid": "4351851",
+     "player": "Anfernee Simons",
+     "price": 0.48,
+     "rule": "spotter_spike_blind",
+     "rung": 10,
+     "start": "2026-11-25T22:00:00+00:00",
+     "stat": "pts",
+     "status": "open",
+     "target": 0.96,
+     "team": "PHI",
+     "ticker": "KXNBAPTS-26NOV25MIAPHI-PHIASIMONS5-10",
+     "unit": "points",
+     "why": "drawn at random from this game's rungs at about the pick's price"
+    },
+    {
+     "bid": 0.48,
+     "entered": "2026-11-25T20:45:25.830584+00:00",
+     "game": "MIA @ PHI",
+     "game_id": "401909317",
+     "id": "spotter_spike_blind:KXNBAREB-26NOV25MIAPHI-PHITMAXEY0-4",
+     "lead_min": 74.6,
+     "matches": "spotter_spike:KXNBAPTS-26NOV25MIAPHI-MIAGANTETOKOUNMPO7-30",
+     "night": "2026-11-25",
+     "p": null,
+     "pid": "4431678",
+     "player": "Tyrese Maxey",
+     "price": 0.49,
+     "rule": "spotter_spike_blind",
+     "rung": 4,
+     "start": "2026-11-25T22:00:00+00:00",
+     "stat": "reb",
+     "status": "open",
+     "target": 0.98,
+     "team": "PHI",
+     "ticker": "KXNBAREB-26NOV25MIAPHI-PHITMAXEY0-4",
+     "unit": "rebounds",
+     "why": "drawn at random from this game's rungs at about the pick's price"
+    },
+    {
+     "bid": 0.46,
+     "entered": "2026-11-25T20:45:25.830584+00:00",
+     "game": "MIA @ PHI",
+     "game_id": "401909317",
+     "id": "spotter_spike_blind:KXNBAAST-26NOV25MIAPHI-PHITMAXEY0-6",
+     "lead_min": 74.6,
+     "matches": "spotter_spike:KXNBAPTS-26NOV25MIAPHI-PHIVEDGECOMBE77-15",
+     "night": "2026-11-25",
+     "p": null,
+     "pid": "4431678",
+     "player": "Tyrese Maxey",
+     "price": 0.47,
+     "rule": "spotter_spike_blind",
+     "rung": 6,
+     "start": "2026-11-25T22:00:00+00:00",
+     "stat": "ast",
+     "status": "open",
+     "target": 0.94,
+     "team": "PHI",
+     "ticker": "KXNBAAST-26NOV25MIAPHI-PHITMAXEY0-6",
+     "unit": "assists",
+     "why": "drawn at random from this game's rungs at about the pick's price"
+    },
+    {
+     "bid": 0.44,
+     "entered": "2026-11-25T20:45:25.830584+00:00",
+     "game": "MIA @ PHI",
+     "game_id": "401909317",
+     "id": "spotter_spike_blind:KXNBAREB-26NOV25MIAPHI-PHIJWALKER33-6",
+     "lead_min": 74.6,
+     "matches": "spotter_spike:KXNBAPTS-26NOV25MIAPHI-PHILJAMES23-20",
+     "night": "2026-11-25",
+     "p": null,
+     "pid": "4432446",
+     "player": "Jabari Walker",
+     "price": 0.45,
+     "rule": "spotter_spike_blind",
+     "rung": 6,
+     "start": "2026-11-25T22:00:00+00:00",
+     "stat": "reb",
+     "status": "open",
+     "target": 0.9,
+     "team": "PHI",
+     "ticker": "KXNBAREB-26NOV25MIAPHI-PHIJWALKER33-6",
+     "unit": "rebounds",
+     "why": "drawn at random from this game's rungs at about the pick's price"
     }
    ]
   }
  },
  "runs": [
-  {
-   "at": "2026-11-23T22:00:33.851521+00:00",
-   "box": 0,
-   "due": 0,
-   "new": 0
-  },
-  {
-   "at": "2026-11-23T22:30:28.456479+00:00",
-   "box": 0,
-   "due": 0,
-   "new": 0
-  },
   {
    "at": "2026-11-23T22:45:28.333885+00:00",
    "box": 0,
@@ -11761,6 +12208,18 @@
    "box": 0,
    "due": 0,
    "new": 0
+  },
+  {
+   "at": "2026-11-25T20:30:31.943516+00:00",
+   "box": 0,
+   "due": 0,
+   "new": 0
+  },
+  {
+   "at": "2026-11-25T20:45:25.830584+00:00",
+   "box": 0,
+   "due": 1,
+   "new": 16
   }
  ],
  "schedule": [

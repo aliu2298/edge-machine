@@ -44439,15 +44439,249 @@
    "night": "2026-11-24",
    "tip": 1795568400,
    "version": "nofade-v2"
+  },
+  {
+   "buckets": [
+    {
+     "P": 0.95,
+     "ask": {
+      "how": "print",
+      "last": null,
+      "printed": 2422.27,
+      "source": "replayed",
+      "status": "verified"
+     },
+     "bucket": "11-20",
+     "fills": {
+      "d65": {
+       "cost": 0.62412,
+       "fill_at": 1795582792,
+       "fill_print": 0.56,
+       "limit": 0.62,
+       "printed": 8105.18,
+       "profit": -0.62412,
+       "profit_touch": -0.62412,
+       "reason": "settled",
+       "sold_at": null,
+       "sold_touch_at": null,
+       "won": false
+      },
+      "d75": {
+       "cost": 0.7136,
+       "fill_at": 1795579765,
+       "fill_print": 0.69,
+       "limit": 0.71,
+       "printed": 4976.21,
+       "profit": -0.7136,
+       "profit_touch": -0.7136,
+       "reason": "settled",
+       "sold_at": null,
+       "sold_touch_at": null,
+       "won": false
+      },
+      "d85": {
+       "cost": 0.81269,
+       "fill_at": 1795578998,
+       "fill_print": 0.8,
+       "limit": 0.81,
+       "printed": 4636.1,
+       "profit": -0.81269,
+       "profit_touch": -0.81269,
+       "reason": "settled",
+       "sold_at": null,
+       "sold_touch_at": null,
+       "won": false
+      }
+     },
+     "id": "KXNBAWINMARGIN-26NOV24DALDEN-DAL11TO20",
+     "no_wins": false,
+     "spread": 0.02,
+     "team": "DAL"
+    },
+    {
+     "P": 0.91,
+     "ask": {
+      "how": "print",
+      "last": 0.9,
+      "printed": 411.98,
+      "source": "replayed",
+      "status": "verified"
+     },
+     "bucket": "6-10",
+     "fills": {
+      "d65": null,
+      "d75": {
+       "cost": 0.68381,
+       "fill_at": 1795582862,
+       "fill_print": 0.65,
+       "limit": 0.68,
+       "printed": 746.85,
+       "profit": 0.22476,
+       "profit_touch": 0.22476,
+       "reason": "sold",
+       "sold_at": 1795584202,
+       "sold_touch_at": 1795584202,
+       "won": true
+      },
+      "d85": {
+       "cost": 0.7731,
+       "fill_at": 1795581890,
+       "fill_print": 0.76,
+       "limit": 0.77,
+       "printed": 2778.89,
+       "profit": 0.13547,
+       "profit_touch": 0.13547,
+       "reason": "sold",
+       "sold_at": 1795584202,
+       "sold_touch_at": 1795584202,
+       "won": true
+      }
+     },
+     "id": "KXNBAWINMARGIN-26NOV24DALDEN-DAL6TO10",
+     "no_wins": true,
+     "spread": 0.01,
+     "team": "DAL"
+    },
+    {
+     "P": 0.91,
+     "ask": {
+      "how": "print",
+      "last": 0.89,
+      "printed": 320.88,
+      "source": "replayed",
+      "status": "verified"
+     },
+     "bucket": "1-5",
+     "fills": {
+      "d65": null,
+      "d75": null,
+      "d85": {
+       "cost": 0.7731,
+       "fill_at": 1795582192,
+       "fill_print": 0.74,
+       "limit": 0.77,
+       "printed": 3744.13,
+       "profit": 0.13547,
+       "profit_touch": 0.13547,
+       "reason": "sold",
+       "sold_at": 1795583565,
+       "sold_touch_at": 1795583508,
+       "won": true
+      }
+     },
+     "id": "KXNBAWINMARGIN-26NOV24DALDEN-DAL1TO5",
+     "no_wins": true,
+     "spread": 0.02,
+     "team": "DAL"
+    },
+    {
+     "P": 0.88,
+     "ask": {
+      "how": "print",
+      "last": 0.87,
+      "printed": 3523.37,
+      "source": "replayed",
+      "status": "verified"
+     },
+     "bucket": "1-5",
+     "fills": {
+      "d65": null,
+      "d75": null,
+      "d85": {
+       "cost": 0.75328,
+       "fill_at": 1795581506,
+       "fill_print": 0.74,
+       "limit": 0.75,
+       "printed": 22.9,
+       "profit": 0.12487,
+       "profit_touch": 0.12487,
+       "reason": "sold",
+       "sold_at": 1795583104,
+       "sold_touch_at": 1795583104,
+       "won": true
+      }
+     },
+     "id": "KXNBAWINMARGIN-26NOV24DALDEN-DEN1TO5",
+     "no_wins": true,
+     "spread": 0.01,
+     "team": "DEN"
+    },
+    {
+     "P": 0.77,
+     "ask": {
+      "how": "print",
+      "last": 0.75,
+      "printed": 390.32,
+      "source": "replayed",
+      "status": "verified"
+     },
+     "bucket": "11-20",
+     "fills": {
+      "d65": null,
+      "d75": null,
+      "d85": null
+     },
+     "id": "KXNBAWINMARGIN-26NOV24DALDEN-DEN11TO20",
+     "no_wins": true,
+     "spread": 0.01,
+     "team": "DEN"
+    },
+    {
+     "P": 0.86,
+     "ask": {
+      "how": "print",
+      "last": 0.85,
+      "printed": 99.59,
+      "source": "replayed",
+      "status": "verified"
+     },
+     "bucket": "21+",
+     "fills": {
+      "d65": null,
+      "d75": null,
+      "d85": null
+     },
+     "id": "KXNBAWINMARGIN-26NOV24DALDEN-DEN21PLUS",
+     "no_wins": true,
+     "spread": 0.01,
+     "team": "DEN"
+    },
+    {
+     "P": 0.82,
+     "ask": {
+      "how": "print",
+      "last": 0.81,
+      "printed": 402.05,
+      "source": "replayed",
+      "status": "verified"
+     },
+     "bucket": "6-10",
+     "fills": {
+      "d65": null,
+      "d75": null,
+      "d85": null
+     },
+     "id": "KXNBAWINMARGIN-26NOV24DALDEN-DEN6TO10",
+     "no_wins": true,
+     "spread": 0.01,
+     "team": "DEN"
+    }
+   ],
+   "event": "KXNBAWINMARGIN-26NOV24DALDEN",
+   "insample": false,
+   "logged": "2026-11-25T15:02:06.116197+00:00",
+   "night": "2026-11-24",
+   "tip": 1795575600,
+   "version": "nofade-v2"
   }
  ],
  "error": null,
  "lane": "nba_wm_nofade",
- "last_run": "2026-11-25T04:38:07.125741+00:00",
+ "last_run": "2026-11-25T15:02:06.116197+00:00",
  "observations": {
-  "at": "2026-11-25T04:38:07.125741+00:00",
+  "at": "2026-11-25T15:02:06.116197+00:00",
   "errors": [],
-  "new": 2,
+  "new": 1,
   "waiting": 0
  },
  "seen": {
@@ -44622,6 +44856,7 @@
   "KXNBAWINMARGIN-26NOV23SASSAC": "2026-11-24T11:40:24.786147+00:00",
   "KXNBAWINMARGIN-26NOV23UTALAL": "2026-11-24T11:40:24.786147+00:00",
   "KXNBAWINMARGIN-26NOV24BOSWAS": "2026-11-25T04:38:07.125741+00:00",
+  "KXNBAWINMARGIN-26NOV24DALDEN": "2026-11-25T15:02:06.116197+00:00",
   "KXNBAWINMARGIN-26NOV24DETORL": "2026-11-25T04:38:07.125741+00:00",
   "KXNBAWINMARGIN-26OCT20BOSDET": "2026-10-30T19:46:54.954817+00:00",
   "KXNBAWINMARGIN-26OCT20OKCSAS": "2026-10-30T19:46:54.954817+00:00",
