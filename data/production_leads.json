@@ -1,5 +1,5 @@
 {
- "board_built_at": "2026-11-25T19:04:46+00:00",
+ "board_built_at": "2026-11-25T19:11:19+00:00",
  "corners_selections": {
   "kalshi:26NOV24RMAPSV": "2026-11-24|Real Madrid|PSV Eindhoven|10+ corners \u00b7 Corners total fade, Champions League",
   "kalshi:26NOV25SPOMUN": "2026-11-25|Sporting CP|Manchester United|7+ corners \u00b7 Corners total fade, Champions League",
@@ -1676,7 +1676,7 @@
    "kickoff": "2026-11-25T20:00Z",
    "lane": "production",
    "last_seen": "2026-11-25",
-   "last_seen_at": "2026-11-25T19:04:46+00:00",
+   "last_seen_at": "2026-11-25T19:11:19+00:00",
    "league": "Champions League",
    "match": "Inter v Stuttgart",
    "pair": "ftts_no_70_80|soccer_ftts",
@@ -1713,7 +1713,7 @@
    "kickoff": "2026-11-25T22:05Z",
    "lane": "production",
    "last_seen": "2026-11-25",
-   "last_seen_at": "2026-11-25T19:04:46+00:00",
+   "last_seen_at": "2026-11-25T19:11:19+00:00",
    "league": "Crypto \u00b7 Favourite band",
    "match": "Bitcoin price on Nov 25, 2026",
    "pair": "crypto_fav_band_below|crypto_fav",
@@ -1750,7 +1750,7 @@
    "kickoff": "2026-11-25T22:05Z",
    "lane": "production",
    "last_seen": "2026-11-25",
-   "last_seen_at": "2026-11-25T19:04:46+00:00",
+   "last_seen_at": "2026-11-25T19:11:19+00:00",
    "league": "Crypto \u00b7 Favourite band",
    "match": "Ethereum price at Nov 25, 2026 at 5pm EST",
    "pair": "crypto_fav_band_below|crypto_fav",
@@ -1787,7 +1787,7 @@
    "kickoff": "2026-11-25T22:05Z",
    "lane": "production",
    "last_seen": "2026-11-25",
-   "last_seen_at": "2026-11-25T19:04:46+00:00",
+   "last_seen_at": "2026-11-25T19:11:19+00:00",
    "league": "Crypto \u00b7 Favourite band",
    "match": "HYPE price on Nov 25, 2026",
    "pair": "crypto_fav_band_below|crypto_fav",
@@ -1824,7 +1824,7 @@
    "kickoff": "2026-11-25T22:05Z",
    "lane": "production",
    "last_seen": "2026-11-25",
-   "last_seen_at": "2026-11-25T19:04:46+00:00",
+   "last_seen_at": "2026-11-25T19:11:19+00:00",
    "league": "Crypto \u00b7 Favourite band",
    "match": "SOL price on Nov 25, 2026",
    "pair": "crypto_fav_band_below|crypto_fav",
@@ -1846,6 +1846,43 @@
    "sport": "crypto_fav",
    "status": "pending"
   },
+  "2026-11-25|KXXRPD-26NOV2517-T0.9399|Below $0.93991 at the close \u00b7 Crypto favourite band, below": {
+   "away": null,
+   "bet": {
+    "kind": "ladder",
+    "side": "no"
+   },
+   "date": "2026-11-25",
+   "edge_at_log": null,
+   "first_seen": "2026-11-25",
+   "headline": "Below $0.93991 at the close",
+   "home": null,
+   "id": "2026-11-25|KXXRPD-26NOV2517-T0.9399|Below $0.93991 at the close \u00b7 Crypto favourite band, below",
+   "kickoff": "2026-11-25T22:05Z",
+   "lane": "production",
+   "last_seen": "2026-11-25",
+   "last_seen_at": "2026-11-25T19:11:19+00:00",
+   "league": "Crypto \u00b7 Favourite band",
+   "match": "Ripple price at Nov 25, 2026 at 5pm EST",
+   "pair": "crypto_fav_band_below|crypto_fav",
+   "price_at_log": 0.73,
+   "published_at": "2026-11-25T19:11:19+00:00",
+   "published_late": false,
+   "published_min_before_kickoff": 173,
+   "route": {
+    "claim": "Below $0.93991 at the close",
+    "event": "KXXRPD-26NOV2517",
+    "market": "KXXRPD-26NOV2517-T0.9399",
+    "outcome": "$0.93991 or above",
+    "outcome_side": "no",
+    "price_at_log": 0.73,
+    "venue": "kalshi"
+   },
+   "sandbox_quote": "crypto_fav_band_below:KXXRPD-26NOV2517-T0.9399",
+   "source": "crypto_fav_band_below",
+   "sport": "crypto_fav",
+   "status": "pending"
+  },
   "2026-11-25|Lille|Bayern Munich|Lille not to score first \u00b7 First to score, NO at 0.70-0.80, best 5 a day by model edge": {
    "away": "Bayern Munich",
    "bet": {
@@ -1861,7 +1898,7 @@
    "kickoff": "2026-11-25T20:00Z",
    "lane": "production",
    "last_seen": "2026-11-25",
-   "last_seen_at": "2026-11-25T19:04:46+00:00",
+   "last_seen_at": "2026-11-25T19:11:19+00:00",
    "league": "Champions League",
    "match": "Lille v Bayern Munich",
    "pair": "ftts_no_70_80|soccer_ftts",
@@ -1898,7 +1935,7 @@
    "kickoff": "2026-11-25T20:00Z",
    "lane": "production",
    "last_seen": "2026-11-25",
-   "last_seen_at": "2026-11-25T19:04:46+00:00",
+   "last_seen_at": "2026-11-25T19:11:19+00:00",
    "league": "Champions League",
    "match": "PSG v Roma",
    "pair": "ftts_no_70_80|soccer_ftts",
@@ -1970,7 +2007,7 @@
    "kickoff": "2026-11-25T20:00Z",
    "lane": "production",
    "last_seen": "2026-11-25",
-   "last_seen_at": "2026-11-25T19:04:46+00:00",
+   "last_seen_at": "2026-11-25T19:11:19+00:00",
    "league": "Champions League",
    "match": "Sporting CP v Manchester United",
    "pair": "corners_ucl_fade|soccer_corners",
@@ -2007,7 +2044,7 @@
    "kickoff": "2026-11-28T15:30Z",
    "lane": "production",
    "last_seen": "2026-11-25",
-   "last_seen_at": "2026-11-25T19:04:46+00:00",
+   "last_seen_at": "2026-11-25T19:11:19+00:00",
    "league": "Eredivisie",
    "match": "Excelsior v Telstar",
    "pair": "ere_o15|soccer_o15",
@@ -2044,7 +2081,7 @@
    "kickoff": "2026-11-29T03:30Z",
    "lane": "production",
    "last_seen": "2026-11-25",
-   "last_seen_at": "2026-11-25T19:04:46+00:00",
+   "last_seen_at": "2026-11-25T19:11:19+00:00",
    "league": "MLS",
    "match": "Portland Timbers v FC Dallas",
    "pair": "mls_fade_home|soccer_p05",
@@ -2100,9 +2137,9 @@
    "ready_at": "2026-10-21T00:47:16+00:00",
    "route": "moved by hand on 2026-10-20",
    "routing": {
-    "leads": 24,
+    "leads": 25,
     "problem": null,
-    "routed": 24,
+    "routed": 25,
     "unlisted": 0,
     "unrouted": 0,
     "unverified": 0,
@@ -2114,7 +2151,7 @@
    "sandbox_roi_fee": 0.1448,
    "timing": {
     "late": [],
-    "timed": 4,
+    "timed": 5,
     "under_target": 0
    }
   },
@@ -2358,5 +2395,5 @@
  "stage": "production",
  "unlisted_skipped": 0,
  "unverified_kickoff_skipped": 1,
- "updated_at": "2026-11-25T19:04:46+00:00"
+ "updated_at": "2026-11-25T19:11:19+00:00"
 }
