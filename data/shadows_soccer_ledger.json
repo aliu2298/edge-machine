@@ -39,6 +39,58 @@
    "recorded": "2026-11-24T19:01:43.752059+00:00",
    "start": "2026-11-24T20:00Z",
    "status": "open"
+  },
+  "A7:KXUCLTOTAL-26NOV25BRULFC": {
+   "bid": 0.4,
+   "event": "KXUCLTOTAL-26NOV25BRULFC",
+   "kind": "2h",
+   "lane": "A7",
+   "match": "Club Brugge v Liverpool",
+   "price": 0.42,
+   "quote": true,
+   "recorded": "2026-11-25T18:31:39.991727+00:00",
+   "start": "2026-11-25T20:00Z",
+   "status": "open",
+   "ticker": "KXUCL2HBTTS-26NOV25BRULFC-BTTS"
+  },
+  "A7:KXUCLTOTAL-26NOV25INTVFB": {
+   "bid": 0.37,
+   "event": "KXUCLTOTAL-26NOV25INTVFB",
+   "kind": "2h",
+   "lane": "A7",
+   "match": "Internazionale v VfB Stuttgart",
+   "price": 0.38,
+   "quote": true,
+   "recorded": "2026-11-25T18:31:39.991727+00:00",
+   "start": "2026-11-25T20:00Z",
+   "status": "open",
+   "ticker": "KXUCL2HBTTS-26NOV25INTVFB-BTTS"
+  },
+  "A7:KXUCLTOTAL-26NOV25LILBMU": {
+   "bid": 0.26,
+   "event": "KXUCLTOTAL-26NOV25LILBMU",
+   "kind": "2h",
+   "lane": "A7",
+   "match": "Lille v Bayern Munich",
+   "price": 0.29,
+   "quote": true,
+   "recorded": "2026-11-25T18:31:39.991727+00:00",
+   "start": "2026-11-25T20:00Z",
+   "status": "open",
+   "ticker": "KXUCL2HBTTS-26NOV25LILBMU-BTTS"
+  },
+  "A7:KXUCLTOTAL-26NOV25PSGROM": {
+   "bid": 0.39,
+   "event": "KXUCLTOTAL-26NOV25PSGROM",
+   "kind": "2h",
+   "lane": "A7",
+   "match": "Paris Saint-Germain v AS Roma",
+   "price": 0.4,
+   "quote": true,
+   "recorded": "2026-11-25T18:31:39.991727+00:00",
+   "start": "2026-11-25T20:00Z",
+   "status": "open",
+   "ticker": "KXUCL2HBTTS-26NOV25PSGROM-BTTS"
   }
  },
  "error": null,
@@ -99,16 +151,43 @@
    "scoreless": true,
    "start": "2026-11-24T20:00Z",
    "status": "done"
+  },
+  "A7:KXUCLTOTAL-26NOV25BRULFC": {
+   "lane": "A7",
+   "match": "Club Brugge v Liverpool",
+   "pick": "A7:KXUCLTOTAL-26NOV25BRULFC",
+   "price": 0.54,
+   "start": "2026-11-25T20:00Z",
+   "status": "pending"
+  },
+  "A7:KXUCLTOTAL-26NOV25INTVFB": {
+   "lane": "A7",
+   "match": "Internazionale v VfB Stuttgart",
+   "pick": "A7:KXUCLTOTAL-26NOV25INTVFB",
+   "price": 0.54,
+   "start": "2026-11-25T20:00Z",
+   "status": "pending"
+  },
+  "A7:KXUCLTOTAL-26NOV25LILBMU": {
+   "lane": "A7",
+   "match": "Lille v Bayern Munich",
+   "pick": "A7:KXUCLTOTAL-26NOV25LILBMU",
+   "price": 0.33,
+   "start": "2026-11-25T20:00Z",
+   "status": "pending"
+  },
+  "A7:KXUCLTOTAL-26NOV25PSGROM": {
+   "lane": "A7",
+   "match": "Paris Saint-Germain v AS Roma",
+   "pick": "A7:KXUCLTOTAL-26NOV25PSGROM",
+   "price": 0.51,
+   "start": "2026-11-25T20:00Z",
+   "status": "pending"
   }
  },
- "last_run": "2026-11-25T16:46:40.871075+00:00",
+ "last_run": "2026-11-25T18:31:39.991727+00:00",
  "registered": "2026-11-21",
  "runs": [
-  {
-   "at": "2026-11-22T20:01:30.421164+00:00",
-   "btts": 0,
-   "ht": 0
-  },
   {
    "at": "2026-11-22T20:31:43.770923+00:00",
    "btts": 0,
@@ -358,6 +437,11 @@
    "at": "2026-11-25T16:46:40.871075+00:00",
    "btts": 4,
    "ht": 4
+  },
+  {
+   "at": "2026-11-25T18:31:39.991727+00:00",
+   "btts": 8,
+   "ht": 8
   }
  ],
  "version": "shadows-v1"
