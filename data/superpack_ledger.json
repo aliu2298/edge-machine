@@ -1495,6 +1495,14 @@
    "at": "2026-11-24T15:05:08.681513+00:00",
    "pool": "entered"
   },
+  "[\"sandbox\", \"ftts_no_70_80\", [\"ftts_no_70_80:KXUCLFTTS-26NOV25INTVFB-VFB\", \"b\"]]": {
+   "at": "2026-11-25T15:12:39.956259+00:00",
+   "pool": "entered"
+  },
+  "[\"sandbox\", \"ftts_no_70_80\", [\"ftts_no_70_80:KXUCLFTTS-26NOV25LILBMU-LIL\", \"b\"]]": {
+   "at": "2026-11-25T15:12:39.956259+00:00",
+   "pool": "entered"
+  },
   "[\"sandbox\", \"liga_btts_even\", [\"liga_btts_even:KXLALIGABTTS-26NOV07OSAATH-BTTS\", \"a\"]]": {
    "at": "2026-11-05T22:26:17.115908+00:00",
    "pool": "entered"
@@ -6692,7 +6700,7 @@
  ],
  "first_run": "2026-11-05T03:09:04.962721+00:00",
  "lane": "superpack",
- "last_run": "2026-11-25T15:05:14.384605+00:00",
+ "last_run": "2026-11-25T15:12:39.956259+00:00",
  "mirror": [
   {
    "contract": "KXAAAGASD-26NOV06-4.0700",
@@ -19770,6 +19778,52 @@
    "price": 0.56,
    "profit": null,
    "scope": "soccer_p05",
+   "settled": null,
+   "side": "b",
+   "snapshot": null,
+   "sport": "Soccer",
+   "src": "sandbox",
+   "status": "open"
+  },
+  {
+   "contract": "KXUCLFTTS-26NOV25INTVFB-VFB",
+   "entered_at": "2026-11-25T15:12:39.956259+00:00",
+   "entities": [
+    "Stuttgart"
+   ],
+   "id": "superpack:[\"sandbox\", \"ftts_no_70_80\", [\"ftts_no_70_80:KXUCLFTTS-26NOV25INTVFB-VFB\", \"b\"]]",
+   "lane": "ftts_no_70_80",
+   "logged": "2026-11-25T15:11:34+00:00",
+   "matched": [
+    "Stuttgart"
+   ],
+   "pid": "[\"sandbox\", \"ftts_no_70_80\", [\"ftts_no_70_80:KXUCLFTTS-26NOV25INTVFB-VFB\", \"b\"]]",
+   "price": 0.73,
+   "profit": null,
+   "scope": "soccer_ftts",
+   "settled": null,
+   "side": "b",
+   "snapshot": null,
+   "sport": "Soccer",
+   "src": "sandbox",
+   "status": "open"
+  },
+  {
+   "contract": "KXUCLFTTS-26NOV25LILBMU-LIL",
+   "entered_at": "2026-11-25T15:12:39.956259+00:00",
+   "entities": [
+    "Lille"
+   ],
+   "id": "superpack:[\"sandbox\", \"ftts_no_70_80\", [\"ftts_no_70_80:KXUCLFTTS-26NOV25LILBMU-LIL\", \"b\"]]",
+   "lane": "ftts_no_70_80",
+   "logged": "2026-11-25T15:11:34+00:00",
+   "matched": [
+    "Lille"
+   ],
+   "pid": "[\"sandbox\", \"ftts_no_70_80\", [\"ftts_no_70_80:KXUCLFTTS-26NOV25LILBMU-LIL\", \"b\"]]",
+   "price": 0.72,
+   "profit": null,
+   "scope": "soccer_ftts",
    "settled": null,
    "side": "b",
    "snapshot": null,
