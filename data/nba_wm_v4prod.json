@@ -2017,12 +2017,12 @@
    "tip": "2026-11-11T04:00:00+00:00"
   }
  },
- "last_run": "2026-11-25T04:38:11.261134+00:00",
+ "last_run": "2026-11-25T15:02:07.988821+00:00",
  "observations": {
-  "at": "2026-11-25T04:38:11.261134+00:00",
+  "at": "2026-11-25T15:02:07.988821+00:00",
   "errors": [],
-  "new": 12,
-  "waiting": 3
+  "new": 3,
+  "waiting": 0
  },
  "rows": {
   "no:KXNBAWINMARGIN-26NOV08BKNDAL-BKN1TO5": {
@@ -6891,6 +6891,59 @@
    "result": "no",
    "ticker": "KXNBAWINMARGIN-26NOV24BOSWAS-WAS1TO5",
    "tip": 1795568400,
+   "version": "wm-nofade-v4"
+  },
+  "no:KXNBAWINMARGIN-26NOV24DALDEN-DAL11TO20": {
+   "P": 0.95,
+   "cost": 0.62412,
+   "decided_at": "2026-11-25T03:00:45+00:00",
+   "event": "KXNBAWINMARGIN-26NOV24DALDEN",
+   "fill_at": 1795582792,
+   "fill_print": 0.56,
+   "key": "no:KXNBAWINMARGIN-26NOV24DALDEN-DAL11TO20",
+   "lane": "nba_wm_nofade",
+   "limit": 0.62,
+   "night": "2026-11-24",
+   "outcome": "bid_posted",
+   "printed": 8105.18,
+   "profit": -0.62412,
+   "profit_touch": -0.62412,
+   "reason": "settled",
+   "result": "yes",
+   "roi": -1.0,
+   "sold_at": null,
+   "sold_touch_at": null,
+   "ticker": "KXNBAWINMARGIN-26NOV24DALDEN-DAL11TO20",
+   "tip": 1795575600,
+   "version": "wm-nofade-v4",
+   "won": false
+  },
+  "no:KXNBAWINMARGIN-26NOV24DALDEN-DAL1TO5": {
+   "decided_at": "2026-11-25T03:00:45+00:00",
+   "event": "KXNBAWINMARGIN-26NOV24DALDEN",
+   "key": "no:KXNBAWINMARGIN-26NOV24DALDEN-DAL1TO5",
+   "lane": "nba_wm_nofade",
+   "night": "2026-11-24",
+   "no_entry": true,
+   "outcome": "bid_posted",
+   "reason": "no fill",
+   "result": "no",
+   "ticker": "KXNBAWINMARGIN-26NOV24DALDEN-DAL1TO5",
+   "tip": 1795575600,
+   "version": "wm-nofade-v4"
+  },
+  "no:KXNBAWINMARGIN-26NOV24DALDEN-DEN6TO10": {
+   "decided_at": "2026-11-25T03:00:45+00:00",
+   "event": "KXNBAWINMARGIN-26NOV24DALDEN",
+   "key": "no:KXNBAWINMARGIN-26NOV24DALDEN-DEN6TO10",
+   "lane": "nba_wm_nofade",
+   "night": "2026-11-24",
+   "no_entry": true,
+   "outcome": "bid_posted",
+   "reason": "no fill",
+   "result": "no",
+   "ticker": "KXNBAWINMARGIN-26NOV24DALDEN-DEN6TO10",
+   "tip": 1795575600,
    "version": "wm-nofade-v4"
   },
   "no:KXNBAWINMARGIN-26NOV24DETORL-ORL11TO20": {
