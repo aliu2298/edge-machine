@@ -14444,21 +14444,19 @@
    "P": 0.87,
    "bot_version": "wm-nofade-v4",
    "bucket": "HOU1TO5",
-   "decided_at": "2026-11-26T00:30:27+00:00",
-   "depth": 215.0,
+   "decided_at": "2026-11-26T01:30:45+00:00",
    "event": "KXNBAWINMARGIN-26NOV25PHXHOU",
    "lane": "nba_wm_nofade",
    "limit": 0.57,
-   "outcome": "plan",
+   "night_cap": 30,
+   "night_count": 4,
+   "outcome": "bid_posted",
    "qty": 1.0,
    "rule_ok": true,
    "slate": "26NOV25",
-   "spread": 0.01,
    "ticker": "KXNBAWINMARGIN-26NOV25PHXHOU-HOU1TO5",
    "tip": "2026-11-26T01:30:00+00:00",
-   "why": null,
-   "yes_ask": 0.14,
-   "yes_bid": 0.13
+   "why": null
   },
   "no:KXNBAWINMARGIN-26NOV25PHXHOU-HOU26PLUS": {
    "P": 0.93,
@@ -24890,6 +24888,6 @@
    "yes_bid": 0.04
   }
  },
- "updated_at": "2026-11-26T01:00:18+00:00",
+ "updated_at": "2026-11-26T01:30:45+00:00",
  "version": 1
 }
