@@ -490,7 +490,7 @@ PAIR_OVERRIDES = {
     # favourite to score 2+, ranked by margin, CLUBS scope (the internationals twin was
     # retired and faded on 2026-10-11, and is not listed): 1-0 on 1 (+105%), nothing to
     # read. The feed names its Yes on the team-total contract (FEED_BETS soccer_team2).
-    "team2_ranked|soccer_team2": dict(moved_on="2026-10-11", production_at=None),
+    # (2026-11-25: OUT again, as asked (Olu): its listing is removed here and in PAIR_REMOVALS below; the record it ran on stays on the page.)
     # Turkey over 2.5 in heavy mismatches: 1-0 on 1 (+43.8%), nothing to read. The feed
     # learned the over-2.5 Yes for it (FEED_BETS soccer_o25, total_gte 3).
     #   turkey_o25_dog|soccer_o25 — OUT 2026-10-20, back to the Sandbox, as asked (Olu): 2/4,
@@ -506,7 +506,7 @@ PAIR_OVERRIDES = {
     #   2026-10-17. Live $1 bets stop; it keeps its whole record (PAIR_REMOVALS), no reset,
     #   no retune.
     "mls_fade_home|soccer_p05": dict(moved_on="2026-10-16", production_at=None),
-    "ftts_no_70_80|soccer_ftts": dict(moved_on="2026-10-16", production_at=None),
+    # (ftts_no_70_80|soccer_ftts: listed 2026-10-16, OUT 2026-11-25, as asked (Olu); see PAIR_REMOVALS.)
     # Congestion under 2.5, CLUBS scope: moved by hand on 2026-10-18 (30 settled, +16.4% after
     # fees, z +1.11, below the stamp) and OUT again the same week, as asked (Olu, 2026-10-19):
     # 43 settled, 15-28, -14.4% after fees, a 3-14 day on 2026-10-18, Eredivisie 0-6. The net
@@ -581,6 +581,11 @@ PAIR_REMOVALS = {
     # 2026-11-16, as asked (Olu): team 2+ form, Internationals scope, back to the Sandbox on its whole record (0 live bets since Nov 6, 1 paper pick). Paper and still
     # collecting. Its listing above stays as the record it left on; the follower refuses the pair by name.
     "team2_form_l10|soccer_team2_intl": dict(removed_on="2026-11-16", keep_record=True),
+    # 2026-11-25, as asked (Olu, typed in the Production Moves session): three lanes back to the Sandbox on their whole records, paper and still collecting
+    # (live and paper: the UCL over 3.5 rule 7-7 -40.0% v +14.8%; Clubs team 2+ ranked 15-16 -32.5% v +0.9%; first to score NO 0.70-0.80 11-5 -9.1% v -2.0%).
+    # The UCL rule (soccer_rules_production A7) is out of that adapter's PAIRS. Open live positions settle on their own; the follower refuses all three by name.
+    "team2_ranked|soccer_team2": dict(removed_on="2026-11-25", keep_record=True),
+    "ftts_no_70_80|soccer_ftts": dict(removed_on="2026-11-25", keep_record=True),
 }
 
 
@@ -4199,7 +4204,34 @@ def load_stages(path=None):
     else:
         st = {"pairs": {}, "events": []}
     apply_resets(st)
+    apply_removals(st)
     return st
+
+
+def apply_removals(st):
+    """Demote, in `st` in place, every Production pair that PAIR_REMOVALS takes off the list. Returns the keys it changed.
+
+    The stage file is rewritten by every tracker run (about every ten minutes), so a pull-back that has to carry its own regenerated stage file
+    cannot be merged: the file moves while its checks run. The change lives in code instead, like a reset (apply_resets): the pair reads as a
+    Sandbox pair, record kept, the moment the removal reaches main, and evaluate_stages (which reads through here) saves it on its next run.
+    Only a pair that is off the live list (PAIR_OVERRIDES) and still staged Production or QA is touched, so a removal already saved is a no-op.
+    An applied removal is appended to st["events"] once, with the reason evaluate_stages gives.
+    """
+    changed = []
+    pairs = st.setdefault("pairs", {})
+    events = st.setdefault("events", [])
+    for key, rem in PAIR_REMOVALS.items():
+        pair = pairs.get(key)
+        if key in PAIR_OVERRIDES or not pair or pair.get("stage") not in ("production", "qa"):
+            continue
+        at = f"{rem['removed_on']}T00:00:00+00:00"
+        keep = bool(rem.get("keep_record"))
+        pairs[key] = dict(stage="sandbox", since=record_since(pair) if keep else at, demoted_at=at)
+        changed.append(key)
+        if not any(e.get("pair") == key and e.get("to") == "sandbox" and e.get("at") == at for e in events):
+            events.append(dict(pair=key, to="sandbox", at=at,
+                               reason="taken off the Production list by hand" + (", record kept" if keep else "")))
+    return changed
 
 
 # A reset registered in code, applied to the stage file on every read (load_stages),

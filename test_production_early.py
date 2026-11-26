@@ -86,7 +86,8 @@ T.PAIR_OVERRIDES["bund_o35|soccer_u35"] = dict(moved_on=MOVE, production_at=None
 # Four soccer rules went back to the Sandbox on 2026-11-02 (record kept): put back, on their own listing dates, for
 # the replays below. liga_btts_even was one of the six of 2026-10-08.
 for _k, _d in (("liga_btts_even|soccer_btts", "2026-10-08"), ("o15_ranked|soccer_o15_intl", "2026-10-01"),
-               ("ere_draw|soccer", "2026-10-11"), ("team2_form_l10|soccer_team2", "2026-10-16")):
+               ("ere_draw|soccer", "2026-10-11"), ("team2_form_l10|soccer_team2", "2026-10-16"),
+               ("team2_ranked|soccer_team2", "2026-10-11"), ("ftts_no_70_80|soccer_ftts", "2026-10-16")):   # both back in the Sandbox 2026-11-25
     T.PAIR_OVERRIDES[_k] = dict(moved_on=_d, production_at=None)
 # crypto_fav_band|crypto_fav came off on 2026-10-20 too, replaced by three crypto angle lanes.
 T.PAIR_OVERRIDES["crypto_fav_band|crypto_fav"] = dict(moved_on=MOVE, production_at=None)
@@ -148,7 +149,7 @@ _OUT_1102 = ("ere_draw|soccer", "liga_btts_even|soccer_btts", "team2_form_l10|so
 eq([(k in _LIVE_OV, T.PAIR_REMOVALS[k]["removed_on"], T.PAIR_REMOVALS[k]["keep_record"]) for k in _OUT_1102],
    [(False, "2026-11-02", True)] * 3, "the three soccer rules still out since 2026-11-02 are off the live list, keeping their records")
 eq((len(_LIVE_OV), "corners_ucl_fade|soccer_corners" in _LIVE_OV, T.PAIR_REMOVALS["corners_ucl_fade|soccer_corners"]),
-   (11, True, dict(removed_on="2026-10-21", keep_record=True)), "(the Internationals over 1.5 and the Eredivisie over 1.5 in on 2026-11-22 take ten to twelve, and the commodities favourite band pulled again the same day takes twelve to eleven; the commodities favourite band back in on 2026-11-12 takes nine to ten; the Champions League corners fade back in on 2026-11-08 takes eight to nine; the commodities favourite band back to the Sandbox the same day takes nine to eight; the under's Cups scope and team 2+ form's Internationals scope in on 2026-11-06 take seven to nine; four soccer rules back to the Sandbox on 2026-11-02 take eleven to seven; seven more lanes back to the Sandbox on 2026-10-27 take eighteen to eleven) five pairs before, eleven after the six, twelve with commodities, eighteen with the six of 2026-10-11, seventeen with team scores 1+ · Clubs out on 2026-10-14, nineteen with corners_under out and its three lanes in on 2026-10-15, twenty-four with the five of 2026-10-16, twenty-three with btts_form_l10_fade out on 2026-10-17, twenty-two with o15_form_l10|soccer_o15 out the same day, twenty-three with o25_congestion|soccer_o25 in on 2026-10-18, twenty-two with it out on 2026-10-19, eighteen with four soccer lanes out on 2026-10-20, twenty with crypto_fav_band out and three crypto angle lanes in the same day, nineteen with corners_ucl_fade out on 2026-10-21, keeping its record")
+   (9, True, dict(removed_on="2026-10-21", keep_record=True)), "(team 2+ ranked (Clubs) and first to score NO 0.70-0.80 back to the Sandbox on 2026-11-25 take eleven to nine; the Internationals over 1.5 and the Eredivisie over 1.5 in on 2026-11-22 take ten to twelve, and the commodities favourite band pulled again the same day takes twelve to eleven; the commodities favourite band back in on 2026-11-12 takes nine to ten; the Champions League corners fade back in on 2026-11-08 takes eight to nine; the commodities favourite band back to the Sandbox the same day takes nine to eight; the under's Cups scope and team 2+ form's Internationals scope in on 2026-11-06 take seven to nine; four soccer rules back to the Sandbox on 2026-11-02 take eleven to seven; seven more lanes back to the Sandbox on 2026-10-27 take eighteen to eleven) five pairs before, eleven after the six, twelve with commodities, eighteen with the six of 2026-10-11, seventeen with team scores 1+ · Clubs out on 2026-10-14, nineteen with corners_under out and its three lanes in on 2026-10-15, twenty-four with the five of 2026-10-16, twenty-three with btts_form_l10_fade out on 2026-10-17, twenty-two with o15_form_l10|soccer_o15 out the same day, twenty-three with o25_congestion|soccer_o25 in on 2026-10-18, twenty-two with it out on 2026-10-19, eighteen with four soccer lanes out on 2026-10-20, twenty with crypto_fav_band out and three crypto angle lanes in the same day, nineteen with corners_ucl_fade out on 2026-10-21, keeping its record")
 
 # The tracker moves them on its next run, and the Since-Production record starts there.
 _stages = {"pairs": {}, "events": []}
@@ -691,7 +692,8 @@ MOVE2 = "2026-10-11"
 # The two Turkey pairs left Production on 2026-10-20 (record kept); their listing is replayed here.
 # u35_low_scoring|soccer_u35 (Clubs) left on 2026-10-27 the same way.
 # ere_draw|soccer (also one of the six of 2026-10-11) left on 2026-11-02 (record kept) and is replayed the same way.
-for _k in ("turkey_btts_dog|soccer_btts", "turkey_o25_dog|soccer_o25", "u35_low_scoring|soccer_u35", "ere_draw|soccer"):
+# team2_ranked|soccer_team2 (also one of the six) left on 2026-11-25 (record kept): replayed the same way.
+for _k in ("turkey_btts_dog|soccer_btts", "turkey_o25_dog|soccer_o25", "u35_low_scoring|soccer_u35", "ere_draw|soccer", "team2_ranked|soccer_team2"):
     T.PAIR_OVERRIDES[_k] = dict(moved_on=MOVE2, production_at=None)
 # corners_under was the sixth: it left Production on 2026-10-15 (three corners lanes replaced it).
 ok("corners_under|soccer_corners" not in T.PAIR_OVERRIDES, "corners_under, listed that day, is out since 2026-10-15")
