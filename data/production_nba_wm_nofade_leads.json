@@ -1,112 +1,7 @@
 {
  "errors": [],
  "lane": "nba_wm_nofade",
- "leads": [
-  {
-   "bucket": "21+",
-   "event": "KXNBAWINMARGIN-26NOV25SASPOR",
-   "id": "nba_wm_nofade:KXNBAWINMARGIN-26NOV25SASPOR-SAS21PLUS",
-   "lane": "nba_wm_nofade",
-   "side": "no",
-   "stake_usd": 1.0,
-   "team": "SAS",
-   "ticker": "KXNBAWINMARGIN-26NOV25SASPOR-SAS21PLUS",
-   "tip": "2026-11-26T03:00:00+00:00",
-   "title": "San Antonio wins by 21+ points",
-   "version": "wm-nofade-v4"
-  },
-  {
-   "bucket": "11-20",
-   "event": "KXNBAWINMARGIN-26NOV25SASPOR",
-   "id": "nba_wm_nofade:KXNBAWINMARGIN-26NOV25SASPOR-SAS11TO20",
-   "lane": "nba_wm_nofade",
-   "side": "no",
-   "stake_usd": 1.0,
-   "team": "SAS",
-   "ticker": "KXNBAWINMARGIN-26NOV25SASPOR-SAS11TO20",
-   "tip": "2026-11-26T03:00:00+00:00",
-   "title": "San Antonio wins by 11-20 points",
-   "version": "wm-nofade-v4"
-  },
-  {
-   "bucket": "6-10",
-   "event": "KXNBAWINMARGIN-26NOV25SASPOR",
-   "id": "nba_wm_nofade:KXNBAWINMARGIN-26NOV25SASPOR-SAS6TO10",
-   "lane": "nba_wm_nofade",
-   "side": "no",
-   "stake_usd": 1.0,
-   "team": "SAS",
-   "ticker": "KXNBAWINMARGIN-26NOV25SASPOR-SAS6TO10",
-   "tip": "2026-11-26T03:00:00+00:00",
-   "title": "San Antonio wins by 6-10 points",
-   "version": "wm-nofade-v4"
-  },
-  {
-   "bucket": "1-5",
-   "event": "KXNBAWINMARGIN-26NOV25SASPOR",
-   "id": "nba_wm_nofade:KXNBAWINMARGIN-26NOV25SASPOR-SAS1TO5",
-   "lane": "nba_wm_nofade",
-   "side": "no",
-   "stake_usd": 1.0,
-   "team": "SAS",
-   "ticker": "KXNBAWINMARGIN-26NOV25SASPOR-SAS1TO5",
-   "tip": "2026-11-26T03:00:00+00:00",
-   "title": "San Antonio wins by 1-5 points",
-   "version": "wm-nofade-v4"
-  },
-  {
-   "bucket": "1-5",
-   "event": "KXNBAWINMARGIN-26NOV25SASPOR",
-   "id": "nba_wm_nofade:KXNBAWINMARGIN-26NOV25SASPOR-POR1TO5",
-   "lane": "nba_wm_nofade",
-   "side": "no",
-   "stake_usd": 1.0,
-   "team": "POR",
-   "ticker": "KXNBAWINMARGIN-26NOV25SASPOR-POR1TO5",
-   "tip": "2026-11-26T03:00:00+00:00",
-   "title": "Portland wins by 1-5 points",
-   "version": "wm-nofade-v4"
-  },
-  {
-   "bucket": "6-10",
-   "event": "KXNBAWINMARGIN-26NOV25SASPOR",
-   "id": "nba_wm_nofade:KXNBAWINMARGIN-26NOV25SASPOR-POR6TO10",
-   "lane": "nba_wm_nofade",
-   "side": "no",
-   "stake_usd": 1.0,
-   "team": "POR",
-   "ticker": "KXNBAWINMARGIN-26NOV25SASPOR-POR6TO10",
-   "tip": "2026-11-26T03:00:00+00:00",
-   "title": "Portland wins by 6-10 points",
-   "version": "wm-nofade-v4"
-  },
-  {
-   "bucket": "11-20",
-   "event": "KXNBAWINMARGIN-26NOV25SASPOR",
-   "id": "nba_wm_nofade:KXNBAWINMARGIN-26NOV25SASPOR-POR11TO20",
-   "lane": "nba_wm_nofade",
-   "side": "no",
-   "stake_usd": 1.0,
-   "team": "POR",
-   "ticker": "KXNBAWINMARGIN-26NOV25SASPOR-POR11TO20",
-   "tip": "2026-11-26T03:00:00+00:00",
-   "title": "Portland wins by 11-20 points",
-   "version": "wm-nofade-v4"
-  },
-  {
-   "bucket": "21+",
-   "event": "KXNBAWINMARGIN-26NOV25SASPOR",
-   "id": "nba_wm_nofade:KXNBAWINMARGIN-26NOV25SASPOR-POR21PLUS",
-   "lane": "nba_wm_nofade",
-   "side": "no",
-   "stake_usd": 1.0,
-   "team": "POR",
-   "ticker": "KXNBAWINMARGIN-26NOV25SASPOR-POR21PLUS",
-   "tip": "2026-11-26T03:00:00+00:00",
-   "title": "Portland wins by 21+ points",
-   "version": "wm-nofade-v4"
-  }
- ],
+ "leads": [],
  "moved_on": "2026-11-02",
  "name": "Win margin NO fade (v2)",
  "rule": {
@@ -124,6 +19,6 @@
   "side": "no",
   "stake_usd": 1.0
  },
- "updated_at": "2026-11-26T05:31:31+00:00",
+ "updated_at": "2026-11-26T06:01:46+00:00",
  "version": "wm-nofade-v4"
 }
