@@ -1,5 +1,5 @@
 {
- "generated": "2026-11-26T05:07Z",
+ "generated": "2026-11-26T06:07Z",
  "lane_note": "own-state lanes: each entry as a trade after fees (the lane's own fill, the sells it logged, the unsold remainder at the market's settled result); a bet is flat when exited at cost (within +-2% before or after fees), won above +2% after fees, else lost. Entries with a tip before 2026-11-06 18:07Z are reconstructed from the exchange order list; later ones use the sell fills the follower logged",
  "lanes": {
   "arg_dip": [],
@@ -5828,7 +5828,7 @@
    },
    {
     "g": 1.25,
-    "hold_r": null,
+    "hold_r": 6.8493,
     "id": "KXNBAWINMARGIN-26NOV25SASPOR-POR1TO5",
     "ko": "2026-11-26T03:00",
     "legs": "2x+2.5x",
@@ -5839,27 +5839,27 @@
     "w": 1.02
    },
    {
-    "g": null,
-    "hold_r": null,
+    "g": 1.3077,
+    "hold_r": -1.0,
     "id": "KXNBAWINMARGIN-26NOV25SASPOR-POR6TO10",
     "ko": "2026-11-26T03:00",
-    "legs": "2x",
-    "r": null,
+    "legs": "2x+2.5x",
+    "r": 1.1739,
     "side": "yes",
     "src": "fills",
-    "st": "open",
+    "st": "won",
     "w": 0.96
    },
    {
-    "g": null,
-    "hold_r": null,
+    "g": -0.2,
+    "hold_r": -1.0,
     "id": "KXNBAWINMARGIN-26NOV25SASPOR-SAS1TO5",
     "ko": "2026-11-26T03:00",
-    "legs": "",
-    "r": null,
+    "legs": "2x",
+    "r": -0.244,
     "side": "yes",
     "src": "fills",
-    "st": "open",
+    "st": "lost",
     "w": 0.9
    }
   ],
