@@ -1,6 +1,6 @@
 {
  "error": null,
- "last_run": "2026-11-26T05:00:32.169486+00:00",
+ "last_run": "2026-11-26T05:59:00.729030+00:00",
  "rules": {
   "R1": {
    "picks": [
@@ -2552,11 +2552,14 @@
      },
      "logged": "2026-11-26T01:30:34.014274+00:00",
      "match": "SA @ POR",
+     "payout": 0.0,
      "price": 0.27,
+     "profit": -100.0,
      "rule": "R4",
+     "settled": "2026-11-26T05:59:00.729030+00:00",
      "side": "no",
      "start": "2026-11-26T03:00Z",
-     "status": "open",
+     "status": "lost",
      "strike": 104.5,
      "team": "POR",
      "ticker": "KXNBATEAMTOTAL-26NOV25SASPOR-POR105",
@@ -2574,11 +2577,14 @@
      },
      "logged": "2026-11-26T01:30:34.014274+00:00",
      "match": "SA @ POR",
+     "payout": 0.0,
      "price": 0.3,
+     "profit": -100.0,
      "rule": "R4",
+     "settled": "2026-11-26T05:59:00.729030+00:00",
      "side": "no",
      "start": "2026-11-26T03:00Z",
-     "status": "open",
+     "status": "lost",
      "strike": 108.5,
      "team": "SA",
      "ticker": "KXNBATEAMTOTAL-26NOV25SASPOR-SAS109",
@@ -5858,11 +5864,14 @@
      },
      "logged": "2026-11-26T01:30:34.014274+00:00",
      "match": "SA @ POR",
+     "payout": 0.0,
      "price": 0.47,
+     "profit": -100.0,
      "rule": "R7",
+     "settled": "2026-11-26T05:59:00.729030+00:00",
      "side": "no",
      "start": "2026-11-26T03:00Z",
-     "status": "open",
+     "status": "lost",
      "strike": 110.5,
      "team": "POR",
      "ticker": "KXNBATEAMTOTAL-26NOV25SASPOR-POR111",
@@ -5880,11 +5889,14 @@
      },
      "logged": "2026-11-26T01:30:34.014274+00:00",
      "match": "SA @ POR",
+     "payout": 1.0,
      "price": 0.5,
+     "profit": 93.24,
      "rule": "R7",
+     "settled": "2026-11-26T05:59:00.729030+00:00",
      "side": "no",
      "start": "2026-11-26T03:00Z",
-     "status": "open",
+     "status": "won",
      "strike": 114.5,
      "team": "SA",
      "ticker": "KXNBATEAMTOTAL-26NOV25SASPOR-SAS115",
@@ -5895,11 +5907,6 @@
   }
  },
  "runs": [
-  {
-   "at": "2026-11-22T03:28:40.251443+00:00",
-   "due": 0,
-   "new": 0
-  },
   {
    "at": "2026-11-22T11:49:12.355609+00:00",
    "due": 0,
@@ -6147,6 +6154,11 @@
   },
   {
    "at": "2026-11-26T05:00:32.169486+00:00",
+   "due": 0,
+   "new": 0
+  },
+  {
+   "at": "2026-11-26T05:59:00.729030+00:00",
    "due": 0,
    "new": 0
   }
