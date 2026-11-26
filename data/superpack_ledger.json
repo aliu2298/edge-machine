@@ -7027,9 +7027,9 @@
    ],
    "pid": "[\"daily\", \"econ_daily\", [\"KXAAAGASD-26NOV26-3.5550\", null]]",
    "price": 0.77,
-   "profit": null,
+   "profit": 0.2781,
    "scope": null,
-   "settled": null,
+   "settled": "2026-11-26T17:00:58.572513+00:00",
    "side": "yes",
    "snapshot": {
     "as_of": "2026-11-26T01:30:49.357602+00:00",
@@ -7098,12 +7098,12 @@
    },
    "sport": "Commodities",
    "src": "daily",
-   "status": "open"
+   "status": "won"
   }
  ],
  "first_run": "2026-11-05T03:09:04.962721+00:00",
  "lane": "superpack",
- "last_run": "2026-11-26T17:04:45.584334+00:00",
+ "last_run": "2026-11-26T17:13:01.359516+00:00",
  "mirror": [
   {
    "contract": "KXAAAGASD-26NOV06-4.0700",
@@ -21014,14 +21014,14 @@
    ],
    "pid": "[\"daily\", \"econ_daily\", [\"KXAAAGASD-26NOV26-3.5550\", null]]",
    "price": 0.77,
-   "profit": null,
+   "profit": 0.2781,
    "scope": null,
-   "settled": null,
+   "settled": "2026-11-26T17:00:58.572513+00:00",
    "side": "yes",
    "snapshot": null,
    "sport": "Commodities",
    "src": "daily",
-   "status": "open"
+   "status": "won"
   },
   {
    "contract": "KXDIESELD-26NOV26-T5.720",
@@ -21037,14 +21037,14 @@
    ],
    "pid": "[\"daily\", \"econ_nc_yes\", [\"KXDIESELD-26NOV26-T5.720\", \"yes\"]]",
    "price": 0.98,
-   "profit": null,
+   "profit": 0.019,
    "scope": null,
-   "settled": null,
+   "settled": "2026-11-26T17:00:58.572513+00:00",
    "side": "yes",
    "snapshot": null,
    "sport": "Commodities",
    "src": "daily",
-   "status": "open"
+   "status": "won"
   },
   {
    "contract": "KXUELFTTS-26NOV26FTCCEL-CEL",
