@@ -1,6 +1,6 @@
 {
  "error": null,
- "last_run": "2026-11-26T00:30:32.838095+00:00",
+ "last_run": "2026-11-26T01:30:34.014274+00:00",
  "rules": {
   "R1": {
    "picks": [
@@ -2540,6 +2540,50 @@
      "ticker": "KXNBATEAMTOTAL-26NOV24DETORL-DET101",
      "title": "Detroit over 100.5 points",
      "why": "DET O-D- v ORL O-D- \u00b7 cheapest NO 0.29 at 100.5"
+    },
+    {
+     "game": "401909325",
+     "id": "R4:KXNBATEAMTOTAL-26NOV25SASPOR-POR105",
+     "labels": {
+      "away": "O-D-",
+      "away_h1": "O+D-",
+      "home": "O-D-",
+      "home_h1": "O-D+"
+     },
+     "logged": "2026-11-26T01:30:34.014274+00:00",
+     "match": "SA @ POR",
+     "price": 0.27,
+     "rule": "R4",
+     "side": "no",
+     "start": "2026-11-26T03:00Z",
+     "status": "open",
+     "strike": 104.5,
+     "team": "POR",
+     "ticker": "KXNBATEAMTOTAL-26NOV25SASPOR-POR105",
+     "title": "Portland over 104.5 points",
+     "why": "POR O-D- v SA O-D- \u00b7 cheapest NO 0.27 at 104.5"
+    },
+    {
+     "game": "401909325",
+     "id": "R4:KXNBATEAMTOTAL-26NOV25SASPOR-SAS109",
+     "labels": {
+      "away": "O-D-",
+      "away_h1": "O+D-",
+      "home": "O-D-",
+      "home_h1": "O-D+"
+     },
+     "logged": "2026-11-26T01:30:34.014274+00:00",
+     "match": "SA @ POR",
+     "price": 0.3,
+     "rule": "R4",
+     "side": "no",
+     "start": "2026-11-26T03:00Z",
+     "status": "open",
+     "strike": 108.5,
+     "team": "SA",
+     "ticker": "KXNBATEAMTOTAL-26NOV25SASPOR-SAS109",
+     "title": "San Antonio over 108.5 points",
+     "why": "SA O-D- v POR O-D- \u00b7 cheapest NO 0.30 at 108.5"
     }
    ]
   },
@@ -5802,16 +5846,55 @@
      "ticker": "KXNBATEAMTOTAL-26NOV24DETORL-DET109",
      "title": "Detroit over 108.5 points",
      "why": "DET O-D- v ORL O-D- \u00b7 both D\u2212 \u00b7 110+ NO 0.56"
+    },
+    {
+     "game": "401909325",
+     "id": "R7:KXNBATEAMTOTAL-26NOV25SASPOR-POR111",
+     "labels": {
+      "away": "O-D-",
+      "away_h1": "O+D-",
+      "home": "O-D-",
+      "home_h1": "O-D+"
+     },
+     "logged": "2026-11-26T01:30:34.014274+00:00",
+     "match": "SA @ POR",
+     "price": 0.47,
+     "rule": "R7",
+     "side": "no",
+     "start": "2026-11-26T03:00Z",
+     "status": "open",
+     "strike": 110.5,
+     "team": "POR",
+     "ticker": "KXNBATEAMTOTAL-26NOV25SASPOR-POR111",
+     "title": "Portland over 110.5 points",
+     "why": "POR O-D- v SA O-D- \u00b7 both D\u2212 \u00b7 110+ NO 0.47"
+    },
+    {
+     "game": "401909325",
+     "id": "R7:KXNBATEAMTOTAL-26NOV25SASPOR-SAS115",
+     "labels": {
+      "away": "O-D-",
+      "away_h1": "O+D-",
+      "home": "O-D-",
+      "home_h1": "O-D+"
+     },
+     "logged": "2026-11-26T01:30:34.014274+00:00",
+     "match": "SA @ POR",
+     "price": 0.5,
+     "rule": "R7",
+     "side": "no",
+     "start": "2026-11-26T03:00Z",
+     "status": "open",
+     "strike": 114.5,
+     "team": "SA",
+     "ticker": "KXNBATEAMTOTAL-26NOV25SASPOR-SAS115",
+     "title": "San Antonio over 114.5 points",
+     "why": "SA O-D- v POR O-D- \u00b7 both D\u2212 \u00b7 115+ NO 0.50"
     }
    ]
   }
  },
  "runs": [
-  {
-   "at": "2026-11-22T01:00:26.303452+00:00",
-   "due": 0,
-   "new": 0
-  },
   {
    "at": "2026-11-22T01:30:28.541764+00:00",
    "due": 1,
@@ -6061,6 +6144,11 @@
    "at": "2026-11-26T00:30:32.838095+00:00",
    "due": 3,
    "new": 0
+  },
+  {
+   "at": "2026-11-26T01:30:34.014274+00:00",
+   "due": 2,
+   "new": 4
   }
  ],
  "version": "nba-rules-v1"
