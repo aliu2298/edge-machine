@@ -258,7 +258,7 @@
    "time": "after-hours"
   }
  ],
- "calendar_at": "2026-11-26T09:00:33Z",
+ "calendar_at": "2026-11-26T10:00:31Z",
  "kpi_reads": [
   {
    "at": "2026-11-07T03:49:31Z",
@@ -6725,9 +6725,15 @@
    "event": "KXCOST-26DECCARDS",
    "read": null,
    "sym": "COST"
+  },
+  {
+   "at": "2026-11-26T10:01:29Z",
+   "event": "KXCOST-26DECCARDS",
+   "read": null,
+   "sym": "COST"
   }
  ],
- "last_run": "2026-11-26T09:01:34Z",
+ "last_run": "2026-11-26T10:01:32Z",
  "predictions": [
   {
    "call": {
