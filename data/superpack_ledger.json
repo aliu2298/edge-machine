@@ -1804,6 +1804,10 @@
    "at": "2026-11-05T16:10:44.196456+00:00",
    "pool": "entered"
   },
+  "[\"sandbox\", \"team2_ranked\", [\"team2_ranked:KXUELTEAMTOTAL-26NOV26JUVOMO-JUV2\", \"a\"]]": {
+   "at": "2026-11-26T19:03:40.053764+00:00",
+   "pool": "entered"
+  },
   "[\"sandbox\", \"team2_ranked\", [\"team2_ranked:KXUELTEAMTOTAL-26NOV26SUNJAG-SUN2\", \"a\"]]": {
    "at": "2026-11-26T18:33:59.390022+00:00",
    "pool": "entered"
@@ -7107,7 +7111,7 @@
  ],
  "first_run": "2026-11-05T03:09:04.962721+00:00",
  "lane": "superpack",
- "last_run": "2026-11-26T18:33:59.390022+00:00",
+ "last_run": "2026-11-26T19:03:40.053764+00:00",
  "mirror": [
   {
    "contract": "KXAAAGASD-26NOV06-4.0700",
@@ -21179,6 +21183,29 @@
    ],
    "pid": "[\"sandbox\", \"team2_ranked\", [\"team2_ranked:KXUELTEAMTOTAL-26NOV26SUNJAG-SUN2\", \"a\"]]",
    "price": 0.71,
+   "profit": null,
+   "scope": "soccer_team2",
+   "settled": null,
+   "side": "a",
+   "snapshot": null,
+   "sport": "Soccer",
+   "src": "sandbox",
+   "status": "open"
+  },
+  {
+   "contract": "KXUELTEAMTOTAL-26NOV26JUVOMO-JUV2",
+   "entered_at": "2026-11-26T19:03:40.053764+00:00",
+   "entities": [
+    "Juventus"
+   ],
+   "id": "superpack:[\"sandbox\", \"team2_ranked\", [\"team2_ranked:KXUELTEAMTOTAL-26NOV26JUVOMO-JUV2\", \"a\"]]",
+   "lane": "team2_ranked",
+   "logged": "2026-11-26T19:03:15+00:00",
+   "matched": [
+    "Juventus"
+   ],
+   "pid": "[\"sandbox\", \"team2_ranked\", [\"team2_ranked:KXUELTEAMTOTAL-26NOV26JUVOMO-JUV2\", \"a\"]]",
+   "price": 0.75,
    "profit": null,
    "scope": "soccer_team2",
    "settled": null,
