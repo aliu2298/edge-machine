@@ -82,6 +82,9 @@
       "payout": 1.0,
       "price": 0.778103,
       "read_at": "2026-11-25T18:35:15+00:00",
+      "roi": -1.0,
+      "roi_crypto": -1.0,
+      "roi_sp": 0.049,
       "singles": {
         "crypto": 0.8112,
         "sp": 0.953325
@@ -94,12 +97,15 @@
         "ticker": "KXINXU-26NOV25H1600-T7239.9999",
         "title": "7,240 or above"
       },
-      "status": "open"
+      "status": "lost",
+      "value": 0.0,
+      "value_crypto": 0.0,
+      "value_sp": 1.0
     }
   ],
   "error": null,
   "key": "combo_crypto_sp_no",
-  "last_run": "2026-11-25T23:57:15+00:00",
+  "last_run": "2026-11-26T00:06:29+00:00",
   "registered": "2026-11-21",
   "version": "combo-v1"
 }
