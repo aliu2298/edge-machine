@@ -1,5 +1,5 @@
 {
- "generated": "2026-11-26T00:07Z",
+ "generated": "2026-11-26T01:07Z",
  "lane_note": "own-state lanes: each entry as a trade after fees (the lane's own fill, the sells it logged, the unsold remainder at the market's settled result); a bet is flat when exited at cost (within +-2% before or after fees), won above +2% after fees, else lost. Entries with a tip before 2026-11-06 18:07Z are reconstructed from the exchange order list; later ones use the sell fills the follower logged",
  "lanes": {
   "arg_dip": [],
@@ -5491,44 +5491,44 @@
     "w": 1.04
    },
    {
-    "g": null,
-    "hold_r": null,
+    "g": -1.0,
+    "hold_r": -1.0,
     "id": "KXNBAWINMARGIN-26NOV25MIAPHI-MIA11TO20",
     "ko": "2026-11-25T22:00",
     "legs": "",
-    "r": null,
+    "r": -1.0,
     "side": "yes",
     "src": "fills",
-    "st": "open",
+    "st": "lost",
     "w": 0.9
    },
    {
-    "g": null,
-    "hold_r": null,
+    "g": -1.0,
+    "hold_r": -1.0,
     "id": "KXNBAWINMARGIN-26NOV25MIAPHI-MIA1TO5",
     "ko": "2026-11-25T22:00",
     "legs": "",
-    "r": null,
+    "r": -1.0,
     "side": "yes",
     "src": "fills",
-    "st": "open",
+    "st": "lost",
     "w": 1.04
    },
    {
-    "g": null,
-    "hold_r": null,
+    "g": -1.0,
+    "hold_r": -1.0,
     "id": "KXNBAWINMARGIN-26NOV25MIAPHI-MIA6TO10",
     "ko": "2026-11-25T22:00",
     "legs": "",
-    "r": null,
+    "r": -1.0,
     "side": "yes",
     "src": "fills",
-    "st": "open",
+    "st": "lost",
     "w": 0.95
    },
    {
     "g": 1.2857,
-    "hold_r": null,
+    "hold_r": -1.0,
     "id": "KXNBAWINMARGIN-26NOV25MIAPHI-PHI11TO20",
     "ko": "2026-11-25T22:00",
     "legs": "2x+2.5x",
@@ -5539,27 +5539,27 @@
     "w": 1.04
    },
    {
-    "g": null,
-    "hold_r": null,
+    "g": -1.0,
+    "hold_r": -1.0,
     "id": "KXNBAWINMARGIN-26NOV25MIAPHI-PHI1TO5",
     "ko": "2026-11-25T22:00",
     "legs": "",
-    "r": null,
+    "r": -1.0,
     "side": "yes",
     "src": "fills",
-    "st": "open",
+    "st": "lost",
     "w": 0.95
    },
    {
-    "g": null,
-    "hold_r": null,
+    "g": 1.2857,
+    "hold_r": 5.734,
     "id": "KXNBAWINMARGIN-26NOV25MIAPHI-PHI6TO10",
     "ko": "2026-11-25T22:00",
-    "legs": "2x",
-    "r": null,
+    "legs": "2x+2.5x",
+    "r": 1.1549,
     "side": "yes",
     "src": "fills",
-    "st": "open",
+    "st": "won",
     "w": 1.04
    },
    {
@@ -6922,10 +6922,13 @@
     "crypto_fav_band_below:KXETHD-26NOV1917-T1799.99": "outside the price band",
     "crypto_fav_band_below:KXETHD-26NOV2017-T1619.99": "outside the price band",
     "crypto_fav_band_below:KXETHD-26NOV2217-T1719.99": "outside the price band",
+    "crypto_fav_band_below:KXETHD-26NOV2517-T1689.99": "outside the price band",
     "crypto_fav_band_below:KXHYPED-26NOV2317-T65.9999": "wide spread",
     "crypto_fav_band_below:KXSOLD-26NOV1917-T73.9999": "no seller at the price",
     "crypto_fav_band_below:KXSOLD-26NOV2117-T70.9999": "already held by another lane",
-    "crypto_fav_band_below:KXSOLD-26NOV2417-T69.9999": "outside the price band"
+    "crypto_fav_band_below:KXSOLD-26NOV2417-T69.9999": "outside the price band",
+    "crypto_fav_band_below:KXSOLD-26NOV2517-T69.9999": "outside the price band",
+    "crypto_fav_band_below:KXXRPD-26NOV2517-T0.9399": "thin book"
    }
   },
   "econ_nc_yes|econ_daily": {
@@ -7080,166 +7083,9 @@
     }
    ],
    "refused": {
-    "finance_spx_nc_no:KXINXU-26NOV23H1600-T7299.9999": "price outside the band at the follower's read"
+    "finance_spx_nc_no:KXINXU-26NOV23H1600-T7299.9999": "price outside the band at the follower's read",
+    "finance_spx_nc_no:KXINXU-26NOV25H1600-T7184.9999": "price outside the band at the follower's read"
    }
-  },
-  "ftts_no_70_80|soccer_ftts": {
-   "entered": "2026-10-16T17:17:38+00:00",
-   "orders": [
-    {
-     "id": "ftts_no_70_80:KXEPLFTTS-26OCT18NFOARS-NFO",
-     "ko": "2026-10-18T15:30",
-     "r": 0.3103,
-     "side": "no",
-     "st": "won",
-     "w": 1.01
-    },
-    {
-     "id": "ftts_no_70_80:KXEPLFTTS-26OCT19TOTCOV-COV",
-     "ko": "2026-10-19T19:00",
-     "r": 0.362,
-     "side": "no",
-     "st": "won",
-     "w": 0.97
-    },
-    {
-     "id": "ftts_no_70_80:KXLALIGAFTTS-26NOV20ATHESP-ESP",
-     "ko": "2026-11-20T20:00",
-     "r": -1.0,
-     "side": "no",
-     "st": "lost",
-     "w": 1.0
-    },
-    {
-     "id": "ftts_no_70_80:KXLIGUE1FTTS-26NOV21NICPSG-NIC",
-     "ko": "2026-11-21T16:15",
-     "r": -1.0,
-     "side": "no",
-     "st": "lost",
-     "w": 0.96
-    },
-    {
-     "id": "ftts_no_70_80:KXEPLFTTS-26NOV21NEWARS-NEW",
-     "ko": "2026-11-21T17:30",
-     "r": 0.3271,
-     "side": "no",
-     "st": "won",
-     "w": 1.0
-    },
-    {
-     "id": "ftts_no_70_80:KXLIGUE1FTTS-26NOV21ASMAUX-AUX",
-     "ko": "2026-11-21T19:45",
-     "r": -1.0,
-     "side": "no",
-     "st": "lost",
-     "w": 1.03
-    },
-    {
-     "id": "ftts_no_70_80:KXSERIEAFTTS-26NOV21NAPTOR-TOR",
-     "ko": "2026-11-21T19:45",
-     "r": 0.3271,
-     "side": "no",
-     "st": "won",
-     "w": 1.0
-    },
-    {
-     "id": "ftts_no_70_80:KXBUNDESLIGAFTTS-26NOV22SVWHSV-HSV",
-     "ko": "2026-11-22T16:30",
-     "r": 0.3803,
-     "side": "no",
-     "st": "won",
-     "w": 0.96
-    },
-    {
-     "id": "ftts_no_70_80:KXLIGUE1FTTS-26NOV22OLMMAN-MAN",
-     "ko": "2026-11-22T19:45",
-     "r": 0.3271,
-     "side": "no",
-     "st": "won",
-     "w": 1.0
-    },
-    {
-     "id": "ftts_no_70_80:KXSERIEAFTTS-26NOV22ATAINT-ATA",
-     "ko": "2026-11-22T19:45",
-     "r": 0.3992,
-     "side": "no",
-     "st": "won",
-     "w": 0.95
-    },
-    {
-     "id": "ftts_no_70_80:KXLALIGAFTTS-26NOV22GETATM-GET",
-     "ko": "2026-11-22T20:00",
-     "r": 0.2781,
-     "side": "no",
-     "st": "won",
-     "w": 1.04
-    },
-    {
-     "id": "ftts_no_70_80:KXMLSFTTS-26NOV22NSHCIN-CIN",
-     "ko": "2026-11-22T21:00",
-     "r": -1.0,
-     "side": "no",
-     "st": "lost",
-     "w": 0.97
-    },
-    {
-     "id": "ftts_no_70_80:KXUCLFTTS-26NOV24ARSBVB-BVB",
-     "ko": "2026-11-24T20:00",
-     "r": 0.294,
-     "side": "no",
-     "st": "won",
-     "w": 1.03
-    },
-    {
-     "id": "ftts_no_70_80:KXUCLFTTS-26NOV24MCINAP-NAP",
-     "ko": "2026-11-24T20:00",
-     "r": -1.0,
-     "side": "no",
-     "st": "lost",
-     "w": 1.05
-    },
-    {
-     "id": "ftts_no_70_80:KXUCLFTTS-26NOV24RBLRCL-RCL",
-     "ko": "2026-11-24T20:00",
-     "r": 0.294,
-     "side": "no",
-     "st": "won",
-     "w": 1.03
-    },
-    {
-     "id": "ftts_no_70_80:KXUCLFTTS-26NOV24SLORBB-SLO",
-     "ko": "2026-11-24T20:00",
-     "r": 0.2473,
-     "side": "no",
-     "st": "won",
-     "w": 1.06
-    },
-    {
-     "id": "ftts_no_70_80:KXUCLFTTS-26NOV25INTVFB-VFB",
-     "ko": "2026-11-25T20:00",
-     "r": 0.3444,
-     "side": "no",
-     "st": "won",
-     "w": 0.99
-    },
-    {
-     "id": "ftts_no_70_80:KXUCLFTTS-26NOV25LILBMU-LIL",
-     "ko": "2026-11-25T20:00",
-     "r": 0.362,
-     "side": "no",
-     "st": "won",
-     "w": 0.97
-    },
-    {
-     "id": "ftts_no_70_80:KXUCLFTTS-26NOV25PSGROM-ROM",
-     "ko": "2026-11-25T20:00",
-     "r": -1.0,
-     "side": "no",
-     "st": "lost",
-     "w": 0.95
-    }
-   ],
-   "refused": {}
   },
   "gas_week_cheap_no|gas_week": {
    "entered": "2026-11-22T21:00:00+00:00",
@@ -7825,260 +7671,6 @@
   "team2_form_l10|soccer_team2_intl": {
    "entered": "2026-11-06T21:10:55+00:00",
    "orders": [],
-   "refused": {}
-  },
-  "team2_ranked|soccer_team2": {
-   "entered": "2026-10-11T19:34:45+00:00",
-   "orders": [
-    {
-     "id": "team2_ranked:KXLALIGATEAMTOTAL-26OCT12LEVSEV-SEV2",
-     "ko": "2026-10-12T19:00",
-     "r": 1.8944,
-     "side": "yes",
-     "st": "won",
-     "w": 0.85
-    },
-    {
-     "id": "team2_ranked:KXUELTEAMTOTAL-26OCT15TORSUN-SUN2",
-     "ko": "2026-10-15T16:45",
-     "r": 0.3992,
-     "side": "yes",
-     "st": "won",
-     "w": 0.88
-    },
-    {
-     "id": "team2_ranked:KXLALIGATEAMTOTAL-26OCT17VCFATH-ATH2",
-     "ko": "2026-10-17T19:00",
-     "r": -1.0,
-     "side": "yes",
-     "st": "lost",
-     "w": 1.0
-    },
-    {
-     "id": "team2_ranked:KXSERIEATEAMTOTAL-26OCT18UDILEC-UDI2",
-     "ko": "2026-10-18T10:30",
-     "r": -1.0,
-     "side": "yes",
-     "st": "lost",
-     "w": 1.2
-    },
-    {
-     "id": "team2_ranked:KXLALIGATEAMTOTAL-26OCT18RCCALA-RCC2",
-     "ko": "2026-10-18T14:15",
-     "r": 1.4588,
-     "side": "yes",
-     "st": "won",
-     "w": 1.0
-    },
-    {
-     "id": "team2_ranked:KXSERIEATEAMTOTAL-26OCT19PARTOR-TOR2",
-     "ko": "2026-10-19T18:45",
-     "r": 1.5221,
-     "side": "yes",
-     "st": "won",
-     "w": 0.97
-    },
-    {
-     "id": "team2_ranked:KXUELTEAMTOTAL-26OCT22FTCTOR-FTC2",
-     "ko": "2026-10-22T16:45",
-     "r": 0.3803,
-     "side": "yes",
-     "st": "won",
-     "w": 0.89
-    },
-    {
-     "id": "team2_ranked:KXUELTEAMTOTAL-26OCT22OLYSPA-OLY2",
-     "ko": "2026-10-22T19:00",
-     "r": -1.0,
-     "side": "yes",
-     "st": "lost",
-     "w": 0.78
-    },
-    {
-     "id": "team2_ranked:KXLALIGATEAMTOTAL-26OCT23ALAMCF-ALA2",
-     "ko": "2026-10-23T19:00",
-     "r": -1.0,
-     "side": "yes",
-     "st": "lost",
-     "w": 0.66
-    },
-    {
-     "id": "team2_ranked:KXSERIEATEAMTOTAL-26OCT24LAZPAR-LAZ2",
-     "ko": "2026-10-24T18:45",
-     "r": 0.5239,
-     "side": "yes",
-     "st": "won",
-     "w": 0.81
-    },
-    {
-     "id": "team2_ranked:KXEPLTEAMTOTAL-26OCT25SUNLEE-LEE2",
-     "ko": "2026-10-25T16:30",
-     "r": -1.0,
-     "side": "yes",
-     "st": "lost",
-     "w": 0.9
-    },
-    {
-     "id": "team2_ranked:KXSERIEATEAMTOTAL-26OCT25LECJUV-JUV2",
-     "ko": "2026-10-25T17:00",
-     "r": 0.5711,
-     "side": "yes",
-     "st": "won",
-     "w": 0.78
-    },
-    {
-     "id": "team2_ranked:KXLALIGATEAMTOTAL-26OCT26SEVOSA-SEV2",
-     "ko": "2026-10-26T20:00",
-     "r": 1.0947,
-     "side": "yes",
-     "st": "won",
-     "w": 1.17
-    },
-    {
-     "id": "team2_ranked:KXSERIEATEAMTOTAL-26OCT28PARUDI-PAR2",
-     "ko": "2026-10-28T17:30",
-     "r": -1.0,
-     "side": "yes",
-     "st": "lost",
-     "w": 0.92
-    },
-    {
-     "id": "team2_ranked:KXSERIEATEAMTOTAL-26OCT28PARUDI-UDI2",
-     "ko": "2026-10-28T17:30",
-     "r": -1.0,
-     "side": "yes",
-     "st": "lost",
-     "w": 0.92
-    },
-    {
-     "id": "team2_ranked:KXSERIEATEAMTOTAL-26OCT28GENJUV-JUV2",
-     "ko": "2026-10-28T19:45",
-     "r": -1.0,
-     "side": "yes",
-     "st": "lost",
-     "w": 0.65
-    },
-    {
-     "id": "team2_ranked:KXLALIGATEAMTOTAL-26NOV01GETSEV-SEV2",
-     "ko": "2026-11-01T13:00",
-     "r": -1.0,
-     "side": "yes",
-     "st": "lost",
-     "w": 1.2
-    },
-    {
-     "id": "team2_ranked:KXSERIEATEAMTOTAL-26NOV01LAZCAG-LAZ2",
-     "ko": "2026-11-01T14:00",
-     "r": 0.5711,
-     "side": "yes",
-     "st": "won",
-     "w": 0.78
-    },
-    {
-     "id": "team2_ranked:KXSERIEATEAMTOTAL-26NOV01LECGEN-GEN2",
-     "ko": "2026-11-01T17:00",
-     "r": 1.6585,
-     "side": "yes",
-     "st": "won",
-     "w": 0.92
-    },
-    {
-     "id": "team2_ranked:KXUCLTEAMTOTAL-26NOV04SLAARS-ARS2",
-     "ko": "2026-11-04T20:00",
-     "r": 0.3992,
-     "side": "yes",
-     "st": "won",
-     "w": 0.88
-    },
-    {
-     "id": "team2_ranked:KXLALIGATEAMTOTAL-26NOV06SEVALA-SEV2",
-     "ko": "2026-11-06T20:00",
-     "r": -1.0,
-     "side": "yes",
-     "st": "lost",
-     "w": 1.15
-    },
-    {
-     "id": "team2_ranked:KXSERIEATEAMTOTAL-26NOV07PARBFC-BFC2",
-     "ko": "2026-11-07T17:00",
-     "r": 1.0515,
-     "side": "yes",
-     "st": "won",
-     "w": 1.2
-    },
-    {
-     "id": "team2_ranked:KXLALIGATEAMTOTAL-26NOV08VILGET-VIL2",
-     "ko": "2026-11-08T17:30",
-     "r": 0.5711,
-     "side": "yes",
-     "st": "won",
-     "w": 11.74
-    },
-    {
-     "id": "team2_ranked:KXLALIGATEAMTOTAL-26NOV20ATHESP-ATH2",
-     "ko": "2026-11-20T20:00",
-     "r": -1.0,
-     "side": "yes",
-     "st": "lost",
-     "w": 11.74
-    },
-    {
-     "id": "team2_ranked:KXEPLTEAMTOTAL-26NOV21BOUNFO-BOU2",
-     "ko": "2026-11-21T15:00",
-     "r": 1.0515,
-     "side": "yes",
-     "st": "won",
-     "w": 11.99
-    },
-    {
-     "id": "team2_ranked:KXLALIGATEAMTOTAL-26NOV21RVCVCF-RVC2",
-     "ko": "2026-11-21T15:15",
-     "r": -1.0,
-     "side": "yes",
-     "st": "lost",
-     "w": 11.99
-    },
-    {
-     "id": "team2_ranked:KXLIGUE1TEAMTOTAL-26NOV21LILOL-LIL2",
-     "ko": "2026-11-21T19:45",
-     "r": -1.0,
-     "side": "yes",
-     "st": "lost",
-     "w": 12.0
-    },
-    {
-     "id": "team2_ranked:KXSERIEATEAMTOTAL-26NOV21NAPTOR-NAP2",
-     "ko": "2026-11-21T19:45",
-     "r": -1.0,
-     "side": "yes",
-     "st": "lost",
-     "w": 11.92
-    },
-    {
-     "id": "team2_ranked:KXEPLTEAMTOTAL-26NOV22HULBRI-BRI2",
-     "ko": "2026-11-22T14:00",
-     "r": -1.0,
-     "side": "yes",
-     "st": "lost",
-     "w": 11.74
-    },
-    {
-     "id": "team2_ranked:KXLIGUE1TEAMTOTAL-26NOV22FCLREN-REN2",
-     "ko": "2026-11-22T16:15",
-     "r": -1.0,
-     "side": "yes",
-     "st": "lost",
-     "w": 12.0
-    },
-    {
-     "id": "team2_ranked:KXLALIGATEAMTOTAL-26NOV22GETATM-ATM2",
-     "ko": "2026-11-22T20:00",
-     "r": 0.7626,
-     "side": "yes",
-     "st": "won",
-     "w": 11.86
-    }
-   ],
    "refused": {}
   },
   "u35_low_scoring|soccer_u35_cup": {
@@ -9438,6 +9030,141 @@
     "ko": "2026-10-30T00:15",
     "r": -1.0,
     "side": "yes",
+    "st": "lost"
+   }
+  ],
+  "ftts_no_70_80|soccer_ftts": [
+   {
+    "id": "ftts_no_70_80:KXEPLFTTS-26OCT18NFOARS-NFO",
+    "ko": "2026-10-18T15:30",
+    "r": 0.3103,
+    "side": "no",
+    "st": "won"
+   },
+   {
+    "id": "ftts_no_70_80:KXEPLFTTS-26OCT19TOTCOV-COV",
+    "ko": "2026-10-19T19:00",
+    "r": 0.362,
+    "side": "no",
+    "st": "won"
+   },
+   {
+    "id": "ftts_no_70_80:KXLALIGAFTTS-26NOV20ATHESP-ESP",
+    "ko": "2026-11-20T20:00",
+    "r": -1.0,
+    "side": "no",
+    "st": "lost"
+   },
+   {
+    "id": "ftts_no_70_80:KXLIGUE1FTTS-26NOV21NICPSG-NIC",
+    "ko": "2026-11-21T16:15",
+    "r": -1.0,
+    "side": "no",
+    "st": "lost"
+   },
+   {
+    "id": "ftts_no_70_80:KXEPLFTTS-26NOV21NEWARS-NEW",
+    "ko": "2026-11-21T17:30",
+    "r": 0.3271,
+    "side": "no",
+    "st": "won"
+   },
+   {
+    "id": "ftts_no_70_80:KXLIGUE1FTTS-26NOV21ASMAUX-AUX",
+    "ko": "2026-11-21T19:45",
+    "r": -1.0,
+    "side": "no",
+    "st": "lost"
+   },
+   {
+    "id": "ftts_no_70_80:KXSERIEAFTTS-26NOV21NAPTOR-TOR",
+    "ko": "2026-11-21T19:45",
+    "r": 0.3271,
+    "side": "no",
+    "st": "won"
+   },
+   {
+    "id": "ftts_no_70_80:KXBUNDESLIGAFTTS-26NOV22SVWHSV-HSV",
+    "ko": "2026-11-22T16:30",
+    "r": 0.3803,
+    "side": "no",
+    "st": "won"
+   },
+   {
+    "id": "ftts_no_70_80:KXLIGUE1FTTS-26NOV22OLMMAN-MAN",
+    "ko": "2026-11-22T19:45",
+    "r": 0.3271,
+    "side": "no",
+    "st": "won"
+   },
+   {
+    "id": "ftts_no_70_80:KXSERIEAFTTS-26NOV22ATAINT-ATA",
+    "ko": "2026-11-22T19:45",
+    "r": 0.3992,
+    "side": "no",
+    "st": "won"
+   },
+   {
+    "id": "ftts_no_70_80:KXLALIGAFTTS-26NOV22GETATM-GET",
+    "ko": "2026-11-22T20:00",
+    "r": 0.2781,
+    "side": "no",
+    "st": "won"
+   },
+   {
+    "id": "ftts_no_70_80:KXMLSFTTS-26NOV22NSHCIN-CIN",
+    "ko": "2026-11-22T21:00",
+    "r": -1.0,
+    "side": "no",
+    "st": "lost"
+   },
+   {
+    "id": "ftts_no_70_80:KXUCLFTTS-26NOV24ARSBVB-BVB",
+    "ko": "2026-11-24T20:00",
+    "r": 0.294,
+    "side": "no",
+    "st": "won"
+   },
+   {
+    "id": "ftts_no_70_80:KXUCLFTTS-26NOV24MCINAP-NAP",
+    "ko": "2026-11-24T20:00",
+    "r": -1.0,
+    "side": "no",
+    "st": "lost"
+   },
+   {
+    "id": "ftts_no_70_80:KXUCLFTTS-26NOV24RBLRCL-RCL",
+    "ko": "2026-11-24T20:00",
+    "r": 0.294,
+    "side": "no",
+    "st": "won"
+   },
+   {
+    "id": "ftts_no_70_80:KXUCLFTTS-26NOV24SLORBB-SLO",
+    "ko": "2026-11-24T20:00",
+    "r": 0.2473,
+    "side": "no",
+    "st": "won"
+   },
+   {
+    "id": "ftts_no_70_80:KXUCLFTTS-26NOV25INTVFB-VFB",
+    "ko": "2026-11-25T20:00",
+    "r": 0.3444,
+    "side": "no",
+    "st": "won"
+   },
+   {
+    "id": "ftts_no_70_80:KXUCLFTTS-26NOV25LILBMU-LIL",
+    "ko": "2026-11-25T20:00",
+    "r": 0.362,
+    "side": "no",
+    "st": "won"
+   },
+   {
+    "id": "ftts_no_70_80:KXUCLFTTS-26NOV25PSGROM-ROM",
+    "ko": "2026-11-25T20:00",
+    "r": -1.0,
+    "side": "no",
     "st": "lost"
    }
   ],
@@ -11317,6 +11044,225 @@
     "r": -1.0,
     "side": "yes",
     "st": "lost"
+   }
+  ],
+  "team2_ranked|soccer_team2": [
+   {
+    "id": "team2_ranked:KXLALIGATEAMTOTAL-26OCT12LEVSEV-SEV2",
+    "ko": "2026-10-12T19:00",
+    "r": 1.8944,
+    "side": "yes",
+    "st": "won"
+   },
+   {
+    "id": "team2_ranked:KXUELTEAMTOTAL-26OCT15TORSUN-SUN2",
+    "ko": "2026-10-15T16:45",
+    "r": 0.3992,
+    "side": "yes",
+    "st": "won"
+   },
+   {
+    "id": "team2_ranked:KXLALIGATEAMTOTAL-26OCT17VCFATH-ATH2",
+    "ko": "2026-10-17T19:00",
+    "r": -1.0,
+    "side": "yes",
+    "st": "lost"
+   },
+   {
+    "id": "team2_ranked:KXSERIEATEAMTOTAL-26OCT18UDILEC-UDI2",
+    "ko": "2026-10-18T10:30",
+    "r": -1.0,
+    "side": "yes",
+    "st": "lost"
+   },
+   {
+    "id": "team2_ranked:KXLALIGATEAMTOTAL-26OCT18RCCALA-RCC2",
+    "ko": "2026-10-18T14:15",
+    "r": 1.4588,
+    "side": "yes",
+    "st": "won"
+   },
+   {
+    "id": "team2_ranked:KXSERIEATEAMTOTAL-26OCT19PARTOR-TOR2",
+    "ko": "2026-10-19T18:45",
+    "r": 1.5221,
+    "side": "yes",
+    "st": "won"
+   },
+   {
+    "id": "team2_ranked:KXUELTEAMTOTAL-26OCT22FTCTOR-FTC2",
+    "ko": "2026-10-22T16:45",
+    "r": 0.3803,
+    "side": "yes",
+    "st": "won"
+   },
+   {
+    "id": "team2_ranked:KXUELTEAMTOTAL-26OCT22OLYSPA-OLY2",
+    "ko": "2026-10-22T19:00",
+    "r": -1.0,
+    "side": "yes",
+    "st": "lost"
+   },
+   {
+    "id": "team2_ranked:KXLALIGATEAMTOTAL-26OCT23ALAMCF-ALA2",
+    "ko": "2026-10-23T19:00",
+    "r": -1.0,
+    "side": "yes",
+    "st": "lost"
+   },
+   {
+    "id": "team2_ranked:KXSERIEATEAMTOTAL-26OCT24LAZPAR-LAZ2",
+    "ko": "2026-10-24T18:45",
+    "r": 0.5239,
+    "side": "yes",
+    "st": "won"
+   },
+   {
+    "id": "team2_ranked:KXEPLTEAMTOTAL-26OCT25SUNLEE-LEE2",
+    "ko": "2026-10-25T16:30",
+    "r": -1.0,
+    "side": "yes",
+    "st": "lost"
+   },
+   {
+    "id": "team2_ranked:KXSERIEATEAMTOTAL-26OCT25LECJUV-JUV2",
+    "ko": "2026-10-25T17:00",
+    "r": 0.5711,
+    "side": "yes",
+    "st": "won"
+   },
+   {
+    "id": "team2_ranked:KXLALIGATEAMTOTAL-26OCT26SEVOSA-SEV2",
+    "ko": "2026-10-26T20:00",
+    "r": 1.0947,
+    "side": "yes",
+    "st": "won"
+   },
+   {
+    "id": "team2_ranked:KXSERIEATEAMTOTAL-26OCT28PARUDI-PAR2",
+    "ko": "2026-10-28T17:30",
+    "r": -1.0,
+    "side": "yes",
+    "st": "lost"
+   },
+   {
+    "id": "team2_ranked:KXSERIEATEAMTOTAL-26OCT28PARUDI-UDI2",
+    "ko": "2026-10-28T17:30",
+    "r": -1.0,
+    "side": "yes",
+    "st": "lost"
+   },
+   {
+    "id": "team2_ranked:KXSERIEATEAMTOTAL-26OCT28GENJUV-JUV2",
+    "ko": "2026-10-28T19:45",
+    "r": -1.0,
+    "side": "yes",
+    "st": "lost"
+   },
+   {
+    "id": "team2_ranked:KXLALIGATEAMTOTAL-26NOV01GETSEV-SEV2",
+    "ko": "2026-11-01T13:00",
+    "r": -1.0,
+    "side": "yes",
+    "st": "lost"
+   },
+   {
+    "id": "team2_ranked:KXSERIEATEAMTOTAL-26NOV01LAZCAG-LAZ2",
+    "ko": "2026-11-01T14:00",
+    "r": 0.5711,
+    "side": "yes",
+    "st": "won"
+   },
+   {
+    "id": "team2_ranked:KXSERIEATEAMTOTAL-26NOV01LECGEN-GEN2",
+    "ko": "2026-11-01T17:00",
+    "r": 1.6585,
+    "side": "yes",
+    "st": "won"
+   },
+   {
+    "id": "team2_ranked:KXUCLTEAMTOTAL-26NOV04SLAARS-ARS2",
+    "ko": "2026-11-04T20:00",
+    "r": 0.3992,
+    "side": "yes",
+    "st": "won"
+   },
+   {
+    "id": "team2_ranked:KXLALIGATEAMTOTAL-26NOV06SEVALA-SEV2",
+    "ko": "2026-11-06T20:00",
+    "r": -1.0,
+    "side": "yes",
+    "st": "lost"
+   },
+   {
+    "id": "team2_ranked:KXSERIEATEAMTOTAL-26NOV07PARBFC-BFC2",
+    "ko": "2026-11-07T17:00",
+    "r": 1.0515,
+    "side": "yes",
+    "st": "won"
+   },
+   {
+    "id": "team2_ranked:KXLALIGATEAMTOTAL-26NOV08VILGET-VIL2",
+    "ko": "2026-11-08T17:30",
+    "r": 0.5711,
+    "side": "yes",
+    "st": "won"
+   },
+   {
+    "id": "team2_ranked:KXLALIGATEAMTOTAL-26NOV20ATHESP-ATH2",
+    "ko": "2026-11-20T20:00",
+    "r": -1.0,
+    "side": "yes",
+    "st": "lost"
+   },
+   {
+    "id": "team2_ranked:KXEPLTEAMTOTAL-26NOV21BOUNFO-BOU2",
+    "ko": "2026-11-21T15:00",
+    "r": 1.0515,
+    "side": "yes",
+    "st": "won"
+   },
+   {
+    "id": "team2_ranked:KXLALIGATEAMTOTAL-26NOV21RVCVCF-RVC2",
+    "ko": "2026-11-21T15:15",
+    "r": -1.0,
+    "side": "yes",
+    "st": "lost"
+   },
+   {
+    "id": "team2_ranked:KXLIGUE1TEAMTOTAL-26NOV21LILOL-LIL2",
+    "ko": "2026-11-21T19:45",
+    "r": -1.0,
+    "side": "yes",
+    "st": "lost"
+   },
+   {
+    "id": "team2_ranked:KXSERIEATEAMTOTAL-26NOV21NAPTOR-NAP2",
+    "ko": "2026-11-21T19:45",
+    "r": -1.0,
+    "side": "yes",
+    "st": "lost"
+   },
+   {
+    "id": "team2_ranked:KXEPLTEAMTOTAL-26NOV22HULBRI-BRI2",
+    "ko": "2026-11-22T14:00",
+    "r": -1.0,
+    "side": "yes",
+    "st": "lost"
+   },
+   {
+    "id": "team2_ranked:KXLIGUE1TEAMTOTAL-26NOV22FCLREN-REN2",
+    "ko": "2026-11-22T16:15",
+    "r": -1.0,
+    "side": "yes",
+    "st": "lost"
+   },
+   {
+    "id": "team2_ranked:KXLALIGATEAMTOTAL-26NOV22GETATM-ATM2",
+    "ko": "2026-11-22T20:00",
+    "r": 0.7626,
+    "side": "yes",
+    "st": "won"
    }
   ],
   "tennis_fav_band|tennis": [
