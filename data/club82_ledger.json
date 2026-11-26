@@ -1,7 +1,1567 @@
 {
+ "cushions": {
+  "tt15": [
+   {
+    "median": 2.5,
+    "n": 18,
+    "name": "Barcelona",
+    "rate": 0.9444,
+    "safe": 1.5
+   },
+   {
+    "median": 1.5,
+    "n": 17,
+    "name": "AS Roma",
+    "rate": 0.8824,
+    "safe": 1.5
+   },
+   {
+    "median": 1.5,
+    "n": 5,
+    "name": "LASK Linz",
+    "rate": 0.6,
+    "safe": null
+   },
+   {
+    "median": 1.5,
+    "n": 18,
+    "name": "Real Madrid",
+    "rate": 0.8333,
+    "safe": 1.5
+   },
+   {
+    "median": 1.0,
+    "n": 16,
+    "name": "Paris Saint-Germain",
+    "rate": 0.8125,
+    "safe": 0.5
+   },
+   {
+    "median": 0.5,
+    "n": 12,
+    "name": "AC Milan",
+    "rate": 0.8333,
+    "safe": 1.5
+   },
+   {
+    "median": 0.5,
+    "n": 11,
+    "name": "AFC Bournemouth",
+    "rate": 0.6364,
+    "safe": 0.5
+   },
+   {
+    "median": 0.5,
+    "n": 16,
+    "name": "Arsenal",
+    "rate": 0.5625,
+    "safe": 0.5
+   },
+   {
+    "median": 0.5,
+    "n": 18,
+    "name": "Atl\u00e9tico Madrid",
+    "rate": 0.6111,
+    "safe": 0.5
+   },
+   {
+    "median": 0.5,
+    "n": 10,
+    "name": "Bayer Leverkusen",
+    "rate": 0.9,
+    "safe": 1.5
+   },
+   {
+    "median": 0.5,
+    "n": 15,
+    "name": "Bayern Munich",
+    "rate": 0.8,
+    "safe": 0.5
+   },
+   {
+    "median": 0.5,
+    "n": 15,
+    "name": "Borussia Dortmund",
+    "rate": 0.6,
+    "safe": 0.5
+   },
+   {
+    "median": 0.5,
+    "n": 11,
+    "name": "Brentford",
+    "rate": 0.5455,
+    "safe": 0.5
+   },
+   {
+    "median": 0.5,
+    "n": 11,
+    "name": "Brest",
+    "rate": 0.5455,
+    "safe": 0.5
+   },
+   {
+    "median": 0.5,
+    "n": 11,
+    "name": "Brighton & Hove Albion",
+    "rate": 0.6364,
+    "safe": 0.5
+   },
+   {
+    "median": 0.5,
+    "n": 11,
+    "name": "Chelsea",
+    "rate": 0.5455,
+    "safe": null
+   },
+   {
+    "median": 0.5,
+    "n": 5,
+    "name": "Club Brugge",
+    "rate": 0.8,
+    "safe": null
+   },
+   {
+    "median": 0.5,
+    "n": 17,
+    "name": "Como",
+    "rate": 0.6471,
+    "safe": 0.5
+   },
+   {
+    "median": 0.5,
+    "n": 10,
+    "name": "FC Augsburg",
+    "rate": 0.8,
+    "safe": 0.5
+   },
+   {
+    "median": 0.5,
+    "n": 12,
+    "name": "Frosinone",
+    "rate": 0.5833,
+    "safe": null
+   },
+   {
+    "median": 0.5,
+    "n": 17,
+    "name": "Internazionale",
+    "rate": 0.7647,
+    "safe": 0.5
+   },
+   {
+    "median": 0.5,
+    "n": 11,
+    "name": "Ipswich Town",
+    "rate": 0.5455,
+    "safe": null
+   },
+   {
+    "median": 0.5,
+    "n": 12,
+    "name": "Juventus",
+    "rate": 0.5833,
+    "safe": 0.5
+   },
+   {
+    "median": 0.5,
+    "n": 12,
+    "name": "Lazio",
+    "rate": 0.75,
+    "safe": 0.5
+   },
+   {
+    "median": 0.5,
+    "n": 16,
+    "name": "Liverpool",
+    "rate": 0.75,
+    "safe": null
+   },
+   {
+    "median": 0.5,
+    "n": 16,
+    "name": "Manchester City",
+    "rate": 0.625,
+    "safe": 0.5
+   },
+   {
+    "median": 0.5,
+    "n": 11,
+    "name": "Marseille",
+    "rate": 0.7273,
+    "safe": 0.5
+   },
+   {
+    "median": 0.5,
+    "n": 11,
+    "name": "Newcastle United",
+    "rate": 0.5455,
+    "safe": 0.5
+   },
+   {
+    "median": 0.5,
+    "n": 11,
+    "name": "Nice",
+    "rate": 0.5455,
+    "safe": null
+   },
+   {
+    "median": 0.5,
+    "n": 11,
+    "name": "Paris FC",
+    "rate": 0.5455,
+    "safe": null
+   },
+   {
+    "median": 0.5,
+    "n": 15,
+    "name": "RB Leipzig",
+    "rate": 0.6,
+    "safe": 0.5
+   },
+   {
+    "median": 0.5,
+    "n": 13,
+    "name": "Racing Santander",
+    "rate": 0.6923,
+    "safe": null
+   },
+   {
+    "median": 0.5,
+    "n": 13,
+    "name": "Real Sociedad",
+    "rate": 0.5385,
+    "safe": null
+   },
+   {
+    "median": 0.5,
+    "n": 10,
+    "name": "SC Freiburg",
+    "rate": 0.6,
+    "safe": 0.5
+   },
+   {
+    "median": 0.5,
+    "n": 5,
+    "name": "Sporting CP",
+    "rate": 0.8,
+    "safe": null
+   },
+   {
+    "median": 0.5,
+    "n": 11,
+    "name": "Stade Rennais",
+    "rate": 0.6364,
+    "safe": 0.5
+   },
+   {
+    "median": 0.5,
+    "n": 10,
+    "name": "TSG Hoffenheim",
+    "rate": 0.7,
+    "safe": null
+   },
+   {
+    "median": 0.5,
+    "n": 11,
+    "name": "Toulouse",
+    "rate": 0.5455,
+    "safe": null
+   },
+   {
+    "median": 0.5,
+    "n": 18,
+    "name": "Villarreal",
+    "rate": 0.6111,
+    "safe": null
+   },
+   {
+    "median": 0.5,
+    "n": 10,
+    "name": "Werder Bremen",
+    "rate": 0.7,
+    "safe": 0.5
+   },
+   {
+    "median": 0.0,
+    "n": 12,
+    "name": "Atalanta",
+    "rate": 0.5,
+    "safe": 0.5
+   },
+   {
+    "median": 0.0,
+    "n": 12,
+    "name": "Bologna",
+    "rate": 0.5,
+    "safe": null
+   },
+   {
+    "median": 0.0,
+    "n": 10,
+    "name": "Eintracht Frankfurt",
+    "rate": 0.5,
+    "safe": null
+   },
+   {
+    "median": 0.0,
+    "n": 12,
+    "name": "Monza",
+    "rate": 0.5,
+    "safe": 0.5
+   },
+   {
+    "median": 0.0,
+    "n": 18,
+    "name": "Real Betis",
+    "rate": 0.5,
+    "safe": 0.5
+   },
+   {
+    "median": 0.0,
+    "n": 12,
+    "name": "Sassuolo",
+    "rate": 0.5,
+    "safe": null
+   },
+   {
+    "median": -0.5,
+    "n": 10,
+    "name": "1. FC Union Berlin",
+    "rate": 0.1,
+    "safe": null
+   },
+   {
+    "median": -0.5,
+    "n": 5,
+    "name": "AEK Athens",
+    "rate": 0.2,
+    "safe": null
+   },
+   {
+    "median": -0.5,
+    "n": 11,
+    "name": "AJ Auxerre",
+    "rate": 0.2727,
+    "safe": 0.5
+   },
+   {
+    "median": -0.5,
+    "n": 11,
+    "name": "AS Monaco",
+    "rate": 0.3636,
+    "safe": 0.5
+   },
+   {
+    "median": -0.5,
+    "n": 13,
+    "name": "Alav\u00e9s",
+    "rate": 0.2308,
+    "safe": null
+   },
+   {
+    "median": -0.5,
+    "n": 16,
+    "name": "Aston Villa",
+    "rate": 0.4375,
+    "safe": null
+   },
+   {
+    "median": -0.5,
+    "n": 12,
+    "name": "Athletic Club",
+    "rate": 0.3333,
+    "safe": null
+   },
+   {
+    "median": -0.5,
+    "n": 5,
+    "name": "Bodo/Glimt",
+    "rate": 0.2,
+    "safe": null
+   },
+   {
+    "median": -0.5,
+    "n": 10,
+    "name": "Borussia M\u00f6nchengladbach",
+    "rate": 0.3,
+    "safe": null
+   },
+   {
+    "median": -0.5,
+    "n": 12,
+    "name": "Cagliari",
+    "rate": 0.1667,
+    "safe": null
+   },
+   {
+    "median": -0.5,
+    "n": 11,
+    "name": "Coventry City",
+    "rate": 0.2727,
+    "safe": null
+   },
+   {
+    "median": -0.5,
+    "n": 11,
+    "name": "Crystal Palace",
+    "rate": 0.3636,
+    "safe": null
+   },
+   {
+    "median": -0.5,
+    "n": 13,
+    "name": "Deportivo",
+    "rate": 0.3077,
+    "safe": null
+   },
+   {
+    "median": -0.5,
+    "n": 13,
+    "name": "Elche",
+    "rate": 0.3846,
+    "safe": null
+   },
+   {
+    "median": -0.5,
+    "n": 13,
+    "name": "Espanyol",
+    "rate": 0.1538,
+    "safe": 0.5
+   },
+   {
+    "median": -0.5,
+    "n": 11,
+    "name": "Everton",
+    "rate": 0.3636,
+    "safe": null
+   },
+   {
+    "median": -0.5,
+    "n": 10,
+    "name": "FC Cologne",
+    "rate": 0.2,
+    "safe": null
+   },
+   {
+    "median": -0.5,
+    "n": 5,
+    "name": "FC Porto",
+    "rate": 0.4,
+    "safe": null
+   },
+   {
+    "median": -0.5,
+    "n": 5,
+    "name": "Fenerbahce",
+    "rate": 0.4,
+    "safe": null
+   },
+   {
+    "median": -0.5,
+    "n": 12,
+    "name": "Fiorentina",
+    "rate": 0.3333,
+    "safe": null
+   },
+   {
+    "median": -0.5,
+    "n": 11,
+    "name": "Fulham",
+    "rate": 0.1818,
+    "safe": 0.5
+   },
+   {
+    "median": -0.5,
+    "n": 5,
+    "name": "Galatasaray",
+    "rate": 0.4,
+    "safe": null
+   },
+   {
+    "median": -0.5,
+    "n": 12,
+    "name": "Genoa",
+    "rate": 0.3333,
+    "safe": null
+   },
+   {
+    "median": -0.5,
+    "n": 11,
+    "name": "Hull City",
+    "rate": 0.4545,
+    "safe": null
+   },
+   {
+    "median": -0.5,
+    "n": 11,
+    "name": "Le Havre AC",
+    "rate": 0.1818,
+    "safe": null
+   },
+   {
+    "median": -0.5,
+    "n": 11,
+    "name": "Le Mans",
+    "rate": 0.4545,
+    "safe": 0.5
+   },
+   {
+    "median": -0.5,
+    "n": 12,
+    "name": "Lecce",
+    "rate": 0.25,
+    "safe": null
+   },
+   {
+    "median": -0.5,
+    "n": 11,
+    "name": "Leeds United",
+    "rate": 0.1818,
+    "safe": null
+   },
+   {
+    "median": -0.5,
+    "n": 16,
+    "name": "Lens",
+    "rate": 0.375,
+    "safe": null
+   },
+   {
+    "median": -0.5,
+    "n": 13,
+    "name": "Levante",
+    "rate": 0.3077,
+    "safe": null
+   },
+   {
+    "median": -0.5,
+    "n": 16,
+    "name": "Lille",
+    "rate": 0.4375,
+    "safe": null
+   },
+   {
+    "median": -0.5,
+    "n": 11,
+    "name": "Lorient",
+    "rate": 0.1818,
+    "safe": null
+   },
+   {
+    "median": -0.5,
+    "n": 11,
+    "name": "Lyon",
+    "rate": 0.4545,
+    "safe": null
+   },
+   {
+    "median": -0.5,
+    "n": 10,
+    "name": "Mainz",
+    "rate": 0.4,
+    "safe": 0.5
+   },
+   {
+    "median": -0.5,
+    "n": 16,
+    "name": "Manchester United",
+    "rate": 0.375,
+    "safe": null
+   },
+   {
+    "median": -0.5,
+    "n": 13,
+    "name": "M\u00e1laga",
+    "rate": 0.0769,
+    "safe": null
+   },
+   {
+    "median": -0.5,
+    "n": 17,
+    "name": "Napoli",
+    "rate": 0.4118,
+    "safe": 0.5
+   },
+   {
+    "median": -0.5,
+    "n": 13,
+    "name": "Osasuna",
+    "rate": 0.3077,
+    "safe": null
+   },
+   {
+    "median": -0.5,
+    "n": 5,
+    "name": "PSV Eindhoven",
+    "rate": 0.0,
+    "safe": null
+   },
+   {
+    "median": -0.5,
+    "n": 12,
+    "name": "Parma",
+    "rate": 0.1667,
+    "safe": null
+   },
+   {
+    "median": -0.5,
+    "n": 12,
+    "name": "Rayo Vallecano",
+    "rate": 0.3333,
+    "safe": null
+   },
+   {
+    "median": -0.5,
+    "n": 10,
+    "name": "SV Elversberg",
+    "rate": 0.4,
+    "safe": null
+   },
+   {
+    "median": -0.5,
+    "n": 5,
+    "name": "Sabah FK",
+    "rate": 0.2,
+    "safe": null
+   },
+   {
+    "median": -0.5,
+    "n": 13,
+    "name": "Sevilla",
+    "rate": 0.3077,
+    "safe": 0.5
+   },
+   {
+    "median": -0.5,
+    "n": 5,
+    "name": "Slavia Prague",
+    "rate": 0.4,
+    "safe": null
+   },
+   {
+    "median": -0.5,
+    "n": 11,
+    "name": "Strasbourg",
+    "rate": 0.2727,
+    "safe": null
+   },
+   {
+    "median": -0.5,
+    "n": 11,
+    "name": "Sunderland",
+    "rate": 0.0909,
+    "safe": null
+   },
+   {
+    "median": -0.5,
+    "n": 12,
+    "name": "Torino",
+    "rate": 0.3333,
+    "safe": null
+   },
+   {
+    "median": -0.5,
+    "n": 11,
+    "name": "Tottenham Hotspur",
+    "rate": 0.4545,
+    "safe": null
+   },
+   {
+    "median": -0.5,
+    "n": 12,
+    "name": "Udinese",
+    "rate": 0.25,
+    "safe": null
+   },
+   {
+    "median": -0.5,
+    "n": 13,
+    "name": "Valencia",
+    "rate": 0.1538,
+    "safe": null
+   },
+   {
+    "median": -0.5,
+    "n": 15,
+    "name": "VfB Stuttgart",
+    "rate": 0.4,
+    "safe": null
+   },
+   {
+    "median": -0.5,
+    "n": 5,
+    "name": "Viking FK",
+    "rate": 0.4,
+    "safe": null
+   },
+   {
+    "median": -1.0,
+    "n": 10,
+    "name": "Hamburg SV",
+    "rate": 0.3,
+    "safe": null
+   },
+   {
+    "median": -1.5,
+    "n": 11,
+    "name": "Angers",
+    "rate": 0.2727,
+    "safe": null
+   },
+   {
+    "median": -1.5,
+    "n": 13,
+    "name": "Celta Vigo",
+    "rate": 0.1538,
+    "safe": null
+   },
+   {
+    "median": -1.5,
+    "n": 5,
+    "name": "Feyenoord Rotterdam",
+    "rate": 0.2,
+    "safe": null
+   },
+   {
+    "median": -1.5,
+    "n": 13,
+    "name": "Getafe",
+    "rate": 0.0769,
+    "safe": null
+   },
+   {
+    "median": -1.5,
+    "n": 11,
+    "name": "Nottingham Forest",
+    "rate": 0.2727,
+    "safe": null
+   },
+   {
+    "median": -1.5,
+    "n": 10,
+    "name": "SC Paderborn 07",
+    "rate": 0.3,
+    "safe": null
+   },
+   {
+    "median": -1.5,
+    "n": 10,
+    "name": "Schalke 04",
+    "rate": 0.1,
+    "safe": null
+   },
+   {
+    "median": -1.5,
+    "n": 5,
+    "name": "Shakhtar Donetsk",
+    "rate": 0.2,
+    "safe": null
+   },
+   {
+    "median": -1.5,
+    "n": 5,
+    "name": "Slovan Bratislava",
+    "rate": 0.0,
+    "safe": null
+   },
+   {
+    "median": -1.5,
+    "n": 11,
+    "name": "Troyes",
+    "rate": 0.3636,
+    "safe": null
+   },
+   {
+    "median": -1.5,
+    "n": 12,
+    "name": "Venezia",
+    "rate": 0.25,
+    "safe": null
+   }
+  ],
+  "u35": [
+   {
+    "median": 2.5,
+    "n": 5,
+    "name": "Bodo/Glimt",
+    "rate": 0.6,
+    "safe": null
+   },
+   {
+    "median": 2.5,
+    "n": 5,
+    "name": "Shakhtar Donetsk",
+    "rate": 0.8,
+    "safe": null
+   },
+   {
+    "median": 2.5,
+    "n": 13,
+    "name": "Valencia",
+    "rate": 0.6923,
+    "safe": 4.5
+   },
+   {
+    "median": 2.0,
+    "n": 10,
+    "name": "Schalke 04",
+    "rate": 0.9,
+    "safe": 3.5
+   },
+   {
+    "median": 1.5,
+    "n": 11,
+    "name": "AS Monaco",
+    "rate": 0.8182,
+    "safe": 3.5
+   },
+   {
+    "median": 1.5,
+    "n": 11,
+    "name": "Angers",
+    "rate": 0.6364,
+    "safe": 4.5
+   },
+   {
+    "median": 1.5,
+    "n": 12,
+    "name": "Athletic Club",
+    "rate": 0.75,
+    "safe": 4.5
+   },
+   {
+    "median": 1.5,
+    "n": 11,
+    "name": "Brighton & Hove Albion",
+    "rate": 0.6364,
+    "safe": 5.5
+   },
+   {
+    "median": 1.5,
+    "n": 12,
+    "name": "Cagliari",
+    "rate": 0.8333,
+    "safe": 3.5
+   },
+   {
+    "median": 1.5,
+    "n": 13,
+    "name": "Celta Vigo",
+    "rate": 0.9231,
+    "safe": 3.5
+   },
+   {
+    "median": 1.5,
+    "n": 13,
+    "name": "Deportivo",
+    "rate": 0.6923,
+    "safe": 4.5
+   },
+   {
+    "median": 1.5,
+    "n": 13,
+    "name": "Elche",
+    "rate": 0.6154,
+    "safe": 5.5
+   },
+   {
+    "median": 1.5,
+    "n": 13,
+    "name": "Espanyol",
+    "rate": 0.9231,
+    "safe": 3.5
+   },
+   {
+    "median": 1.5,
+    "n": 11,
+    "name": "Everton",
+    "rate": 0.6364,
+    "safe": 4.5
+   },
+   {
+    "median": 1.5,
+    "n": 5,
+    "name": "FC Porto",
+    "rate": 0.6,
+    "safe": null
+   },
+   {
+    "median": 1.5,
+    "n": 11,
+    "name": "Fulham",
+    "rate": 0.8182,
+    "safe": 3.5
+   },
+   {
+    "median": 1.5,
+    "n": 12,
+    "name": "Genoa",
+    "rate": 0.9167,
+    "safe": 3.5
+   },
+   {
+    "median": 1.5,
+    "n": 13,
+    "name": "Getafe",
+    "rate": 0.8462,
+    "safe": 3.5
+   },
+   {
+    "median": 1.5,
+    "n": 11,
+    "name": "Hull City",
+    "rate": 0.7273,
+    "safe": 4.5
+   },
+   {
+    "median": 1.5,
+    "n": 12,
+    "name": "Juventus",
+    "rate": 0.75,
+    "safe": 4.5
+   },
+   {
+    "median": 1.5,
+    "n": 11,
+    "name": "Leeds United",
+    "rate": 0.8182,
+    "safe": 3.5
+   },
+   {
+    "median": 1.5,
+    "n": 16,
+    "name": "Lille",
+    "rate": 0.8125,
+    "safe": 4.5
+   },
+   {
+    "median": 1.5,
+    "n": 11,
+    "name": "Lorient",
+    "rate": 0.9091,
+    "safe": 3.5
+   },
+   {
+    "median": 1.5,
+    "n": 11,
+    "name": "Lyon",
+    "rate": 0.8182,
+    "safe": 3.5
+   },
+   {
+    "median": 1.5,
+    "n": 13,
+    "name": "M\u00e1laga",
+    "rate": 0.7692,
+    "safe": 4.5
+   },
+   {
+    "median": 1.5,
+    "n": 11,
+    "name": "Nottingham Forest",
+    "rate": 0.7273,
+    "safe": 4.5
+   },
+   {
+    "median": 1.5,
+    "n": 13,
+    "name": "Osasuna",
+    "rate": 0.7692,
+    "safe": 4.5
+   },
+   {
+    "median": 1.5,
+    "n": 5,
+    "name": "PSV Eindhoven",
+    "rate": 0.8,
+    "safe": null
+   },
+   {
+    "median": 1.5,
+    "n": 18,
+    "name": "Real Betis",
+    "rate": 0.7222,
+    "safe": 5.5
+   },
+   {
+    "median": 1.5,
+    "n": 11,
+    "name": "Sunderland",
+    "rate": 0.8182,
+    "safe": 3.5
+   },
+   {
+    "median": 1.5,
+    "n": 11,
+    "name": "Tottenham Hotspur",
+    "rate": 0.8182,
+    "safe": 3.5
+   },
+   {
+    "median": 1.5,
+    "n": 11,
+    "name": "Troyes",
+    "rate": 0.7273,
+    "safe": 4.5
+   },
+   {
+    "median": 1.5,
+    "n": 12,
+    "name": "Venezia",
+    "rate": 0.6667,
+    "safe": 4.5
+   },
+   {
+    "median": 1.5,
+    "n": 15,
+    "name": "VfB Stuttgart",
+    "rate": 0.6667,
+    "safe": 5.5
+   },
+   {
+    "median": 1.0,
+    "n": 16,
+    "name": "Arsenal",
+    "rate": 0.875,
+    "safe": 3.5
+   },
+   {
+    "median": 1.0,
+    "n": 12,
+    "name": "Bologna",
+    "rate": 0.75,
+    "safe": 4.5
+   },
+   {
+    "median": 1.0,
+    "n": 10,
+    "name": "FC Cologne",
+    "rate": 0.8,
+    "safe": 5.5
+   },
+   {
+    "median": 1.0,
+    "n": 10,
+    "name": "SC Paderborn 07",
+    "rate": 0.6,
+    "safe": 4.5
+   },
+   {
+    "median": 0.5,
+    "n": 10,
+    "name": "1. FC Union Berlin",
+    "rate": 0.5,
+    "safe": 6.5
+   },
+   {
+    "median": 0.5,
+    "n": 12,
+    "name": "AC Milan",
+    "rate": 0.5833,
+    "safe": 5.5
+   },
+   {
+    "median": 0.5,
+    "n": 11,
+    "name": "AFC Bournemouth",
+    "rate": 0.7273,
+    "safe": 4.5
+   },
+   {
+    "median": 0.5,
+    "n": 13,
+    "name": "Alav\u00e9s",
+    "rate": 0.7692,
+    "safe": 4.5
+   },
+   {
+    "median": 0.5,
+    "n": 16,
+    "name": "Aston Villa",
+    "rate": 0.5625,
+    "safe": 5.5
+   },
+   {
+    "median": 0.5,
+    "n": 12,
+    "name": "Atalanta",
+    "rate": 0.5833,
+    "safe": 5.5
+   },
+   {
+    "median": 0.5,
+    "n": 18,
+    "name": "Atl\u00e9tico Madrid",
+    "rate": 0.8333,
+    "safe": 3.5
+   },
+   {
+    "median": 0.5,
+    "n": 15,
+    "name": "Borussia Dortmund",
+    "rate": 0.7333,
+    "safe": 4.5
+   },
+   {
+    "median": 0.5,
+    "n": 11,
+    "name": "Brentford",
+    "rate": 0.7273,
+    "safe": 4.5
+   },
+   {
+    "median": 0.5,
+    "n": 11,
+    "name": "Brest",
+    "rate": 0.7273,
+    "safe": 4.5
+   },
+   {
+    "median": 0.5,
+    "n": 11,
+    "name": "Chelsea",
+    "rate": 0.5455,
+    "safe": 5.5
+   },
+   {
+    "median": 0.5,
+    "n": 5,
+    "name": "Club Brugge",
+    "rate": 0.6,
+    "safe": null
+   },
+   {
+    "median": 0.5,
+    "n": 17,
+    "name": "Como",
+    "rate": 0.5882,
+    "safe": 5.5
+   },
+   {
+    "median": 0.5,
+    "n": 5,
+    "name": "Feyenoord Rotterdam",
+    "rate": 0.6,
+    "safe": null
+   },
+   {
+    "median": 0.5,
+    "n": 12,
+    "name": "Frosinone",
+    "rate": 0.5833,
+    "safe": 6.5
+   },
+   {
+    "median": 0.5,
+    "n": 17,
+    "name": "Internazionale",
+    "rate": 0.5294,
+    "safe": 5.5
+   },
+   {
+    "median": 0.5,
+    "n": 11,
+    "name": "Ipswich Town",
+    "rate": 0.6364,
+    "safe": 5.5
+   },
+   {
+    "median": 0.5,
+    "n": 12,
+    "name": "Lazio",
+    "rate": 0.75,
+    "safe": 4.5
+   },
+   {
+    "median": 0.5,
+    "n": 11,
+    "name": "Le Havre AC",
+    "rate": 0.5455,
+    "safe": 5.5
+   },
+   {
+    "median": 0.5,
+    "n": 11,
+    "name": "Le Mans",
+    "rate": 0.5455,
+    "safe": 4.5
+   },
+   {
+    "median": 0.5,
+    "n": 12,
+    "name": "Lecce",
+    "rate": 0.75,
+    "safe": 4.5
+   },
+   {
+    "median": 0.5,
+    "n": 16,
+    "name": "Lens",
+    "rate": 0.625,
+    "safe": 5.5
+   },
+   {
+    "median": 0.5,
+    "n": 13,
+    "name": "Levante",
+    "rate": 0.6154,
+    "safe": 6.5
+   },
+   {
+    "median": 0.5,
+    "n": 16,
+    "name": "Liverpool",
+    "rate": 0.5625,
+    "safe": 5.5
+   },
+   {
+    "median": 0.5,
+    "n": 11,
+    "name": "Marseille",
+    "rate": 0.5455,
+    "safe": 5.5
+   },
+   {
+    "median": 0.5,
+    "n": 17,
+    "name": "Napoli",
+    "rate": 0.5882,
+    "safe": 5.5
+   },
+   {
+    "median": 0.5,
+    "n": 11,
+    "name": "Newcastle United",
+    "rate": 0.5455,
+    "safe": 4.5
+   },
+   {
+    "median": 0.5,
+    "n": 11,
+    "name": "Nice",
+    "rate": 0.8182,
+    "safe": 3.5
+   },
+   {
+    "median": 0.5,
+    "n": 11,
+    "name": "Paris FC",
+    "rate": 0.6364,
+    "safe": 4.5
+   },
+   {
+    "median": 0.5,
+    "n": 12,
+    "name": "Parma",
+    "rate": 0.9167,
+    "safe": 3.5
+   },
+   {
+    "median": 0.5,
+    "n": 12,
+    "name": "Rayo Vallecano",
+    "rate": 0.75,
+    "safe": 5.5
+   },
+   {
+    "median": 0.5,
+    "n": 13,
+    "name": "Real Sociedad",
+    "rate": 0.5385,
+    "safe": 5.5
+   },
+   {
+    "median": 0.5,
+    "n": 10,
+    "name": "SC Freiburg",
+    "rate": 0.6,
+    "safe": 5.5
+   },
+   {
+    "median": 0.5,
+    "n": 12,
+    "name": "Sassuolo",
+    "rate": 0.5833,
+    "safe": 6.5
+   },
+   {
+    "median": 0.5,
+    "n": 13,
+    "name": "Sevilla",
+    "rate": 0.5385,
+    "safe": 4.5
+   },
+   {
+    "median": 0.5,
+    "n": 5,
+    "name": "Slavia Prague",
+    "rate": 0.6,
+    "safe": null
+   },
+   {
+    "median": 0.5,
+    "n": 11,
+    "name": "Strasbourg",
+    "rate": 0.5455,
+    "safe": 4.5
+   },
+   {
+    "median": 0.5,
+    "n": 10,
+    "name": "TSG Hoffenheim",
+    "rate": 0.6,
+    "safe": 5.5
+   },
+   {
+    "median": 0.5,
+    "n": 12,
+    "name": "Torino",
+    "rate": 0.8333,
+    "safe": 3.5
+   },
+   {
+    "median": 0.5,
+    "n": 11,
+    "name": "Toulouse",
+    "rate": 0.5455,
+    "safe": 4.5
+   },
+   {
+    "median": 0.5,
+    "n": 12,
+    "name": "Udinese",
+    "rate": 0.75,
+    "safe": 5.5
+   },
+   {
+    "median": 0.0,
+    "n": 10,
+    "name": "Borussia M\u00f6nchengladbach",
+    "rate": 0.5,
+    "safe": 7.5
+   },
+   {
+    "median": 0.0,
+    "n": 12,
+    "name": "Fiorentina",
+    "rate": 0.5,
+    "safe": 4.5
+   },
+   {
+    "median": 0.0,
+    "n": 16,
+    "name": "Manchester City",
+    "rate": 0.5,
+    "safe": 6.5
+   },
+   {
+    "median": 0.0,
+    "n": 16,
+    "name": "Manchester United",
+    "rate": 0.5,
+    "safe": 5.5
+   },
+   {
+    "median": 0.0,
+    "n": 18,
+    "name": "Real Madrid",
+    "rate": 0.5,
+    "safe": 5.5
+   },
+   {
+    "median": 0.0,
+    "n": 10,
+    "name": "SV Elversberg",
+    "rate": 0.5,
+    "safe": 7.5
+   },
+   {
+    "median": -0.5,
+    "n": 5,
+    "name": "AEK Athens",
+    "rate": 0.4,
+    "safe": null
+   },
+   {
+    "median": -0.5,
+    "n": 11,
+    "name": "AJ Auxerre",
+    "rate": 0.4545,
+    "safe": 5.5
+   },
+   {
+    "median": -0.5,
+    "n": 17,
+    "name": "AS Roma",
+    "rate": 0.3529,
+    "safe": 6.5
+   },
+   {
+    "median": -0.5,
+    "n": 10,
+    "name": "Bayer Leverkusen",
+    "rate": 0.4,
+    "safe": 6.5
+   },
+   {
+    "median": -0.5,
+    "n": 15,
+    "name": "Bayern Munich",
+    "rate": 0.4,
+    "safe": 6.5
+   },
+   {
+    "median": -0.5,
+    "n": 11,
+    "name": "Coventry City",
+    "rate": 0.4545,
+    "safe": 5.5
+   },
+   {
+    "median": -0.5,
+    "n": 11,
+    "name": "Crystal Palace",
+    "rate": 0.3636,
+    "safe": 5.5
+   },
+   {
+    "median": -0.5,
+    "n": 10,
+    "name": "Eintracht Frankfurt",
+    "rate": 0.3,
+    "safe": 6.5
+   },
+   {
+    "median": -0.5,
+    "n": 10,
+    "name": "FC Augsburg",
+    "rate": 0.3,
+    "safe": 7.5
+   },
+   {
+    "median": -0.5,
+    "n": 5,
+    "name": "Fenerbahce",
+    "rate": 0.4,
+    "safe": null
+   },
+   {
+    "median": -0.5,
+    "n": 5,
+    "name": "Galatasaray",
+    "rate": 0.4,
+    "safe": null
+   },
+   {
+    "median": -0.5,
+    "n": 10,
+    "name": "Hamburg SV",
+    "rate": 0.4,
+    "safe": 5.5
+   },
+   {
+    "median": -0.5,
+    "n": 5,
+    "name": "LASK Linz",
+    "rate": 0.4,
+    "safe": null
+   },
+   {
+    "median": -0.5,
+    "n": 12,
+    "name": "Monza",
+    "rate": 0.4167,
+    "safe": 5.5
+   },
+   {
+    "median": -0.5,
+    "n": 16,
+    "name": "Paris Saint-Germain",
+    "rate": 0.3125,
+    "safe": 6.5
+   },
+   {
+    "median": -0.5,
+    "n": 13,
+    "name": "Racing Santander",
+    "rate": 0.4615,
+    "safe": 5.5
+   },
+   {
+    "median": -0.5,
+    "n": 5,
+    "name": "Sabah FK",
+    "rate": 0.4,
+    "safe": null
+   },
+   {
+    "median": -0.5,
+    "n": 5,
+    "name": "Slovan Bratislava",
+    "rate": 0.4,
+    "safe": null
+   },
+   {
+    "median": -0.5,
+    "n": 5,
+    "name": "Sporting CP",
+    "rate": 0.4,
+    "safe": null
+   },
+   {
+    "median": -0.5,
+    "n": 11,
+    "name": "Stade Rennais",
+    "rate": 0.4545,
+    "safe": 5.5
+   },
+   {
+    "median": -0.5,
+    "n": 5,
+    "name": "Viking FK",
+    "rate": 0.2,
+    "safe": null
+   },
+   {
+    "median": -0.5,
+    "n": 18,
+    "name": "Villarreal",
+    "rate": 0.4444,
+    "safe": 5.5
+   },
+   {
+    "median": -0.5,
+    "n": 10,
+    "name": "Werder Bremen",
+    "rate": 0.3,
+    "safe": 5.5
+   },
+   {
+    "median": -1.0,
+    "n": 10,
+    "name": "Mainz",
+    "rate": 0.3,
+    "safe": 7.5
+   },
+   {
+    "median": -1.5,
+    "n": 18,
+    "name": "Barcelona",
+    "rate": 0.2778,
+    "safe": 7.5
+   },
+   {
+    "median": -1.5,
+    "n": 15,
+    "name": "RB Leipzig",
+    "rate": 0.2667,
+    "safe": 6.5
+   }
+  ]
+ },
  "error": null,
  "games_through": "2026-11-25",
- "last_run": "2026-11-26T02:53:11.089355+00:00",
+ "last_run": "2026-11-26T12:43:35.723055+00:00",
  "registered": "2026-11-23",
  "rules": {
   "club82_tt15": {
@@ -1717,6 +3277,18 @@
      "ticker": "KXUCLTOTAL-26NOV25SPOMUN-4"
     }
    ]
+  },
+  "club82_v2_tt15_cushion": {
+   "picks": []
+  },
+  "club82_v2_tt15_value": {
+   "picks": []
+  },
+  "club82_v2_u35_cushion": {
+   "picks": []
+  },
+  "club82_v2_u35_value": {
+   "picks": []
   }
  },
  "runs": [
@@ -1832,6 +3404,11 @@
   },
   {
    "at": "2026-11-26T02:53:11.089355+00:00",
+   "due": 0,
+   "new": 0
+  },
+  {
+   "at": "2026-11-26T12:43:35.723055+00:00",
    "due": 0,
    "new": 0
   }
