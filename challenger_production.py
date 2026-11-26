@@ -78,6 +78,27 @@ def _ask(market):
         return None
 
 
+def _venue_result(m):
+    """'a', 'b', 'void', ('price', dollars) or None for side A's Kalshi market.
+
+    A plain yes or no is side A or side B. Kalshi finalizes a match that never had a ball
+    played (walkover, injury before the start) as result 'scalar' with a fair price per side
+    (2026-11-24: Florianopolis Huertas Del Pino v Storck Franca paid 0.38 / 0.62). That goes
+    through the Sandbox's own reading, sandbox_sources.classify_kalshi_market: 0.99 or more is
+    side A, 0.01 or less is side B, a number between is a price payout, anything unusable is void.
+    Any other result stays open.
+    """
+    result = str(m.get("result") or "").strip().lower()
+    if result == "yes":
+        return "a"
+    if result == "no":
+        return "b"
+    if result != "scalar":
+        return None
+    import sandbox_sources as S
+    return S.classify_kalshi_market(m)
+
+
 def scan(now, state, fetch=D.get):
     """List new picks into the ledger from the open events, then grade the open ones from the settled window."""
     errors = []
@@ -108,10 +129,21 @@ def scan(now, state, fetch=D.get):
     by_ticker = {m["ticker"]: m for ev in settled for m in ev.get("markets") or []}
     for q in state["quotes"].values():
         m = by_ticker.get(q["tickers"]["a"])
-        if q["status"] != "open" or not m or m.get("result") not in ("yes", "no"):
+        if q["status"] != "open" or not m:
             continue
-        won = m["result"] == "yes"
+        res = _venue_result(m)
+        if res is None:
+            continue
         p = q["price"]
+        if isinstance(res, tuple):                      # a fair-price payout (walkover, retirement before a ball)
+            paid = res[1]
+            q.update(status="settled", result="price", settled=m.get("settlement_ts"), settle_px=paid,
+                     pnl=round(STAKE * (paid / p - 1), 2) if p else 0.0)
+            continue
+        if res == "void":
+            q.update(status="void", result="void", settled=m.get("settlement_ts"), settle_px=None, pnl=0.0)
+            continue
+        won = res == "a"
         q.update(status="won" if won else "lost", result="a" if won else "b", settled=m.get("settlement_ts"),
                  settle_px=1.0 if won else 0.0, pnl=round(STAKE * (1 / p - 1), 2) if won and p else -STAKE)
     state["last_run"] = now.replace(microsecond=0).isoformat()

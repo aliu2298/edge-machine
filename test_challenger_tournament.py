@@ -67,5 +67,34 @@ check("the band the follower enforces is published", blob["bands"], {"challenger
 stale = CP.feed(dict(state, last_run=(now - dt.timedelta(hours=5)).isoformat()), now=now + dt.timedelta(minutes=5))
 check("an open pick is not published when the scan is stale", stale["leads"], {})
 
+
+# grading: Kalshi finalizes a match with no ball played (walkover) as result 'scalar' with a fair price
+# per side (2026-11-24 Florianopolis: 0.38 / 0.62). The settler used to accept only yes or no, so the
+# pick stayed open for good. A plain yes/no still grades won/lost; a mid price is a price payout.
+def graded(markets_by_event, price=0.48):
+    st = {"quotes": {}, "last_run": None, "error": None}
+    evs = []
+    for tk, (ra, rb, va, vb) in markets_by_event.items():
+        ta, tb = f"{tk}-AAA", f"{tk}-BBB"
+        ev_ = dict(event_ticker=tk, product_metadata={"competition": gen}, markets=[
+            dict(ticker=ta, result=ra, status="finalized", settlement_value_dollars=va, settlement_ts="2026-11-25T15:47:46Z"),
+            dict(ticker=tb, result=rb, status="finalized", settlement_value_dollars=vb, settlement_ts="2026-11-25T15:47:46Z")])
+        evs.append(ev_)
+        qq = CP._quote(ev_, ev_["markets"][0], ev_["markets"][1], "Alpha", "Beta", int(now.timestamp()) - 86400, now, price)
+        st["quotes"][qq["id"]] = qq
+    fetch = lambda path: {"events": evs if "status=settled" in path else []}
+    CP.F._WINDOWS.clear()
+    return {q["market_id"]: q for q in CP.scan(now, st, fetch)["quotes"].values()}
+
+g = graded({"EW": ("scalar", "scalar", "0.3800", "0.6200"), "EY": ("yes", "no", "1.0000", "0.0000"),
+            "EN": ("no", "yes", "0.0000", "1.0000"), "ES": ("scalar", "scalar", "0.9900", "0.0100"),
+            "EP": (None, None, "", "")})
+check("a walkover's scalar fair price settles as a price payout, not left open",
+      (g["EW"]["status"], g["EW"]["result"], g["EW"]["settle_px"], g["EW"]["pnl"]), ("settled", "price", 0.38, round(100 * (0.38 / 0.48 - 1), 2)))
+check("a plain yes still grades won", (g["EY"]["status"], g["EY"]["result"]), ("won", "a"))
+check("a plain no still grades lost", (g["EN"]["status"], g["EN"]["pnl"]), ("lost", -100.0))
+check("a scalar at 0.99 is side A's win, as the Sandbox reads it", g["ES"]["status"], "won")
+check("a market with no result stays open", g["EP"]["status"], "open")
+
 print(f"\n{'ALL PASS' if not FAILS else str(len(FAILS)) + ' FAILED'}")
 raise SystemExit(1 if FAILS else 0)
