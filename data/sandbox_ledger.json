@@ -8,10 +8,10 @@
   },
   "commodities": {
    "cmd_market": {
-    "offered": 225,
-    "picked": 225
+    "offered": 200,
+    "picked": 200
    },
-   "kalshi_venue": 225
+   "kalshi_venue": 200
   },
   "commodities_fav": {
    "kalshi_venue": 160
@@ -33,7 +33,7 @@
    "kalshi_venue": 525
   },
   "economics": {
-   "kalshi_venue": 38
+   "kalshi_venue": 34
   },
   "finance": {
    "kalshi_venue": 30
@@ -61,7 +61,7 @@
     "offered": 9,
     "picked": 0
    },
-   "kalshi_venue": 244,
+   "kalshi_venue": 237,
    "polymarket_us": 0,
    "polymarket_us_listed": 0,
    "polymarket_us_priced": 0
@@ -108,18 +108,18 @@
   },
   "soccer_ftts": {
    "ftts_lineup_lag": {
-    "offered": 72,
+    "offered": 36,
     "picked": 0
    },
    "ftts_market": {
-    "offered": 72,
-    "picked": 72
+    "offered": 36,
+    "picked": 36
    },
    "ftts_no_70_80": {
-    "offered": 72,
-    "picked": 2
+    "offered": 36,
+    "picked": 0
    },
-   "kalshi_venue": 72
+   "kalshi_venue": 36
   },
   "soccer_o05": {
    "kalshi_venue": 0,
@@ -322,59 +322,59 @@
   "tennis": {
    "kalshi_venue": 6,
    "polymarket_us": 40,
-   "polymarket_us_listed": 236,
-   "polymarket_us_priced": 65
+   "polymarket_us_listed": 232,
+   "polymarket_us_priced": 63
   },
   "tennis_combo": {
    "combo": 0,
    "legs": 0
   },
   "tennis_pmcombo": {
-   "combo": 4,
-   "legs": 6
+   "combo": 5,
+   "legs": 7
   }
  },
  "feed_status": {},
  "meta": {
   "created": "2026-09-10T04:42:15+00:00",
   "lane_reads": {
-   "boxing": "2026-11-26T17:19:44+00:00",
-   "commodities": "2026-11-26T17:19:44+00:00",
-   "commodities_fav": "2026-11-26T17:19:44+00:00",
-   "cricket": "2026-11-26T17:19:44+00:00",
-   "crypto": "2026-11-26T17:19:44+00:00",
-   "crypto_fav": "2026-11-26T17:19:44+00:00",
-   "economics": "2026-11-26T17:19:44+00:00",
-   "finance": "2026-11-26T17:19:44+00:00",
+   "boxing": "2026-11-26T17:26:46+00:00",
+   "commodities": "2026-11-26T17:26:46+00:00",
+   "commodities_fav": "2026-11-26T17:26:46+00:00",
+   "cricket": "2026-11-26T17:26:46+00:00",
+   "crypto": "2026-11-26T17:26:46+00:00",
+   "crypto_fav": "2026-11-26T17:26:46+00:00",
+   "economics": "2026-11-26T17:26:46+00:00",
+   "finance": "2026-11-26T17:26:46+00:00",
    "mma": "2026-11-21T20:10:14+00:00",
-   "nfl": "2026-11-26T17:19:44+00:00",
-   "nhl_pl": "2026-11-26T17:19:44+00:00",
-   "nhl_rest": "2026-11-26T17:19:44+00:00",
-   "soccer": "2026-11-26T17:19:44+00:00",
-   "soccer_btts": "2026-11-26T17:19:44+00:00",
-   "soccer_btts_cup": "2026-11-26T17:19:44+00:00",
+   "nfl": "2026-11-26T17:26:46+00:00",
+   "nhl_pl": "2026-11-26T17:26:46+00:00",
+   "nhl_rest": "2026-11-26T17:26:46+00:00",
+   "soccer": "2026-11-26T17:26:46+00:00",
+   "soccer_btts": "2026-11-26T17:26:46+00:00",
+   "soccer_btts_cup": "2026-11-26T17:26:46+00:00",
    "soccer_btts_intl": "2026-11-17T23:27:07+00:00",
-   "soccer_corners": "2026-11-26T17:19:44+00:00",
-   "soccer_ftts": "2026-11-26T17:19:44+00:00",
-   "soccer_o15": "2026-11-26T17:19:44+00:00",
-   "soccer_o15_cup": "2026-11-26T17:19:44+00:00",
+   "soccer_corners": "2026-11-26T17:26:46+00:00",
+   "soccer_ftts": "2026-11-26T17:26:46+00:00",
+   "soccer_o15": "2026-11-26T17:26:46+00:00",
+   "soccer_o15_cup": "2026-11-26T17:26:46+00:00",
    "soccer_o15_intl": "2026-11-17T23:27:07+00:00",
-   "soccer_o25": "2026-11-26T17:19:44+00:00",
-   "soccer_o25_cup": "2026-11-26T17:19:44+00:00",
+   "soccer_o25": "2026-11-26T17:26:46+00:00",
+   "soccer_o25_cup": "2026-11-26T17:26:46+00:00",
    "soccer_o25_intl": "2026-11-17T23:27:07+00:00",
-   "soccer_p05": "2026-11-26T17:19:44+00:00",
-   "soccer_p05_cup": "2026-11-26T17:19:44+00:00",
+   "soccer_p05": "2026-11-26T17:26:46+00:00",
+   "soccer_p05_cup": "2026-11-26T17:26:46+00:00",
    "soccer_p05_intl": "2026-11-17T23:27:07+00:00",
-   "soccer_team1": "2026-11-26T17:19:44+00:00",
-   "soccer_team1_cup": "2026-11-26T17:19:44+00:00",
+   "soccer_team1": "2026-11-26T17:26:46+00:00",
+   "soccer_team1_cup": "2026-11-26T17:26:46+00:00",
    "soccer_team1_intl": "2026-11-17T19:33:51+00:00",
-   "soccer_team2": "2026-11-26T17:19:44+00:00",
-   "soccer_team2_cup": "2026-11-26T17:19:44+00:00",
+   "soccer_team2": "2026-11-26T17:26:46+00:00",
+   "soccer_team2_cup": "2026-11-26T17:26:46+00:00",
    "soccer_team2_intl": "2026-11-17T19:33:51+00:00",
-   "soccer_u35": "2026-11-26T17:19:44+00:00",
-   "soccer_u35_cup": "2026-11-26T17:19:44+00:00",
+   "soccer_u35": "2026-11-26T17:26:46+00:00",
+   "soccer_u35_cup": "2026-11-26T17:26:46+00:00",
    "soccer_u35_intl": "2026-11-17T23:27:07+00:00",
-   "tennis": "2026-11-26T17:19:44+00:00",
+   "tennis": "2026-11-26T17:26:46+00:00",
    "tennis_pmcombo": "2026-10-13T22:45:29+00:00"
   },
   "lane_skips": {
@@ -697,7 +697,7 @@
    }
   },
   "odds_api": {
-   "at": "2026-11-26T17:19:44+00:00",
+   "at": "2026-11-26T17:26:46+00:00",
    "remaining": 175,
    "used": 325
   },
@@ -718,7 +718,7 @@
     "start": "2026-09-28T22:15:10Z"
    }
   ],
-  "runs": 2980,
+  "runs": 2981,
   "tennis_shortlist": {
    "audit": [
     {
@@ -730,7 +730,7 @@
    "daily_limit": 3,
    "day": "2026-11-02"
   },
-  "updated": "2026-11-26T17:20:11+00:00"
+  "updated": "2026-11-26T17:27:13+00:00"
  },
  "quotes": [
   {
@@ -405124,7 +405124,7 @@
   },
   {
    "bet": true,
-   "close_at": "2026-11-26T17:19:44+00:00",
+   "close_at": "2026-11-26T17:26:46+00:00",
    "close_price": 0.53,
    "date": "2026-11-28",
    "edge": null,
@@ -440205,7 +440205,7 @@
   },
   {
    "bet": true,
-   "close_at": "2026-11-26T17:19:44+00:00",
+   "close_at": "2026-11-26T17:26:46+00:00",
    "close_price": 0.56,
    "date": "2026-11-29",
    "edge": null,
@@ -451939,7 +451939,7 @@
   },
   {
    "bet": true,
-   "close_at": "2026-11-26T17:19:44+00:00",
+   "close_at": "2026-11-26T17:26:46+00:00",
    "close_price": 0.81,
    "date": "2026-11-28",
    "edge": null,
@@ -475233,7 +475233,7 @@
   },
   {
    "bet": true,
-   "close_at": "2026-11-26T17:19:44+00:00",
+   "close_at": "2026-11-26T17:22:43+00:00",
    "close_price": 0.71,
    "date": "2026-11-26",
    "edge": null,
@@ -475359,7 +475359,7 @@
   },
   {
    "bet": true,
-   "close_at": "2026-11-26T17:19:44+00:00",
+   "close_at": "2026-11-26T17:22:43+00:00",
    "close_price": 0.78,
    "date": "2026-11-26",
    "edge": null,
@@ -475401,7 +475401,7 @@
   },
   {
    "bet": true,
-   "close_at": "2026-11-26T17:19:44+00:00",
+   "close_at": "2026-11-26T17:22:43+00:00",
    "close_price": 0.79,
    "date": "2026-11-26",
    "edge": null,
@@ -479254,6 +479254,194 @@
    "untraded": false,
    "url": "https://kalshi.com/markets/kxbundesligaftts",
    "venue": "kalshi_binary",
+   "venue_start": null
+  },
+  {
+   "bet": false,
+   "date": "2026-11-28",
+   "edge": -0.04,
+   "espn_away": "Lens",
+   "espn_home": "Angers",
+   "event": "KXLIGUE1TEAMTOTAL-26NOV28ANGRCL",
+   "id": "goals_market:KXLIGUE1TEAMTOTAL-26NOV28ANGRCL-RCL1",
+   "kalshi_title": "Lens over 0.5 goals",
+   "label": "Angers v Lens: Lens to score 1+",
+   "league": "Ligue 1",
+   "liquidity": null,
+   "logged": "2026-11-26T17:26:46+00:00",
+   "market_id": "KXLIGUE1TEAMTOTAL-26NOV28ANGRCL-RCL1",
+   "opponent": "Angers",
+   "pick": null,
+   "pnl": 0.0,
+   "price": null,
+   "price_a": 0.9,
+   "price_b": 0.18,
+   "price_draw": null,
+   "prob_a": 0.86,
+   "result": null,
+   "settled": null,
+   "side_a": "Yes",
+   "side_b": "No",
+   "source": "goals_market",
+   "sport": "soccer_team1",
+   "spread": null,
+   "stake": 0.0,
+   "start": "2026-11-28T16:15:00+00:00",
+   "start_source": "espn",
+   "status": "open",
+   "team": "Lens",
+   "uncovered": null,
+   "untraded": false,
+   "url": "https://kalshi.com/markets/kxligue1teamtotal",
+   "venue": "kalshi_binary",
+   "venue_start": null
+  },
+  {
+   "bet": false,
+   "date": "2026-11-28",
+   "edge": -0.045,
+   "espn_away": "Lens",
+   "espn_home": "Angers",
+   "event": "KXLIGUE1TEAMTOTAL-26NOV28ANGRCL",
+   "id": "goals_market:KXLIGUE1TEAMTOTAL-26NOV28ANGRCL-ANG2",
+   "kalshi_title": "Angers over 1.5 goals",
+   "label": "Angers v Lens: Angers to score 2+",
+   "league": "Ligue 1",
+   "liquidity": null,
+   "logged": "2026-11-26T17:26:46+00:00",
+   "market_id": "KXLIGUE1TEAMTOTAL-26NOV28ANGRCL-ANG2",
+   "opponent": "Lens",
+   "pick": null,
+   "pnl": 0.0,
+   "price": null,
+   "price_a": 0.33,
+   "price_b": 0.76,
+   "price_draw": null,
+   "prob_a": 0.285,
+   "result": null,
+   "settled": null,
+   "side_a": "Yes",
+   "side_b": "No",
+   "source": "goals_market",
+   "sport": "soccer_team2",
+   "spread": null,
+   "stake": 0.0,
+   "start": "2026-11-28T16:15:00+00:00",
+   "start_source": "espn",
+   "status": "open",
+   "team": "Angers",
+   "uncovered": null,
+   "untraded": false,
+   "url": "https://kalshi.com/markets/kxligue1teamtotal",
+   "venue": "kalshi_binary",
+   "venue_start": null
+  },
+  {
+   "bet": false,
+   "date": "2026-11-28",
+   "edge": -0.045,
+   "espn_away": "Lens",
+   "espn_home": "Angers",
+   "event": "KXLIGUE1TEAMTOTAL-26NOV28ANGRCL",
+   "id": "goals_market:KXLIGUE1TEAMTOTAL-26NOV28ANGRCL-RCL2",
+   "kalshi_title": "Lens over 1.5 goals",
+   "label": "Angers v Lens: Lens to score 2+",
+   "league": "Ligue 1",
+   "liquidity": null,
+   "logged": "2026-11-26T17:26:46+00:00",
+   "market_id": "KXLIGUE1TEAMTOTAL-26NOV28ANGRCL-RCL2",
+   "opponent": "Angers",
+   "pick": null,
+   "pnl": 0.0,
+   "price": null,
+   "price_a": 0.63,
+   "price_b": 0.46,
+   "price_draw": null,
+   "prob_a": 0.585,
+   "result": null,
+   "settled": null,
+   "side_a": "Yes",
+   "side_b": "No",
+   "source": "goals_market",
+   "sport": "soccer_team2",
+   "spread": null,
+   "stake": 0.0,
+   "start": "2026-11-28T16:15:00+00:00",
+   "start_source": "espn",
+   "status": "open",
+   "team": "Lens",
+   "uncovered": null,
+   "untraded": false,
+   "url": "https://kalshi.com/markets/kxligue1teamtotal",
+   "venue": "kalshi_binary",
+   "venue_start": null
+  },
+  {
+   "bet": false,
+   "date": "2026-11-26",
+   "edge": -0.005,
+   "id": "polymarket_us:aec-wtadb-aklirenche-costoupapami-2026-11-25",
+   "label": "Akli A / Rencheli A vs Costoulas S / Papamichail D",
+   "liquidity": null,
+   "logged": "2026-11-26T17:26:46+00:00",
+   "market_id": "aec-wtadb-aklirenche-costoupapami-2026-11-25",
+   "pick": null,
+   "pnl": 0.0,
+   "price": null,
+   "price_a": 0.68,
+   "price_b": 0.33,
+   "price_draw": null,
+   "prob_a": 0.675,
+   "result": null,
+   "settled": null,
+   "side_a": "Akli A / Rencheli A",
+   "side_b": "Costoulas S / Papamichail D",
+   "source": "polymarket_us",
+   "sport": "tennis",
+   "spread": 0.01,
+   "stake": 0.0,
+   "start": "2026-11-26T21:10:00+00:00",
+   "start_source": null,
+   "status": "open",
+   "tier": "wtadb",
+   "uncovered": null,
+   "untraded": false,
+   "url": "https://polymarket.us/event/wtadb-aklirenche-costoupapami-2026-11-25",
+   "venue": "polymarket_us",
+   "venue_start": null
+  },
+  {
+   "bet": false,
+   "date": "2026-11-27",
+   "edge": -0.005,
+   "id": "polymarket_us:aec-utr-zylame-khalaq-2026-11-27",
+   "label": "Zylberman, Amelia vs Khan, Laquisa",
+   "liquidity": null,
+   "logged": "2026-11-26T17:26:46+00:00",
+   "market_id": "aec-utr-zylame-khalaq-2026-11-27",
+   "pick": null,
+   "pnl": 0.0,
+   "price": null,
+   "price_a": 0.25,
+   "price_b": 0.76,
+   "price_draw": null,
+   "prob_a": 0.245,
+   "result": null,
+   "settled": null,
+   "side_a": "Zylberman, Amelia",
+   "side_b": "Khan, Laquisa",
+   "source": "polymarket_us",
+   "sport": "tennis",
+   "spread": 0.01,
+   "stake": 0.0,
+   "start": "2026-11-27T01:30:00+00:00",
+   "start_source": null,
+   "status": "open",
+   "tier": "utr",
+   "uncovered": null,
+   "untraded": false,
+   "url": "https://polymarket.us/event/utr-zylame-khalaq-2026-11-27",
+   "venue": "polymarket_us",
    "venue_start": null
   }
  ],
