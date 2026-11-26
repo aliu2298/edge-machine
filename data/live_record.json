@@ -1,5 +1,5 @@
 {
- "generated": "2026-11-25T23:07Z",
+ "generated": "2026-11-26T00:07Z",
  "lane_note": "own-state lanes: each entry as a trade after fees (the lane's own fill, the sells it logged, the unsold remainder at the market's settled result); a bet is flat when exited at cost (within +-2% before or after fees), won above +2% after fees, else lost. Entries with a tip before 2026-11-06 18:07Z are reconstructed from the exchange order list; later ones use the sell fills the follower logged",
  "lanes": {
   "arg_dip": [],
@@ -5527,15 +5527,15 @@
     "w": 0.95
    },
    {
-    "g": null,
+    "g": 1.2857,
     "hold_r": null,
     "id": "KXNBAWINMARGIN-26NOV25MIAPHI-PHI11TO20",
     "ko": "2026-11-25T22:00",
-    "legs": "",
-    "r": null,
+    "legs": "2x+2.5x",
+    "r": 1.1549,
     "side": "yes",
     "src": "fills",
-    "st": "open",
+    "st": "won",
     "w": 1.04
    },
    {
@@ -5555,7 +5555,7 @@
     "hold_r": null,
     "id": "KXNBAWINMARGIN-26NOV25MIAPHI-PHI6TO10",
     "ko": "2026-11-25T22:00",
-    "legs": "",
+    "legs": "2x",
     "r": null,
     "side": "yes",
     "src": "fills",
@@ -5633,6 +5633,198 @@
     "src": "fills",
     "st": "open",
     "w": 1.05
+   },
+   {
+    "g": null,
+    "hold_r": null,
+    "id": "KXNBAWINMARGIN-26NOV25CLENYK-CLE11TO20",
+    "ko": "2026-11-26T00:30",
+    "legs": "",
+    "r": null,
+    "side": "yes",
+    "src": "fills",
+    "st": "open",
+    "w": 1.05
+   },
+   {
+    "g": null,
+    "hold_r": null,
+    "id": "KXNBAWINMARGIN-26NOV25CLENYK-CLE1TO5",
+    "ko": "2026-11-26T00:30",
+    "legs": "",
+    "r": null,
+    "side": "yes",
+    "src": "fills",
+    "st": "open",
+    "w": 0.96
+   },
+   {
+    "g": null,
+    "hold_r": null,
+    "id": "KXNBAWINMARGIN-26NOV25CLENYK-CLE6TO10",
+    "ko": "2026-11-26T00:30",
+    "legs": "",
+    "r": null,
+    "side": "yes",
+    "src": "fills",
+    "st": "open",
+    "w": 1.05
+   },
+   {
+    "g": null,
+    "hold_r": null,
+    "id": "KXNBAWINMARGIN-26NOV25CLENYK-NYK11TO20",
+    "ko": "2026-11-26T00:30",
+    "legs": "",
+    "r": null,
+    "side": "yes",
+    "src": "fills",
+    "st": "open",
+    "w": 0.95
+   },
+   {
+    "g": null,
+    "hold_r": null,
+    "id": "KXNBAWINMARGIN-26NOV25CLENYK-NYK1TO5",
+    "ko": "2026-11-26T00:30",
+    "legs": "",
+    "r": null,
+    "side": "yes",
+    "src": "fills",
+    "st": "open",
+    "w": 1.01
+   },
+   {
+    "g": null,
+    "hold_r": null,
+    "id": "KXNBAWINMARGIN-26NOV25CLENYK-NYK6TO10",
+    "ko": "2026-11-26T00:30",
+    "legs": "",
+    "r": null,
+    "side": "yes",
+    "src": "fills",
+    "st": "open",
+    "w": 1.01
+   },
+   {
+    "g": null,
+    "hold_r": null,
+    "id": "KXNBAWINMARGIN-26NOV25MINOKC-MIN1TO5",
+    "ko": "2026-11-26T00:30",
+    "legs": "",
+    "r": null,
+    "side": "yes",
+    "src": "fills",
+    "st": "open",
+    "w": 1.04
+   },
+   {
+    "g": null,
+    "hold_r": null,
+    "id": "KXNBAWINMARGIN-26NOV25MINOKC-MIN6TO10",
+    "ko": "2026-11-26T00:30",
+    "legs": "",
+    "r": null,
+    "side": "yes",
+    "src": "fills",
+    "st": "open",
+    "w": 1.04
+   },
+   {
+    "g": null,
+    "hold_r": null,
+    "id": "KXNBAWINMARGIN-26NOV25MINOKC-OKC1TO5",
+    "ko": "2026-11-26T00:30",
+    "legs": "",
+    "r": null,
+    "side": "yes",
+    "src": "fills",
+    "st": "open",
+    "w": 0.95
+   },
+   {
+    "g": null,
+    "hold_r": null,
+    "id": "KXNBAWINMARGIN-26NOV25MINOKC-OKC6TO10",
+    "ko": "2026-11-26T00:30",
+    "legs": "",
+    "r": null,
+    "side": "yes",
+    "src": "fills",
+    "st": "open",
+    "w": 0.95
+   },
+   {
+    "g": null,
+    "hold_r": null,
+    "id": "KXNBAWINMARGIN-26NOV25BKNMIL-BKN11TO20",
+    "ko": "2026-11-26T01:00",
+    "legs": "",
+    "r": null,
+    "side": "yes",
+    "src": "fills",
+    "st": "open",
+    "w": 1.04
+   },
+   {
+    "g": null,
+    "hold_r": null,
+    "id": "KXNBAWINMARGIN-26NOV25BKNMIL-BKN1TO5",
+    "ko": "2026-11-26T01:00",
+    "legs": "",
+    "r": null,
+    "side": "yes",
+    "src": "fills",
+    "st": "open",
+    "w": 0.95
+   },
+   {
+    "g": null,
+    "hold_r": null,
+    "id": "KXNBAWINMARGIN-26NOV25BKNMIL-BKN6TO10",
+    "ko": "2026-11-26T01:00",
+    "legs": "",
+    "r": null,
+    "side": "yes",
+    "src": "fills",
+    "st": "open",
+    "w": 1.04
+   },
+   {
+    "g": null,
+    "hold_r": null,
+    "id": "KXNBAWINMARGIN-26NOV25BKNMIL-MIL11TO20",
+    "ko": "2026-11-26T01:00",
+    "legs": "",
+    "r": null,
+    "side": "yes",
+    "src": "fills",
+    "st": "open",
+    "w": 1.01
+   },
+   {
+    "g": null,
+    "hold_r": null,
+    "id": "KXNBAWINMARGIN-26NOV25BKNMIL-MIL1TO5",
+    "ko": "2026-11-26T01:00",
+    "legs": "",
+    "r": null,
+    "side": "yes",
+    "src": "fills",
+    "st": "open",
+    "w": 0.95
+   },
+   {
+    "g": null,
+    "hold_r": null,
+    "id": "KXNBAWINMARGIN-26NOV25BKNMIL-MIL6TO10",
+    "ko": "2026-11-26T01:00",
+    "legs": "",
+    "r": null,
+    "side": "yes",
+    "src": "fills",
+    "st": "open",
+    "w": 1.04
    }
   ],
   "o35_cheap_no": [
@@ -7408,156 +7600,6 @@
      "side": "no",
      "st": "lost",
      "w": 10.32
-    }
-   ],
-   "refused": {}
-  },
-  "sr_a7|soccer_u35": {
-   "entered": "2026-10-21T23:00:00+00:00",
-   "orders": [
-    {
-     "id": "sr_a7:KXUCLTOTAL-26NOV03ATMBMU-4",
-     "ko": "2026-11-03T20:00",
-     "r": -1.0,
-     "side": "yes",
-     "st": "lost",
-     "w": 0.9
-    },
-    {
-     "id": "sr_a7:KXUCLTOTAL-26NOV03FEYINT-4",
-     "ko": "2026-11-03T20:00",
-     "r": -1.0,
-     "side": "yes",
-     "st": "lost",
-     "w": 1.0
-    },
-    {
-     "id": "sr_a7:KXUCLTOTAL-26NOV03MUNROM-4",
-     "ko": "2026-11-03T20:00",
-     "r": 1.2361,
-     "side": "yes",
-     "st": "won",
-     "w": 0.9
-    },
-    {
-     "id": "sr_a7:KXUCLTOTAL-26NOV03VILPSG-4",
-     "ko": "2026-11-03T20:00",
-     "r": 0.8605,
-     "side": "yes",
-     "st": "won",
-     "w": 0.54
-    },
-    {
-     "id": "sr_a7:KXUCLTOTAL-26NOV04AEKRMA-4",
-     "ko": "2026-11-04T17:45",
-     "r": 0.7624,
-     "side": "yes",
-     "st": "won",
-     "w": 0.57
-    },
-    {
-     "id": "sr_a7:KXUCLTOTAL-26NOV04FENLFC-4",
-     "ko": "2026-11-04T17:45",
-     "r": 0.8265,
-     "side": "yes",
-     "st": "won",
-     "w": 0.55
-    },
-    {
-     "id": "sr_a7:KXUCLTOTAL-26NOV04BVBRBB-4",
-     "ko": "2026-11-04T20:00",
-     "r": -1.0,
-     "side": "yes",
-     "st": "lost",
-     "w": 0.88
-    },
-    {
-     "id": "sr_a7:KXUCLTOTAL-26NOV04FCPNAP-4",
-     "ko": "2026-11-04T20:00",
-     "r": 2.1776,
-     "side": "yes",
-     "st": "won",
-     "w": 0.95
-    },
-    {
-     "id": "sr_a7:KXUCLTOTAL-26NOV04PSVBRU-4",
-     "ko": "2026-11-04T20:00",
-     "r": -1.0,
-     "side": "yes",
-     "st": "lost",
-     "w": 0.54
-    },
-    {
-     "id": "sr_a7:KXUCLTOTAL-26NOV04RCLCOM-4",
-     "ko": "2026-11-04T20:00",
-     "r": 1.4588,
-     "side": "yes",
-     "st": "won",
-     "w": 0.82
-    },
-    {
-     "id": "sr_a7:KXUCLTOTAL-26NOV24GALAVL-4",
-     "ko": "2026-11-24T17:45",
-     "r": -1.0,
-     "side": "yes",
-     "st": "lost",
-     "w": 9.66
-    },
-    {
-     "id": "sr_a7:KXUCLTOTAL-26NOV24COMAEK-4",
-     "ko": "2026-11-24T20:00",
-     "r": -1.0,
-     "side": "yes",
-     "st": "lost",
-     "w": 9.9
-    },
-    {
-     "id": "sr_a7:KXUCLTOTAL-26NOV24FEYFCP-4",
-     "ko": "2026-11-24T20:00",
-     "r": -1.0,
-     "side": "yes",
-     "st": "lost",
-     "w": 10.01
-    },
-    {
-     "id": "sr_a7:KXUCLTOTAL-26NOV24MCINAP-4",
-     "ko": "2026-11-24T20:00",
-     "r": 0.8606,
-     "side": "yes",
-     "st": "won",
-     "w": 9.72
-    },
-    {
-     "id": "sr_a7:KXUCLTOTAL-26NOV25BRULFC-4",
-     "ko": "2026-11-25T20:00",
-     "r": -1.0,
-     "side": "yes",
-     "st": "lost",
-     "w": 9.52
-    },
-    {
-     "id": "sr_a7:KXUCLTOTAL-26NOV25INTVFB-4",
-     "ko": "2026-11-25T20:00",
-     "r": -1.0,
-     "side": "yes",
-     "st": "lost",
-     "w": 9.52
-    },
-    {
-     "id": "sr_a7:KXUCLTOTAL-26NOV25LILBMU-4",
-     "ko": "2026-11-25T20:00",
-     "r": -1.0,
-     "side": "yes",
-     "st": "lost",
-     "w": 9.72
-    },
-    {
-     "id": "sr_a7:KXUCLTOTAL-26NOV25PSGROM-4",
-     "ko": "2026-11-25T20:00",
-     "r": 0.8958,
-     "side": "yes",
-     "st": "won",
-     "w": 9.54
     }
    ],
    "refused": {}
@@ -10713,6 +10755,134 @@
     "side": null,
     "st": "unconfirmed",
     "w": null
+   }
+  ],
+  "sr_a7|soccer_u35": [
+   {
+    "id": "sr_a7:KXUCLTOTAL-26NOV03ATMBMU-4",
+    "ko": "2026-11-03T20:00",
+    "r": -1.0,
+    "side": "yes",
+    "st": "lost"
+   },
+   {
+    "id": "sr_a7:KXUCLTOTAL-26NOV03FEYINT-4",
+    "ko": "2026-11-03T20:00",
+    "r": -1.0,
+    "side": "yes",
+    "st": "lost"
+   },
+   {
+    "id": "sr_a7:KXUCLTOTAL-26NOV03MUNROM-4",
+    "ko": "2026-11-03T20:00",
+    "r": 1.2361,
+    "side": "yes",
+    "st": "won"
+   },
+   {
+    "id": "sr_a7:KXUCLTOTAL-26NOV03VILPSG-4",
+    "ko": "2026-11-03T20:00",
+    "r": 0.8605,
+    "side": "yes",
+    "st": "won"
+   },
+   {
+    "id": "sr_a7:KXUCLTOTAL-26NOV04AEKRMA-4",
+    "ko": "2026-11-04T17:45",
+    "r": 0.7624,
+    "side": "yes",
+    "st": "won"
+   },
+   {
+    "id": "sr_a7:KXUCLTOTAL-26NOV04FENLFC-4",
+    "ko": "2026-11-04T17:45",
+    "r": 0.8265,
+    "side": "yes",
+    "st": "won"
+   },
+   {
+    "id": "sr_a7:KXUCLTOTAL-26NOV04BVBRBB-4",
+    "ko": "2026-11-04T20:00",
+    "r": -1.0,
+    "side": "yes",
+    "st": "lost"
+   },
+   {
+    "id": "sr_a7:KXUCLTOTAL-26NOV04FCPNAP-4",
+    "ko": "2026-11-04T20:00",
+    "r": 2.1776,
+    "side": "yes",
+    "st": "won"
+   },
+   {
+    "id": "sr_a7:KXUCLTOTAL-26NOV04PSVBRU-4",
+    "ko": "2026-11-04T20:00",
+    "r": -1.0,
+    "side": "yes",
+    "st": "lost"
+   },
+   {
+    "id": "sr_a7:KXUCLTOTAL-26NOV04RCLCOM-4",
+    "ko": "2026-11-04T20:00",
+    "r": 1.4588,
+    "side": "yes",
+    "st": "won"
+   },
+   {
+    "id": "sr_a7:KXUCLTOTAL-26NOV24GALAVL-4",
+    "ko": "2026-11-24T17:45",
+    "r": -1.0,
+    "side": "yes",
+    "st": "lost"
+   },
+   {
+    "id": "sr_a7:KXUCLTOTAL-26NOV24COMAEK-4",
+    "ko": "2026-11-24T20:00",
+    "r": -1.0,
+    "side": "yes",
+    "st": "lost"
+   },
+   {
+    "id": "sr_a7:KXUCLTOTAL-26NOV24FEYFCP-4",
+    "ko": "2026-11-24T20:00",
+    "r": -1.0,
+    "side": "yes",
+    "st": "lost"
+   },
+   {
+    "id": "sr_a7:KXUCLTOTAL-26NOV24MCINAP-4",
+    "ko": "2026-11-24T20:00",
+    "r": 0.8606,
+    "side": "yes",
+    "st": "won"
+   },
+   {
+    "id": "sr_a7:KXUCLTOTAL-26NOV25BRULFC-4",
+    "ko": "2026-11-25T20:00",
+    "r": -1.0,
+    "side": "yes",
+    "st": "lost"
+   },
+   {
+    "id": "sr_a7:KXUCLTOTAL-26NOV25INTVFB-4",
+    "ko": "2026-11-25T20:00",
+    "r": -1.0,
+    "side": "yes",
+    "st": "lost"
+   },
+   {
+    "id": "sr_a7:KXUCLTOTAL-26NOV25LILBMU-4",
+    "ko": "2026-11-25T20:00",
+    "r": -1.0,
+    "side": "yes",
+    "st": "lost"
+   },
+   {
+    "id": "sr_a7:KXUCLTOTAL-26NOV25PSGROM-4",
+    "ko": "2026-11-25T20:00",
+    "r": 0.8958,
+    "side": "yes",
+    "st": "won"
    }
   ],
   "sr_c1|soccer_u35": [
