@@ -230,9 +230,35 @@
    "perp": "KXORCLPERP",
    "sym": "ORCL",
    "time": "after-hours"
+  },
+  {
+   "date": "2026-12-17",
+   "eps_forecast": "$3.91",
+   "fiscal_q": "Nov/2026",
+   "kpi": [],
+   "mentions": [
+    "KXEARNINGSMENTIONACN-26DEC17"
+   ],
+   "n_ests": "7",
+   "name": "Accenture plc",
+   "perp": "KXACNPERP",
+   "sym": "ACN",
+   "time": "pre-market"
+  },
+  {
+   "date": "2026-12-17",
+   "eps_forecast": "$37.95",
+   "fiscal_q": "Nov/2026",
+   "kpi": [],
+   "mentions": [],
+   "n_ests": "8",
+   "name": "Micron Technology, Inc.",
+   "perp": "KXMUPERP",
+   "sym": "MU",
+   "time": "after-hours"
   }
  ],
- "calendar_at": "2026-11-26T04:00:27Z",
+ "calendar_at": "2026-11-26T05:00:34Z",
  "kpi_reads": [
   {
    "at": "2026-11-07T03:49:31Z",
@@ -6647,9 +6673,19 @@
     "width": 685185.185185194
    },
    "sym": "COST"
+  },
+  {
+   "at": "2026-11-26T05:01:33Z",
+   "event": "KXCOST-26DECCARDS",
+   "read": {
+    "median": 151356250.0,
+    "rungs": 10,
+    "width": 685185.185185194
+   },
+   "sym": "COST"
   }
  ],
- "last_run": "2026-11-26T04:01:18Z",
+ "last_run": "2026-11-26T05:01:38Z",
  "predictions": [
   {
    "call": {
@@ -7787,6 +7823,34 @@
    "side": -1,
    "status": "no_fill",
    "sym": "UNH"
+  },
+  {
+   "entry_due": "2026-12-09T21:00:00Z",
+   "exit_due": "2026-12-16T21:00:00Z",
+   "family": "runup",
+   "id": "runup:ACN:2026-12-17",
+   "logged_at": "2026-11-26T05:01:33Z",
+   "perp": "KXACNPERP",
+   "random_side": -1,
+   "reason": "Up into the 2026-12-17 report (pre-market).",
+   "report": "2026-12-17",
+   "report_time": "pre-market",
+   "side": 1,
+   "sym": "ACN"
+  },
+  {
+   "entry_due": "2026-12-10T21:00:00Z",
+   "exit_due": "2026-12-17T21:00:00Z",
+   "family": "runup",
+   "id": "runup:MU:2026-12-17",
+   "logged_at": "2026-11-26T05:01:33Z",
+   "perp": "KXMUPERP",
+   "random_side": -1,
+   "reason": "Up into the 2026-12-17 report (after-hours).",
+   "report": "2026-12-17",
+   "report_time": "after-hours",
+   "side": 1,
+   "sym": "MU"
   }
  ],
  "registered": "2026-11-07",
