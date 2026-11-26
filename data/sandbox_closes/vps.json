@@ -280,6 +280,11 @@
    "lead_min": 14.8,
    "price": 0.6
   },
+  "crypto_fav_band_below:KXBTCD-26NOV2617-T60749.99": {
+   "at": "2026-11-26T19:39:59+00:00",
+   "lead_min": 25.0,
+   "price": 0.69
+  },
   "crypto_fav_band_below:KXETHD-26NOV1917-T1799.99": {
    "at": "2026-11-19T19:57:37+00:00",
    "lead_min": 7.4,
@@ -581,9 +586,9 @@
    "price": 0.71
   },
   "ftts_no_70_80:KXUELFTTS-26NOV26FTCCEL-CEL": {
-   "at": "2026-11-26T19:24:56+00:00",
-   "lead_min": 35.1,
-   "price": 0.79
+   "at": "2026-11-26T19:39:59+00:00",
+   "lead_min": 20.0,
+   "price": 0.77
   },
   "ftts_no_70_80:KXUELFTTS-26NOV26OLMLEV-LEV": {
    "at": "2026-11-26T17:39:41+00:00",
@@ -591,8 +596,8 @@
    "price": 0.79
   },
   "ftts_no_70_80:KXUELFTTS-26NOV26TSGSTU-STU": {
-   "at": "2026-11-26T19:24:56+00:00",
-   "lead_min": 35.1,
+   "at": "2026-11-26T19:39:59+00:00",
+   "lead_min": 20.0,
    "price": 0.77
   },
   "ftts_no_70_80:KXUELFTTS-26NOV26USGLPO-LPO": {
@@ -655,16 +660,6 @@
    "lead_min": 9.5,
    "price": 0.8
   },
-  "o15_ranked:KXUEFANLTOTAL-26NOV16GRESRB-2": {
-   "at": "2026-11-16T19:32:58+00:00",
-   "lead_min": 12.0,
-   "price": 0.8
-  },
-  "o15_ranked:KXUEFANLTOTAL-26NOV16MKDSLO-2": {
-   "at": "2026-11-16T19:32:58+00:00",
-   "lead_min": 12.0,
-   "price": 0.67
-  },
   "team1_form_l5:KXUEFANLTEAMTOTAL-26NOV17DENNOR-DEN1": {
    "at": "2026-11-17T19:35:59+00:00",
    "lead_min": 9.0,
@@ -721,34 +716,19 @@
    "price": 0.49
   },
   "team2_ranked:KXUELTEAMTOTAL-26NOV26JUVOMO-JUV2": {
-   "at": "2026-11-26T19:24:56+00:00",
-   "lead_min": 35.1,
-   "price": 0.76
+   "at": "2026-11-26T19:39:59+00:00",
+   "lead_min": 20.0,
+   "price": 0.75
   },
   "team2_ranked:KXUELTEAMTOTAL-26NOV26SUNJAG-SUN2": {
-   "at": "2026-11-26T19:24:56+00:00",
-   "lead_min": 35.1,
+   "at": "2026-11-26T19:39:59+00:00",
+   "lead_min": 20.0,
    "price": 0.71
-  },
-  "team2_ranked_fade:KXUEFANLTEAMTOTAL-26NOV16MKDSLO-SLO2": {
-   "at": "2026-11-16T19:32:58+00:00",
-   "lead_min": 12.0,
-   "price": 0.51
   },
   "u35_low_scoring:KXTACAPORTTOTAL-26NOV21VITBRA-4": {
    "at": "2026-11-21T20:19:47+00:00",
    "lead_min": 10.2,
    "price": 0.76
-  },
-  "u35_low_scoring:KXUEFANLTOTAL-26NOV16GRESRB-4": {
-   "at": "2026-11-16T19:32:58+00:00",
-   "lead_min": 12.0,
-   "price": 0.67
-  },
-  "u35_low_scoring:KXUEFANLTOTAL-26NOV16MKDSLO-4": {
-   "at": "2026-11-16T19:32:58+00:00",
-   "lead_min": 12.0,
-   "price": 0.8
   },
   "u35_low_scoring:KXUEFANLTOTAL-26NOV17BIHROU-4": {
    "at": "2026-11-17T19:35:59+00:00",
@@ -761,5 +741,5 @@
    "price": 0.8
   }
  },
- "updated": "2026-11-26T19:24:56+00:00"
+ "updated": "2026-11-26T19:39:59+00:00"
 }
