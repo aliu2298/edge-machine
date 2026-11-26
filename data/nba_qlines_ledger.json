@@ -9,8 +9,8 @@
  "error": null,
  "games_through": "2026-11-25",
  "last_live_read": "2026-11-26T02:30:28.189122+00:00",
- "last_run": "2026-11-26T05:18:13.964297+00:00",
- "last_settle": "2026-11-26T05:18:13.964297+00:00",
+ "last_run": "2026-11-26T06:00:28.569688+00:00",
+ "last_settle": "2026-11-26T06:00:28.569688+00:00",
  "looks": {
   "401909314": {
    "at": "2026-11-24T23:30:33.063986+00:00",
@@ -581,6 +581,78 @@
  },
  "registered": "2026-11-23",
  "rules": {
+  "nba_qlines_v2_1H_over_cushion": {
+   "picks": []
+  },
+  "nba_qlines_v2_1H_over_value": {
+   "picks": []
+  },
+  "nba_qlines_v2_1H_under_cushion": {
+   "picks": []
+  },
+  "nba_qlines_v2_1H_under_value": {
+   "picks": []
+  },
+  "nba_qlines_v2_1Q_over_cushion": {
+   "picks": []
+  },
+  "nba_qlines_v2_1Q_over_value": {
+   "picks": []
+  },
+  "nba_qlines_v2_1Q_under_cushion": {
+   "picks": []
+  },
+  "nba_qlines_v2_1Q_under_value": {
+   "picks": []
+  },
+  "nba_qlines_v2_2H_over_cushion": {
+   "picks": []
+  },
+  "nba_qlines_v2_2H_over_value": {
+   "picks": []
+  },
+  "nba_qlines_v2_2H_under_cushion": {
+   "picks": []
+  },
+  "nba_qlines_v2_2H_under_value": {
+   "picks": []
+  },
+  "nba_qlines_v2_2Q_over_cushion": {
+   "picks": []
+  },
+  "nba_qlines_v2_2Q_over_value": {
+   "picks": []
+  },
+  "nba_qlines_v2_2Q_under_cushion": {
+   "picks": []
+  },
+  "nba_qlines_v2_2Q_under_value": {
+   "picks": []
+  },
+  "nba_qlines_v2_3Q_over_cushion": {
+   "picks": []
+  },
+  "nba_qlines_v2_3Q_over_value": {
+   "picks": []
+  },
+  "nba_qlines_v2_3Q_under_cushion": {
+   "picks": []
+  },
+  "nba_qlines_v2_3Q_under_value": {
+   "picks": []
+  },
+  "nba_qlines_v2_4Q_over_cushion": {
+   "picks": []
+  },
+  "nba_qlines_v2_4Q_over_value": {
+   "picks": []
+  },
+  "nba_qlines_v2_4Q_under_cushion": {
+   "picks": []
+  },
+  "nba_qlines_v2_4Q_under_value": {
+   "picks": []
+  },
   "qlines_1H_over": {
    "picks": [
     {
@@ -4160,6 +4232,7 @@
      "bid": 0.62,
      "direction": "over",
      "entered": "2026-11-26T02:30:28.189122+00:00",
+     "fee_in": 0.0158,
      "game": "SAC @ GS",
      "game_id": "401909324",
      "id": "qlines_2H_over_blind:KXNBA2HTOTAL-26NOV25SACGSW-101",
@@ -4167,13 +4240,17 @@
      "line": 100.5,
      "night": "2026-11-25",
      "offset": 0,
+     "payout": 1.0,
      "price": 0.66,
+     "profit": 0.3242,
+     "ret": 0.4797,
      "rule": "qlines_2H_over_blind",
      "rung": 100.5,
      "section": "2H",
+     "settled": "2026-11-26T06:00:28.569688+00:00",
      "side": "yes",
      "start": "2026-11-26T03:00:00+00:00",
-     "status": "open",
+     "status": "won",
      "teams": {
       "GS": "15/17",
       "SAC": "12/17"
@@ -8157,6 +8234,7 @@
      "bid": 0.57,
      "direction": "over",
      "entered": "2026-11-26T02:30:28.189122+00:00",
+     "fee_in": 0.0168,
      "game": "SAC @ GS",
      "game_id": "401909324",
      "id": "qlines_4Q_over_blind:KXNBA4QTOTAL-26NOV25SACGSW-50",
@@ -8164,13 +8242,17 @@
      "line": 48.5,
      "night": "2026-11-25",
      "offset": 1,
+     "payout": 0.0,
      "price": 0.6,
+     "profit": -0.6168,
+     "ret": -1.0,
      "rule": "qlines_4Q_over_blind",
      "rung": 49.5,
      "section": "4Q",
+     "settled": "2026-11-26T06:00:28.569688+00:00",
      "side": "yes",
      "start": "2026-11-26T03:00:00+00:00",
-     "status": "open",
+     "status": "lost",
      "teams": {
       "GS": "11/17",
       "SAC": "14/17"
@@ -8434,6 +8516,7 @@
      "bid": 0.09,
      "direction": "under",
      "entered": "2026-11-26T02:30:28.189122+00:00",
+     "fee_in": 0.0058,
      "game": "SAC @ GS",
      "game_id": "401909324",
      "id": "qlines_4Q_under:KXNBA4QTOTAL-26NOV25SACGSW-62",
@@ -8442,16 +8525,20 @@
      "matches": "qlines_4Q_under_blind:KXNBA4QTOTAL-26NOV25SACGSW-62",
      "night": "2026-11-25",
      "offset": 1,
+     "payout": 1.0,
      "price": 0.91,
+     "profit": 0.0842,
      "qualifying": [
       "SAC"
      ],
+     "ret": 0.0919,
      "rule": "qlines_4Q_under",
      "rung": 61.5,
      "section": "4Q",
+     "settled": "2026-11-26T06:00:28.569688+00:00",
      "side": "no",
      "start": "2026-11-26T03:00:00+00:00",
-     "status": "open",
+     "status": "won",
      "teams": {
       "GS": "15/17",
       "SAC": "16/17"
@@ -9057,6 +9144,7 @@
      "bid": 0.09,
      "direction": "under",
      "entered": "2026-11-26T02:30:28.189122+00:00",
+     "fee_in": 0.0058,
      "game": "SAC @ GS",
      "game_id": "401909324",
      "id": "qlines_4Q_under_blind:KXNBA4QTOTAL-26NOV25SACGSW-62",
@@ -9064,13 +9152,17 @@
      "line": 62.5,
      "night": "2026-11-25",
      "offset": 1,
+     "payout": 1.0,
      "price": 0.91,
+     "profit": 0.0842,
+     "ret": 0.0919,
      "rule": "qlines_4Q_under_blind",
      "rung": 61.5,
      "section": "4Q",
+     "settled": "2026-11-26T06:00:28.569688+00:00",
      "side": "no",
      "start": "2026-11-26T03:00:00+00:00",
-     "status": "open",
+     "status": "won",
      "teams": {
       "GS": "15/17",
       "SAC": "16/17"
@@ -9265,6 +9357,12 @@
    "at": "2026-11-26T05:18:13.964297+00:00",
    "due": 0,
    "games": 0,
+   "new": 0
+  },
+  {
+   "at": "2026-11-26T06:00:28.569688+00:00",
+   "due": 0,
+   "games": 2,
    "new": 0
   }
  ],
