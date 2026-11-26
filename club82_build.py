@@ -4,6 +4,7 @@ phone cards. Never breaks the page: soccer_build wraps the call."""
 import html as _h
 
 import club82 as C
+import club_v2_page as P
 import fmt
 
 
@@ -72,11 +73,56 @@ HEAD = ('<div class="tbl"><table class="club82-picks"><tr><th>Kickoff</th><th>Ma
         '{}</table></div>')
 
 
+def groups_for(state, k=None):
+    """{v1, cushion, value, control: [rows]} for one category or both."""
+    g = {"v1": [], "cushion": [], "value": [], "control": []}
+    for x in ([k] if k else C.KINDS):
+        g["v1"] += _picks(state, C.lane(x))
+        g["cushion"] += _picks(state, C.lane_v2(x, "cushion"))
+        g["value"] += _picks(state, C.lane_v2(x, "value"))
+        g["control"] += _picks(state, C.lane(x, True))
+    return g
+
+
+def version_of(p):
+    r = p.get("rule", "")
+    return "v2 cushion" if r.endswith("_cushion") else "v2 value" if r.endswith("_value") else "v1"
+
+
+def bet_text(p):
+    v = version_of(p)
+    if p["kind"] == "u35":
+        return f"{v} · under {p.get('rung', 3.5):g} (NO)"
+    return f"{v} · {p.get('team', '')} over {p.get('rung', 1.5):g} (YES)"
+
+
+def bets_html(state):
+    rows = [p for k in C.KINDS for key in ("v1", "cushion", "value") for p in groups_for(state, k)[key]]
+    return P.bets_block(rows, lambda p: p["match"], bet_text, lambda p: None if p.get("profit") is None else p["profit"] / 100)
+
+
+def cushion_table(state, fixtures, k):
+    data = (C.cushion_rows(fixtures) if fixtures else state.get("cushions") or {}).get(k) or []
+    last = {}
+    for p in sorted(_picks(state, C.lane_v2(k, "value")), key=lambda p: p["start"]):
+        last[p.get("rated_team") or p.get("team")] = p["rung"]
+    rows = "".join(f'<tr data-team="{esc(r["name"])}"><td><b>{esc(r["name"])}</b></td><td class="num">{_pct(r["rate"], d=0)}</td><td class="num">{r["median"]:+.1f}</td>'
+                   f'<td class="num">{"—" if r["safe"] is None else "%g" % r["safe"]}</td><td class="num">{"—" if r["name"] not in last else "%g" % last[r["name"]]}</td></tr>' for r in data if r["n"] >= C.MIN_GAMES)
+    if not rows:
+        return '<p class="sm mut">No team has 10 games yet.</p>'
+    return ('<div class="tbl"><table class="club82-cushion"><tr><th>Team</th><th class="num">Hit rate at the v1 line</th><th class="num">Median cushion</th>'
+            f'<th class="num">Safe line</th><th class="num">Last v2 value rung</th></tr>{rows}</table></div>')
+
+
+def last_live_read(state):
+    """The newest live entry or logged skip: any control, lane or v2 row's `logged` stamp and any skip's `at` (Club 82 has no backfill); else the last run."""
+    stamps = [p["logged"] for ln in (state.get("rules") or {}).values() for p in ln.get("picks") or [] if p.get("logged")]
+    stamps += [s["at"] for s in (state.get("skips") or {}).values() if s.get("at")]
+    return max(stamps) if stamps else None
+
+
 def lane_html(state, fixtures, k):
-    picks = sorted(_picks(state, C.lane(k)), key=lambda p: (p["start"], p["id"]), reverse=True)
     ctl = sorted(_picks(state, C.lane(k, True)), key=lambda p: (p["start"], p["id"]), reverse=True)
-    recent = picks_table("".join(_row(p) for p in picks[:5]), "No entries yet. A match enters when a team clears the bar before kickoff.")
-    allrows = picks_table("".join(_row(p) for p in picks), "No entries yet.")
     ctlrows = picks_table("".join(_row(p) for p in ctl[:60]), "No control rows yet.")
     skips = [s for s in (state.get("skips") or {}).values() if s["kind"] == k]
     skips.sort(key=lambda s: s["start"], reverse=True)
@@ -88,8 +134,7 @@ def lane_html(state, fixtures, k):
     return (f'<h4 class="sm">{esc(C.NAMES[k])} · hit = {esc(C.HITS[k])}</h4>'
             f'<h4 class="sm">Teams at 82%+ now · {n_now}</h4>{now_t}'
             f'<details class="section-disclosure"><summary><b>Watch · 75-81%</b><span>{n_watch} team{"s" if n_watch != 1 else ""} under the bar</span></summary>{watch_t}</details>'
-            f'<h4 class="sm">Recent picks</h4>{recent}'
-            f'<details class="section-disclosure"><summary><b>All entries</b><span>{len(picks)}</span></summary>{allrows}</details>'
+            f'<details class="section-disclosure"><summary><b>Team cushions</b><span>hit rate at the v1 line, median cushion, safe line, last v2 value rung</span></summary>{cushion_table(state, fixtures, k)}</details>'
             f'<details class="section-disclosure"><summary><b>Control rows</b><span>latest 60 of {len(ctl)}</span></summary>{ctlrows}</details>'
             f'<details class="section-disclosure"><summary><b>Skipped reads</b><span>{len(skips)} logged · no market, no quote or a wide spread</span></summary>'
             + (f'<div class="tbl"><table class="club82-skips"><tr><th>Kickoff</th><th>Match</th><th>Team</th><th>Why</th><th>Qualifying</th></tr>{skip_rows}</table></div>' if skip_rows else '<p class="sm mut">None logged.</p>') + '</details>')
@@ -98,8 +143,9 @@ def lane_html(state, fixtures, k):
 def summary_line(state):
     parts = []
     for k in C.KINDS:
-        a, b = C.stats(_picks(state, C.lane(k))), C.stats(_picks(state, C.lane(k, True)))
-        parts.append(f"{C.NAMES[k].split(' (')[0]} {_wl(a)} {_pct(a['ret'], True)} v control {_pct(b['ret'], True)}")
+        g = groups_for(state, k)
+        s = {x: P.stats(g[x], C.cost) for x in g}
+        parts.append(f"{C.NAMES[k].split(' (')[0]}: v1 {_pct(s['v1']['ret'], True)} · cushion {_pct(s['cushion']['ret'], True)} · value {_pct(s['value']['ret'], True)} v control {_pct(s['control']['ret'], True)}")
     return " · ".join(parts)
 
 
@@ -108,7 +154,7 @@ def section(state=None, fixtures=None):
     fixtures = fixtures or []
     entries = sum(len(_picks(state, C.lane(k))) for k in C.KINDS)
     through = (max((f["kickoff"][:10] for f in C.season_games(fixtures)), default=None) if fixtures else state.get("games_through")) or "not yet"
-    last = state.get("last_run")
+    last = last_live_read(state)
     err = f" · {esc(state['error'])}" if state.get("error") else ""
     lanes = "".join(lane_html(state, fixtures, k) for k in C.KINDS)
     html = (f'<section id="club82" class="sp-section"><details class="fold nba-qline club82-fold" id="club82-fold"><summary><h3>Club 82 (Sandbox)</h3>'
@@ -118,8 +164,8 @@ def section(state=None, fixtures=None):
             f'(90 minutes), is {C.THRESHOLD * 100:.0f}% or better over {C.MIN_GAMES}+ games, counting only games before the kickoff. Under 3.5: NO when either team qualifies, one entry a match. '
             f'Team 2+: YES on the team-total over 1.5 for each qualifying team. The price is read 30 to 60 minutes before kickoff (spread 5c or less), held to settlement. '
             f'Each lane has a control read at the same moment: every match\'s under 3.5, every team\'s over 1.5. Read at {C.REVIEW_AT[0]} settled, then {C.REVIEW_AT[1]}.</p>'
-            f'{record_table(state)}{lanes}'
-            f'<p class="sm mut">Last read {esc(fmt.when(last) if last else "not yet")}{err}. Registered {esc(C.REGISTERED)}.</p></details></section>')
+            f'{P.version_lines(groups_for(state), C.cost)}{P.category_table([(C.NAMES[k], groups_for(state, k)) for k in C.KINDS], C.cost)}{bets_html(state)}{lanes}'
+            f'<p class="sm mut">Last live read {esc(fmt.when(last) if last else "none yet")}{err}. Registered {esc(C.REGISTERED)}.</p></details></section>')
     import sandbox_build                                         # the sport page's own label pass runs before this block is put in
     return sandbox_build.label_cells(html)
 

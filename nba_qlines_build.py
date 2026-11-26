@@ -5,6 +5,7 @@ import datetime as dt
 import html as _h
 import os
 
+import club_v2_page as P
 import fmt
 import nba_qlines as Q
 import nba_spotter as S
@@ -126,9 +127,65 @@ def backfill_note(state, sec=None):
 def summary_line(state, sec):
     parts = []
     for d in Q.DIRS:
-        a, b = Q.stats(_picks(state, Q.lane(sec, d))), Q.stats(_picks(state, Q.lane(sec, d, True)))
-        parts.append(f"{d} {Q.LINES[sec][d]}: {_won_lost(a)} {_pct(a['ret'], True)} v blind {_pct(b['ret'], True)}")
+        g = groups_for(state, sec, d)
+        s = {k: P.stats(g[k], Q.cost) for k in g}
+        parts.append(f"{d} {Q.LINES[sec][d]}: v1 {_pct(s['v1']['ret'], True)} · cushion {_pct(s['cushion']['ret'], True)} · value {_pct(s['value']['ret'], True)} v control {_pct(s['control']['ret'], True)}")
     return " · ".join(parts)
+
+
+def groups_for(state, sec=None, d=None):
+    """{v1, cushion, value, control: [rows]} for one category (section and direction) or every one."""
+    secs, dirs = ([sec] if sec else Q.SECTIONS), ([d] if d else Q.DIRS)
+    g = {"v1": [], "cushion": [], "value": [], "control": []}
+    for s in secs:
+        for x in dirs:
+            g["v1"] += _picks(state, Q.lane(s, x))
+            g["cushion"] += _picks(state, Q.lane_v2(s, x, "cushion"))
+            g["value"] += _picks(state, Q.lane_v2(s, x, "value"))
+            g["control"] += _picks(state, Q.lane(s, x, True))
+    return g
+
+
+def version_of(p):
+    r = p.get("rule", "")
+    return "v2 cushion" if r.endswith("_cushion") else "v2 value" if r.endswith("_value") else "v1"
+
+
+def bets_html(state):
+    rows = [p for s in Q.SECTIONS for x in Q.DIRS for p in groups_for(state, s, x)["v1"] + groups_for(state, s, x)["cushion"] + groups_for(state, s, x)["value"]]
+    return P.bets_block(rows, lambda p: game_name(p["game"]), lambda p: f"{version_of(p)} · {p['section']} {p['direction']} {p['rung']:g}", lambda p: p.get("ret"))
+
+
+def cushion_rows(games, sec, d, state):
+    """Per team: hit rate at the v1 line, median cushion over it, the safe line (the hardest line still hit at the club rate over 10+ games) and the last v2 value rung."""
+    cfg = Q.LINES[sec]
+    L = cfg[d]
+    sign = 1 if d == "over" else -1
+    tt = Q.team_totals([dict(g, day="0000") for g in games], sec, "9999")
+    last = {}
+    for p in sorted(_picks(state, Q.lane_v2(sec, d, "value")), key=lambda p: p["start"]):
+        last[p.get("team")] = p["rung"]
+    out = []
+    for team, totals in tt.items():
+        rate, n = Q.team_rate(totals, L, d)
+        margins = sorted((t - L) * sign for t in totals)
+        median = margins[len(margins) // 2] if len(margins) % 2 else (margins[len(margins) // 2 - 1] + margins[len(margins) // 2]) / 2
+        safe = None
+        for x in range(30, 160):
+            line = x + 0.5
+            r, nn = Q.team_rate(totals, line, d)
+            if nn >= Q.V2_MIN_GAMES and r >= Q.THRESHOLD - Q.EPS and (safe is None or (line - safe) * sign > 0):
+                safe = line
+        out.append(dict(team=team, rate=rate, n=n, median=median, safe=safe, value=last.get(team)))
+    return sorted(out, key=lambda r: (-(r["median"]), r["team"]))
+
+
+def cushion_table(games, sec, d, state):
+    rows = "".join(f'<tr data-team="{esc(r["team"])}"><td><b>{esc(code(r["team"]))}</b></td><td class="num">{_pct(r["rate"], d=0)}</td><td class="num">{r["median"]:+.1f}</td>'
+                   f'<td class="num">{"—" if r["safe"] is None else f"{r['safe']:g}"}</td><td class="num">{"—" if r["value"] is None else f"{r['value']:g}"}</td></tr>'
+                   for r in cushion_rows(games, sec, d, state))
+    return ('<div class="tbl"><table class="qline-cushion"><tr><th>Team</th><th class="num">Hit rate at the v1 line</th><th class="num">Median cushion</th>'
+            f'<th class="num">Safe line</th><th class="num">Last v2 value rung</th></tr>{rows}</table></div>')
 
 
 def qualifying_now(games, sec):
@@ -140,12 +197,14 @@ def section_html(state, games, sec):
     head = " · ".join(f"{d}: {', '.join(code(t) for t in q[d]) or 'none'}" for d in Q.DIRS)
     body = ""
     for d in Q.DIRS:
+        body += (f'<details class="section-disclosure"><summary><b>Team cushions · {esc(d)} {Q.LINES[sec][d]}</b><span>hit rate at the v1 line, median cushion, safe line, last v2 value rung</span></summary>'
+                 f'{cushion_table(games, sec, d, state)}</details>')
         body += (f'<h4 class="sm">Teams at {NEAR * 100:.0f}%+ · {esc(d)} {Q.LINES[sec][d]} · qualify at {Q.THRESHOLD * 100:.0f}% over {Q.MIN_GAMES}+ games</h4>{teams_table(games, sec, d)}'
                  f'<details class="section-disclosure"><summary><b>All teams · {esc(d)} {Q.LINES[sec][d]}</b><span>every team, {len(Q.team_rows(games, sec, d))} in all</span></summary>{teams_table(games, sec, d, True)}</details>')
     return (f'<details class="fold nba-qline" id="qlines-{esc(sec.lower())}"><summary><h3>Club 90 · {esc(sec)}</h3>'
             f'<span class="sm mut">{esc(summary_line(state, sec))}</span></summary>'
             f'<p class="sm">Qualifying now (games before tonight) · {esc(head)}</p>'
-            f'{backfill_note(state, sec)}{record_table(state, sec)}{picks_html(state, sec)}{body}</details>')
+            f'{body}</details>')
 
 
 def section(state=None, games_doc=None, now=None):
@@ -154,6 +213,7 @@ def section(state=None, games_doc=None, now=None):
     last, settled = last_live_read(state), state.get("last_settle")
     err = f" · {esc(state['error'])}" if state.get("error") else ""
     sections = "".join(section_html(state, games, sec) for sec in Q.SECTIONS)
+    cats = P.category_table([(f"{sec} {d} {Q.LINES[sec][d]:g}", groups_for(state, sec, d)) for sec in Q.SECTIONS for d in Q.DIRS], Q.cost)
     nb, entries = backfill_counts(state)
     backfilled = f" ({nb} backfilled)" if nb else ""
     entries = sum(len(_picks(state, Q.lane(sec, d))) for sec in Q.SECTIONS for d in Q.DIRS)
@@ -161,7 +221,7 @@ def section(state=None, games_doc=None, now=None):
     return f"""<section id="qlines" class="sp-section">
 <div class="sp-section-head"><h2>Club 90 · quarter &amp; half lines</h2><span class="sm mut">paper · {entries} entr{"y" if entries == 1 else "ies"}{backfilled} · tracker through {esc(through)}</span></div>
 <p class="sm">Paper only, on Kalshi's game-total lines for each quarter and half. A team qualifies on a line when its season hit rate on games before tonight is {Q.THRESHOLD * 100:.0f}% or better over {Q.MIN_GAMES}+ games; a game with a qualifying team is one entry. Over: the YES ask. Under: the NO price. The ask is read 15 to 40 minutes before the tip (spread 5c or less), held to settlement. If the line itself is not listed, the nearest rung 1 to 3 points harder is used. Each lane has a blind control: the same line bet in every game that night. Read at {Q.REVIEW_AT[0]} settled, then {Q.REVIEW_AT[1]}, against the control.</p>
-{overall_line(state)}{backfill_note(state)}{sections}
+{overall_line(state)}{backfill_note(state)}{P.version_lines(groups_for(state), Q.cost)}{cats}{bets_html(state)}{sections}
 <p class="sm mut">Last live read {esc(fmt.when(last) if last else "none yet")} · Last settle {esc(fmt.when(settled) if settled else "none yet")}{err}. Registered {esc(Q.REGISTERED)}.</p>
 </section>"""
 

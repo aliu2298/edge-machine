@@ -180,9 +180,10 @@ check("the committed export passes the whitelist and carries no dollar sign", "$
 
 import production as P
 import raised_stakes as RS
-check("a raised stake shows its date under the pair, with no amount", ("stake raised Nov 6" in P.stake_note("sr_a7|soccer_u35"), "$" in P.stake_note("sr_a7|soccer_u35"), P.stake_note("sr_c1|soccer_u35")), (True, False, ""))
-_seven = {"mls_fade_home|soccer_p05", "crypto_fav_band_below|crypto_fav", "team2_ranked|soccer_team2", "sr_a7|soccer_u35", "sr_a6|soccer_o25",
-          "team1_form_l5|soccer_team1_intl", "u35_low_scoring|soccer_u35_intl"}
+# 2026-11-26: sr_a7 and team2_ranked went back to the Sandbox (Nov 25, #540), so the follower no longer raises them; sr_a6 is a pair still raised.
+check("a raised stake shows its date under the pair, with no amount", ("stake raised " in P.stake_note("sr_a6|soccer_o25"), "$" in P.stake_note("sr_a6|soccer_o25"), P.stake_note("sr_c1|soccer_u35"), P.stake_note("sr_a7|soccer_u35")), (True, False, "", ""))
+_seven = {"mls_fade_home|soccer_p05", "crypto_fav_band_below|crypto_fav", "sr_a6|soccer_o25",
+          "team1_form_l5|soccer_team1_intl", "u35_low_scoring|soccer_u35_intl"}      # sr_a7 and team2_ranked left on 2026-11-25 (back to the Sandbox)
 # The follower's raised list grows as Olu raises lanes (st_t7|soccer_team3 and st_t1h|soccer_team2 on 2026-11-20, nine in all), so the test does
 # not pin the count: the original seven stay raised (the commodities band went back to the Sandbox 2026-11-08), and a pair added since is
 # one of the two named here or a Production pair the follower holds.
