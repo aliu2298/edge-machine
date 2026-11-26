@@ -1,6 +1,6 @@
 {
  "error": null,
- "last_run": "2026-11-26T19:01:43.948627+00:00",
+ "last_run": "2026-11-26T21:31:47.636130+00:00",
  "rules": {
   "NO": {
    "picks": [
@@ -563,6 +563,23 @@
      "status": "won",
      "ticker": "KXARGPREMDIVBTTS-26NOV25BOCIRM-BTTS",
      "why": "Argentina BTTS NO 0.58"
+    },
+    {
+     "ask": 0.58,
+     "bid": 0.57,
+     "event": "KXBRASILEIROBTTS-26NOV26SPACR",
+     "id": "NO:KXBRASILEIROBTTS-26NOV26SPACR",
+     "league": "Brasileir\u00e3o",
+     "league_key": "BRA",
+     "logged": "2026-11-26T21:31:47.636130+00:00",
+     "match": "S\u00e3o Paulo v Remo",
+     "price": 0.58,
+     "rule": "NO",
+     "side": "no",
+     "start": "2026-11-26T23:00Z",
+     "status": "open",
+     "ticker": "KXBRASILEIROBTTS-26NOV26SPACR-BTTS",
+     "why": "Brazil BTTS NO 0.58"
     }
    ]
   },
@@ -1127,18 +1144,28 @@
      "status": "lost",
      "ticker": "KXARGPREMDIVBTTS-26NOV25BOCIRM-BTTS",
      "why": "Argentina BTTS YES 0.43"
+    },
+    {
+     "ask": 0.43,
+     "bid": 0.42,
+     "event": "KXBRASILEIROBTTS-26NOV26SPACR",
+     "id": "YES:KXBRASILEIROBTTS-26NOV26SPACR",
+     "league": "Brasileir\u00e3o",
+     "league_key": "BRA",
+     "logged": "2026-11-26T21:31:47.636130+00:00",
+     "match": "S\u00e3o Paulo v Remo",
+     "price": 0.43,
+     "rule": "YES",
+     "side": "yes",
+     "start": "2026-11-26T23:00Z",
+     "status": "open",
+     "ticker": "KXBRASILEIROBTTS-26NOV26SPACR-BTTS",
+     "why": "Brazil BTTS YES 0.43"
     }
    ]
   }
  },
  "runs": [
-  {
-   "at": "2026-11-23T22:31:43.316241+00:00",
-   "due": 2,
-   "matched": 2,
-   "new": 2,
-   "quoted": 2
-  },
   {
    "at": "2026-11-23T23:02:02.601645+00:00",
    "due": 1,
@@ -1488,6 +1515,13 @@
    "matched": 0,
    "new": 0,
    "quoted": 0
+  },
+  {
+   "at": "2026-11-26T21:31:47.636130+00:00",
+   "due": 1,
+   "matched": 1,
+   "new": 2,
+   "quoted": 1
   }
  ],
  "schedule": [
