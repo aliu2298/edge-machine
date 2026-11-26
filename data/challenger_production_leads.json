@@ -5,7 +5,7 @@
    0.3
   ]
  },
- "board_built_at": "2026-11-26T09:02:00+00:00",
+ "board_built_at": "2026-11-26T09:39:22+00:00",
  "collector_error": null,
  "collector_healthy": {
   "challenger_won_here": true
@@ -538,6 +538,41 @@
    "source": "challenger_won_here",
    "sport": "tennis",
    "status": "miss"
+  },
+  "2026-11-24|Connor Huertas Del Pino|Leonardo Storck Franca|Connor Huertas Del Pino to win \u00b7 Challenger underdog who has won here": {
+   "away": "Leonardo Storck Franca",
+   "bet": {
+    "kind": "match_result",
+    "side": "home"
+   },
+   "date": "2026-11-24",
+   "edge_at_log": null,
+   "first_seen": "2026-11-24",
+   "headline": "Connor Huertas Del Pino to win",
+   "home": "Connor Huertas Del Pino",
+   "id": "2026-11-24|Connor Huertas Del Pino|Leonardo Storck Franca|Connor Huertas Del Pino to win \u00b7 Challenger underdog who has won here",
+   "kickoff": "2026-11-24T20:40Z",
+   "lane": "production",
+   "league": "Tennis",
+   "match": "Connor Huertas Del Pino v Leonardo Storck Franca",
+   "pair": "challenger_won_here|tennis",
+   "price_at_log": 0.48,
+   "published_at": "2026-11-26T09:39:22+00:00",
+   "published_late": false,
+   "published_min_before_kickoff": null,
+   "route": {
+    "claim": "Connor Huertas Del Pino to win",
+    "event": "KXATPCHALLENGERMATCH-26NOV24HUESTO",
+    "market": "KXATPCHALLENGERMATCH-26NOV24HUESTO-HUE",
+    "outcome": "Connor Huertas Del Pino",
+    "outcome_side": "yes",
+    "price_at_log": 0.48,
+    "venue": "kalshi"
+   },
+   "sandbox_quote": "challenger_won_here:KXATPCHALLENGERMATCH-26NOV24HUESTO-HUE",
+   "source": "challenger_won_here",
+   "sport": "tennis",
+   "status": "price"
   },
   "2026-11-24|Evan Zhu|Omar Jasika|Evan Zhu to win \u00b7 Challenger underdog who has won here": {
    "away": "Omar Jasika",
@@ -1633,9 +1668,9 @@
    "ready_at": "2026-11-21T00:00:00+00:00",
    "route": "moved by hand on 2026-11-20",
    "routing": {
-    "leads": 46,
+    "leads": 47,
     "problem": null,
-    "routed": 46,
+    "routed": 47,
     "unlisted": 0,
     "unrouted": 0,
     "unverified": 0,
@@ -1643,8 +1678,8 @@
    },
    "sandbox_clv": null,
    "sandbox_n": 46,
-   "sandbox_roi": -0.3688,
-   "sandbox_roi_fee": -0.3879,
+   "sandbox_roi": -0.3654,
+   "sandbox_roi_fee": -0.3846,
    "timing": {
     "late": [],
     "timed": 27,
@@ -1656,5 +1691,5 @@
  "stage": "production",
  "unlisted_skipped": 0,
  "unverified_kickoff_skipped": 0,
- "updated_at": "2026-11-26T09:02:00+00:00"
+ "updated_at": "2026-11-26T09:39:22+00:00"
 }
