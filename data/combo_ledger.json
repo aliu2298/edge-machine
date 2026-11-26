@@ -101,11 +101,24 @@
       "value": 0.0,
       "value_crypto": 0.0,
       "value_sp": 1.0
+    },
+    {
+      "crypto": {
+        "ask": 0.75,
+        "gap_min": 0.5,
+        "label": "Bitcoin price on Nov 26, 2026?",
+        "logged": "2026-11-26T19:33:55+00:00",
+        "ticker": "KXBTCD-26NOV2617-T60749.99"
+      },
+      "day": "2026-11-26",
+      "read_at": "2026-11-26T19:34:22+00:00",
+      "reason": "no S&P rung in the 90-98c, 3c-spread, 25-contract rule at that minute",
+      "status": "no_combo"
     }
   ],
   "error": null,
   "key": "combo_crypto_sp_no",
-  "last_run": "2026-11-26T19:17:14+00:00",
+  "last_run": "2026-11-26T19:34:22+00:00",
   "registered": "2026-11-21",
   "version": "combo-v1"
 }

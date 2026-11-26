@@ -1244,6 +1244,11 @@
    "entries": "entered",
    "pool": "entered"
   },
+  "[\"sandbox\", \"crypto_fav_band_below\", [\"crypto_fav_band_below:KXBTCD-26NOV2617-T60749.99\", \"b\"]]": {
+   "at": "2026-11-26T19:34:21.451574+00:00",
+   "entries": "entered",
+   "pool": "entered"
+  },
   "[\"sandbox\", \"crypto_fav_band_below\", [\"crypto_fav_band_below:KXETHD-26NOV0517-T2259.99\", \"b\"]]": {
    "at": "2026-11-05T19:09:22.391845+00:00",
    "pool": "entered"
@@ -7107,11 +7112,98 @@
    "sport": "Commodities",
    "src": "daily",
    "status": "won"
+  },
+  {
+   "contract": "KXBTCD-26NOV2617-T60749.99",
+   "entered_at": "2026-11-26T19:34:21.451574+00:00",
+   "entities": [
+    "Bitcoin"
+   ],
+   "id": "superpack:[\"sandbox\", \"crypto_fav_band_below\", [\"crypto_fav_band_below:KXBTCD-26NOV2617-T60749.99\", \"b\"]]",
+   "lane": "crypto_fav_band_below",
+   "logged": "2026-11-26T19:33:55+00:00",
+   "matched": [
+    "Bitcoin"
+   ],
+   "pid": "[\"sandbox\", \"crypto_fav_band_below\", [\"crypto_fav_band_below:KXBTCD-26NOV2617-T60749.99\", \"b\"]]",
+   "price": 0.75,
+   "profit": null,
+   "scope": "crypto_fav",
+   "settled": null,
+   "side": "b",
+   "snapshot": {
+    "as_of": "2026-11-26T19:33:55+00:00",
+    "names": [
+     {
+      "bets": 54,
+      "name": "AAA gas",
+      "profit": 7.1968,
+      "sport": "Commodities"
+     },
+     {
+      "bets": 5,
+      "name": "AS Roma",
+      "profit": 5.8257,
+      "sport": "Soccer"
+     },
+     {
+      "bets": 6,
+      "name": "AC Milan",
+      "profit": 5.4689,
+      "sport": "Soccer"
+     },
+     {
+      "bets": 6,
+      "name": "Hull City",
+      "profit": 4.8685,
+      "sport": "Soccer"
+     },
+     {
+      "bets": 5,
+      "name": "Charlotte FC",
+      "profit": 4.5293,
+      "sport": "Soccer"
+     },
+     {
+      "bets": 5,
+      "name": "AEK Athens",
+      "profit": 4.4399,
+      "sport": "Soccer"
+     },
+     {
+      "bets": 5,
+      "name": "Columbus Crew",
+      "profit": 4.221,
+      "sport": "Soccer"
+     },
+     {
+      "bets": 36,
+      "name": "Bitcoin",
+      "profit": 4.1283,
+      "sport": "Crypto"
+     },
+     {
+      "bets": 12,
+      "name": "Ethereum",
+      "profit": 4.0317,
+      "sport": "Crypto"
+     },
+     {
+      "bets": 5,
+      "name": "AFC Bournemouth",
+      "profit": 3.1006,
+      "sport": "Soccer"
+     }
+    ]
+   },
+   "sport": "Crypto",
+   "src": "sandbox",
+   "status": "open"
   }
  ],
  "first_run": "2026-11-05T03:09:04.962721+00:00",
  "lane": "superpack",
- "last_run": "2026-11-26T19:17:12.940378+00:00",
+ "last_run": "2026-11-26T19:34:21.451574+00:00",
  "mirror": [
   {
    "contract": "KXAAAGASD-26NOV06-4.0700",
@@ -21212,6 +21304,29 @@
    "side": "a",
    "snapshot": null,
    "sport": "Soccer",
+   "src": "sandbox",
+   "status": "open"
+  },
+  {
+   "contract": "KXBTCD-26NOV2617-T60749.99",
+   "entered_at": "2026-11-26T19:34:21.451574+00:00",
+   "entities": [
+    "Bitcoin"
+   ],
+   "id": "superpack:[\"sandbox\", \"crypto_fav_band_below\", [\"crypto_fav_band_below:KXBTCD-26NOV2617-T60749.99\", \"b\"]]",
+   "lane": "crypto_fav_band_below",
+   "logged": "2026-11-26T19:33:55+00:00",
+   "matched": [
+    "Bitcoin"
+   ],
+   "pid": "[\"sandbox\", \"crypto_fav_band_below\", [\"crypto_fav_band_below:KXBTCD-26NOV2617-T60749.99\", \"b\"]]",
+   "price": 0.75,
+   "profit": null,
+   "scope": "crypto_fav",
+   "settled": null,
+   "side": "b",
+   "snapshot": null,
+   "sport": "Crypto",
    "src": "sandbox",
    "status": "open"
   }
