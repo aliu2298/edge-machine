@@ -8,9 +8,9 @@
  },
  "error": null,
  "games_through": "2026-11-25",
- "last_live_read": "2026-11-26T01:00:29.102528+00:00",
- "last_run": "2026-11-26T02:00:30.177464+00:00",
- "last_settle": "2026-11-26T02:00:30.177464+00:00",
+ "last_live_read": "2026-11-26T02:30:28.189122+00:00",
+ "last_run": "2026-11-26T02:30:28.189122+00:00",
+ "last_settle": "2026-11-26T02:30:28.189122+00:00",
  "looks": {
   "401909314": {
    "at": "2026-11-24T23:30:33.063986+00:00",
@@ -255,6 +255,56 @@
    "priced": 11,
    "skipped": {
     "2H over: wide": 1
+   }
+  },
+  "401909324": {
+   "at": "2026-11-26T02:30:28.189122+00:00",
+   "entered": {
+    "1H over": 1,
+    "1H over blind": 1,
+    "1H under": 1,
+    "1H under blind": 1,
+    "1Q over blind": 1,
+    "1Q under blind": 1,
+    "2H over blind": 1,
+    "2Q over blind": 1,
+    "3Q under blind": 1,
+    "4Q over blind": 1,
+    "4Q under": 1,
+    "4Q under blind": 1
+   },
+   "game": "SAC @ GS",
+   "lead_min": 29.5,
+   "night": "2026-11-25",
+   "priced": 9,
+   "skipped": {
+    "2H under: wide": 1,
+    "2Q under: wide": 1,
+    "3Q over: wide": 1
+   }
+  },
+  "401909325": {
+   "at": "2026-11-26T02:30:28.189122+00:00",
+   "entered": {
+    "1H over": 1,
+    "1H over blind": 1,
+    "1H under blind": 1,
+    "1Q over blind": 1,
+    "1Q under blind": 1,
+    "2Q over blind": 1,
+    "3Q over blind": 1
+   },
+   "game": "SA @ POR",
+   "lead_min": 29.5,
+   "night": "2026-11-25",
+   "priced": 6,
+   "skipped": {
+    "2H over: wide": 1,
+    "2H under: wide": 1,
+    "2Q under: wide": 1,
+    "3Q under: wide": 1,
+    "4Q over: wide": 1,
+    "4Q under: wide": 1
    }
   },
   "401910036": {
@@ -810,6 +860,64 @@
       "PHX": "15/16"
      },
      "ticker": "KXNBA1HTOTAL-26NOV25PHXHOU-106"
+    },
+    {
+     "ask": 0.71,
+     "bid": 0.68,
+     "direction": "over",
+     "entered": "2026-11-26T02:30:28.189122+00:00",
+     "game": "SAC @ GS",
+     "game_id": "401909324",
+     "id": "qlines_1H_over:KXNBA1HTOTAL-26NOV25SACGSW-105",
+     "lead_min": 29.5,
+     "line": 104.5,
+     "matches": "qlines_1H_over_blind:KXNBA1HTOTAL-26NOV25SACGSW-105",
+     "night": "2026-11-25",
+     "offset": 0,
+     "price": 0.71,
+     "qualifying": [
+      "SAC"
+     ],
+     "rule": "qlines_1H_over",
+     "rung": 104.5,
+     "section": "1H",
+     "side": "yes",
+     "start": "2026-11-26T03:00:00+00:00",
+     "status": "open",
+     "teams": {
+      "GS": "12/17",
+      "SAC": "16/17"
+     },
+     "ticker": "KXNBA1HTOTAL-26NOV25SACGSW-105"
+    },
+    {
+     "ask": 0.82,
+     "bid": 0.8,
+     "direction": "over",
+     "entered": "2026-11-26T02:30:28.189122+00:00",
+     "game": "SA @ POR",
+     "game_id": "401909325",
+     "id": "qlines_1H_over:KXNBA1HTOTAL-26NOV25SASPOR-106",
+     "lead_min": 29.5,
+     "line": 104.5,
+     "matches": "qlines_1H_over_blind:KXNBA1HTOTAL-26NOV25SASPOR-106",
+     "night": "2026-11-25",
+     "offset": 1,
+     "price": 0.82,
+     "qualifying": [
+      "SA"
+     ],
+     "rule": "qlines_1H_over",
+     "rung": 105.5,
+     "section": "1H",
+     "side": "yes",
+     "start": "2026-11-26T03:00:00+00:00",
+     "status": "open",
+     "teams": {
+      "POR": "15/17",
+      "SA": "17/18"
+     },
+     "ticker": "KXNBA1HTOTAL-26NOV25SASPOR-106"
     }
    ]
   },
@@ -1290,6 +1398,7 @@
      "bid": 0.58,
      "direction": "over",
      "entered": "2026-11-26T00:01:59.505850+00:00",
+     "fee_in": 0.017,
      "game": "CLE @ NY",
      "game_id": "401909319",
      "id": "qlines_1H_over_blind:KXNBA1HTOTAL-26NOV25CLENYK-105",
@@ -1297,13 +1406,17 @@
      "line": 104.5,
      "night": "2026-11-25",
      "offset": 0,
+     "payout": 1.0,
      "price": 0.59,
+     "profit": 0.393,
+     "ret": 0.6474,
      "rule": "qlines_1H_over_blind",
      "rung": 104.5,
      "section": "1H",
+     "settled": "2026-11-26T02:30:28.189122+00:00",
      "side": "yes",
      "start": "2026-11-26T00:30:00+00:00",
-     "status": "open",
+     "status": "won",
      "teams": {
       "CLE": "16/18",
       "NY": "9/17"
@@ -1315,6 +1428,7 @@
      "bid": 0.6,
      "direction": "over",
      "entered": "2026-11-26T00:01:59.505850+00:00",
+     "fee_in": 0.0167,
      "game": "MIN @ OKC",
      "game_id": "401909320",
      "id": "qlines_1H_over_blind:KXNBA1HTOTAL-26NOV25MINOKC-105",
@@ -1322,13 +1436,17 @@
      "line": 104.5,
      "night": "2026-11-25",
      "offset": 0,
+     "payout": 0.0,
      "price": 0.61,
+     "profit": -0.6267,
+     "ret": -1.0,
      "rule": "qlines_1H_over_blind",
      "rung": 104.5,
      "section": "1H",
+     "settled": "2026-11-26T02:30:28.189122+00:00",
      "side": "yes",
      "start": "2026-11-26T00:30:00+00:00",
-     "status": "open",
+     "status": "lost",
      "teams": {
       "MIN": "12/18",
       "OKC": "13/18"
@@ -1409,6 +1527,56 @@
       "PHX": "15/16"
      },
      "ticker": "KXNBA1HTOTAL-26NOV25PHXHOU-106"
+    },
+    {
+     "ask": 0.71,
+     "bid": 0.68,
+     "direction": "over",
+     "entered": "2026-11-26T02:30:28.189122+00:00",
+     "game": "SAC @ GS",
+     "game_id": "401909324",
+     "id": "qlines_1H_over_blind:KXNBA1HTOTAL-26NOV25SACGSW-105",
+     "lead_min": 29.5,
+     "line": 104.5,
+     "night": "2026-11-25",
+     "offset": 0,
+     "price": 0.71,
+     "rule": "qlines_1H_over_blind",
+     "rung": 104.5,
+     "section": "1H",
+     "side": "yes",
+     "start": "2026-11-26T03:00:00+00:00",
+     "status": "open",
+     "teams": {
+      "GS": "12/17",
+      "SAC": "16/17"
+     },
+     "ticker": "KXNBA1HTOTAL-26NOV25SACGSW-105"
+    },
+    {
+     "ask": 0.82,
+     "bid": 0.8,
+     "direction": "over",
+     "entered": "2026-11-26T02:30:28.189122+00:00",
+     "game": "SA @ POR",
+     "game_id": "401909325",
+     "id": "qlines_1H_over_blind:KXNBA1HTOTAL-26NOV25SASPOR-106",
+     "lead_min": 29.5,
+     "line": 104.5,
+     "night": "2026-11-25",
+     "offset": 1,
+     "price": 0.82,
+     "rule": "qlines_1H_over_blind",
+     "rung": 105.5,
+     "section": "1H",
+     "side": "yes",
+     "start": "2026-11-26T03:00:00+00:00",
+     "status": "open",
+     "teams": {
+      "POR": "15/17",
+      "SA": "17/18"
+     },
+     "ticker": "KXNBA1HTOTAL-26NOV25SASPOR-106"
     }
    ]
   },
@@ -1419,6 +1587,7 @@
      "bid": 0.18,
      "direction": "under",
      "entered": "2026-11-26T00:01:59.505850+00:00",
+     "fee_in": 0.0104,
      "game": "CLE @ NY",
      "game_id": "401909319",
      "id": "qlines_1H_under:KXNBA1HTOTAL-26NOV25CLENYK-119",
@@ -1427,21 +1596,54 @@
      "matches": "qlines_1H_under_blind:KXNBA1HTOTAL-26NOV25CLENYK-119",
      "night": "2026-11-25",
      "offset": 1,
+     "payout": 1.0,
      "price": 0.82,
+     "profit": 0.1696,
      "qualifying": [
       "NY"
      ],
+     "ret": 0.2042,
      "rule": "qlines_1H_under",
      "rung": 118.5,
      "section": "1H",
+     "settled": "2026-11-26T02:30:28.189122+00:00",
      "side": "no",
      "start": "2026-11-26T00:30:00+00:00",
-     "status": "open",
+     "status": "won",
      "teams": {
       "CLE": "11/18",
       "NY": "16/17"
      },
      "ticker": "KXNBA1HTOTAL-26NOV25CLENYK-119"
+    },
+    {
+     "ask": 0.28,
+     "bid": 0.25,
+     "direction": "under",
+     "entered": "2026-11-26T02:30:28.189122+00:00",
+     "game": "SAC @ GS",
+     "game_id": "401909324",
+     "id": "qlines_1H_under:KXNBA1HTOTAL-26NOV25SACGSW-119",
+     "lead_min": 29.5,
+     "line": 119.5,
+     "matches": "qlines_1H_under_blind:KXNBA1HTOTAL-26NOV25SACGSW-119",
+     "night": "2026-11-25",
+     "offset": 1,
+     "price": 0.75,
+     "qualifying": [
+      "GS"
+     ],
+     "rule": "qlines_1H_under",
+     "rung": 118.5,
+     "section": "1H",
+     "side": "no",
+     "start": "2026-11-26T03:00:00+00:00",
+     "status": "open",
+     "teams": {
+      "GS": "16/17",
+      "SAC": "9/17"
+     },
+     "ticker": "KXNBA1HTOTAL-26NOV25SACGSW-119"
     }
    ]
   },
@@ -1922,6 +2124,7 @@
      "bid": 0.18,
      "direction": "under",
      "entered": "2026-11-26T00:01:59.505850+00:00",
+     "fee_in": 0.0104,
      "game": "CLE @ NY",
      "game_id": "401909319",
      "id": "qlines_1H_under_blind:KXNBA1HTOTAL-26NOV25CLENYK-119",
@@ -1929,13 +2132,17 @@
      "line": 119.5,
      "night": "2026-11-25",
      "offset": 1,
+     "payout": 1.0,
      "price": 0.82,
+     "profit": 0.1696,
+     "ret": 0.2042,
      "rule": "qlines_1H_under_blind",
      "rung": 118.5,
      "section": "1H",
+     "settled": "2026-11-26T02:30:28.189122+00:00",
      "side": "no",
      "start": "2026-11-26T00:30:00+00:00",
-     "status": "open",
+     "status": "won",
      "teams": {
       "CLE": "11/18",
       "NY": "16/17"
@@ -1947,6 +2154,7 @@
      "bid": 0.18,
      "direction": "under",
      "entered": "2026-11-26T00:01:59.505850+00:00",
+     "fee_in": 0.0104,
      "game": "MIN @ OKC",
      "game_id": "401909320",
      "id": "qlines_1H_under_blind:KXNBA1HTOTAL-26NOV25MINOKC-119",
@@ -1954,13 +2162,17 @@
      "line": 119.5,
      "night": "2026-11-25",
      "offset": 1,
+     "payout": 1.0,
      "price": 0.82,
+     "profit": 0.1696,
+     "ret": 0.2042,
      "rule": "qlines_1H_under_blind",
      "rung": 118.5,
      "section": "1H",
+     "settled": "2026-11-26T02:30:28.189122+00:00",
      "side": "no",
      "start": "2026-11-26T00:30:00+00:00",
-     "status": "open",
+     "status": "won",
      "teams": {
       "MIN": "14/18",
       "OKC": "13/18"
@@ -2041,6 +2253,56 @@
       "PHX": "12/16"
      },
      "ticker": "KXNBA1HTOTAL-26NOV25PHXHOU-120"
+    },
+    {
+     "ask": 0.28,
+     "bid": 0.25,
+     "direction": "under",
+     "entered": "2026-11-26T02:30:28.189122+00:00",
+     "game": "SAC @ GS",
+     "game_id": "401909324",
+     "id": "qlines_1H_under_blind:KXNBA1HTOTAL-26NOV25SACGSW-119",
+     "lead_min": 29.5,
+     "line": 119.5,
+     "night": "2026-11-25",
+     "offset": 1,
+     "price": 0.75,
+     "rule": "qlines_1H_under_blind",
+     "rung": 118.5,
+     "section": "1H",
+     "side": "no",
+     "start": "2026-11-26T03:00:00+00:00",
+     "status": "open",
+     "teams": {
+      "GS": "16/17",
+      "SAC": "9/17"
+     },
+     "ticker": "KXNBA1HTOTAL-26NOV25SACGSW-119"
+    },
+    {
+     "ask": 0.4,
+     "bid": 0.38,
+     "direction": "under",
+     "entered": "2026-11-26T02:30:28.189122+00:00",
+     "game": "SA @ POR",
+     "game_id": "401909325",
+     "id": "qlines_1H_under_blind:KXNBA1HTOTAL-26NOV25SASPOR-120",
+     "lead_min": 29.5,
+     "line": 119.5,
+     "night": "2026-11-25",
+     "offset": 0,
+     "price": 0.62,
+     "rule": "qlines_1H_under_blind",
+     "rung": 119.5,
+     "section": "1H",
+     "side": "no",
+     "start": "2026-11-26T03:00:00+00:00",
+     "status": "open",
+     "teams": {
+      "POR": "12/17",
+      "SA": "12/18"
+     },
+     "ticker": "KXNBA1HTOTAL-26NOV25SASPOR-120"
     }
    ]
   },
@@ -2524,6 +2786,7 @@
      "bid": 0.56,
      "direction": "over",
      "entered": "2026-11-26T00:01:59.505850+00:00",
+     "fee_in": 0.0172,
      "game": "CLE @ NY",
      "game_id": "401909319",
      "id": "qlines_1Q_over_blind:KXNBA1QTOTAL-26NOV25CLENYK-53",
@@ -2531,13 +2794,17 @@
      "line": 51.5,
      "night": "2026-11-25",
      "offset": 1,
+     "payout": 1.0,
      "price": 0.57,
+     "profit": 0.4128,
+     "ret": 0.703,
      "rule": "qlines_1Q_over_blind",
      "rung": 52.5,
      "section": "1Q",
+     "settled": "2026-11-26T02:30:28.189122+00:00",
      "side": "yes",
      "start": "2026-11-26T00:30:00+00:00",
-     "status": "open",
+     "status": "won",
      "teams": {
       "CLE": "16/18",
       "NY": "11/17"
@@ -2549,6 +2816,7 @@
      "bid": 0.58,
      "direction": "over",
      "entered": "2026-11-26T00:01:59.505850+00:00",
+     "fee_in": 0.0168,
      "game": "MIN @ OKC",
      "game_id": "401909320",
      "id": "qlines_1Q_over_blind:KXNBA1QTOTAL-26NOV25MINOKC-53",
@@ -2556,13 +2824,17 @@
      "line": 51.5,
      "night": "2026-11-25",
      "offset": 1,
+     "payout": 0.0,
      "price": 0.6,
+     "profit": -0.6168,
+     "ret": -1.0,
      "rule": "qlines_1Q_over_blind",
      "rung": 52.5,
      "section": "1Q",
+     "settled": "2026-11-26T02:30:28.189122+00:00",
      "side": "yes",
      "start": "2026-11-26T00:30:00+00:00",
-     "status": "open",
+     "status": "lost",
      "teams": {
       "MIN": "14/18",
       "OKC": "15/18"
@@ -2643,6 +2915,56 @@
       "PHX": "10/16"
      },
      "ticker": "KXNBA1QTOTAL-26NOV25PHXHOU-53"
+    },
+    {
+     "ask": 0.7,
+     "bid": 0.68,
+     "direction": "over",
+     "entered": "2026-11-26T02:30:28.189122+00:00",
+     "game": "SAC @ GS",
+     "game_id": "401909324",
+     "id": "qlines_1Q_over_blind:KXNBA1QTOTAL-26NOV25SACGSW-52",
+     "lead_min": 29.5,
+     "line": 51.5,
+     "night": "2026-11-25",
+     "offset": 0,
+     "price": 0.7,
+     "rule": "qlines_1Q_over_blind",
+     "rung": 51.5,
+     "section": "1Q",
+     "side": "yes",
+     "start": "2026-11-26T03:00:00+00:00",
+     "status": "open",
+     "teams": {
+      "GS": "12/17",
+      "SAC": "14/17"
+     },
+     "ticker": "KXNBA1QTOTAL-26NOV25SACGSW-52"
+    },
+    {
+     "ask": 0.75,
+     "bid": 0.74,
+     "direction": "over",
+     "entered": "2026-11-26T02:30:28.189122+00:00",
+     "game": "SA @ POR",
+     "game_id": "401909325",
+     "id": "qlines_1Q_over_blind:KXNBA1QTOTAL-26NOV25SASPOR-53",
+     "lead_min": 29.5,
+     "line": 51.5,
+     "night": "2026-11-25",
+     "offset": 1,
+     "price": 0.75,
+     "rule": "qlines_1Q_over_blind",
+     "rung": 52.5,
+     "section": "1Q",
+     "side": "yes",
+     "start": "2026-11-26T03:00:00+00:00",
+     "status": "open",
+     "teams": {
+      "POR": "10/17",
+      "SA": "14/18"
+     },
+     "ticker": "KXNBA1QTOTAL-26NOV25SASPOR-53"
     }
    ]
   },
@@ -3192,6 +3514,7 @@
      "bid": 0.29,
      "direction": "under",
      "entered": "2026-11-26T00:01:59.505850+00:00",
+     "fee_in": 0.0145,
      "game": "CLE @ NY",
      "game_id": "401909319",
      "id": "qlines_1Q_under_blind:KXNBA1QTOTAL-26NOV25CLENYK-59",
@@ -3199,13 +3522,17 @@
      "line": 59.5,
      "night": "2026-11-25",
      "offset": 1,
+     "payout": 1.0,
      "price": 0.71,
+     "profit": 0.2755,
+     "ret": 0.3803,
      "rule": "qlines_1Q_under_blind",
      "rung": 58.5,
      "section": "1Q",
+     "settled": "2026-11-26T02:30:28.189122+00:00",
      "side": "no",
      "start": "2026-11-26T00:30:00+00:00",
-     "status": "open",
+     "status": "won",
      "teams": {
       "CLE": "14/18",
       "NY": "13/17"
@@ -3217,6 +3544,7 @@
      "bid": 0.31,
      "direction": "under",
      "entered": "2026-11-26T00:01:59.505850+00:00",
+     "fee_in": 0.015,
      "game": "MIN @ OKC",
      "game_id": "401909320",
      "id": "qlines_1Q_under_blind:KXNBA1QTOTAL-26NOV25MINOKC-59",
@@ -3224,13 +3552,17 @@
      "line": 59.5,
      "night": "2026-11-25",
      "offset": 1,
+     "payout": 1.0,
      "price": 0.69,
+     "profit": 0.295,
+     "ret": 0.4184,
      "rule": "qlines_1Q_under_blind",
      "rung": 58.5,
      "section": "1Q",
+     "settled": "2026-11-26T02:30:28.189122+00:00",
      "side": "no",
      "start": "2026-11-26T00:30:00+00:00",
-     "status": "open",
+     "status": "won",
      "teams": {
       "MIN": "12/18",
       "OKC": "8/18"
@@ -3311,6 +3643,56 @@
       "PHX": "11/16"
      },
      "ticker": "KXNBA1QTOTAL-26NOV25PHXHOU-59"
+    },
+    {
+     "ask": 0.35,
+     "bid": 0.32,
+     "direction": "under",
+     "entered": "2026-11-26T02:30:28.189122+00:00",
+     "game": "SAC @ GS",
+     "game_id": "401909324",
+     "id": "qlines_1Q_under_blind:KXNBA1QTOTAL-26NOV25SACGSW-60",
+     "lead_min": 29.5,
+     "line": 59.5,
+     "night": "2026-11-25",
+     "offset": 0,
+     "price": 0.68,
+     "rule": "qlines_1Q_under_blind",
+     "rung": 59.5,
+     "section": "1Q",
+     "side": "no",
+     "start": "2026-11-26T03:00:00+00:00",
+     "status": "open",
+     "teams": {
+      "GS": "12/17",
+      "SAC": "10/17"
+     },
+     "ticker": "KXNBA1QTOTAL-26NOV25SACGSW-60"
+    },
+    {
+     "ask": 0.5,
+     "bid": 0.49,
+     "direction": "under",
+     "entered": "2026-11-26T02:30:28.189122+00:00",
+     "game": "SA @ POR",
+     "game_id": "401909325",
+     "id": "qlines_1Q_under_blind:KXNBA1QTOTAL-26NOV25SASPOR-59",
+     "lead_min": 29.5,
+     "line": 59.5,
+     "night": "2026-11-25",
+     "offset": 1,
+     "price": 0.51,
+     "rule": "qlines_1Q_under_blind",
+     "rung": 58.5,
+     "section": "1Q",
+     "side": "no",
+     "start": "2026-11-26T03:00:00+00:00",
+     "status": "open",
+     "teams": {
+      "POR": "11/17",
+      "SA": "10/18"
+     },
+     "ticker": "KXNBA1QTOTAL-26NOV25SASPOR-59"
     }
    ]
   },
@@ -3642,6 +4024,31 @@
       "OKC": "15/18"
      },
      "ticker": "KXNBA2HTOTAL-26NOV25MINOKC-102"
+    },
+    {
+     "ask": 0.66,
+     "bid": 0.62,
+     "direction": "over",
+     "entered": "2026-11-26T02:30:28.189122+00:00",
+     "game": "SAC @ GS",
+     "game_id": "401909324",
+     "id": "qlines_2H_over_blind:KXNBA2HTOTAL-26NOV25SACGSW-101",
+     "lead_min": 29.5,
+     "line": 100.5,
+     "night": "2026-11-25",
+     "offset": 0,
+     "price": 0.66,
+     "rule": "qlines_2H_over_blind",
+     "rung": 100.5,
+     "section": "2H",
+     "side": "yes",
+     "start": "2026-11-26T03:00:00+00:00",
+     "status": "open",
+     "teams": {
+      "GS": "15/17",
+      "SAC": "12/17"
+     },
+     "ticker": "KXNBA2HTOTAL-26NOV25SACGSW-101"
     }
    ]
   },
@@ -4528,6 +4935,7 @@
      "bid": 0.6,
      "direction": "over",
      "entered": "2026-11-26T00:01:59.505850+00:00",
+     "fee_in": 0.016,
      "game": "CLE @ NY",
      "game_id": "401909319",
      "id": "qlines_2Q_over_blind:KXNBA2QTOTAL-26NOV25CLENYK-51",
@@ -4535,13 +4943,17 @@
      "line": 50.5,
      "night": "2026-11-25",
      "offset": 0,
+     "payout": 1.0,
      "price": 0.65,
+     "profit": 0.334,
+     "ret": 0.5015,
      "rule": "qlines_2Q_over_blind",
      "rung": 50.5,
      "section": "2Q",
+     "settled": "2026-11-26T02:30:28.189122+00:00",
      "side": "yes",
      "start": "2026-11-26T00:30:00+00:00",
-     "status": "open",
+     "status": "won",
      "teams": {
       "CLE": "15/18",
       "NY": "10/17"
@@ -4553,6 +4965,7 @@
      "bid": 0.57,
      "direction": "over",
      "entered": "2026-11-26T00:01:59.505850+00:00",
+     "fee_in": 0.0167,
      "game": "MIN @ OKC",
      "game_id": "401909320",
      "id": "qlines_2Q_over_blind:KXNBA2QTOTAL-26NOV25MINOKC-52",
@@ -4560,13 +4973,17 @@
      "line": 50.5,
      "night": "2026-11-25",
      "offset": 1,
+     "payout": 1.0,
      "price": 0.61,
+     "profit": 0.3733,
+     "ret": 0.5957,
      "rule": "qlines_2Q_over_blind",
      "rung": 51.5,
      "section": "2Q",
+     "settled": "2026-11-26T02:30:28.189122+00:00",
      "side": "yes",
      "start": "2026-11-26T00:30:00+00:00",
-     "status": "open",
+     "status": "won",
      "teams": {
       "MIN": "15/18",
       "OKC": "11/18"
@@ -4647,6 +5064,56 @@
       "PHX": "14/16"
      },
      "ticker": "KXNBA2QTOTAL-26NOV25PHXHOU-51"
+    },
+    {
+     "ask": 0.67,
+     "bid": 0.63,
+     "direction": "over",
+     "entered": "2026-11-26T02:30:28.189122+00:00",
+     "game": "SAC @ GS",
+     "game_id": "401909324",
+     "id": "qlines_2Q_over_blind:KXNBA2QTOTAL-26NOV25SACGSW-52",
+     "lead_min": 29.5,
+     "line": 50.5,
+     "night": "2026-11-25",
+     "offset": 1,
+     "price": 0.67,
+     "rule": "qlines_2Q_over_blind",
+     "rung": 51.5,
+     "section": "2Q",
+     "side": "yes",
+     "start": "2026-11-26T03:00:00+00:00",
+     "status": "open",
+     "teams": {
+      "GS": "12/17",
+      "SAC": "14/17"
+     },
+     "ticker": "KXNBA2QTOTAL-26NOV25SACGSW-52"
+    },
+    {
+     "ask": 0.82,
+     "bid": 0.77,
+     "direction": "over",
+     "entered": "2026-11-26T02:30:28.189122+00:00",
+     "game": "SA @ POR",
+     "game_id": "401909325",
+     "id": "qlines_2Q_over_blind:KXNBA2QTOTAL-26NOV25SASPOR-51",
+     "lead_min": 29.5,
+     "line": 50.5,
+     "night": "2026-11-25",
+     "offset": 0,
+     "price": 0.82,
+     "rule": "qlines_2Q_over_blind",
+     "rung": 50.5,
+     "section": "2Q",
+     "side": "yes",
+     "start": "2026-11-26T03:00:00+00:00",
+     "status": "open",
+     "teams": {
+      "POR": "15/17",
+      "SA": "13/18"
+     },
+     "ticker": "KXNBA2QTOTAL-26NOV25SASPOR-51"
     }
    ]
   },
@@ -4835,6 +5302,7 @@
      "bid": 0.08,
      "direction": "under",
      "entered": "2026-11-26T00:01:59.505850+00:00",
+     "fee_in": 0.0052,
      "game": "MIN @ OKC",
      "game_id": "401909320",
      "id": "qlines_2Q_under:KXNBA2QTOTAL-26NOV25MINOKC-64",
@@ -4843,16 +5311,20 @@
      "matches": "qlines_2Q_under_blind:KXNBA2QTOTAL-26NOV25MINOKC-64",
      "night": "2026-11-25",
      "offset": 0,
+     "payout": 1.0,
      "price": 0.92,
+     "profit": 0.0748,
      "qualifying": [
       "OKC"
      ],
+     "ret": 0.0808,
      "rule": "qlines_2Q_under",
      "rung": 63.5,
      "section": "2Q",
+     "settled": "2026-11-26T02:30:28.189122+00:00",
      "side": "no",
      "start": "2026-11-26T00:30:00+00:00",
-     "status": "open",
+     "status": "won",
      "teams": {
       "MIN": "16/18",
       "OKC": "17/18"
@@ -5337,6 +5809,7 @@
      "bid": 0.09,
      "direction": "under",
      "entered": "2026-11-26T00:01:59.505850+00:00",
+     "fee_in": 0.0058,
      "game": "CLE @ NY",
      "game_id": "401909319",
      "id": "qlines_2Q_under_blind:KXNBA2QTOTAL-26NOV25CLENYK-63",
@@ -5344,13 +5817,17 @@
      "line": 63.5,
      "night": "2026-11-25",
      "offset": 1,
+     "payout": 1.0,
      "price": 0.91,
+     "profit": 0.0842,
+     "ret": 0.0919,
      "rule": "qlines_2Q_under_blind",
      "rung": 62.5,
      "section": "2Q",
+     "settled": "2026-11-26T02:30:28.189122+00:00",
      "side": "no",
      "start": "2026-11-26T00:30:00+00:00",
-     "status": "open",
+     "status": "won",
      "teams": {
       "CLE": "13/18",
       "NY": "15/17"
@@ -5362,6 +5839,7 @@
      "bid": 0.08,
      "direction": "under",
      "entered": "2026-11-26T00:01:59.505850+00:00",
+     "fee_in": 0.0052,
      "game": "MIN @ OKC",
      "game_id": "401909320",
      "id": "qlines_2Q_under_blind:KXNBA2QTOTAL-26NOV25MINOKC-64",
@@ -5369,13 +5847,17 @@
      "line": 63.5,
      "night": "2026-11-25",
      "offset": 0,
+     "payout": 1.0,
      "price": 0.92,
+     "profit": 0.0748,
+     "ret": 0.0808,
      "rule": "qlines_2Q_under_blind",
      "rung": 63.5,
      "section": "2Q",
+     "settled": "2026-11-26T02:30:28.189122+00:00",
      "side": "no",
      "start": "2026-11-26T00:30:00+00:00",
-     "status": "open",
+     "status": "won",
      "teams": {
       "MIN": "16/18",
       "OKC": "17/18"
@@ -6136,6 +6618,31 @@
       "PHX": "14/16"
      },
      "ticker": "KXNBA3QTOTAL-26NOV25PHXHOU-54"
+    },
+    {
+     "ask": 0.58,
+     "bid": 0.54,
+     "direction": "over",
+     "entered": "2026-11-26T02:30:28.189122+00:00",
+     "game": "SA @ POR",
+     "game_id": "401909325",
+     "id": "qlines_3Q_over_blind:KXNBA3QTOTAL-26NOV25SASPOR-54",
+     "lead_min": 29.5,
+     "line": 53.5,
+     "night": "2026-11-25",
+     "offset": 0,
+     "price": 0.58,
+     "rule": "qlines_3Q_over_blind",
+     "rung": 53.5,
+     "section": "3Q",
+     "side": "yes",
+     "start": "2026-11-26T03:00:00+00:00",
+     "status": "open",
+     "teams": {
+      "POR": "12/17",
+      "SA": "9/18"
+     },
+     "ticker": "KXNBA3QTOTAL-26NOV25SASPOR-54"
     }
    ]
   },
@@ -6746,6 +7253,31 @@
       "PHX": "13/16"
      },
      "ticker": "KXNBA3QTOTAL-26NOV25PHXHOU-64"
+    },
+    {
+     "ask": 0.11,
+     "bid": 0.06,
+     "direction": "under",
+     "entered": "2026-11-26T02:30:28.189122+00:00",
+     "game": "SAC @ GS",
+     "game_id": "401909324",
+     "id": "qlines_3Q_under_blind:KXNBA3QTOTAL-26NOV25SACGSW-64",
+     "lead_min": 29.5,
+     "line": 64.5,
+     "night": "2026-11-25",
+     "offset": 1,
+     "price": 0.94,
+     "rule": "qlines_3Q_under_blind",
+     "rung": 63.5,
+     "section": "3Q",
+     "side": "no",
+     "start": "2026-11-26T03:00:00+00:00",
+     "status": "open",
+     "teams": {
+      "GS": "14/17",
+      "SAC": "14/17"
+     },
+     "ticker": "KXNBA3QTOTAL-26NOV25SACGSW-64"
     }
    ]
   },
@@ -7329,6 +7861,31 @@
       "PHX": "13/16"
      },
      "ticker": "KXNBA4QTOTAL-26NOV25PHXHOU-50"
+    },
+    {
+     "ask": 0.6,
+     "bid": 0.57,
+     "direction": "over",
+     "entered": "2026-11-26T02:30:28.189122+00:00",
+     "game": "SAC @ GS",
+     "game_id": "401909324",
+     "id": "qlines_4Q_over_blind:KXNBA4QTOTAL-26NOV25SACGSW-50",
+     "lead_min": 29.5,
+     "line": 48.5,
+     "night": "2026-11-25",
+     "offset": 1,
+     "price": 0.6,
+     "rule": "qlines_4Q_over_blind",
+     "rung": 49.5,
+     "section": "4Q",
+     "side": "yes",
+     "start": "2026-11-26T03:00:00+00:00",
+     "status": "open",
+     "teams": {
+      "GS": "11/17",
+      "SAC": "14/17"
+     },
+     "ticker": "KXNBA4QTOTAL-26NOV25SACGSW-50"
     }
    ]
   },
@@ -7485,6 +8042,7 @@
      "bid": 0.17,
      "direction": "under",
      "entered": "2026-11-25T23:28:21.499409+00:00",
+     "fee_in": 0.0099,
      "game": "CHI @ CHA",
      "game_id": "401909318",
      "id": "qlines_4Q_under:KXNBA4QTOTAL-26NOV25CHICHA-62",
@@ -7493,16 +8051,20 @@
      "matches": "qlines_4Q_under_blind:KXNBA4QTOTAL-26NOV25CHICHA-62",
      "night": "2026-11-25",
      "offset": 1,
+     "payout": 0.0,
      "price": 0.83,
+     "profit": -0.8399,
      "qualifying": [
       "CHA"
      ],
+     "ret": -1.0,
      "rule": "qlines_4Q_under",
      "rung": 61.5,
      "section": "4Q",
+     "settled": "2026-11-26T02:30:28.189122+00:00",
      "side": "no",
      "start": "2026-11-26T00:00:00+00:00",
-     "status": "open",
+     "status": "lost",
      "teams": {
       "CHA": "15/16",
       "CHI": "11/17"
@@ -7566,6 +8128,35 @@
       "MEM": "17/18"
      },
      "ticker": "KXNBA4QTOTAL-26NOV25LACMEM-62"
+    },
+    {
+     "ask": 0.14,
+     "bid": 0.09,
+     "direction": "under",
+     "entered": "2026-11-26T02:30:28.189122+00:00",
+     "game": "SAC @ GS",
+     "game_id": "401909324",
+     "id": "qlines_4Q_under:KXNBA4QTOTAL-26NOV25SACGSW-62",
+     "lead_min": 29.5,
+     "line": 62.5,
+     "matches": "qlines_4Q_under_blind:KXNBA4QTOTAL-26NOV25SACGSW-62",
+     "night": "2026-11-25",
+     "offset": 1,
+     "price": 0.91,
+     "qualifying": [
+      "SAC"
+     ],
+     "rule": "qlines_4Q_under",
+     "rung": 61.5,
+     "section": "4Q",
+     "side": "no",
+     "start": "2026-11-26T03:00:00+00:00",
+     "status": "open",
+     "teams": {
+      "GS": "15/17",
+      "SAC": "16/17"
+     },
+     "ticker": "KXNBA4QTOTAL-26NOV25SACGSW-62"
     }
    ]
   },
@@ -7986,6 +8577,7 @@
      "bid": 0.17,
      "direction": "under",
      "entered": "2026-11-25T23:28:21.499409+00:00",
+     "fee_in": 0.0099,
      "game": "CHI @ CHA",
      "game_id": "401909318",
      "id": "qlines_4Q_under_blind:KXNBA4QTOTAL-26NOV25CHICHA-62",
@@ -7993,13 +8585,17 @@
      "line": 62.5,
      "night": "2026-11-25",
      "offset": 1,
+     "payout": 0.0,
      "price": 0.83,
+     "profit": -0.8399,
+     "ret": -1.0,
      "rule": "qlines_4Q_under_blind",
      "rung": 61.5,
      "section": "4Q",
+     "settled": "2026-11-26T02:30:28.189122+00:00",
      "side": "no",
      "start": "2026-11-26T00:00:00+00:00",
-     "status": "open",
+     "status": "lost",
      "teams": {
       "CHA": "15/16",
       "CHI": "11/17"
@@ -8130,6 +8726,31 @@
       "PHX": "14/16"
      },
      "ticker": "KXNBA4QTOTAL-26NOV25PHXHOU-62"
+    },
+    {
+     "ask": 0.14,
+     "bid": 0.09,
+     "direction": "under",
+     "entered": "2026-11-26T02:30:28.189122+00:00",
+     "game": "SAC @ GS",
+     "game_id": "401909324",
+     "id": "qlines_4Q_under_blind:KXNBA4QTOTAL-26NOV25SACGSW-62",
+     "lead_min": 29.5,
+     "line": 62.5,
+     "night": "2026-11-25",
+     "offset": 1,
+     "price": 0.91,
+     "rule": "qlines_4Q_under_blind",
+     "rung": 61.5,
+     "section": "4Q",
+     "side": "no",
+     "start": "2026-11-26T03:00:00+00:00",
+     "status": "open",
+     "teams": {
+      "GS": "15/17",
+      "SAC": "16/17"
+     },
+     "ticker": "KXNBA4QTOTAL-26NOV25SACGSW-62"
     }
    ]
   }
@@ -8290,6 +8911,12 @@
    "due": 0,
    "games": 0,
    "new": 0
+  },
+  {
+   "at": "2026-11-26T02:30:28.189122+00:00",
+   "due": 2,
+   "games": 1,
+   "new": 19
   }
  ],
  "schedule": [
