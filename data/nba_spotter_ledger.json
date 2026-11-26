@@ -1,7 +1,7 @@
 {
  "box_through": "2026-11-25",
  "error": null,
- "last_run": "2026-11-25T23:45:28.592459+00:00",
+ "last_run": "2026-11-26T00:01:57.987807+00:00",
  "looks": {
   "401909305": {
    "at": "2026-11-20T22:45:25.302540+00:00",
@@ -5150,6 +5150,7 @@
     {
      "bid": 0.39,
      "entered": "2026-11-25T20:45:25.830584+00:00",
+     "fee_in": 0.0167,
      "game": "MIA @ PHI",
      "game_id": "401909317",
      "id": "spotter_fade_blind:KXNBA3PT-26NOV25MIAPHI-PHILJAMES23-2",
@@ -5157,15 +5158,20 @@
      "matches": "spotter_fade:KXNBAPRA-26NOV25MIAPHI-PHIJBROWN7-35",
      "night": "2026-11-25",
      "p": null,
+     "payout": 0.0,
      "pid": "1966",
      "player": "LeBron James",
      "price": 0.61,
+     "profit": -0.6267,
+     "ret": -1.0,
      "rule": "spotter_fade_blind",
      "rung": 2,
+     "settled": "2026-11-26T00:01:57.987807+00:00",
      "side": "no",
+     "sold": false,
      "start": "2026-11-25T22:00:00+00:00",
      "stat": "m3",
-     "status": "open",
+     "status": "lost",
      "team": "PHI",
      "ticker": "KXNBA3PT-26NOV25MIAPHI-PHILJAMES23-2",
      "unit": "threes",
@@ -12906,12 +12912,6 @@
  },
  "runs": [
   {
-   "at": "2026-11-24T00:15:42.395586+00:00",
-   "box": 0,
-   "due": 1,
-   "new": 0
-  },
-  {
    "at": "2026-11-24T00:30:27.601522+00:00",
    "box": 0,
    "due": 0,
@@ -13210,6 +13210,12 @@
    "box": 0,
    "due": 2,
    "new": 2
+  },
+  {
+   "at": "2026-11-26T00:01:57.987807+00:00",
+   "box": 0,
+   "due": 0,
+   "new": 0
   }
  ],
  "schedule": [
