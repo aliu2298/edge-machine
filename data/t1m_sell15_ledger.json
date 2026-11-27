@@ -113,6 +113,25 @@
    "touched": true,
    "version": "t1m-sell15-v1",
    "won": true
+  },
+  {
+   "day": "2026-11-27",
+   "entry": 0.29,
+   "entry_ts": 1795803450,
+   "hold": -1.0,
+   "id": "T1M:KXLIGUE1TOTAL-26NOV27STBPAR",
+   "ko": 1795808700,
+   "league": "Ligue 1",
+   "logged": "2026-11-27T23:01:36.840475+00:00",
+   "match": "Brest v Paris FC",
+   "sell": -1.0,
+   "sell_maker": -1.0,
+   "sweeps": 1,
+   "target": 0.43,
+   "ticker": "KXLIGUE1TOTAL-26NOV27STBPAR-4",
+   "touched": false,
+   "version": "t1m-sell15-v1",
+   "won": false
   }
  ],
  "error": null,
@@ -567,7 +586,7 @@
    "KXLIGUE1TOTAL-26OCT26PSGOL": "no settled over 3.5 market"
   }
  },
- "last_run": "2026-11-27T22:01:43.778716+00:00",
+ "last_run": "2026-11-27T23:01:36.840475+00:00",
  "registered": "2026-11-09T00:00:00Z",
  "skips": {
   "T1M:KXBUNDESLIGATOTAL-26NOV07RBLFCA": "kicked off before the readout was registered (in the backfill, not the record)",

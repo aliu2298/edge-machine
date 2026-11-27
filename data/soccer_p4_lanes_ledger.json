@@ -1,6 +1,6 @@
 {
  "error": null,
- "last_run": "2026-11-27T22:00:33.299398+00:00",
+ "last_run": "2026-11-27T23:00:32.783840+00:00",
  "matches": [
   {
    "day": "2026-11-19",
@@ -3770,6 +3770,50 @@
    "logged": "2026-11-27T22:00:33.299398+00:00",
    "timed": 4,
    "title": "Levante v Racing Santander",
+   "version": "soccerp4-v1"
+  },
+  {
+   "day": "2026-11-27",
+   "entries": [
+    {
+     "ask": 0.56,
+     "bid": 0.54,
+     "kind": "GAME",
+     "maker": {
+      "cost": 0.55,
+      "filled": false,
+      "roi": null
+     },
+     "mom": "pre",
+     "name": "Madeira",
+     "score": "0-0",
+     "side": "no",
+     "taker": {
+      "cost": 0.58,
+      "depth": 0,
+      "filled": false,
+      "roi": 0.7241
+     },
+     "team": "home",
+     "ticker": "KXLIGAPORTUGALGAME-26NOV27CSMCDN-CSM",
+     "ts": 1795806900,
+     "v2": true,
+     "won": true
+    }
+   ],
+   "espn_id": "401885389",
+   "event": "KXLIGAPORTUGALGAME-26NOV27CSMCDN",
+   "goals": 3,
+   "ht": 1795813476,
+   "ko": 1795810500,
+   "labels": {
+    "away": "O-D+",
+    "home": "O-D+"
+   },
+   "league": "LIGAPORTUGAL",
+   "logged": "2026-11-27T23:00:32.783840+00:00",
+   "timed": 3,
+   "title": "Maritimo v C.D. Nacional",
    "version": "soccerp4-v1"
   }
  ],
