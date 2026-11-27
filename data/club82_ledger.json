@@ -95,22 +95,15 @@
    {
     "median": 0.5,
     "n": 11,
-    "name": "Brest",
-    "rate": 0.5455,
-    "safe": 0.5
-   },
-   {
-    "median": 0.5,
-    "n": 11,
     "name": "Brighton & Hove Albion",
     "rate": 0.6364,
     "safe": 0.5
    },
    {
     "median": 0.5,
-    "n": 11,
+    "n": 12,
     "name": "Chelsea",
-    "rate": 0.5455,
+    "rate": 0.5833,
     "safe": null
    },
    {
@@ -206,13 +199,6 @@
    },
    {
     "median": 0.5,
-    "n": 11,
-    "name": "Paris FC",
-    "rate": 0.5455,
-    "safe": null
-   },
-   {
-    "median": 0.5,
     "n": 15,
     "name": "RB Leipzig",
     "rate": 0.6,
@@ -220,9 +206,9 @@
    },
    {
     "median": 0.5,
-    "n": 13,
+    "n": 14,
     "name": "Racing Santander",
-    "rate": 0.6923,
+    "rate": 0.7143,
     "safe": null
    },
    {
@@ -276,9 +262,9 @@
    },
    {
     "median": 0.5,
-    "n": 10,
+    "n": 11,
     "name": "Werder Bremen",
-    "rate": 0.7,
+    "rate": 0.7273,
     "safe": 0.5
    },
    {
@@ -291,9 +277,9 @@
    {
     "median": 0.0,
     "n": 12,
-    "name": "Bologna",
+    "name": "Brest",
     "rate": 0.5,
-    "safe": null
+    "safe": 0.5
    },
    {
     "median": 0.0,
@@ -308,6 +294,13 @@
     "name": "Monza",
     "rate": 0.5,
     "safe": 0.5
+   },
+   {
+    "median": 0.0,
+    "n": 12,
+    "name": "Paris FC",
+    "rate": 0.5,
+    "safe": null
    },
    {
     "median": 0.0,
@@ -381,9 +374,16 @@
    },
    {
     "median": -0.5,
-    "n": 10,
+    "n": 13,
+    "name": "Bologna",
+    "rate": 0.4615,
+    "safe": null
+   },
+   {
+    "median": -0.5,
+    "n": 11,
     "name": "Borussia M\u00f6nchengladbach",
-    "rate": 0.3,
+    "rate": 0.3636,
     "safe": null
    },
    {
@@ -528,9 +528,9 @@
    },
    {
     "median": -0.5,
-    "n": 13,
+    "n": 14,
     "name": "Levante",
-    "rate": 0.3077,
+    "rate": 0.2857,
     "safe": null
    },
    {
@@ -702,6 +702,13 @@
     "safe": null
    },
    {
+    "median": -1.0,
+    "n": 12,
+    "name": "Nottingham Forest",
+    "rate": 0.3333,
+    "safe": null
+   },
+   {
     "median": -1.5,
     "n": 11,
     "name": "Angers",
@@ -727,13 +734,6 @@
     "n": 13,
     "name": "Getafe",
     "rate": 0.0769,
-    "safe": null
-   },
-   {
-    "median": -1.5,
-    "n": 11,
-    "name": "Nottingham Forest",
-    "rate": 0.2727,
     "safe": null
    },
    {
@@ -773,9 +773,9 @@
    },
    {
     "median": -1.5,
-    "n": 12,
+    "n": 13,
     "name": "Venezia",
-    "rate": 0.25,
+    "rate": 0.2308,
     "safe": null
    }
   ],
@@ -827,6 +827,13 @@
     "n": 12,
     "name": "Athletic Club",
     "rate": 0.75,
+    "safe": 4.5
+   },
+   {
+    "median": 1.5,
+    "n": 13,
+    "name": "Bologna",
+    "rate": 0.7692,
     "safe": 4.5
    },
    {
@@ -957,9 +964,9 @@
    },
    {
     "median": 1.5,
-    "n": 11,
+    "n": 12,
     "name": "Nottingham Forest",
-    "rate": 0.7273,
+    "rate": 0.6667,
     "safe": 4.5
    },
    {
@@ -1006,9 +1013,9 @@
    },
    {
     "median": 1.5,
-    "n": 12,
+    "n": 13,
     "name": "Venezia",
-    "rate": 0.6667,
+    "rate": 0.6923,
     "safe": 4.5
    },
    {
@@ -1028,7 +1035,7 @@
    {
     "median": 1.0,
     "n": 12,
-    "name": "Bologna",
+    "name": "Brest",
     "rate": 0.75,
     "safe": 4.5
    },
@@ -1111,20 +1118,6 @@
    },
    {
     "median": 0.5,
-    "n": 11,
-    "name": "Brest",
-    "rate": 0.7273,
-    "safe": 4.5
-   },
-   {
-    "median": 0.5,
-    "n": 11,
-    "name": "Chelsea",
-    "rate": 0.5455,
-    "safe": 5.5
-   },
-   {
-    "median": 0.5,
     "n": 5,
     "name": "Club Brugge",
     "rate": 0.6,
@@ -1202,9 +1195,9 @@
    },
    {
     "median": 0.5,
-    "n": 13,
+    "n": 14,
     "name": "Levante",
-    "rate": 0.6154,
+    "rate": 0.5714,
     "safe": 6.5
    },
    {
@@ -1244,9 +1237,9 @@
    },
    {
     "median": 0.5,
-    "n": 11,
+    "n": 12,
     "name": "Paris FC",
-    "rate": 0.6364,
+    "rate": 0.6667,
     "safe": 4.5
    },
    {
@@ -1335,10 +1328,10 @@
    },
    {
     "median": 0.0,
-    "n": 10,
-    "name": "Borussia M\u00f6nchengladbach",
+    "n": 12,
+    "name": "Chelsea",
     "rate": 0.5,
-    "safe": 7.5
+    "safe": 5.5
    },
    {
     "median": 0.0,
@@ -1413,6 +1406,13 @@
    {
     "median": -0.5,
     "n": 11,
+    "name": "Borussia M\u00f6nchengladbach",
+    "rate": 0.4545,
+    "safe": 6.5
+   },
+   {
+    "median": -0.5,
+    "n": 11,
     "name": "Coventry City",
     "rate": 0.4545,
     "safe": 5.5
@@ -1482,9 +1482,9 @@
    },
    {
     "median": -0.5,
-    "n": 13,
+    "n": 14,
     "name": "Racing Santander",
-    "rate": 0.4615,
+    "rate": 0.4286,
     "safe": 5.5
    },
    {
@@ -1531,9 +1531,9 @@
    },
    {
     "median": -0.5,
-    "n": 10,
+    "n": 11,
     "name": "Werder Bremen",
-    "rate": 0.3,
+    "rate": 0.2727,
     "safe": 5.5
    },
    {
@@ -1560,8 +1560,8 @@
   ]
  },
  "error": null,
- "games_through": "2026-11-25",
- "last_run": "2026-11-27T21:00:29.349476+00:00",
+ "games_through": "2026-11-27",
+ "last_run": "2026-11-27T22:00:29.580961+00:00",
  "registered": "2026-11-23",
  "rules": {
   "club82_tt15": {
@@ -2754,16 +2754,19 @@
      "logged": "2026-11-27T18:45:34.575352+00:00",
      "match": "Werder Bremen v Borussia M\u00f6nchengladbach",
      "opponent": "Borussia M\u00f6nchengladbach",
+     "payout": 1.0,
      "price": 0.61,
+     "profit": 59.58,
      "qualifying": false,
      "rates": {
       "away": "3/10",
       "home": "7/10"
      },
      "rule": "club82_tt15_blind",
+     "settled": "2026-11-27T22:00:29.580961+00:00",
      "side": "yes",
      "start": "2026-11-27T19:30Z",
-     "status": "open",
+     "status": "won",
      "team": "Werder Bremen",
      "team_side": "home",
      "ticker": "KXBUNDESLIGATEAMTOTAL-26NOV27SVWBMG-SVW2"
@@ -2780,16 +2783,19 @@
      "logged": "2026-11-27T18:45:34.575352+00:00",
      "match": "Werder Bremen v Borussia M\u00f6nchengladbach",
      "opponent": "Werder Bremen",
+     "payout": 1.0,
      "price": 0.34,
+     "profit": 181.13,
      "qualifying": false,
      "rates": {
       "away": "3/10",
       "home": "7/10"
      },
      "rule": "club82_tt15_blind",
+     "settled": "2026-11-27T22:00:29.580961+00:00",
      "side": "yes",
      "start": "2026-11-27T19:30Z",
-     "status": "open",
+     "status": "won",
      "team": "Borussia M\u00f6nchengladbach",
      "team_side": "away",
      "ticker": "KXBUNDESLIGATEAMTOTAL-26NOV27SVWBMG-BMG2"
@@ -2806,16 +2812,19 @@
      "logged": "2026-11-27T18:45:34.575352+00:00",
      "match": "Venezia v Bologna",
      "opponent": "Bologna",
+     "payout": 0.0,
      "price": 0.32,
+     "profit": -100.0,
      "qualifying": false,
      "rates": {
       "away": "6/12",
       "home": "3/12"
      },
      "rule": "club82_tt15_blind",
+     "settled": "2026-11-27T22:00:29.580961+00:00",
      "side": "yes",
      "start": "2026-11-27T19:45Z",
-     "status": "open",
+     "status": "lost",
      "team": "Venezia",
      "team_side": "home",
      "ticker": "KXSERIEATEAMTOTAL-26NOV27VENBFC-VEN2"
@@ -2832,16 +2841,19 @@
      "logged": "2026-11-27T18:45:34.575352+00:00",
      "match": "Venezia v Bologna",
      "opponent": "Venezia",
+     "payout": 0.0,
      "price": 0.4,
+     "profit": -100.0,
      "qualifying": false,
      "rates": {
       "away": "6/12",
       "home": "3/12"
      },
      "rule": "club82_tt15_blind",
+     "settled": "2026-11-27T22:00:29.580961+00:00",
      "side": "yes",
      "start": "2026-11-27T19:45Z",
-     "status": "open",
+     "status": "lost",
      "team": "Bologna",
      "team_side": "away",
      "ticker": "KXSERIEATEAMTOTAL-26NOV27VENBFC-BFC2"
@@ -2858,16 +2870,19 @@
      "logged": "2026-11-27T18:45:34.575352+00:00",
      "match": "Brest v Paris FC",
      "opponent": "Paris FC",
+     "payout": 0.0,
      "price": 0.33,
+     "profit": -100.0,
      "qualifying": false,
      "rates": {
       "away": "6/11",
       "home": "6/11"
      },
      "rule": "club82_tt15_blind",
+     "settled": "2026-11-27T22:00:29.580961+00:00",
      "side": "yes",
      "start": "2026-11-27T19:45Z",
-     "status": "open",
+     "status": "lost",
      "team": "Brest",
      "team_side": "home",
      "ticker": "KXLIGUE1TEAMTOTAL-26NOV27STBPAR-STB2"
@@ -2884,16 +2899,19 @@
      "logged": "2026-11-27T18:45:34.575352+00:00",
      "match": "Brest v Paris FC",
      "opponent": "Brest",
+     "payout": 0.0,
      "price": 0.47,
+     "profit": -100.0,
      "qualifying": false,
      "rates": {
       "away": "6/11",
       "home": "6/11"
      },
      "rule": "club82_tt15_blind",
+     "settled": "2026-11-27T22:00:29.580961+00:00",
      "side": "yes",
      "start": "2026-11-27T19:45Z",
-     "status": "open",
+     "status": "lost",
      "team": "Paris FC",
      "team_side": "away",
      "ticker": "KXLIGUE1TEAMTOTAL-26NOV27STBPAR-PAR2"
@@ -2910,16 +2928,19 @@
      "logged": "2026-11-27T19:00:30.053841+00:00",
      "match": "Nottingham Forest v Chelsea",
      "opponent": "Chelsea",
+     "payout": 1.0,
      "price": 0.44,
+     "profit": 118.7,
      "qualifying": false,
      "rates": {
       "away": "6/11",
       "home": "3/11"
      },
      "rule": "club82_tt15_blind",
+     "settled": "2026-11-27T22:00:29.580961+00:00",
      "side": "yes",
      "start": "2026-11-27T20:00Z",
-     "status": "open",
+     "status": "won",
      "team": "Nottingham Forest",
      "team_side": "home",
      "ticker": "KXEPLTEAMTOTAL-26NOV27NFOCFC-NFO2"
@@ -2936,16 +2957,19 @@
      "logged": "2026-11-27T19:00:30.053841+00:00",
      "match": "Nottingham Forest v Chelsea",
      "opponent": "Nottingham Forest",
+     "payout": 1.0,
      "price": 0.4,
+     "profit": 139.92,
      "qualifying": false,
      "rates": {
       "away": "6/11",
       "home": "3/11"
      },
      "rule": "club82_tt15_blind",
+     "settled": "2026-11-27T22:00:29.580961+00:00",
      "side": "yes",
      "start": "2026-11-27T20:00Z",
-     "status": "open",
+     "status": "won",
      "team": "Chelsea",
      "team_side": "away",
      "ticker": "KXEPLTEAMTOTAL-26NOV27NFOCFC-CFC2"
@@ -2962,16 +2986,19 @@
      "logged": "2026-11-27T19:00:30.053841+00:00",
      "match": "Levante v Racing Santander",
      "opponent": "Racing Santander",
+     "payout": 0.0,
      "price": 0.58,
+     "profit": -100.0,
      "qualifying": false,
      "rates": {
       "away": "9/13",
       "home": "4/13"
      },
      "rule": "club82_tt15_blind",
+     "settled": "2026-11-27T22:00:29.580961+00:00",
      "side": "yes",
      "start": "2026-11-27T20:00Z",
-     "status": "open",
+     "status": "lost",
      "team": "Levante",
      "team_side": "home",
      "ticker": "KXLALIGATEAMTOTAL-26NOV27LEVSAN-LEV2"
@@ -2988,16 +3015,19 @@
      "logged": "2026-11-27T19:00:30.053841+00:00",
      "match": "Levante v Racing Santander",
      "opponent": "Levante",
+     "payout": 1.0,
      "price": 0.44,
+     "profit": 118.7,
      "qualifying": false,
      "rates": {
       "away": "9/13",
       "home": "4/13"
      },
      "rule": "club82_tt15_blind",
+     "settled": "2026-11-27T22:00:29.580961+00:00",
      "side": "yes",
      "start": "2026-11-27T20:00Z",
-     "status": "open",
+     "status": "won",
      "team": "Racing Santander",
      "team_side": "away",
      "ticker": "KXLALIGATEAMTOTAL-26NOV27LEVSAN-SAN2"
@@ -3547,16 +3577,19 @@
      "line": 3.5,
      "logged": "2026-11-27T18:45:34.575352+00:00",
      "match": "Werder Bremen v Borussia M\u00f6nchengladbach",
+     "payout": 0.0,
      "price": 0.6,
+     "profit": -100.0,
      "qualifying": false,
      "rates": {
       "away": "5/10",
       "home": "3/10"
      },
      "rule": "club82_u35_blind",
+     "settled": "2026-11-27T22:00:29.580961+00:00",
      "side": "no",
      "start": "2026-11-27T19:30Z",
-     "status": "open",
+     "status": "lost",
      "ticker": "KXBUNDESLIGATOTAL-26NOV27SVWBMG-4"
     },
     {
@@ -3570,16 +3603,19 @@
      "line": 3.5,
      "logged": "2026-11-27T18:45:34.575352+00:00",
      "match": "Venezia v Bologna",
+     "payout": 1.0,
      "price": 0.76,
+     "profit": 29.4,
      "qualifying": false,
      "rates": {
       "away": "9/12",
       "home": "8/12"
      },
      "rule": "club82_u35_blind",
+     "settled": "2026-11-27T22:00:29.580961+00:00",
      "side": "no",
      "start": "2026-11-27T19:45Z",
-     "status": "open",
+     "status": "won",
      "ticker": "KXSERIEATOTAL-26NOV27VENBFC-4"
     },
     {
@@ -3593,16 +3629,19 @@
      "line": 3.5,
      "logged": "2026-11-27T18:45:34.575352+00:00",
      "match": "Brest v Paris FC",
+     "payout": 1.0,
      "price": 0.72,
+     "profit": 36.22,
      "qualifying": false,
      "rates": {
       "away": "7/11",
       "home": "8/11"
      },
      "rule": "club82_u35_blind",
+     "settled": "2026-11-27T22:00:29.580961+00:00",
      "side": "no",
      "start": "2026-11-27T19:45Z",
-     "status": "open",
+     "status": "won",
      "ticker": "KXLIGUE1TOTAL-26NOV27STBPAR-4"
     },
     {
@@ -3616,16 +3655,19 @@
      "line": 3.5,
      "logged": "2026-11-27T19:00:30.053841+00:00",
      "match": "Nottingham Forest v Chelsea",
+     "payout": 0.0,
      "price": 0.68,
+     "profit": -100.0,
      "qualifying": false,
      "rates": {
       "away": "6/11",
       "home": "8/11"
      },
      "rule": "club82_u35_blind",
+     "settled": "2026-11-27T22:00:29.580961+00:00",
      "side": "no",
      "start": "2026-11-27T20:00Z",
-     "status": "open",
+     "status": "lost",
      "ticker": "KXEPLTOTAL-26NOV27NFOCFC-4"
     },
     {
@@ -3639,16 +3681,19 @@
      "line": 3.5,
      "logged": "2026-11-27T19:00:30.053841+00:00",
      "match": "Levante v Racing Santander",
+     "payout": 0.0,
      "price": 0.57,
+     "profit": -100.0,
      "qualifying": false,
      "rates": {
       "away": "6/13",
       "home": "8/13"
      },
      "rule": "club82_u35_blind",
+     "settled": "2026-11-27T22:00:29.580961+00:00",
      "side": "no",
      "start": "2026-11-27T20:00Z",
-     "status": "open",
+     "status": "lost",
      "ticker": "KXLALIGATOTAL-26NOV27LEVSAN-4"
     }
    ]
@@ -3831,6 +3876,11 @@
    "at": "2026-11-27T21:00:29.349476+00:00",
    "due": 0,
    "new": 0
+  },
+  {
+   "at": "2026-11-27T22:00:29.580961+00:00",
+   "due": 0,
+   "new": 0
   }
  ],
  "schedule": [
@@ -3881,11 +3931,11 @@
     "since": null
    },
    {
-    "hits": 9,
-    "n": 13,
+    "hits": 10,
+    "n": 14,
     "name": "Racing Santander",
     "qualifies": false,
-    "rate": 0.6923076923076923,
+    "rate": 0.7142857142857143,
     "since": null
    },
    {
@@ -3906,10 +3956,10 @@
    },
    {
     "hits": 4,
-    "n": 13,
+    "n": 14,
     "name": "Levante",
     "qualifies": false,
-    "rate": 0.3076923076923077,
+    "rate": 0.2857142857142857,
     "since": null
    },
    {
@@ -4041,11 +4091,11 @@
     "since": null
    },
    {
-    "hits": 3,
-    "n": 11,
+    "hits": 4,
+    "n": 12,
     "name": "Nottingham Forest",
     "qualifies": false,
-    "rate": 0.2727272727272727,
+    "rate": 0.3333333333333333,
     "since": null
    },
    {
@@ -4170,10 +4220,10 @@
    },
    {
     "hits": 6,
-    "n": 11,
+    "n": 12,
     "name": "Brest",
     "qualifies": false,
-    "rate": 0.5454545454545454,
+    "rate": 0.5,
     "since": null
    },
    {
@@ -4234,10 +4284,10 @@
    },
    {
     "hits": 6,
-    "n": 11,
+    "n": 12,
     "name": "Paris FC",
     "qualifies": false,
-    "rate": 0.5454545454545454,
+    "rate": 0.5,
     "since": null
    },
    {
@@ -4346,10 +4396,10 @@
    },
    {
     "hits": 3,
-    "n": 12,
+    "n": 13,
     "name": "Venezia",
     "qualifies": false,
-    "rate": 0.25,
+    "rate": 0.23076923076923078,
     "since": null
    },
    {
@@ -4418,10 +4468,10 @@
    },
    {
     "hits": 6,
-    "n": 12,
+    "n": 13,
     "name": "Bologna",
     "qualifies": false,
-    "rate": 0.5,
+    "rate": 0.46153846153846156,
     "since": null
    },
    {
@@ -4465,11 +4515,11 @@
     "since": null
    },
    {
-    "hits": 6,
-    "n": 11,
+    "hits": 7,
+    "n": 12,
     "name": "Chelsea",
     "qualifies": false,
-    "rate": 0.5454545454545454,
+    "rate": 0.5833333333333334,
     "since": null
    },
    {
@@ -4545,11 +4595,11 @@
     "since": null
    },
    {
-    "hits": 3,
-    "n": 10,
+    "hits": 4,
+    "n": 11,
     "name": "Borussia M\u00f6nchengladbach",
     "qualifies": false,
-    "rate": 0.3,
+    "rate": 0.36363636363636365,
     "since": null
    },
    {
@@ -4593,11 +4643,11 @@
     "since": null
    },
    {
-    "hits": 7,
-    "n": 10,
+    "hits": 8,
+    "n": 11,
     "name": "Werder Bremen",
     "qualifies": false,
-    "rate": 0.7,
+    "rate": 0.7272727272727273,
     "since": null
    },
    {
@@ -4772,10 +4822,10 @@
    },
    {
     "hits": 6,
-    "n": 13,
+    "n": 14,
     "name": "Racing Santander",
     "qualifies": false,
-    "rate": 0.46153846153846156,
+    "rate": 0.42857142857142855,
     "since": null
    },
    {
@@ -4796,10 +4846,10 @@
    },
    {
     "hits": 8,
-    "n": 13,
+    "n": 14,
     "name": "Levante",
     "qualifies": false,
-    "rate": 0.6153846153846154,
+    "rate": 0.5714285714285714,
     "since": null
    },
    {
@@ -4932,10 +4982,10 @@
    },
    {
     "hits": 8,
-    "n": 11,
+    "n": 12,
     "name": "Nottingham Forest",
     "qualifies": false,
-    "rate": 0.7272727272727273,
+    "rate": 0.6666666666666666,
     "since": null
    },
    {
@@ -5059,11 +5109,11 @@
     "since": null
    },
    {
-    "hits": 8,
-    "n": 11,
+    "hits": 9,
+    "n": 12,
     "name": "Brest",
     "qualifies": false,
-    "rate": 0.7272727272727273,
+    "rate": 0.75,
     "since": null
    },
    {
@@ -5123,11 +5173,11 @@
     "since": null
    },
    {
-    "hits": 7,
-    "n": 11,
+    "hits": 8,
+    "n": 12,
     "name": "Paris FC",
     "qualifies": false,
-    "rate": 0.6363636363636364,
+    "rate": 0.6666666666666666,
     "since": null
    },
    {
@@ -5235,11 +5285,11 @@
     "since": null
    },
    {
-    "hits": 8,
-    "n": 12,
+    "hits": 9,
+    "n": 13,
     "name": "Venezia",
     "qualifies": false,
-    "rate": 0.6666666666666666,
+    "rate": 0.6923076923076923,
     "since": null
    },
    {
@@ -5307,11 +5357,11 @@
     "since": null
    },
    {
-    "hits": 9,
-    "n": 12,
+    "hits": 10,
+    "n": 13,
     "name": "Bologna",
     "qualifies": false,
-    "rate": 0.75,
+    "rate": 0.7692307692307693,
     "since": null
    },
    {
@@ -5356,10 +5406,10 @@
    },
    {
     "hits": 6,
-    "n": 11,
+    "n": 12,
     "name": "Chelsea",
     "qualifies": false,
-    "rate": 0.5454545454545454,
+    "rate": 0.5,
     "since": null
    },
    {
@@ -5436,10 +5486,10 @@
    },
    {
     "hits": 5,
-    "n": 10,
+    "n": 11,
     "name": "Borussia M\u00f6nchengladbach",
     "qualifies": false,
-    "rate": 0.5,
+    "rate": 0.45454545454545453,
     "since": null
    },
    {
@@ -5484,10 +5534,10 @@
    },
    {
     "hits": 3,
-    "n": 10,
+    "n": 11,
     "name": "Werder Bremen",
     "qualifies": false,
-    "rate": 0.3,
+    "rate": 0.2727272727272727,
     "since": null
    },
    {
