@@ -239316,5 +239316,39 @@
   "start": "2026-11-20T18:30:00+00:00",
   "status": "graded",
   "venue": "polymarket_us"
+ },
+ {
+  "bet": false,
+  "compact": true,
+  "id": "polymarket_us:aec-boxing-rhyedw-leemcg-2026-11-20",
+  "logged": "2026-11-20T15:10:40+00:00",
+  "market_id": "aec-boxing-rhyedw-leemcg-2026-11-20",
+  "price_a": 0.83,
+  "price_b": 0.22,
+  "price_draw": null,
+  "result": "a",
+  "settled": "2026-11-20T23:34:36+00:00",
+  "source": "polymarket_us",
+  "sport": "boxing",
+  "start": "2026-11-20T20:35:00+00:00",
+  "status": "graded",
+  "venue": "polymarket_us"
+ },
+ {
+  "bet": false,
+  "compact": true,
+  "id": "polymarket_us:aec-utr-linale-garjul-2026-11-20",
+  "logged": "2026-11-20T17:04:14+00:00",
+  "market_id": "aec-utr-linale-garjul-2026-11-20",
+  "price_a": 0.37,
+  "price_b": 0.64,
+  "price_draw": null,
+  "result": "b",
+  "settled": "2026-11-20T23:34:37+00:00",
+  "source": "polymarket_us",
+  "sport": "tennis",
+  "start": "2026-11-20T18:30:00+00:00",
+  "status": "graded",
+  "venue": "polymarket_us"
  }
 ]
