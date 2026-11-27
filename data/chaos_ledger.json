@@ -195736,8 +195736,20 @@
     "KXATPCHALLENGERMATCH-26NOV26UCHMIL": 0,
     "KXATPCHALLENGERMATCH-26NOV26ZANMOL": 0,
     "KXATPCHALLENGERMATCH-26NOV26ZARMEL": 1,
+    "KXATPCHALLENGERMATCH-26NOV27ARNPIE": 1,
+    "KXATPCHALLENGERMATCH-26NOV27BONPAN": 0,
+    "KXATPCHALLENGERMATCH-26NOV27COPBLA": 0,
+    "KXATPCHALLENGERMATCH-26NOV27DEDKIR": 0,
+    "KXATPCHALLENGERMATCH-26NOV27DONRIN": 0,
     "KXATPCHALLENGERMATCH-26NOV27FAUGUN": 1,
-    "KXATPCHALLENGERMATCH-26NOV27URSDUR": 0
+    "KXATPCHALLENGERMATCH-26NOV27GHEMAR": 1,
+    "KXATPCHALLENGERMATCH-26NOV27MARJUS": 0,
+    "KXATPCHALLENGERMATCH-26NOV27MELZAN": 0,
+    "KXATPCHALLENGERMATCH-26NOV27OVCXIL": 0,
+    "KXATPCHALLENGERMATCH-26NOV27SANHEN": 0,
+    "KXATPCHALLENGERMATCH-26NOV27TABKEL": 0,
+    "KXATPCHALLENGERMATCH-26NOV27URSDUR": 0,
+    "KXATPCHALLENGERMATCH-26NOV27VIVDEB": 0
    },
    "series": [
     "KXATPCHALLENGERMATCH"
@@ -207711,6 +207723,76 @@
      "stop": null,
      "target": null,
      "ticker": "KXATPCHALLENGERMATCH-26NOV27FAUGUN-GUN",
+     "unreachable": false,
+     "variant": "t1h_hold",
+     "won": false
+    },
+    {
+     "ask": {
+      "book": null,
+      "first_quotes": false,
+      "how": "print",
+      "last_trade": 0.24,
+      "printed": 685.94,
+      "source": "replayed",
+      "status": "verified"
+     },
+     "cost": 0.25277,
+     "entry": 0.24,
+     "entry_i": 776,
+     "entry_ts": 1795778220,
+     "event": "KXATPCHALLENGERMATCH-26NOV27GHEMAR",
+     "exit": 0.0,
+     "exit_i": 928,
+     "exit_key": "hold",
+     "exit_ts": 1795787340,
+     "hours": 1,
+     "night": "2026-11-27",
+     "profit": -0.25277,
+     "reason": "settled",
+     "roi": -1.0,
+     "side": "yes",
+     "spread": 0.01,
+     "start_how": "price path",
+     "start_ts": 1795781820,
+     "stop": null,
+     "target": null,
+     "ticker": "KXATPCHALLENGERMATCH-26NOV27GHEMAR-GHE",
+     "unreachable": false,
+     "variant": "t1h_hold",
+     "won": false
+    },
+    {
+     "ask": {
+      "book": null,
+      "first_quotes": false,
+      "how": "print",
+      "last_trade": 0.21,
+      "printed": 36.09,
+      "source": "replayed",
+      "status": "verified"
+     },
+     "cost": 0.22161,
+     "entry": 0.21,
+     "entry_i": 710,
+     "entry_ts": 1795774260,
+     "event": "KXATPCHALLENGERMATCH-26NOV27ARNPIE",
+     "exit": 0.0,
+     "exit_i": 948,
+     "exit_key": "hold",
+     "exit_ts": 1795788540,
+     "hours": 1,
+     "night": "2026-11-27",
+     "profit": -0.22161,
+     "reason": "settled",
+     "roi": -1.0,
+     "side": "yes",
+     "spread": 0.01,
+     "start_how": "price path",
+     "start_ts": 1795777860,
+     "stop": null,
+     "target": null,
+     "ticker": "KXATPCHALLENGERMATCH-26NOV27ARNPIE-PIE",
      "unreachable": false,
      "variant": "t1h_hold",
      "won": false
@@ -233133,8 +233215,20 @@
     "KXATPCHALLENGERMATCH-26NOV26UCHMIL": 0,
     "KXATPCHALLENGERMATCH-26NOV26ZANMOL": 0,
     "KXATPCHALLENGERMATCH-26NOV26ZARMEL": 0,
+    "KXATPCHALLENGERMATCH-26NOV27ARNPIE": 0,
+    "KXATPCHALLENGERMATCH-26NOV27BONPAN": 0,
+    "KXATPCHALLENGERMATCH-26NOV27COPBLA": 0,
+    "KXATPCHALLENGERMATCH-26NOV27DEDKIR": 0,
+    "KXATPCHALLENGERMATCH-26NOV27DONRIN": 0,
     "KXATPCHALLENGERMATCH-26NOV27FAUGUN": 0,
-    "KXATPCHALLENGERMATCH-26NOV27URSDUR": 0
+    "KXATPCHALLENGERMATCH-26NOV27GHEMAR": 0,
+    "KXATPCHALLENGERMATCH-26NOV27MARJUS": 0,
+    "KXATPCHALLENGERMATCH-26NOV27MELZAN": 0,
+    "KXATPCHALLENGERMATCH-26NOV27OVCXIL": 0,
+    "KXATPCHALLENGERMATCH-26NOV27SANHEN": 0,
+    "KXATPCHALLENGERMATCH-26NOV27TABKEL": 0,
+    "KXATPCHALLENGERMATCH-26NOV27URSDUR": 0,
+    "KXATPCHALLENGERMATCH-26NOV27VIVDEB": 0
    },
    "series": [
     "KXATPCHALLENGERMATCH"
@@ -411782,16 +411876,8 @@
    "watch": false
   }
  },
- "last_run": "2026-11-27T10:00:50.746237+00:00",
+ "last_run": "2026-11-27T19:02:28.282968+00:00",
  "runs": [
-  {
-   "at": "2026-11-15T09:00:30.619410+00:00",
-   "new": {
-    "challenger_cheap_hold_base": 10,
-    "challenger_won_here_hold": 0,
-    "nba_winmargin_live": 24
-   }
-  },
   {
    "at": "2026-11-15T09:30:30.808859+00:00",
    "new": {}
@@ -412105,6 +412191,13 @@
    "at": "2026-11-27T10:00:50.746237+00:00",
    "new": {
     "challenger_cheap_hold_base": 1,
+    "challenger_won_here_hold": 0
+   }
+  },
+  {
+   "at": "2026-11-27T19:02:28.282968+00:00",
+   "new": {
+    "challenger_cheap_hold_base": 2,
     "challenger_won_here_hold": 0
    }
   }
