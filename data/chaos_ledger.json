@@ -195735,7 +195735,9 @@
     "KXATPCHALLENGERMATCH-26NOV26SWEOVE": 0,
     "KXATPCHALLENGERMATCH-26NOV26UCHMIL": 0,
     "KXATPCHALLENGERMATCH-26NOV26ZANMOL": 0,
-    "KXATPCHALLENGERMATCH-26NOV26ZARMEL": 1
+    "KXATPCHALLENGERMATCH-26NOV26ZARMEL": 1,
+    "KXATPCHALLENGERMATCH-26NOV27FAUGUN": 1,
+    "KXATPCHALLENGERMATCH-26NOV27URSDUR": 0
    },
    "series": [
     "KXATPCHALLENGERMATCH"
@@ -207674,6 +207676,41 @@
      "stop": null,
      "target": null,
      "ticker": "KXATPCHALLENGERMATCH-26NOV26BOUSCH-BOU",
+     "unreachable": false,
+     "variant": "t1h_hold",
+     "won": false
+    },
+    {
+     "ask": {
+      "book": null,
+      "first_quotes": false,
+      "how": "print",
+      "last_trade": 0.25,
+      "printed": 3542.06,
+      "source": "replayed",
+      "status": "verified"
+     },
+     "cost": 0.26312,
+     "entry": 0.25,
+     "entry_i": 651,
+     "entry_ts": 1795762920,
+     "event": "KXATPCHALLENGERMATCH-26NOV27FAUGUN",
+     "exit": 0.0,
+     "exit_i": 823,
+     "exit_key": "hold",
+     "exit_ts": 1795773240,
+     "hours": 1,
+     "night": "2026-11-27",
+     "profit": -0.26312,
+     "reason": "settled",
+     "roi": -1.0,
+     "side": "yes",
+     "spread": 0.01,
+     "start_how": "price path",
+     "start_ts": 1795766520,
+     "stop": null,
+     "target": null,
+     "ticker": "KXATPCHALLENGERMATCH-26NOV27FAUGUN-GUN",
      "unreachable": false,
      "variant": "t1h_hold",
      "won": false
@@ -233095,7 +233132,9 @@
     "KXATPCHALLENGERMATCH-26NOV26SWEOVE": 0,
     "KXATPCHALLENGERMATCH-26NOV26UCHMIL": 0,
     "KXATPCHALLENGERMATCH-26NOV26ZANMOL": 0,
-    "KXATPCHALLENGERMATCH-26NOV26ZARMEL": 0
+    "KXATPCHALLENGERMATCH-26NOV26ZARMEL": 0,
+    "KXATPCHALLENGERMATCH-26NOV27FAUGUN": 0,
+    "KXATPCHALLENGERMATCH-26NOV27URSDUR": 0
    },
    "series": [
     "KXATPCHALLENGERMATCH"
@@ -411743,15 +411782,8 @@
    "watch": false
   }
  },
- "last_run": "2026-11-27T09:30:51.650595+00:00",
+ "last_run": "2026-11-27T10:00:50.746237+00:00",
  "runs": [
-  {
-   "at": "2026-11-14T15:52:17.477790+00:00",
-   "new": {
-    "challenger_cheap_hold_base": 0,
-    "challenger_won_here_hold": 0
-   }
-  },
   {
    "at": "2026-11-15T09:00:30.619410+00:00",
    "new": {
@@ -412068,6 +412100,13 @@
   {
    "at": "2026-11-27T09:30:51.650595+00:00",
    "new": {}
+  },
+  {
+   "at": "2026-11-27T10:00:50.746237+00:00",
+   "new": {
+    "challenger_cheap_hold_base": 1,
+    "challenger_won_here_hold": 0
+   }
   }
  ],
  "version": "chaos-v2"
