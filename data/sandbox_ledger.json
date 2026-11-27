@@ -8,10 +8,10 @@
   },
   "commodities": {
    "cmd_market": {
-    "offered": 400,
-    "picked": 400
+    "offered": 390,
+    "picked": 390
    },
-   "kalshi_venue": 400
+   "kalshi_venue": 390
   },
   "commodities_fav": {
    "kalshi_venue": 200
@@ -23,20 +23,20 @@
    "polymarket_us_priced": 3
   },
   "crypto": {
-   "kalshi_venue": 100
+   "kalshi_venue": 0
   },
   "crypto_fav": {
    "crypto_fav_band_below": {
-    "offered": 250,
+    "offered": 0,
     "picked": 0
    },
-   "kalshi_venue": 250
+   "kalshi_venue": 0
   },
   "economics": {
-   "kalshi_venue": 34
+   "kalshi_venue": 32
   },
   "finance": {
-   "kalshi_venue": 30
+   "kalshi_venue": 15
   },
   "mma": {
    "kalshi_venue": 0,
@@ -45,7 +45,7 @@
    "polymarket_us_priced": 0
   },
   "nfl": {
-   "kalshi_venue": 1,
+   "kalshi_venue": 0,
    "polymarket_us": 11,
    "polymarket_us_listed": 11,
    "polymarket_us_priced": 11
@@ -61,7 +61,7 @@
     "offered": 8,
     "picked": 1
    },
-   "kalshi_venue": 212,
+   "kalshi_venue": 239,
    "polymarket_us": 0,
    "polymarket_us_listed": 0,
    "polymarket_us_priced": 0
@@ -108,18 +108,18 @@
   },
   "soccer_ftts": {
    "ftts_lineup_lag": {
-    "offered": 76,
+    "offered": 96,
     "picked": 0
    },
    "ftts_market": {
-    "offered": 76,
-    "picked": 76
+    "offered": 96,
+    "picked": 96
    },
    "ftts_no_70_80": {
-    "offered": 76,
+    "offered": 96,
     "picked": 0
    },
-   "kalshi_venue": 76
+   "kalshi_venue": 96
   },
   "soccer_o05": {
    "kalshi_venue": 0,
@@ -201,7 +201,7 @@
    "kalshi_venue": 160,
    "mls_fade_home": {
     "offered": 16,
-    "picked": 0
+    "picked": 1
    }
   },
   "soccer_p05_cup": {
@@ -220,10 +220,10 @@
   },
   "soccer_team1": {
    "goals_market": {
-    "offered": 90,
-    "picked": 90
+    "offered": 96,
+    "picked": 96
    },
-   "kalshi_venue": 90
+   "kalshi_venue": 96
   },
   "soccer_team1_cup": {
    "goals_market": {
@@ -249,12 +249,12 @@
   },
   "soccer_team2": {
    "goals_market": {
-    "offered": 90,
-    "picked": 90
+    "offered": 96,
+    "picked": 96
    },
-   "kalshi_venue": 90,
+   "kalshi_venue": 96,
    "team2_ranked": {
-    "offered": 90,
+    "offered": 96,
     "picked": 0
    }
   },
@@ -322,7 +322,7 @@
   "tennis": {
    "kalshi_venue": 0,
    "polymarket_us": 40,
-   "polymarket_us_listed": 173,
+   "polymarket_us_listed": 172,
    "polymarket_us_priced": 38
   },
   "tennis_combo": {
@@ -338,43 +338,43 @@
  "meta": {
   "created": "2026-09-10T04:42:15+00:00",
   "lane_reads": {
-   "boxing": "2026-11-27T20:04:24+00:00",
-   "commodities": "2026-11-27T20:04:24+00:00",
-   "commodities_fav": "2026-11-27T20:04:24+00:00",
-   "cricket": "2026-11-27T20:04:24+00:00",
+   "boxing": "2026-11-27T20:11:33+00:00",
+   "commodities": "2026-11-27T20:11:33+00:00",
+   "commodities_fav": "2026-11-27T20:11:33+00:00",
+   "cricket": "2026-11-27T20:11:33+00:00",
    "crypto": "2026-11-27T20:04:24+00:00",
    "crypto_fav": "2026-11-27T20:04:24+00:00",
-   "economics": "2026-11-27T20:04:24+00:00",
-   "finance": "2026-11-27T20:04:24+00:00",
+   "economics": "2026-11-27T20:11:33+00:00",
+   "finance": "2026-11-27T20:11:33+00:00",
    "mma": "2026-11-21T20:10:14+00:00",
-   "nfl": "2026-11-27T20:04:24+00:00",
-   "nhl_pl": "2026-11-27T20:04:24+00:00",
-   "nhl_rest": "2026-11-27T20:04:24+00:00",
-   "soccer": "2026-11-27T20:04:24+00:00",
-   "soccer_btts": "2026-11-27T20:04:24+00:00",
-   "soccer_btts_cup": "2026-11-27T20:04:24+00:00",
+   "nfl": "2026-11-27T20:11:33+00:00",
+   "nhl_pl": "2026-11-27T20:11:33+00:00",
+   "nhl_rest": "2026-11-27T20:11:33+00:00",
+   "soccer": "2026-11-27T20:11:33+00:00",
+   "soccer_btts": "2026-11-27T20:11:33+00:00",
+   "soccer_btts_cup": "2026-11-27T20:11:33+00:00",
    "soccer_btts_intl": "2026-11-17T23:27:07+00:00",
-   "soccer_corners": "2026-11-27T20:04:24+00:00",
-   "soccer_ftts": "2026-11-27T20:04:24+00:00",
-   "soccer_o15": "2026-11-27T20:04:24+00:00",
-   "soccer_o15_cup": "2026-11-27T20:04:24+00:00",
+   "soccer_corners": "2026-11-27T20:11:33+00:00",
+   "soccer_ftts": "2026-11-27T20:11:33+00:00",
+   "soccer_o15": "2026-11-27T20:11:33+00:00",
+   "soccer_o15_cup": "2026-11-27T20:11:33+00:00",
    "soccer_o15_intl": "2026-11-17T23:27:07+00:00",
-   "soccer_o25": "2026-11-27T20:04:24+00:00",
-   "soccer_o25_cup": "2026-11-27T20:04:24+00:00",
+   "soccer_o25": "2026-11-27T20:11:33+00:00",
+   "soccer_o25_cup": "2026-11-27T20:11:33+00:00",
    "soccer_o25_intl": "2026-11-17T23:27:07+00:00",
-   "soccer_p05": "2026-11-27T20:04:24+00:00",
-   "soccer_p05_cup": "2026-11-27T20:04:24+00:00",
+   "soccer_p05": "2026-11-27T20:11:33+00:00",
+   "soccer_p05_cup": "2026-11-27T20:11:33+00:00",
    "soccer_p05_intl": "2026-11-17T23:27:07+00:00",
-   "soccer_team1": "2026-11-27T20:04:24+00:00",
+   "soccer_team1": "2026-11-27T20:11:33+00:00",
    "soccer_team1_cup": "2026-11-26T19:54:07+00:00",
    "soccer_team1_intl": "2026-11-17T19:33:51+00:00",
-   "soccer_team2": "2026-11-27T20:04:24+00:00",
+   "soccer_team2": "2026-11-27T20:11:33+00:00",
    "soccer_team2_cup": "2026-11-26T19:54:07+00:00",
    "soccer_team2_intl": "2026-11-17T19:33:51+00:00",
-   "soccer_u35": "2026-11-27T20:04:24+00:00",
-   "soccer_u35_cup": "2026-11-27T20:04:24+00:00",
+   "soccer_u35": "2026-11-27T20:11:33+00:00",
+   "soccer_u35_cup": "2026-11-27T20:11:33+00:00",
    "soccer_u35_intl": "2026-11-17T23:27:07+00:00",
-   "tennis": "2026-11-27T20:04:24+00:00",
+   "tennis": "2026-11-27T20:11:33+00:00",
    "tennis_pmcombo": "2026-10-13T22:45:29+00:00"
   },
   "lane_skips": {
@@ -711,7 +711,7 @@
    }
   },
   "odds_api": {
-   "at": "2026-11-27T20:04:24+00:00",
+   "at": "2026-11-27T20:11:33+00:00",
    "remaining": 175,
    "used": 325
   },
@@ -732,7 +732,7 @@
     "start": "2026-09-28T22:15:10Z"
    }
   ],
-  "runs": 3088,
+  "runs": 3089,
   "tennis_shortlist": {
    "audit": [
     {
@@ -744,7 +744,7 @@
    "daily_limit": 3,
    "day": "2026-11-02"
   },
-  "updated": "2026-11-27T20:05:11+00:00"
+  "updated": "2026-11-27T20:12:17+00:00"
  },
  "quotes": [
   {
@@ -235203,40 +235203,6 @@
   },
   {
    "bet": false,
-   "date": "2026-11-19",
-   "edge": -0.01,
-   "id": "polymarket_us:aec-itfme-jusrob-anuwat-2026-11-19",
-   "label": "Justin Roberts vs Anuj Watane",
-   "liquidity": null,
-   "logged": "2026-11-19T16:11:18+00:00",
-   "market_id": "aec-itfme-jusrob-anuwat-2026-11-19",
-   "pick": null,
-   "pnl": 0.0,
-   "price": null,
-   "price_a": 0.58,
-   "price_b": 0.44,
-   "price_draw": null,
-   "prob_a": 0.57,
-   "result": "b",
-   "settled": "2026-11-20T20:10:54+00:00",
-   "side_a": "Justin Roberts",
-   "side_b": "Anuj Watane",
-   "source": "polymarket_us",
-   "sport": "tennis",
-   "spread": 0.02,
-   "stake": 0.0,
-   "start": "2026-11-19T17:30:00+00:00",
-   "start_source": null,
-   "status": "graded",
-   "tier": "itfme",
-   "uncovered": null,
-   "untraded": false,
-   "url": "https://polymarket.us/event/itfme-jusrob-anuwat-2026-11-19",
-   "venue": "polymarket_us",
-   "venue_start": null
-  },
-  {
-   "bet": false,
    "date": "2026-11-21",
    "edge": -0.045,
    "espn_away": "Valencia",
@@ -260997,40 +260963,6 @@
    "uncovered": null,
    "untraded": false,
    "url": "https://polymarket.us/event/atp-oribat-thiwil-2026-11-20",
-   "venue": "polymarket_us",
-   "venue_start": null
-  },
-  {
-   "bet": false,
-   "date": "2026-11-20",
-   "edge": -0.005,
-   "id": "polymarket_us:aec-itfme-danpag-lorgag-2026-11-20",
-   "label": "Dante Pagani vs Lorenzo Gagliardo",
-   "liquidity": null,
-   "logged": "2026-11-20T16:10:02+00:00",
-   "market_id": "aec-itfme-danpag-lorgag-2026-11-20",
-   "pick": null,
-   "pnl": 0.0,
-   "price": null,
-   "price_a": 0.44,
-   "price_b": 0.57,
-   "price_draw": null,
-   "prob_a": 0.435,
-   "result": "b",
-   "settled": "2026-11-20T20:11:23+00:00",
-   "side_a": "Dante Pagani",
-   "side_b": "Lorenzo Gagliardo",
-   "source": "polymarket_us",
-   "sport": "tennis",
-   "spread": 0.01,
-   "stake": 0.0,
-   "start": "2026-11-20T18:00:00+00:00",
-   "start_source": null,
-   "status": "graded",
-   "tier": "itfme",
-   "uncovered": null,
-   "untraded": false,
-   "url": "https://polymarket.us/event/itfme-danpag-lorgag-2026-11-20",
    "venue": "polymarket_us",
    "venue_start": null
   },
@@ -380337,7 +380269,7 @@
   },
   {
    "bet": true,
-   "close_at": "2026-11-27T20:04:24+00:00",
+   "close_at": "2026-11-27T20:11:33+00:00",
    "close_price": 0.53,
    "date": "2026-11-28",
    "edge": null,
@@ -415418,7 +415350,7 @@
   },
   {
    "bet": true,
-   "close_at": "2026-11-27T20:04:24+00:00",
+   "close_at": "2026-11-27T20:11:33+00:00",
    "close_price": 0.56,
    "date": "2026-11-29",
    "edge": null,
@@ -427152,7 +427084,7 @@
   },
   {
    "bet": true,
-   "close_at": "2026-11-27T20:04:24+00:00",
+   "close_at": "2026-11-27T20:11:33+00:00",
    "close_price": 0.8,
    "date": "2026-11-28",
    "edge": null,
@@ -457351,7 +457283,7 @@
   },
   {
    "bet": true,
-   "close_at": "2026-11-27T20:04:24+00:00",
+   "close_at": "2026-11-27T20:11:33+00:00",
    "close_price": 0.47,
    "date": "2026-11-30",
    "edge": null,
@@ -473122,7 +473054,7 @@
   },
   {
    "bet": true,
-   "close_at": "2026-11-27T20:04:24+00:00",
+   "close_at": "2026-11-27T20:11:33+00:00",
    "close_price": 0.6,
    "date": "2026-11-28",
    "edge": null,
@@ -477682,7 +477614,7 @@
   },
   {
    "bet": true,
-   "close_at": "2026-11-27T20:04:24+00:00",
+   "close_at": "2026-11-27T20:11:33+00:00",
    "close_price": 0.62,
    "date": "2026-12-01",
    "edge": null,
@@ -481619,7 +481551,7 @@
   },
   {
    "bet": true,
-   "close_at": "2026-11-27T20:04:24+00:00",
+   "close_at": "2026-11-27T20:11:33+00:00",
    "close_price": 0.24,
    "date": "2026-11-28",
    "edge": null,
@@ -481740,7 +481672,7 @@
   },
   {
    "bet": true,
-   "close_at": "2026-11-27T20:04:24+00:00",
+   "close_at": "2026-11-27T20:11:33+00:00",
    "close_price": 0.1,
    "date": "2026-11-28",
    "edge": null,
@@ -482215,6 +482147,224 @@
    "url": "https://kalshi.com/markets/kxaaagascdva",
    "venue": "kalshi_binary",
    "venue_start": null
+  },
+  {
+   "bet": false,
+   "date": "2026-11-28",
+   "edge": -0.025,
+   "espn_away": "Villefranche",
+   "espn_home": "Saint-\u00c9tienne",
+   "event": "KXCOUPEDEFRANCEBTTS-26NOV28STEVIL1025",
+   "id": "btts_market:KXCOUPEDEFRANCEBTTS-26NOV28STEVIL1025-BTTS",
+   "kalshi_title": "Both Teams To Score",
+   "label": "Saint-\u00c9tienne v Villefranche: both teams to score",
+   "league": "Coupe de France",
+   "liquidity": null,
+   "logged": "2026-11-27T20:11:32+00:00",
+   "market_id": "KXCOUPEDEFRANCEBTTS-26NOV28STEVIL1025-BTTS",
+   "pick": null,
+   "pnl": 0.0,
+   "price": null,
+   "price_a": 0.5,
+   "price_b": 0.55,
+   "price_draw": null,
+   "prob_a": 0.475,
+   "result": null,
+   "settled": null,
+   "side_a": "Yes",
+   "side_b": "No",
+   "source": "btts_market",
+   "sport": "soccer_btts_cup",
+   "spread": null,
+   "stake": 0.0,
+   "start": "2026-11-28T18:00:00+00:00",
+   "start_source": "espn",
+   "status": "open",
+   "uncovered": null,
+   "untraded": false,
+   "url": "https://kalshi.com/markets/kxcoupedefrancebtts",
+   "venue": "kalshi_binary",
+   "venue_start": null
+  },
+  {
+   "bet": false,
+   "date": "2026-11-28",
+   "edge": -0.01,
+   "espn_away": "Villefranche",
+   "espn_home": "Saint-\u00c9tienne",
+   "event": "KXCOUPEDEFRANCETOTAL-26NOV28STEVIL1025",
+   "id": "goals_market:KXCOUPEDEFRANCETOTAL-26NOV28STEVIL1025-2",
+   "kalshi_title": "Over 1.5 goals scored",
+   "label": "Saint-\u00c9tienne v Villefranche: over 1.5 goals",
+   "league": "Coupe de France",
+   "liquidity": null,
+   "logged": "2026-11-27T20:11:32+00:00",
+   "market_id": "KXCOUPEDEFRANCETOTAL-26NOV28STEVIL1025-2",
+   "pick": null,
+   "pnl": 0.0,
+   "price": null,
+   "price_a": 0.86,
+   "price_b": 0.16,
+   "price_draw": null,
+   "prob_a": 0.85,
+   "result": null,
+   "settled": null,
+   "side_a": "Yes",
+   "side_b": "No",
+   "source": "goals_market",
+   "sport": "soccer_o15_cup",
+   "spread": null,
+   "stake": 0.0,
+   "start": "2026-11-28T18:00:00+00:00",
+   "start_source": "espn",
+   "status": "open",
+   "uncovered": null,
+   "untraded": false,
+   "url": "https://kalshi.com/markets/kxcoupedefrancetotal",
+   "venue": "kalshi_binary",
+   "venue_start": null
+  },
+  {
+   "bet": false,
+   "date": "2026-11-28",
+   "edge": -0.01,
+   "espn_away": "Villefranche",
+   "espn_home": "Saint-\u00c9tienne",
+   "event": "KXCOUPEDEFRANCETOTAL-26NOV28STEVIL1025",
+   "id": "goals_market:KXCOUPEDEFRANCETOTAL-26NOV28STEVIL1025-3",
+   "kalshi_title": "Over 2.5 goals scored",
+   "label": "Saint-\u00c9tienne v Villefranche: over 2.5 goals",
+   "league": "Coupe de France",
+   "liquidity": null,
+   "logged": "2026-11-27T20:11:32+00:00",
+   "market_id": "KXCOUPEDEFRANCETOTAL-26NOV28STEVIL1025-3",
+   "pick": null,
+   "pnl": 0.0,
+   "price": null,
+   "price_a": 0.66,
+   "price_b": 0.36,
+   "price_draw": null,
+   "prob_a": 0.65,
+   "result": null,
+   "settled": null,
+   "side_a": "Yes",
+   "side_b": "No",
+   "source": "goals_market",
+   "sport": "soccer_o25_cup",
+   "spread": null,
+   "stake": 0.0,
+   "start": "2026-11-28T18:00:00+00:00",
+   "start_source": "espn",
+   "status": "open",
+   "uncovered": null,
+   "untraded": false,
+   "url": "https://kalshi.com/markets/kxcoupedefrancetotal",
+   "venue": "kalshi_binary",
+   "venue_start": null
+  },
+  {
+   "bet": false,
+   "date": "2026-11-28",
+   "edge": -0.015,
+   "espn_away": "Villefranche",
+   "espn_home": "Saint-\u00c9tienne",
+   "event": "KXCOUPEDEFRANCETOTAL-26NOV28STEVIL1025",
+   "id": "goals_market:KXCOUPEDEFRANCETOTAL-26NOV28STEVIL1025-4",
+   "kalshi_title": "Over 3.5 goals scored",
+   "label": "Saint-\u00c9tienne v Villefranche: over 3.5 goals",
+   "league": "Coupe de France",
+   "liquidity": null,
+   "logged": "2026-11-27T20:11:32+00:00",
+   "market_id": "KXCOUPEDEFRANCETOTAL-26NOV28STEVIL1025-4",
+   "pick": null,
+   "pnl": 0.0,
+   "price": null,
+   "price_a": 0.44,
+   "price_b": 0.59,
+   "price_draw": null,
+   "prob_a": 0.425,
+   "result": null,
+   "settled": null,
+   "side_a": "Yes",
+   "side_b": "No",
+   "source": "goals_market",
+   "sport": "soccer_u35_cup",
+   "spread": null,
+   "stake": 0.0,
+   "start": "2026-11-28T18:00:00+00:00",
+   "start_source": "espn",
+   "status": "open",
+   "uncovered": null,
+   "untraded": false,
+   "url": "https://kalshi.com/markets/kxcoupedefrancetotal",
+   "venue": "kalshi_binary",
+   "venue_start": null
+  },
+  {
+   "bet": false,
+   "date": "2026-11-28",
+   "edge": 0.0,
+   "id": "cmd_market:KXAAAGASCDCT-26NOV28-LD",
+   "label": "Will gas prices show a large decrease?",
+   "liquidity": null,
+   "logged": "2026-11-27T20:11:33+00:00",
+   "market_id": "KXAAAGASCDCT-26NOV28-LD",
+   "pick": null,
+   "pnl": 0.0,
+   "price": null,
+   "price_a": 0.24,
+   "price_b": 0.85,
+   "price_draw": null,
+   "prob_a": 0.24,
+   "result": null,
+   "settled": null,
+   "side_a": "Large decrease",
+   "side_b": "No",
+   "source": "cmd_market",
+   "sport": "commodities",
+   "spread": null,
+   "stake": 0.0,
+   "start": "2026-11-28T15:00:00+00:00",
+   "start_source": null,
+   "status": "open",
+   "uncovered": null,
+   "untraded": false,
+   "url": "https://kalshi.com/markets/kxaaagascdct",
+   "venue": "kalshi_binary",
+   "venue_start": null
+  },
+  {
+   "bet": false,
+   "date": "2026-11-28",
+   "edge": 0.0,
+   "id": "cmd_market:KXAAAGASCDTN-26NOV28-LI",
+   "label": "Will gas prices show a large increase?",
+   "liquidity": null,
+   "logged": "2026-11-27T20:11:33+00:00",
+   "market_id": "KXAAAGASCDTN-26NOV28-LI",
+   "pick": null,
+   "pnl": 0.0,
+   "price": null,
+   "price_a": 0.05,
+   "price_b": 0.99,
+   "price_draw": null,
+   "prob_a": 0.05,
+   "result": null,
+   "settled": null,
+   "side_a": "Large increase",
+   "side_b": "No",
+   "source": "cmd_market",
+   "sport": "commodities",
+   "spread": null,
+   "stake": 0.0,
+   "start": "2026-11-28T15:00:00+00:00",
+   "start_source": null,
+   "status": "open",
+   "uncovered": null,
+   "untraded": false,
+   "url": "https://kalshi.com/markets/kxaaagascdtn",
+   "venue": "kalshi_binary",
+   "venue_start": null
   }
  ],
  "retired": {
@@ -482590,10 +482740,10 @@
   },
   "polymarket_us": {
    "bets": 0,
-   "brier_n": 20596,
-   "brier_sum": 3834.2327887798565,
+   "brier_n": 20598,
+   "brier_sum": 3834.7469137798566,
    "pnl": 0.0,
-   "quotes": 21115,
+   "quotes": 21117,
    "settled": 0,
    "staked": 0.0,
    "won": 0
