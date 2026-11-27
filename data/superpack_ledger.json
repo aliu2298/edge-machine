@@ -486,6 +486,11 @@
    "entries": "entered",
    "pool": "entered"
   },
+  "[\"daily\", \"econ_nc_yes\", [\"KXAAAGASD-26NOV27-3.5450\", \"yes\"]]": {
+   "at": "2026-11-27T04:04:16.648764+00:00",
+   "entries": "entered",
+   "pool": "entered"
+  },
   "[\"daily\", \"econ_nc_yes\", [\"KXDIESELD-26NOV07-T6.205\", \"yes\"]]": {
    "at": "2026-11-07T04:04:24.943173+00:00",
    "pool": "entered"
@@ -512,6 +517,10 @@
   },
   "[\"daily\", \"econ_nc_yes\", [\"KXDIESELD-26NOV26-T5.720\", \"yes\"]]": {
    "at": "2026-11-26T04:04:46.366044+00:00",
+   "pool": "entered"
+  },
+  "[\"daily\", \"econ_nc_yes\", [\"KXDIESELD-26NOV27-T5.700\", \"yes\"]]": {
+   "at": "2026-11-27T04:04:16.648764+00:00",
    "pool": "entered"
   },
   "[\"finance_nc\", \"finance_nc\", [\"KXINXU-26NOV05H1600-T7499.9999\", \"no\"]]": {
@@ -7211,11 +7220,98 @@
    "sport": "Crypto",
    "src": "sandbox",
    "status": "lost"
+  },
+  {
+   "contract": "KXAAAGASD-26NOV27-3.5450",
+   "entered_at": "2026-11-27T04:04:16.648764+00:00",
+   "entities": [
+    "AAA gas"
+   ],
+   "id": "superpack:[\"daily\", \"econ_nc_yes\", [\"KXAAAGASD-26NOV27-3.5450\", \"yes\"]]",
+   "lane": "econ_nc_yes",
+   "logged": "2026-11-27T03:46:05.984594+00:00",
+   "matched": [
+    "AAA gas"
+   ],
+   "pid": "[\"daily\", \"econ_nc_yes\", [\"KXAAAGASD-26NOV27-3.5450\", \"yes\"]]",
+   "price": 0.94,
+   "profit": null,
+   "scope": null,
+   "settled": null,
+   "side": "yes",
+   "snapshot": {
+    "as_of": "2026-11-27T03:46:05.984594+00:00",
+    "names": [
+     {
+      "bets": 54,
+      "name": "AAA gas",
+      "profit": 7.1968,
+      "sport": "Commodities"
+     },
+     {
+      "bets": 5,
+      "name": "AS Roma",
+      "profit": 5.8257,
+      "sport": "Soccer"
+     },
+     {
+      "bets": 6,
+      "name": "AC Milan",
+      "profit": 5.4689,
+      "sport": "Soccer"
+     },
+     {
+      "bets": 6,
+      "name": "Hull City",
+      "profit": 4.8685,
+      "sport": "Soccer"
+     },
+     {
+      "bets": 5,
+      "name": "Charlotte FC",
+      "profit": 4.5293,
+      "sport": "Soccer"
+     },
+     {
+      "bets": 5,
+      "name": "AEK Athens",
+      "profit": 4.4399,
+      "sport": "Soccer"
+     },
+     {
+      "bets": 5,
+      "name": "Columbus Crew",
+      "profit": 4.221,
+      "sport": "Soccer"
+     },
+     {
+      "bets": 12,
+      "name": "Ethereum",
+      "profit": 4.0317,
+      "sport": "Crypto"
+     },
+     {
+      "bets": 37,
+      "name": "Bitcoin",
+      "profit": 3.1283,
+      "sport": "Crypto"
+     },
+     {
+      "bets": 5,
+      "name": "AFC Bournemouth",
+      "profit": 3.1006,
+      "sport": "Soccer"
+     }
+    ]
+   },
+   "sport": "Commodities",
+   "src": "daily",
+   "status": "open"
   }
  ],
  "first_run": "2026-11-05T03:09:04.962721+00:00",
  "lane": "superpack",
- "last_run": "2026-11-27T03:34:44.944719+00:00",
+ "last_run": "2026-11-27T04:04:16.648764+00:00",
  "mirror": [
   {
    "contract": "KXAAAGASD-26NOV06-4.0700",
@@ -21365,6 +21461,52 @@
    "snapshot": null,
    "sport": "Soccer",
    "src": "sandbox",
+   "status": "open"
+  },
+  {
+   "contract": "KXAAAGASD-26NOV27-3.5450",
+   "entered_at": "2026-11-27T04:04:16.648764+00:00",
+   "entities": [
+    "AAA gas"
+   ],
+   "id": "superpack:[\"daily\", \"econ_nc_yes\", [\"KXAAAGASD-26NOV27-3.5450\", \"yes\"]]",
+   "lane": "econ_nc_yes",
+   "logged": "2026-11-27T03:46:05.984594+00:00",
+   "matched": [
+    "AAA gas"
+   ],
+   "pid": "[\"daily\", \"econ_nc_yes\", [\"KXAAAGASD-26NOV27-3.5450\", \"yes\"]]",
+   "price": 0.94,
+   "profit": null,
+   "scope": null,
+   "settled": null,
+   "side": "yes",
+   "snapshot": null,
+   "sport": "Commodities",
+   "src": "daily",
+   "status": "open"
+  },
+  {
+   "contract": "KXDIESELD-26NOV27-T5.700",
+   "entered_at": "2026-11-27T04:04:16.648764+00:00",
+   "entities": [
+    "Diesel"
+   ],
+   "id": "superpack:[\"daily\", \"econ_nc_yes\", [\"KXDIESELD-26NOV27-T5.700\", \"yes\"]]",
+   "lane": "econ_nc_yes",
+   "logged": "2026-11-27T03:46:05.984594+00:00",
+   "matched": [
+    "Diesel"
+   ],
+   "pid": "[\"daily\", \"econ_nc_yes\", [\"KXDIESELD-26NOV27-T5.700\", \"yes\"]]",
+   "price": 0.96,
+   "profit": null,
+   "scope": null,
+   "settled": null,
+   "side": "yes",
+   "snapshot": null,
+   "sport": "Commodities",
+   "src": "daily",
    "status": "open"
   }
  ],
