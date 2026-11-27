@@ -1790,9 +1790,11 @@
    "ask_check": {
     "book": null,
     "first_quotes": false,
+    "how": "print",
     "last_trade": 0.04,
+    "printed": 3744.73,
     "source": "replayed",
-    "status": "checking"
+    "status": "verified"
    },
    "bid": 0.0,
    "entry_at": "2026-11-27T21:07:00+00:00",
@@ -1942,14 +1944,14 @@
   "KXBOXING-26OCT31TSUTSUROJAS": "2026-10-31T20:06:27.383501+00:00"
  },
  "lane": "boxing_cheap_dog",
- "last_success": "2026-11-27T22:00:39.508248+00:00",
+ "last_success": "2026-11-27T22:08:22.393607+00:00",
  "observations": {
-  "at": "2026-11-27T22:00:39.508248+00:00",
-  "entered": 1,
+  "at": "2026-11-27T22:08:22.393607+00:00",
+  "entered": 0,
   "events": 2,
-  "filled": 2,
+  "filled": 0,
   "no_start": 0,
-  "skipped": 1,
+  "skipped": 0,
   "unverified": 1,
   "waiting": 18
  },
