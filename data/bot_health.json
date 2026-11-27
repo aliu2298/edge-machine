@@ -6,8 +6,8 @@
   "rule": "LOW under the threshold set on the server"
  },
  "engine": {
-  "beat_age_s": 313,
-  "cycle": 75,
+  "beat_age_s": 274,
+  "cycle": 81,
   "last_error": null,
   "mode": "LIVE",
   "service_active": true,
@@ -21,53 +21,53 @@
  },
  "feeds": {
   "production": {
-   "actionable": 3,
-   "age_min": 12,
-   "leads": 29,
+   "actionable": 4,
+   "age_min": 11,
+   "leads": 30,
    "problems": 0,
    "status": "HTTP 200"
   },
   "production_challenger": {
    "actionable": 0,
-   "age_min": 5,
+   "age_min": 20,
    "leads": 47,
    "problems": 0,
-   "status": "HTTP 200"
+   "status": "HTTP 304 (cached)"
   },
   "production_econ": {
    "actionable": 0,
-   "age_min": 10,
+   "age_min": 22,
    "leads": 9,
    "problems": 0,
-   "status": "HTTP 200"
+   "status": "HTTP 304 (cached)"
   },
   "production_gas_week": {
    "actionable": 0,
-   "age_min": 5,
+   "age_min": 20,
    "leads": 0,
    "problems": 0,
-   "status": "HTTP 200"
+   "status": "HTTP 304 (cached)"
   },
   "production_nba_value": {
    "actionable": 0,
-   "age_min": 10,
+   "age_min": 22,
    "leads": 0,
    "problems": 0,
-   "status": "HTTP 200"
+   "status": "HTTP 304 (cached)"
   },
   "production_soccer_rules": {
    "actionable": 0,
-   "age_min": 6,
+   "age_min": 21,
    "leads": 3,
    "problems": 0,
-   "status": "HTTP 200"
+   "status": "HTTP 304 (cached)"
   },
   "production_soccer_team_rules": {
    "actionable": 0,
-   "age_min": 6,
-   "leads": 10,
+   "age_min": 21,
+   "leads": 9,
    "problems": 0,
-   "status": "HTTP 200"
+   "status": "HTTP 304 (cached)"
   }
  },
  "loss_cap": {
@@ -78,13 +78,13 @@
   "kalshi": 4
  },
  "pnl_sign": {
-  "today": "down",
+  "today": "up",
   "yesterday": "up"
  },
- "published_at": "2026-11-27T19:23:03+00:00",
+ "published_at": "2026-11-27T20:23:02+00:00",
  "schema": 1,
  "server": {
-  "backup_age_h": 12.9,
+  "backup_age_h": 13.9,
   "disk_pct": 36,
   "jobs": {
    "bot-backup": {
@@ -96,10 +96,10 @@
     "timer": "active"
    },
    "edge-kick": {
-    "last": "ok",
+    "last": "not run yet",
     "timer": "active"
    }
   },
-  "mem_free_mb": 565
+  "mem_free_mb": 530
  }
 }
