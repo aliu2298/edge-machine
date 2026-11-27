@@ -1894,6 +1894,10 @@
    "at": "2026-11-06T13:09:08.900685+00:00",
    "pool": "entered"
   },
+  "[\"sandbox\", \"u35_low_scoring\", [\"u35_low_scoring:KXDFBPOKALTOTAL-26DEC01HOKKOE-4\", \"b\"]]": {
+   "at": "2026-11-27T17:04:27.235928+00:00",
+   "pool": "entered"
+  },
   "[\"sandbox\", \"u35_low_scoring\", [\"u35_low_scoring:KXINTLFRIENDLYTOTAL-26NOV13PERBOL-4\", \"b\"]]": {
    "at": "2026-11-11T02:03:50.915046+00:00",
    "pool": "entered"
@@ -7315,7 +7319,7 @@
  ],
  "first_run": "2026-11-05T03:09:04.962721+00:00",
  "lane": "superpack",
- "last_run": "2026-11-27T16:34:38.110105+00:00",
+ "last_run": "2026-11-27T17:04:27.235928+00:00",
  "mirror": [
   {
    "contract": "KXAAAGASD-26NOV06-4.0700",
@@ -21529,6 +21533,31 @@
    "price": 0.6,
    "profit": null,
    "scope": "soccer_p05",
+   "settled": null,
+   "side": "b",
+   "snapshot": null,
+   "sport": "Soccer",
+   "src": "sandbox",
+   "status": "open"
+  },
+  {
+   "contract": "KXDFBPOKALTOTAL-26DEC01HOKKOE-4",
+   "entered_at": "2026-11-27T17:04:27.235928+00:00",
+   "entities": [
+    "Holstein Kiel",
+    "FC Cologne"
+   ],
+   "id": "superpack:[\"sandbox\", \"u35_low_scoring\", [\"u35_low_scoring:KXDFBPOKALTOTAL-26DEC01HOKKOE-4\", \"b\"]]",
+   "lane": "u35_low_scoring",
+   "logged": "2026-11-27T17:03:36+00:00",
+   "matched": [
+    "FC Cologne",
+    "Holstein Kiel"
+   ],
+   "pid": "[\"sandbox\", \"u35_low_scoring\", [\"u35_low_scoring:KXDFBPOKALTOTAL-26DEC01HOKKOE-4\", \"b\"]]",
+   "price": 0.61,
+   "profit": null,
+   "scope": "soccer_u35_cup",
    "settled": null,
    "side": "b",
    "snapshot": null,
