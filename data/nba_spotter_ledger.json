@@ -1,7 +1,7 @@
 {
  "box_through": "2026-11-26",
  "error": null,
- "last_run": "2026-11-27T23:00:29.833877+00:00",
+ "last_run": "2026-11-27T23:15:26.801277+00:00",
  "looks": {
   "401909305": {
    "at": "2026-11-20T22:45:25.302540+00:00",
@@ -417,6 +417,63 @@
    },
    "spread": -2.5,
    "usable": 156
+  },
+  "401909327": {
+   "at": "2026-11-27T23:15:26.801277+00:00",
+   "batch": 3,
+   "entered": {
+    "spotter_fade": 2,
+    "spotter_hold": 4,
+    "spotter_spike": 0
+   },
+   "game": "MIL @ DET",
+   "night": "2026-11-27",
+   "out": 57,
+   "skipped": {
+    "no quote": 14,
+    "outside 5-60c": 80,
+    "wide": 21
+   },
+   "spread": -9.5,
+   "usable": 173
+  },
+  "401909328": {
+   "at": "2026-11-27T23:15:26.801277+00:00",
+   "batch": 3,
+   "entered": {
+    "spotter_fade": 0,
+    "spotter_hold": 0,
+    "spotter_spike": 3
+   },
+   "game": "PHI @ IND",
+   "night": "2026-11-27",
+   "out": 57,
+   "skipped": {
+    "no quote": 5,
+    "outside 5-60c": 68,
+    "wide": 14
+   },
+   "spread": 3.5,
+   "usable": 138
+  },
+  "401909329": {
+   "at": "2026-11-27T23:15:26.801277+00:00",
+   "batch": 3,
+   "entered": {
+    "spotter_fade": 2,
+    "spotter_hold": 4,
+    "spotter_spike": 1
+   },
+   "game": "BKN @ TOR",
+   "night": "2026-11-27",
+   "out": 57,
+   "skipped": {
+    "no quote": 12,
+    "outside 5-60c": 74,
+    "wide": 4
+   },
+   "spread": -9.5,
+   "usable": 166
   },
   "401910007": {
    "at": "2026-11-18T23:12:11.631686+00:00",
@@ -1976,7 +2033,7 @@
   },
   "2026-11-27": {
    "spotter_fade": {
-    "n": 4,
+    "n": 8,
     "players": [
      [
       "3059319",
@@ -1993,15 +2050,64 @@
      [
       "3062679",
       "pra"
+     ],
+     [
+      "4432194",
+      "pra"
+     ],
+     [
+      "5082206",
+      "pra"
+     ],
+     [
+      "4712896",
+      "ast"
+     ],
+     [
+      "5105623",
+      "pra"
      ]
     ]
    },
    "spotter_hold": {
-    "n": 0,
-    "players": []
+    "n": 8,
+    "players": [
+     [
+      "4433134",
+      "reb"
+     ],
+     [
+      "4395724",
+      "reb"
+     ],
+     [
+      "4395702",
+      "m3"
+     ],
+     [
+      "4433134",
+      "m3"
+     ],
+     [
+      "4395702",
+      "reb"
+     ],
+     [
+      "5149115",
+      "reb"
+     ],
+     [
+      "3908845",
+      "m3"
+     ],
+     [
+      "3908845",
+      "reb"
+     ]
+    ]
    },
    "spotter_spike": {
-    "n": 4,
+    "n": 8,
     "players": [
      [
       "3934672",
@@ -2017,6 +2123,22 @@
      ],
      [
       "3147657",
+      "pts"
+     ],
+     [
+      "3059318",
+      "pts"
+     ],
+     [
+      "4395724",
+      "pts"
+     ],
+     [
+      "3133603",
+      "pts"
+     ],
+     [
+      "1966",
       "pts"
      ]
     ]
@@ -3861,6 +3983,106 @@
      "unit": "points+rebounds+assists",
      "why": "opponent gives up a lot of this",
      "yes_ask": 0.54
+    },
+    {
+     "bid": 0.37,
+     "edge": 0.0718,
+     "entered": "2026-11-27T23:15:26.801277+00:00",
+     "game": "BKN @ TOR",
+     "game_id": "401909329",
+     "id": "spotter_fade:KXNBAPRA-26NOV27BKNTOR-BKNDSHARPE20-25",
+     "lead_min": 74.6,
+     "night": "2026-11-27",
+     "p": 0.6518,
+     "pid": "4432194",
+     "player": "Day'Ron Sharpe",
+     "price": 0.63,
+     "rule": "spotter_fade",
+     "rung": 25,
+     "side": "no",
+     "start": "2026-11-28T00:30:00+00:00",
+     "stat": "pra",
+     "status": "open",
+     "team": "BKN",
+     "ticker": "KXNBAPRA-26NOV27BKNTOR-BKNDSHARPE20-25",
+     "unit": "points+rebounds+assists",
+     "why": "minutes up on last season",
+     "yes_ask": 0.42
+    },
+    {
+     "bid": 0.39,
+     "edge": 0.0671,
+     "entered": "2026-11-27T23:15:26.801277+00:00",
+     "game": "MIL @ DET",
+     "game_id": "401909327",
+     "id": "spotter_fade:KXNBAPRA-26NOV27MILDET-MILBBURRIES0-20",
+     "lead_min": 74.6,
+     "night": "2026-11-27",
+     "p": 0.6371,
+     "pid": "5082206",
+     "player": "Brayden Burries",
+     "price": 0.61,
+     "rule": "spotter_fade",
+     "rung": 20,
+     "side": "no",
+     "start": "2026-11-28T00:30:00+00:00",
+     "stat": "pra",
+     "status": "open",
+     "team": "MIL",
+     "ticker": "KXNBAPRA-26NOV27MILDET-MILBBURRIES0-20",
+     "unit": "points+rebounds+assists",
+     "why": "came off the bench last game",
+     "yes_ask": 0.43
+    },
+    {
+     "bid": 0.32,
+     "edge": 0.0624,
+     "entered": "2026-11-27T23:15:26.801277+00:00",
+     "game": "BKN @ TOR",
+     "game_id": "401909329",
+     "id": "spotter_fade:KXNBAAST-26NOV27BKNTOR-BKNNCLOWNEY21-2",
+     "lead_min": 74.6,
+     "night": "2026-11-27",
+     "p": 0.6924,
+     "pid": "4712896",
+     "player": "Noah Clowney",
+     "price": 0.68,
+     "rule": "spotter_fade",
+     "rung": 2,
+     "side": "no",
+     "start": "2026-11-28T00:30:00+00:00",
+     "stat": "ast",
+     "status": "open",
+     "team": "BKN",
+     "ticker": "KXNBAAST-26NOV27BKNTOR-BKNNCLOWNEY21-2",
+     "unit": "assists",
+     "why": "fewer shots than last season",
+     "yes_ask": 0.37
+    },
+    {
+     "bid": 0.39,
+     "edge": 0.0618,
+     "entered": "2026-11-27T23:15:26.801277+00:00",
+     "game": "MIL @ DET",
+     "game_id": "401909327",
+     "id": "spotter_fade:KXNBAPRA-26NOV27MILDET-MILKWARE9-20",
+     "lead_min": 74.6,
+     "night": "2026-11-27",
+     "p": 0.6518,
+     "pid": "5105623",
+     "player": "Kel'el Ware",
+     "price": 0.61,
+     "rule": "spotter_fade",
+     "rung": 20,
+     "side": "no",
+     "start": "2026-11-28T00:30:00+00:00",
+     "stat": "pra",
+     "status": "open",
+     "team": "MIL",
+     "ticker": "KXNBAPRA-26NOV27MILDET-MILKWARE9-20",
+     "unit": "points+rebounds+assists",
+     "why": "came off the bench last game",
+     "yes_ask": 0.41
     }
    ]
   },
@@ -5728,6 +5950,113 @@
      "unit": "assists",
      "why": "drawn at random from this game's rungs at about the pick's price, NO side",
      "yes_ask": 0.53
+    },
+    {
+     "bid": 0.39,
+     "entered": "2026-11-27T23:15:26.801277+00:00",
+     "game": "BKN @ TOR",
+     "game_id": "401909329",
+     "id": "spotter_fade_blind:KXNBA3PT-26NOV27BKNTOR-TORAGRAVES22-2",
+     "lead_min": 74.6,
+     "matches": "spotter_fade:KXNBAPRA-26NOV27BKNTOR-BKNDSHARPE20-25",
+     "night": "2026-11-27",
+     "outs": [
+      "RJ Barrett"
+     ],
+     "p": null,
+     "pid": "5149115",
+     "player": "Allen Graves",
+     "price": 0.61,
+     "rule": "spotter_fade_blind",
+     "rung": 2,
+     "side": "no",
+     "start": "2026-11-28T00:30:00+00:00",
+     "stat": "m3",
+     "status": "open",
+     "team": "TOR",
+     "ticker": "KXNBA3PT-26NOV27BKNTOR-TORAGRAVES22-2",
+     "unit": "threes",
+     "why": "drawn at random from this game's rungs at about the pick's price, NO side",
+     "yes_ask": 0.41
+    },
+    {
+     "bid": 0.37,
+     "entered": "2026-11-27T23:15:26.801277+00:00",
+     "game": "MIL @ DET",
+     "game_id": "401909327",
+     "id": "spotter_fade_blind:KXNBA3PT-26NOV27MILDET-DETJCOLLINS20-2",
+     "lead_min": 74.6,
+     "matches": "spotter_fade:KXNBAPRA-26NOV27MILDET-MILBBURRIES0-20",
+     "night": "2026-11-27",
+     "outs": [
+      "Cade Cunningham",
+      "Duncan Robinson"
+     ],
+     "p": null,
+     "pid": "3908845",
+     "player": "John Collins",
+     "price": 0.63,
+     "rule": "spotter_fade_blind",
+     "rung": 2,
+     "side": "no",
+     "start": "2026-11-28T00:30:00+00:00",
+     "stat": "m3",
+     "status": "open",
+     "team": "DET",
+     "ticker": "KXNBA3PT-26NOV27MILDET-DETJCOLLINS20-2",
+     "unit": "threes",
+     "why": "drawn at random from this game's rungs at about the pick's price, NO side",
+     "yes_ask": 0.38
+    },
+    {
+     "bid": 0.32,
+     "entered": "2026-11-27T23:15:26.801277+00:00",
+     "game": "BKN @ TOR",
+     "game_id": "401909329",
+     "id": "spotter_fade_blind:KXNBAAST-26NOV27BKNTOR-BKNEDEMIN8-4",
+     "lead_min": 74.6,
+     "matches": "spotter_fade:KXNBAAST-26NOV27BKNTOR-BKNNCLOWNEY21-2",
+     "night": "2026-11-27",
+     "p": null,
+     "pid": "5175643",
+     "player": "Egor D\u00ebmin",
+     "price": 0.68,
+     "rule": "spotter_fade_blind",
+     "rung": 4,
+     "side": "no",
+     "start": "2026-11-28T00:30:00+00:00",
+     "stat": "ast",
+     "status": "open",
+     "team": "BKN",
+     "ticker": "KXNBAAST-26NOV27BKNTOR-BKNEDEMIN8-4",
+     "unit": "assists",
+     "why": "drawn at random from this game's rungs at about the pick's price, NO side",
+     "yes_ask": 0.33
+    },
+    {
+     "bid": 0.42,
+     "entered": "2026-11-27T23:15:26.801277+00:00",
+     "game": "MIL @ DET",
+     "game_id": "401909327",
+     "id": "spotter_fade_blind:KXNBAREB-26NOV27MILDET-MILNAMENT15-4",
+     "lead_min": 74.6,
+     "matches": "spotter_fade:KXNBAPRA-26NOV27MILDET-MILKWARE9-20",
+     "night": "2026-11-27",
+     "p": null,
+     "pid": "5164559",
+     "player": "Nate Ament",
+     "price": 0.58,
+     "rule": "spotter_fade_blind",
+     "rung": 4,
+     "side": "no",
+     "start": "2026-11-28T00:30:00+00:00",
+     "stat": "reb",
+     "status": "open",
+     "team": "MIL",
+     "ticker": "KXNBAREB-26NOV27MILDET-MILNAMENT15-4",
+     "unit": "rebounds",
+     "why": "drawn at random from this game's rungs at about the pick's price, NO side",
+     "yes_ask": 0.45
     }
    ]
   },
@@ -7593,6 +7922,218 @@
      "ticker": "KXNBAREB-26NOV25LACMEM-MEMKMURRAY24-4",
      "unit": "rebounds",
      "why": "minutes down on last season"
+    },
+    {
+     "bid": 0.42,
+     "edge": 0.1153,
+     "entered": "2026-11-27T23:15:26.801277+00:00",
+     "game": "BKN @ TOR",
+     "game_id": "401909329",
+     "id": "spotter_hold:KXNBAREB-26NOV27BKNTOR-TORSBARNES4-8",
+     "lead_min": 74.6,
+     "night": "2026-11-27",
+     "outs": [
+      "RJ Barrett"
+     ],
+     "p": 0.5453,
+     "pid": "4433134",
+     "player": "Scottie Barnes",
+     "price": 0.43,
+     "rule": "spotter_hold",
+     "rung": 8,
+     "start": "2026-11-28T00:30:00+00:00",
+     "stat": "reb",
+     "status": "open",
+     "team": "TOR",
+     "ticker": "KXNBAREB-26NOV27BKNTOR-TORSBARNES4-8",
+     "unit": "rebounds",
+     "why": "shots up on last season"
+    },
+    {
+     "bid": 0.48,
+     "edge": 0.0788,
+     "entered": "2026-11-27T23:15:26.801277+00:00",
+     "game": "BKN @ TOR",
+     "game_id": "401909329",
+     "id": "spotter_hold:KXNBAREB-26NOV27BKNTOR-TORIQUICKLEY5-4",
+     "lead_min": 74.6,
+     "night": "2026-11-27",
+     "outs": [
+      "RJ Barrett"
+     ],
+     "p": 0.5688,
+     "pid": "4395724",
+     "player": "Immanuel Quickley",
+     "price": 0.49,
+     "rule": "spotter_hold",
+     "rung": 4,
+     "start": "2026-11-28T00:30:00+00:00",
+     "stat": "reb",
+     "status": "open",
+     "team": "TOR",
+     "ticker": "KXNBAREB-26NOV27BKNTOR-TORIQUICKLEY5-4",
+     "unit": "rebounds",
+     "why": "a top scorer on his team is out"
+    },
+    {
+     "bid": 0.44,
+     "edge": 0.0758,
+     "entered": "2026-11-27T23:15:26.801277+00:00",
+     "game": "MIL @ DET",
+     "game_id": "401909327",
+     "id": "spotter_hold:KXNBA3PT-26NOV27MILDET-DETIJOESF-4",
+     "lead_min": 74.6,
+     "night": "2026-11-27",
+     "outs": [
+      "Cade Cunningham",
+      "Duncan Robinson"
+     ],
+     "p": 0.5258,
+     "pid": "4395702",
+     "player": "Isaiah Joe",
+     "price": 0.45,
+     "rule": "spotter_hold",
+     "rung": 4,
+     "start": "2026-11-28T00:30:00+00:00",
+     "stat": "m3",
+     "status": "open",
+     "team": "DET",
+     "ticker": "KXNBA3PT-26NOV27MILDET-DETIJOESF-4",
+     "unit": "threes",
+     "why": "a top scorer on his team is out"
+    },
+    {
+     "bid": 0.29,
+     "edge": 0.074,
+     "entered": "2026-11-27T23:15:26.801277+00:00",
+     "game": "BKN @ TOR",
+     "game_id": "401909329",
+     "id": "spotter_hold:KXNBA3PT-26NOV27BKNTOR-TORSBARNES4-2",
+     "lead_min": 74.6,
+     "night": "2026-11-27",
+     "outs": [
+      "RJ Barrett"
+     ],
+     "p": 0.384,
+     "pid": "4433134",
+     "player": "Scottie Barnes",
+     "price": 0.31,
+     "rule": "spotter_hold",
+     "rung": 2,
+     "start": "2026-11-28T00:30:00+00:00",
+     "stat": "m3",
+     "status": "open",
+     "team": "TOR",
+     "ticker": "KXNBA3PT-26NOV27BKNTOR-TORSBARNES4-2",
+     "unit": "threes",
+     "why": "shots up on last season"
+    },
+    {
+     "bid": 0.39,
+     "edge": 0.0657,
+     "entered": "2026-11-27T23:15:26.801277+00:00",
+     "game": "MIL @ DET",
+     "game_id": "401909327",
+     "id": "spotter_hold:KXNBAREB-26NOV27MILDET-DETIJOESF-4",
+     "lead_min": 74.6,
+     "night": "2026-11-27",
+     "outs": [
+      "Cade Cunningham",
+      "Duncan Robinson"
+     ],
+     "p": 0.4657,
+     "pid": "4395702",
+     "player": "Isaiah Joe",
+     "price": 0.4,
+     "rule": "spotter_hold",
+     "rung": 4,
+     "start": "2026-11-28T00:30:00+00:00",
+     "stat": "reb",
+     "status": "open",
+     "team": "DET",
+     "ticker": "KXNBAREB-26NOV27MILDET-DETIJOESF-4",
+     "unit": "rebounds",
+     "why": "a top scorer on his team is out"
+    },
+    {
+     "bid": 0.4,
+     "edge": 0.0652,
+     "entered": "2026-11-27T23:15:26.801277+00:00",
+     "game": "BKN @ TOR",
+     "game_id": "401909329",
+     "id": "spotter_hold:KXNBAREB-26NOV27BKNTOR-TORAGRAVES22-6",
+     "lead_min": 74.6,
+     "night": "2026-11-27",
+     "outs": [
+      "RJ Barrett"
+     ],
+     "p": 0.4752,
+     "pid": "5149115",
+     "player": "Allen Graves",
+     "price": 0.41,
+     "rule": "spotter_hold",
+     "rung": 6,
+     "start": "2026-11-28T00:30:00+00:00",
+     "stat": "reb",
+     "status": "open",
+     "team": "TOR",
+     "ticker": "KXNBAREB-26NOV27BKNTOR-TORAGRAVES22-6",
+     "unit": "rebounds",
+     "why": "a top scorer on his team is out"
+    },
+    {
+     "bid": 0.37,
+     "edge": 0.0643,
+     "entered": "2026-11-27T23:15:26.801277+00:00",
+     "game": "MIL @ DET",
+     "game_id": "401909327",
+     "id": "spotter_hold:KXNBA3PT-26NOV27MILDET-DETJCOLLINS20-2",
+     "lead_min": 74.6,
+     "night": "2026-11-27",
+     "outs": [
+      "Cade Cunningham",
+      "Duncan Robinson"
+     ],
+     "p": 0.4443,
+     "pid": "3908845",
+     "player": "John Collins",
+     "price": 0.38,
+     "rule": "spotter_hold",
+     "rung": 2,
+     "start": "2026-11-28T00:30:00+00:00",
+     "stat": "m3",
+     "status": "open",
+     "team": "DET",
+     "ticker": "KXNBA3PT-26NOV27MILDET-DETJCOLLINS20-2",
+     "unit": "threes",
+     "why": "a top scorer on his team is out"
+    },
+    {
+     "bid": 0.5,
+     "edge": 0.0545,
+     "entered": "2026-11-27T23:15:26.801277+00:00",
+     "game": "MIL @ DET",
+     "game_id": "401909327",
+     "id": "spotter_hold:KXNBAREB-26NOV27MILDET-DETJCOLLINS20-6",
+     "lead_min": 74.6,
+     "night": "2026-11-27",
+     "outs": [
+      "Cade Cunningham",
+      "Duncan Robinson"
+     ],
+     "p": 0.5645,
+     "pid": "3908845",
+     "player": "John Collins",
+     "price": 0.51,
+     "rule": "spotter_hold",
+     "rung": 6,
+     "start": "2026-11-28T00:30:00+00:00",
+     "stat": "reb",
+     "status": "open",
+     "team": "DET",
+     "ticker": "KXNBAREB-26NOV27MILDET-DETJCOLLINS20-6",
+     "unit": "rebounds",
+     "why": "a top scorer on his team is out"
     }
    ]
   },
@@ -9417,6 +9958,208 @@
      "team": "MEM",
      "ticker": "KXNBAAST-26NOV25LACMEM-MEMTHENDRICKS22-2",
      "unit": "assists",
+     "why": "drawn at random from this game's rungs at about the pick's price"
+    },
+    {
+     "bid": 0.43,
+     "entered": "2026-11-27T23:15:26.801277+00:00",
+     "game": "BKN @ TOR",
+     "game_id": "401909329",
+     "id": "spotter_hold_blind:KXNBA3PT-26NOV27BKNTOR-BKNJRANDLE30-2",
+     "lead_min": 74.6,
+     "matches": "spotter_hold:KXNBAREB-26NOV27BKNTOR-TORSBARNES4-8",
+     "night": "2026-11-27",
+     "p": null,
+     "pid": "3064514",
+     "player": "Julius Randle",
+     "price": 0.44,
+     "rule": "spotter_hold_blind",
+     "rung": 2,
+     "start": "2026-11-28T00:30:00+00:00",
+     "stat": "m3",
+     "status": "open",
+     "team": "BKN",
+     "ticker": "KXNBA3PT-26NOV27BKNTOR-BKNJRANDLE30-2",
+     "unit": "threes",
+     "why": "drawn at random from this game's rungs at about the pick's price"
+    },
+    {
+     "bid": 0.49,
+     "entered": "2026-11-27T23:15:26.801277+00:00",
+     "game": "BKN @ TOR",
+     "game_id": "401909329",
+     "id": "spotter_hold_blind:KXNBAPTS-26NOV27BKNTOR-TORAGRAVES22-10",
+     "lead_min": 74.6,
+     "matches": "spotter_hold:KXNBAREB-26NOV27BKNTOR-TORIQUICKLEY5-4",
+     "night": "2026-11-27",
+     "outs": [
+      "RJ Barrett"
+     ],
+     "p": null,
+     "pid": "5149115",
+     "player": "Allen Graves",
+     "price": 0.5,
+     "rule": "spotter_hold_blind",
+     "rung": 10,
+     "start": "2026-11-28T00:30:00+00:00",
+     "stat": "pts",
+     "status": "open",
+     "team": "TOR",
+     "ticker": "KXNBAPTS-26NOV27BKNTOR-TORAGRAVES22-10",
+     "unit": "points",
+     "why": "drawn at random from this game's rungs at about the pick's price"
+    },
+    {
+     "bid": 0.44,
+     "entered": "2026-11-27T23:15:26.801277+00:00",
+     "game": "MIL @ DET",
+     "game_id": "401909327",
+     "id": "spotter_hold_blind:KXNBAPTS-26NOV27MILDET-DETDJENKINS24-20",
+     "lead_min": 74.6,
+     "matches": "spotter_hold:KXNBA3PT-26NOV27MILDET-DETIJOESF-4",
+     "night": "2026-11-27",
+     "outs": [
+      "Cade Cunningham",
+      "Duncan Robinson"
+     ],
+     "p": null,
+     "pid": "5107199",
+     "player": "Daniss Jenkins",
+     "price": 0.46,
+     "rule": "spotter_hold_blind",
+     "rung": 20,
+     "start": "2026-11-28T00:30:00+00:00",
+     "stat": "pts",
+     "status": "open",
+     "team": "DET",
+     "ticker": "KXNBAPTS-26NOV27MILDET-DETDJENKINS24-20",
+     "unit": "points",
+     "why": "drawn at random from this game's rungs at about the pick's price"
+    },
+    {
+     "bid": 0.32,
+     "entered": "2026-11-27T23:15:26.801277+00:00",
+     "game": "BKN @ TOR",
+     "game_id": "401909329",
+     "id": "spotter_hold_blind:KXNBA3PT-26NOV27BKNTOR-TORIQUICKLEY5-4",
+     "lead_min": 74.6,
+     "matches": "spotter_hold:KXNBA3PT-26NOV27BKNTOR-TORSBARNES4-2",
+     "night": "2026-11-27",
+     "outs": [
+      "RJ Barrett"
+     ],
+     "p": null,
+     "pid": "4395724",
+     "player": "Immanuel Quickley",
+     "price": 0.34,
+     "rule": "spotter_hold_blind",
+     "rung": 4,
+     "start": "2026-11-28T00:30:00+00:00",
+     "stat": "m3",
+     "status": "open",
+     "team": "TOR",
+     "ticker": "KXNBA3PT-26NOV27BKNTOR-TORIQUICKLEY5-4",
+     "unit": "threes",
+     "why": "drawn at random from this game's rungs at about the pick's price"
+    },
+    {
+     "bid": 0.39,
+     "entered": "2026-11-27T23:15:26.801277+00:00",
+     "game": "MIL @ DET",
+     "game_id": "401909327",
+     "id": "spotter_hold_blind:KXNBAPRA-26NOV27MILDET-MILBBURRIES0-20",
+     "lead_min": 74.6,
+     "matches": "spotter_hold:KXNBAREB-26NOV27MILDET-DETIJOESF-4",
+     "night": "2026-11-27",
+     "p": null,
+     "pid": "5082206",
+     "player": "Brayden Burries",
+     "price": 0.43,
+     "rule": "spotter_hold_blind",
+     "rung": 20,
+     "start": "2026-11-28T00:30:00+00:00",
+     "stat": "pra",
+     "status": "open",
+     "team": "MIL",
+     "ticker": "KXNBAPRA-26NOV27MILDET-MILBBURRIES0-20",
+     "unit": "points+rebounds+assists",
+     "why": "drawn at random from this game's rungs at about the pick's price"
+    },
+    {
+     "bid": 0.36,
+     "entered": "2026-11-27T23:15:26.801277+00:00",
+     "game": "BKN @ TOR",
+     "game_id": "401909329",
+     "id": "spotter_hold_blind:KXNBAREB-26NOV27BKNTOR-BKNDSHARPE20-10",
+     "lead_min": 74.6,
+     "matches": "spotter_hold:KXNBAREB-26NOV27BKNTOR-TORAGRAVES22-6",
+     "night": "2026-11-27",
+     "p": null,
+     "pid": "4432194",
+     "player": "Day'Ron Sharpe",
+     "price": 0.39,
+     "rule": "spotter_hold_blind",
+     "rung": 10,
+     "start": "2026-11-28T00:30:00+00:00",
+     "stat": "reb",
+     "status": "open",
+     "team": "BKN",
+     "ticker": "KXNBAREB-26NOV27BKNTOR-BKNDSHARPE20-10",
+     "unit": "rebounds",
+     "why": "drawn at random from this game's rungs at about the pick's price"
+    },
+    {
+     "bid": 0.32,
+     "entered": "2026-11-27T23:15:26.801277+00:00",
+     "game": "MIL @ DET",
+     "game_id": "401909327",
+     "id": "spotter_hold_blind:KXNBAAST-26NOV27MILDET-DETJGREENSF-2",
+     "lead_min": 74.6,
+     "matches": "spotter_hold:KXNBA3PT-26NOV27MILDET-DETJCOLLINS20-2",
+     "night": "2026-11-27",
+     "outs": [
+      "Cade Cunningham",
+      "Duncan Robinson"
+     ],
+     "p": null,
+     "pid": "2596112",
+     "player": "Javonte Green",
+     "price": 0.35,
+     "rule": "spotter_hold_blind",
+     "rung": 2,
+     "start": "2026-11-28T00:30:00+00:00",
+     "stat": "ast",
+     "status": "open",
+     "team": "DET",
+     "ticker": "KXNBAAST-26NOV27MILDET-DETJGREENSF-2",
+     "unit": "assists",
+     "why": "drawn at random from this game's rungs at about the pick's price"
+    },
+    {
+     "bid": 0.52,
+     "entered": "2026-11-27T23:15:26.801277+00:00",
+     "game": "MIL @ DET",
+     "game_id": "401909327",
+     "id": "spotter_hold_blind:KXNBAPRA-26NOV27MILDET-DETDJENKINS24-30",
+     "lead_min": 74.6,
+     "matches": "spotter_hold:KXNBAREB-26NOV27MILDET-DETJCOLLINS20-6",
+     "night": "2026-11-27",
+     "outs": [
+      "Cade Cunningham",
+      "Duncan Robinson"
+     ],
+     "p": null,
+     "pid": "5107199",
+     "player": "Daniss Jenkins",
+     "price": 0.53,
+     "rule": "spotter_hold_blind",
+     "rung": 30,
+     "start": "2026-11-28T00:30:00+00:00",
+     "stat": "pra",
+     "status": "open",
+     "team": "DET",
+     "ticker": "KXNBAPRA-26NOV27MILDET-DETDJENKINS24-30",
+     "unit": "points+rebounds+assists",
      "why": "drawn at random from this game's rungs at about the pick's price"
     }
    ]
@@ -11573,6 +12316,114 @@
      "ticker": "KXNBAPTS-26NOV27MIANYK-NYKMBRIDGES25-15",
      "unit": "points",
      "why": "minutes down on last season"
+    },
+    {
+     "bid": 0.45,
+     "edge": 0.0909,
+     "entered": "2026-11-27T23:15:26.801277+00:00",
+     "game": "PHI @ IND",
+     "game_id": "401909328",
+     "id": "spotter_spike:KXNBAPTS-26NOV27PHIIND-PHIJEMBIID21-25",
+     "lead_min": 74.6,
+     "night": "2026-11-27",
+     "outs": [
+      "Jaylen Brown"
+     ],
+     "p": 0.5909,
+     "pid": "3059318",
+     "player": "Joel Embiid",
+     "price": 0.48,
+     "rule": "spotter_spike",
+     "rung": 25,
+     "start": "2026-11-28T00:30:00+00:00",
+     "stat": "pts",
+     "status": "open",
+     "target": 0.96,
+     "team": "PHI",
+     "ticker": "KXNBAPTS-26NOV27PHIIND-PHIJEMBIID21-25",
+     "unit": "points",
+     "why": "a hot run the price has followed up"
+    },
+    {
+     "bid": 0.44,
+     "edge": 0.0858,
+     "entered": "2026-11-27T23:15:26.801277+00:00",
+     "game": "BKN @ TOR",
+     "game_id": "401909329",
+     "id": "spotter_spike:KXNBAPTS-26NOV27BKNTOR-TORIQUICKLEY5-20",
+     "lead_min": 74.6,
+     "night": "2026-11-27",
+     "outs": [
+      "RJ Barrett"
+     ],
+     "p": 0.5858,
+     "pid": "4395724",
+     "player": "Immanuel Quickley",
+     "price": 0.45,
+     "rule": "spotter_spike",
+     "rung": 20,
+     "start": "2026-11-28T00:30:00+00:00",
+     "stat": "pts",
+     "status": "open",
+     "target": 0.9,
+     "team": "TOR",
+     "ticker": "KXNBAPTS-26NOV27BKNTOR-TORIQUICKLEY5-20",
+     "unit": "points",
+     "why": "a top scorer on his team is out"
+    },
+    {
+     "bid": 0.35,
+     "edge": 0.0807,
+     "entered": "2026-11-27T23:15:26.801277+00:00",
+     "game": "PHI @ IND",
+     "game_id": "401909328",
+     "id": "spotter_spike:KXNBAPTS-26NOV27PHIIND-INDKOUBRE10-15",
+     "lead_min": 74.6,
+     "night": "2026-11-27",
+     "outs": [
+      "Tyrese Haliburton"
+     ],
+     "p": 0.5807,
+     "pid": "3133603",
+     "player": "Kelly Oubre Jr.",
+     "price": 0.36,
+     "rule": "spotter_spike",
+     "rung": 15,
+     "start": "2026-11-28T00:30:00+00:00",
+     "stat": "pts",
+     "status": "open",
+     "target": 0.72,
+     "team": "IND",
+     "ticker": "KXNBAPTS-26NOV27PHIIND-INDKOUBRE10-15",
+     "unit": "points",
+     "why": "minutes down on last season"
+    },
+    {
+     "bid": 0.44,
+     "edge": 0.0798,
+     "entered": "2026-11-27T23:15:26.801277+00:00",
+     "game": "PHI @ IND",
+     "game_id": "401909328",
+     "id": "spotter_spike:KXNBAPTS-26NOV27PHIIND-PHILJAMES23-20",
+     "lead_min": 74.6,
+     "night": "2026-11-27",
+     "outs": [
+      "Jaylen Brown"
+     ],
+     "p": 0.5798,
+     "pid": "1966",
+     "player": "LeBron James",
+     "price": 0.45,
+     "rule": "spotter_spike",
+     "rung": 20,
+     "start": "2026-11-28T00:30:00+00:00",
+     "stat": "pts",
+     "status": "open",
+     "target": 0.9,
+     "team": "PHI",
+     "ticker": "KXNBAPTS-26NOV27PHIIND-PHILJAMES23-20",
+     "unit": "points",
+     "why": "a hot run the price has followed up"
     }
    ]
   },
@@ -13720,17 +14571,116 @@
      "ticker": "KXNBA3PT-26NOV27MIANYK-MIAKTHOMPSON11-4",
      "unit": "threes",
      "why": "drawn at random from this game's rungs at about the pick's price"
+    },
+    {
+     "bid": 0.44,
+     "entered": "2026-11-27T23:15:26.801277+00:00",
+     "game": "PHI @ IND",
+     "game_id": "401909328",
+     "id": "spotter_spike_blind:KXNBAPRA-26NOV27PHIIND-INDPSIAKAM43-35",
+     "lead_min": 74.6,
+     "matches": "spotter_spike:KXNBAPTS-26NOV27PHIIND-PHIJEMBIID21-25",
+     "night": "2026-11-27",
+     "outs": [
+      "Tyrese Haliburton"
+     ],
+     "p": null,
+     "pid": "3149673",
+     "player": "Pascal Siakam",
+     "price": 0.45,
+     "rule": "spotter_spike_blind",
+     "rung": 35,
+     "start": "2026-11-28T00:30:00+00:00",
+     "stat": "pra",
+     "status": "open",
+     "target": 0.9,
+     "team": "IND",
+     "ticker": "KXNBAPRA-26NOV27PHIIND-INDPSIAKAM43-35",
+     "unit": "points+rebounds+assists",
+     "why": "drawn at random from this game's rungs at about the pick's price"
+    },
+    {
+     "bid": 0.37,
+     "entered": "2026-11-27T23:15:26.801277+00:00",
+     "game": "BKN @ TOR",
+     "game_id": "401909329",
+     "id": "spotter_spike_blind:KXNBAPRA-26NOV27BKNTOR-BKNDSHARPE20-25",
+     "lead_min": 74.6,
+     "matches": "spotter_spike:KXNBAPTS-26NOV27BKNTOR-TORIQUICKLEY5-20",
+     "night": "2026-11-27",
+     "p": null,
+     "pid": "4432194",
+     "player": "Day'Ron Sharpe",
+     "price": 0.42,
+     "rule": "spotter_spike_blind",
+     "rung": 25,
+     "start": "2026-11-28T00:30:00+00:00",
+     "stat": "pra",
+     "status": "open",
+     "target": 0.84,
+     "team": "BKN",
+     "ticker": "KXNBAPRA-26NOV27BKNTOR-BKNDSHARPE20-25",
+     "unit": "points+rebounds+assists",
+     "why": "drawn at random from this game's rungs at about the pick's price"
+    },
+    {
+     "bid": 0.34,
+     "entered": "2026-11-27T23:15:26.801277+00:00",
+     "game": "PHI @ IND",
+     "game_id": "401909328",
+     "id": "spotter_spike_blind:KXNBAREB-26NOV27PHIIND-PHIJEMBIID21-10",
+     "lead_min": 74.6,
+     "matches": "spotter_spike:KXNBAPTS-26NOV27PHIIND-INDKOUBRE10-15",
+     "night": "2026-11-27",
+     "outs": [
+      "Jaylen Brown"
+     ],
+     "p": null,
+     "pid": "3059318",
+     "player": "Joel Embiid",
+     "price": 0.36,
+     "rule": "spotter_spike_blind",
+     "rung": 10,
+     "start": "2026-11-28T00:30:00+00:00",
+     "stat": "reb",
+     "status": "open",
+     "target": 0.72,
+     "team": "PHI",
+     "ticker": "KXNBAREB-26NOV27PHIIND-PHIJEMBIID21-10",
+     "unit": "rebounds",
+     "why": "drawn at random from this game's rungs at about the pick's price"
+    },
+    {
+     "bid": 0.42,
+     "entered": "2026-11-27T23:15:26.801277+00:00",
+     "game": "PHI @ IND",
+     "game_id": "401909328",
+     "id": "spotter_spike_blind:KXNBAPTS-26NOV27PHIIND-INDPSIAKAM43-25",
+     "lead_min": 74.6,
+     "matches": "spotter_spike:KXNBAPTS-26NOV27PHIIND-PHILJAMES23-20",
+     "night": "2026-11-27",
+     "outs": [
+      "Tyrese Haliburton"
+     ],
+     "p": null,
+     "pid": "3149673",
+     "player": "Pascal Siakam",
+     "price": 0.45,
+     "rule": "spotter_spike_blind",
+     "rung": 25,
+     "start": "2026-11-28T00:30:00+00:00",
+     "stat": "pts",
+     "status": "open",
+     "target": 0.9,
+     "team": "IND",
+     "ticker": "KXNBAPTS-26NOV27PHIIND-INDPSIAKAM43-25",
+     "unit": "points",
+     "why": "drawn at random from this game's rungs at about the pick's price"
     }
    ]
   }
  },
  "runs": [
-  {
-   "at": "2026-11-25T06:00:30.128969+00:00",
-   "box": 1,
-   "due": 0,
-   "new": 0
-  },
   {
    "at": "2026-11-25T06:30:38.557564+00:00",
    "box": 0,
@@ -14030,6 +14980,12 @@
    "box": 0,
    "due": 0,
    "new": 0
+  },
+  {
+   "at": "2026-11-27T23:15:26.801277+00:00",
+   "box": 0,
+   "due": 3,
+   "new": 32
   }
  ],
  "schedule": [
