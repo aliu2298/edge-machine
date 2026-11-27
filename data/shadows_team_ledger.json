@@ -16,11 +16,14 @@
    "kind": "2h",
    "lane": "T1",
    "match": "Brest v Paris FC",
+   "payout": 0.0,
    "price": 0.29,
+   "profit": -100.0,
    "quote": true,
    "recorded": "2026-11-27T18:17:31.850902+00:00",
+   "settled": "2026-11-27T22:01:56.574802+00:00",
    "start": "2026-11-27T19:45Z",
-   "status": "open",
+   "status": "lost",
    "ticker": "KXLIGUE12HBTTS-26NOV27STBPAR-BTTS"
   },
   "T1:KXSERIEATEAMTOTAL-26NOV22ACMFRO": {
@@ -118,20 +121,32 @@
    "status": "done"
   },
   "T1:KXLIGUE1TEAMTOTAL-26NOV27STBPAR:away": {
+   "action": "sell",
+   "bid": 0.23,
+   "ht_ts": 1795811543,
    "lane": "T1",
    "match": "Brest v Paris FC",
    "pick": "T1:KXLIGUE1TEAMTOTAL-26NOV27STBPAR:away",
    "price": 0.46,
+   "profit": -54.42,
+   "score": "1-0",
+   "scoreless": true,
    "start": "2026-11-27T19:45Z",
-   "status": "pending"
+   "status": "done"
   },
   "T1:KXLIGUE1TEAMTOTAL-26NOV27STBPAR:home": {
+   "action": "hold",
+   "ht_ts": 1795811543,
    "lane": "T1",
    "match": "Brest v Paris FC",
    "pick": "T1:KXLIGUE1TEAMTOTAL-26NOV27STBPAR:home",
    "price": 0.32,
+   "profit": -100.0,
+   "score": "1-0",
+   "scoreless": false,
+   "settled": true,
    "start": "2026-11-27T19:45Z",
-   "status": "pending"
+   "status": "done"
   },
   "T1:KXSERIEATEAMTOTAL-26NOV22ACMFRO:away": {
    "action": "hold",
@@ -274,14 +289,9 @@
    "status": "done"
   }
  },
- "last_run": "2026-11-27T21:02:08.905210+00:00",
+ "last_run": "2026-11-27T22:01:56.574802+00:00",
  "registered": "2026-11-21",
  "runs": [
-  {
-   "at": "2026-11-22T18:47:09.451791+00:00",
-   "btts": 2,
-   "ht": 4
-  },
   {
    "at": "2026-11-22T19:01:49.287287+00:00",
    "btts": 2,
@@ -529,6 +539,11 @@
   },
   {
    "at": "2026-11-27T21:02:08.905210+00:00",
+   "btts": 7,
+   "ht": 14
+  },
+  {
+   "at": "2026-11-27T22:01:56.574802+00:00",
    "btts": 7,
    "ht": 14
   }
