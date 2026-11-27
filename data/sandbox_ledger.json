@@ -8,10 +8,10 @@
   },
   "commodities": {
    "cmd_market": {
-    "offered": 400,
-    "picked": 400
+    "offered": 390,
+    "picked": 390
    },
-   "kalshi_venue": 400
+   "kalshi_venue": 390
   },
   "commodities_fav": {
    "kalshi_venue": 220
@@ -33,7 +33,7 @@
    "kalshi_venue": 250
   },
   "economics": {
-   "kalshi_venue": 36
+   "kalshi_venue": 32
   },
   "finance": {
    "kalshi_venue": 0
@@ -61,17 +61,17 @@
     "offered": 9,
     "picked": 0
    },
-   "kalshi_venue": 263,
+   "kalshi_venue": 280,
    "polymarket_us": 0,
    "polymarket_us_listed": 0,
    "polymarket_us_priced": 0
   },
   "soccer_btts": {
    "btts_market": {
-    "offered": 80,
-    "picked": 80
+    "offered": 81,
+    "picked": 81
    },
-   "kalshi_venue": 80,
+   "kalshi_venue": 81,
    "liga_btts_even": {
     "offered": 10,
     "picked": 1
@@ -79,10 +79,10 @@
   },
   "soccer_btts_cup": {
    "btts_market": {
-    "offered": 10,
-    "picked": 10
+    "offered": 12,
+    "picked": 12
    },
-   "kalshi_venue": 10
+   "kalshi_venue": 12
   },
   "soccer_btts_intl": {
    "btts_market": {
@@ -108,18 +108,18 @@
   },
   "soccer_ftts": {
    "ftts_lineup_lag": {
-    "offered": 70,
+    "offered": 72,
     "picked": 0
    },
    "ftts_market": {
-    "offered": 70,
-    "picked": 70
+    "offered": 72,
+    "picked": 72
    },
    "ftts_no_70_80": {
-    "offered": 70,
+    "offered": 72,
     "picked": 0
    },
-   "kalshi_venue": 70
+   "kalshi_venue": 72
   },
   "soccer_o05": {
    "kalshi_venue": 0,
@@ -145,10 +145,10 @@
     "picked": 1
    },
    "goals_market": {
-    "offered": 80,
-    "picked": 80
+    "offered": 81,
+    "picked": 81
    },
-   "kalshi_venue": 80,
+   "kalshi_venue": 81,
    "liga_u15_dog_24h": {
     "offered": 10,
     "picked": 0
@@ -156,10 +156,10 @@
   },
   "soccer_o15_cup": {
    "goals_market": {
-    "offered": 10,
-    "picked": 10
+    "offered": 12,
+    "picked": 12
    },
-   "kalshi_venue": 10
+   "kalshi_venue": 12
   },
   "soccer_o15_intl": {
    "goals_market": {
@@ -174,17 +174,17 @@
   },
   "soccer_o25": {
    "goals_market": {
-    "offered": 80,
-    "picked": 80
+    "offered": 81,
+    "picked": 81
    },
-   "kalshi_venue": 80
+   "kalshi_venue": 81
   },
   "soccer_o25_cup": {
    "goals_market": {
-    "offered": 10,
-    "picked": 10
+    "offered": 12,
+    "picked": 12
    },
-   "kalshi_venue": 10
+   "kalshi_venue": 12
   },
   "soccer_o25_intl": {
    "goals_market": {
@@ -220,10 +220,10 @@
   },
   "soccer_team1": {
    "goals_market": {
-    "offered": 70,
-    "picked": 70
+    "offered": 72,
+    "picked": 72
    },
-   "kalshi_venue": 70
+   "kalshi_venue": 72
   },
   "soccer_team1_cup": {
    "goals_market": {
@@ -249,12 +249,12 @@
   },
   "soccer_team2": {
    "goals_market": {
-    "offered": 70,
-    "picked": 70
+    "offered": 72,
+    "picked": 72
    },
-   "kalshi_venue": 70,
+   "kalshi_venue": 72,
    "team2_ranked": {
-    "offered": 70,
+    "offered": 72,
     "picked": 0
    }
   },
@@ -292,19 +292,19 @@
   },
   "soccer_u35": {
    "goals_market": {
-    "offered": 80,
-    "picked": 80
+    "offered": 81,
+    "picked": 81
    },
-   "kalshi_venue": 80
+   "kalshi_venue": 81
   },
   "soccer_u35_cup": {
    "goals_market": {
-    "offered": 10,
-    "picked": 10
+    "offered": 12,
+    "picked": 12
    },
-   "kalshi_venue": 10,
+   "kalshi_venue": 12,
    "u35_low_scoring": {
-    "offered": 10,
+    "offered": 12,
     "picked": 0
    }
   },
@@ -322,59 +322,59 @@
   "tennis": {
    "kalshi_venue": 7,
    "polymarket_us": 40,
-   "polymarket_us_listed": 167,
-   "polymarket_us_priced": 59
+   "polymarket_us_listed": 162,
+   "polymarket_us_priced": 57
   },
   "tennis_combo": {
    "combo": 0,
    "legs": 0
   },
   "tennis_pmcombo": {
-   "combo": 8,
-   "legs": 8
+   "combo": 10,
+   "legs": 10
   }
  },
  "feed_status": {},
  "meta": {
   "created": "2026-09-10T04:42:15+00:00",
   "lane_reads": {
-   "boxing": "2026-11-27T13:06:06+00:00",
-   "commodities": "2026-11-27T13:06:06+00:00",
-   "commodities_fav": "2026-11-27T13:06:06+00:00",
-   "cricket": "2026-11-27T13:06:06+00:00",
-   "crypto": "2026-11-27T13:06:06+00:00",
-   "crypto_fav": "2026-11-27T13:06:06+00:00",
-   "economics": "2026-11-27T13:06:06+00:00",
+   "boxing": "2026-11-27T13:14:14+00:00",
+   "commodities": "2026-11-27T13:14:14+00:00",
+   "commodities_fav": "2026-11-27T13:14:14+00:00",
+   "cricket": "2026-11-27T13:14:14+00:00",
+   "crypto": "2026-11-27T13:14:14+00:00",
+   "crypto_fav": "2026-11-27T13:14:14+00:00",
+   "economics": "2026-11-27T13:14:14+00:00",
    "finance": "2026-11-27T12:57:55+00:00",
    "mma": "2026-11-21T20:10:14+00:00",
-   "nfl": "2026-11-27T13:06:06+00:00",
-   "nhl_pl": "2026-11-27T13:06:06+00:00",
-   "nhl_rest": "2026-11-27T13:06:06+00:00",
-   "soccer": "2026-11-27T13:06:06+00:00",
-   "soccer_btts": "2026-11-27T13:06:06+00:00",
-   "soccer_btts_cup": "2026-11-27T13:06:06+00:00",
+   "nfl": "2026-11-27T13:14:14+00:00",
+   "nhl_pl": "2026-11-27T13:14:14+00:00",
+   "nhl_rest": "2026-11-27T13:14:14+00:00",
+   "soccer": "2026-11-27T13:14:14+00:00",
+   "soccer_btts": "2026-11-27T13:14:14+00:00",
+   "soccer_btts_cup": "2026-11-27T13:14:14+00:00",
    "soccer_btts_intl": "2026-11-17T23:27:07+00:00",
-   "soccer_corners": "2026-11-27T13:06:06+00:00",
-   "soccer_ftts": "2026-11-27T13:06:06+00:00",
-   "soccer_o15": "2026-11-27T13:06:06+00:00",
-   "soccer_o15_cup": "2026-11-27T13:06:06+00:00",
+   "soccer_corners": "2026-11-27T13:14:14+00:00",
+   "soccer_ftts": "2026-11-27T13:14:14+00:00",
+   "soccer_o15": "2026-11-27T13:14:14+00:00",
+   "soccer_o15_cup": "2026-11-27T13:14:14+00:00",
    "soccer_o15_intl": "2026-11-17T23:27:07+00:00",
-   "soccer_o25": "2026-11-27T13:06:06+00:00",
-   "soccer_o25_cup": "2026-11-27T13:06:06+00:00",
+   "soccer_o25": "2026-11-27T13:14:14+00:00",
+   "soccer_o25_cup": "2026-11-27T13:14:14+00:00",
    "soccer_o25_intl": "2026-11-17T23:27:07+00:00",
-   "soccer_p05": "2026-11-27T13:06:06+00:00",
-   "soccer_p05_cup": "2026-11-27T13:06:06+00:00",
+   "soccer_p05": "2026-11-27T13:14:14+00:00",
+   "soccer_p05_cup": "2026-11-27T13:14:14+00:00",
    "soccer_p05_intl": "2026-11-17T23:27:07+00:00",
-   "soccer_team1": "2026-11-27T13:06:06+00:00",
+   "soccer_team1": "2026-11-27T13:14:14+00:00",
    "soccer_team1_cup": "2026-11-26T19:54:07+00:00",
    "soccer_team1_intl": "2026-11-17T19:33:51+00:00",
-   "soccer_team2": "2026-11-27T13:06:06+00:00",
+   "soccer_team2": "2026-11-27T13:14:14+00:00",
    "soccer_team2_cup": "2026-11-26T19:54:07+00:00",
    "soccer_team2_intl": "2026-11-17T19:33:51+00:00",
-   "soccer_u35": "2026-11-27T13:06:06+00:00",
-   "soccer_u35_cup": "2026-11-27T13:06:06+00:00",
+   "soccer_u35": "2026-11-27T13:14:14+00:00",
+   "soccer_u35_cup": "2026-11-27T13:14:14+00:00",
    "soccer_u35_intl": "2026-11-17T23:27:07+00:00",
-   "tennis": "2026-11-27T13:06:06+00:00",
+   "tennis": "2026-11-27T13:14:14+00:00",
    "tennis_pmcombo": "2026-10-13T22:45:29+00:00"
   },
   "lane_skips": {
@@ -697,7 +697,7 @@
    }
   },
   "odds_api": {
-   "at": "2026-11-27T13:06:06+00:00",
+   "at": "2026-11-27T13:14:14+00:00",
    "remaining": 175,
    "used": 325
   },
@@ -718,7 +718,7 @@
     "start": "2026-09-28T22:15:10Z"
    }
   ],
-  "runs": 3058,
+  "runs": 3059,
   "tennis_shortlist": {
    "audit": [
     {
@@ -730,7 +730,7 @@
    "daily_limit": 3,
    "day": "2026-11-02"
   },
-  "updated": "2026-11-27T13:06:58+00:00"
+  "updated": "2026-11-27T13:15:04+00:00"
  },
  "quotes": [
   {
@@ -246796,40 +246796,6 @@
    "venue_start": null
   },
   {
-   "bet": false,
-   "date": "2026-11-20",
-   "edge": -0.005,
-   "id": "polymarket_us:aec-itfwo-sarbal-diasim-2026-11-20",
-   "label": "Sara Victoria Balan vs Diana-Ioana Simionescu",
-   "liquidity": null,
-   "logged": "2026-11-20T02:46:00+00:00",
-   "market_id": "aec-itfwo-sarbal-diasim-2026-11-20",
-   "pick": null,
-   "pnl": 0.0,
-   "price": null,
-   "price_a": 0.17,
-   "price_b": 0.84,
-   "price_draw": null,
-   "prob_a": 0.165,
-   "result": "b",
-   "settled": "2026-11-20T13:12:38+00:00",
-   "side_a": "Sara Victoria Balan",
-   "side_b": "Diana-Ioana Simionescu",
-   "source": "polymarket_us",
-   "sport": "tennis",
-   "spread": 0.01,
-   "stake": 0.0,
-   "start": "2026-11-20T08:00:00+00:00",
-   "start_source": null,
-   "status": "graded",
-   "tier": "itfwo",
-   "uncovered": null,
-   "untraded": false,
-   "url": "https://polymarket.us/event/itfwo-sarbal-diasim-2026-11-20",
-   "venue": "polymarket_us",
-   "venue_start": null
-  },
-  {
    "bet": true,
    "close_at": "2026-11-21T19:40:17+00:00",
    "close_price": 0.58,
@@ -247086,40 +247052,6 @@
    "untraded": false,
    "url": "https://kalshi.com/markets/kxaaagascdca",
    "venue": "kalshi_binary",
-   "venue_start": null
-  },
-  {
-   "bet": false,
-   "date": "2026-11-20",
-   "edge": -0.005,
-   "id": "polymarket_us:aec-itfwo-giupop-ralser-2026-11-20",
-   "label": "Giulia Safina Popa vs Raluca Georgiana Serban",
-   "liquidity": null,
-   "logged": "2026-11-20T05:34:16+00:00",
-   "market_id": "aec-itfwo-giupop-ralser-2026-11-20",
-   "pick": null,
-   "pnl": 0.0,
-   "price": null,
-   "price_a": 0.4,
-   "price_b": 0.61,
-   "price_draw": null,
-   "prob_a": 0.395,
-   "result": "a",
-   "settled": "2026-11-20T13:12:39+00:00",
-   "side_a": "Giulia Safina Popa",
-   "side_b": "Raluca Georgiana Serban",
-   "source": "polymarket_us",
-   "sport": "tennis",
-   "spread": 0.01,
-   "stake": 0.0,
-   "start": "2026-11-20T09:00:00+00:00",
-   "start_source": null,
-   "status": "graded",
-   "tier": "itfwo",
-   "uncovered": null,
-   "untraded": false,
-   "url": "https://polymarket.us/event/itfwo-giupop-ralser-2026-11-20",
-   "venue": "polymarket_us",
    "venue_start": null
   },
   {
@@ -388156,8 +388088,8 @@
   },
   {
    "bet": true,
-   "close_at": "2026-11-27T13:06:06+00:00",
-   "close_price": 0.53,
+   "close_at": "2026-11-27T13:14:14+00:00",
+   "close_price": 0.54,
    "date": "2026-11-28",
    "edge": null,
    "espn_away": "Athletic Club",
@@ -423237,7 +423169,7 @@
   },
   {
    "bet": true,
-   "close_at": "2026-11-27T13:06:06+00:00",
+   "close_at": "2026-11-27T13:14:14+00:00",
    "close_price": 0.56,
    "date": "2026-11-29",
    "edge": null,
@@ -434971,7 +434903,7 @@
   },
   {
    "bet": true,
-   "close_at": "2026-11-27T13:06:06+00:00",
+   "close_at": "2026-11-27T13:14:14+00:00",
    "close_price": 0.81,
    "date": "2026-11-28",
    "edge": null,
@@ -465170,7 +465102,7 @@
   },
   {
    "bet": true,
-   "close_at": "2026-11-27T13:06:06+00:00",
+   "close_at": "2026-11-27T13:14:14+00:00",
    "close_price": 0.47,
    "date": "2026-11-30",
    "edge": null,
@@ -472137,8 +472069,8 @@
    "price_b": 0.56,
    "price_draw": null,
    "prob_a": 0.445,
-   "result": null,
-   "settled": null,
+   "result": "a",
+   "settled": "2026-11-27T13:14:52+00:00",
    "side_a": "Agafonov E / Binda A",
    "side_b": "Bianchi J J / Sheehy J",
    "source": "polymarket_us",
@@ -472147,7 +472079,7 @@
    "stake": 0.0,
    "start": "2026-11-27T10:20:00+00:00",
    "start_source": null,
-   "status": "open",
+   "status": "graded",
    "tier": "atpdb",
    "uncovered": null,
    "untraded": false,
@@ -479241,6 +479173,360 @@
    "url": "https://polymarket.us/event/itfwo-marcanlucala-pierivmarsou-2026-11-27",
    "venue": "polymarket_us",
    "venue_start": null
+  },
+  {
+   "bet": false,
+   "date": "2026-11-28",
+   "edge": -0.05,
+   "espn_away": "Genclerbirligi",
+   "espn_home": "Samsunspor",
+   "event": "KXSUPERLIGTOTAL-26NOV28SAMGEN",
+   "id": "goals_market:KXSUPERLIGTOTAL-26NOV28SAMGEN-2",
+   "kalshi_title": "Over 1.5 goals scored",
+   "label": "Samsunspor v Genclerbirligi: over 1.5 goals",
+   "league": "Turkish Super Lig",
+   "liquidity": null,
+   "logged": "2026-11-27T13:14:13+00:00",
+   "market_id": "KXSUPERLIGTOTAL-26NOV28SAMGEN-2",
+   "pick": null,
+   "pnl": 0.0,
+   "price": null,
+   "price_a": 0.77,
+   "price_b": 0.33,
+   "price_draw": null,
+   "prob_a": 0.72,
+   "result": null,
+   "settled": null,
+   "side_a": "Yes",
+   "side_b": "No",
+   "source": "goals_market",
+   "sport": "soccer_o15",
+   "spread": null,
+   "stake": 0.0,
+   "start": "2026-11-28T13:00:00+00:00",
+   "start_source": "espn",
+   "status": "open",
+   "uncovered": null,
+   "untraded": false,
+   "url": "https://kalshi.com/markets/kxsuperligtotal",
+   "venue": "kalshi_binary",
+   "venue_start": null
+  },
+  {
+   "bet": false,
+   "date": "2026-11-28",
+   "edge": -0.025,
+   "espn_away": "Genclerbirligi",
+   "espn_home": "Samsunspor",
+   "event": "KXSUPERLIGTOTAL-26NOV28SAMGEN",
+   "id": "goals_market:KXSUPERLIGTOTAL-26NOV28SAMGEN-3",
+   "kalshi_title": "Over 2.5 goals scored",
+   "label": "Samsunspor v Genclerbirligi: over 2.5 goals",
+   "league": "Turkish Super Lig",
+   "liquidity": null,
+   "logged": "2026-11-27T13:14:13+00:00",
+   "market_id": "KXSUPERLIGTOTAL-26NOV28SAMGEN-3",
+   "pick": null,
+   "pnl": 0.0,
+   "price": null,
+   "price_a": 0.53,
+   "price_b": 0.52,
+   "price_draw": null,
+   "prob_a": 0.505,
+   "result": null,
+   "settled": null,
+   "side_a": "Yes",
+   "side_b": "No",
+   "source": "goals_market",
+   "sport": "soccer_o25",
+   "spread": null,
+   "stake": 0.0,
+   "start": "2026-11-28T13:00:00+00:00",
+   "start_source": "espn",
+   "status": "open",
+   "uncovered": null,
+   "untraded": false,
+   "url": "https://kalshi.com/markets/kxsuperligtotal",
+   "venue": "kalshi_binary",
+   "venue_start": null
+  },
+  {
+   "bet": false,
+   "date": "2026-11-28",
+   "edge": -0.045,
+   "espn_away": "Genclerbirligi",
+   "espn_home": "Samsunspor",
+   "event": "KXSUPERLIGTOTAL-26NOV28SAMGEN",
+   "id": "goals_market:KXSUPERLIGTOTAL-26NOV28SAMGEN-4",
+   "kalshi_title": "Over 3.5 goals scored",
+   "label": "Samsunspor v Genclerbirligi: over 3.5 goals",
+   "league": "Turkish Super Lig",
+   "liquidity": null,
+   "logged": "2026-11-27T13:14:13+00:00",
+   "market_id": "KXSUPERLIGTOTAL-26NOV28SAMGEN-4",
+   "pick": null,
+   "pnl": 0.0,
+   "price": null,
+   "price_a": 0.33,
+   "price_b": 0.76,
+   "price_draw": null,
+   "prob_a": 0.285,
+   "result": null,
+   "settled": null,
+   "side_a": "Yes",
+   "side_b": "No",
+   "source": "goals_market",
+   "sport": "soccer_u35",
+   "spread": null,
+   "stake": 0.0,
+   "start": "2026-11-28T13:00:00+00:00",
+   "start_source": "espn",
+   "status": "open",
+   "uncovered": null,
+   "untraded": false,
+   "url": "https://kalshi.com/markets/kxsuperligtotal",
+   "venue": "kalshi_binary",
+   "venue_start": null
+  },
+  {
+   "bet": false,
+   "date": "2026-11-28",
+   "edge": -0.03,
+   "espn_away": "Grenoble",
+   "espn_home": "Nimes",
+   "event": "KXCOUPEDEFRANCEGAME-26NOV28NIMGRE",
+   "id": "goals_market:KXCOUPEDEFRANCEGAME-26NOV28NIMGRE-GRE",
+   "kalshi_title": "Grenoble",
+   "label": "Nimes v Grenoble: Grenoble to win (No = Nimes +0.5)",
+   "league": "Coupe de France",
+   "liquidity": null,
+   "logged": "2026-11-27T13:14:13+00:00",
+   "market_id": "KXCOUPEDEFRANCEGAME-26NOV28NIMGRE-GRE",
+   "opponent": "Grenoble",
+   "pick": null,
+   "pnl": 0.0,
+   "price": null,
+   "price_a": 0.46,
+   "price_b": 0.6,
+   "price_draw": null,
+   "prob_a": 0.43,
+   "result": null,
+   "settled": null,
+   "side_a": "Yes",
+   "side_b": "No",
+   "source": "goals_market",
+   "sport": "soccer_p05_cup",
+   "spread": null,
+   "stake": 0.0,
+   "start": "2026-11-28T17:00:00+00:00",
+   "start_source": "espn",
+   "status": "open",
+   "team": "Nimes",
+   "uncovered": null,
+   "untraded": false,
+   "url": "https://kalshi.com/markets/kxcoupedefrancegame",
+   "venue": "kalshi_binary",
+   "venue_start": null
+  },
+  {
+   "bet": false,
+   "date": "2026-11-27",
+   "edge": -0.005,
+   "id": "polymarket_us:aec-utr-bragio-linlor-2026-11-24",
+   "label": "Branchetti, Giovanni vs Lingua Lavallen, Alejo Lorenzo",
+   "liquidity": null,
+   "logged": "2026-11-27T13:14:13+00:00",
+   "market_id": "aec-utr-bragio-linlor-2026-11-24",
+   "pick": null,
+   "pnl": 0.0,
+   "price": null,
+   "price_a": 0.19,
+   "price_b": 0.82,
+   "price_draw": null,
+   "prob_a": 0.185,
+   "result": null,
+   "settled": null,
+   "side_a": "Branchetti, Giovanni",
+   "side_b": "Lingua Lavallen, Alejo Lorenzo",
+   "source": "polymarket_us",
+   "sport": "tennis",
+   "spread": 0.01,
+   "stake": 0.0,
+   "start": "2026-11-27T17:10:00+00:00",
+   "start_source": null,
+   "status": "open",
+   "tier": "utr",
+   "uncovered": null,
+   "untraded": false,
+   "url": "https://polymarket.us/event/utr-bragio-linlor-2026-11-24",
+   "venue": "polymarket_us",
+   "venue_start": null
+  },
+  {
+   "bet": false,
+   "date": "2026-11-27",
+   "edge": -0.005,
+   "id": "polymarket_us:aec-utr-desfra-mentad-2026-11-24",
+   "label": "Descotte, Matias Franco vs Meneo, Tadeo",
+   "liquidity": null,
+   "logged": "2026-11-27T13:14:13+00:00",
+   "market_id": "aec-utr-desfra-mentad-2026-11-24",
+   "pick": null,
+   "pnl": 0.0,
+   "price": null,
+   "price_a": 0.84,
+   "price_b": 0.17,
+   "price_draw": null,
+   "prob_a": 0.835,
+   "result": null,
+   "settled": null,
+   "side_a": "Descotte, Matias Franco",
+   "side_b": "Meneo, Tadeo",
+   "source": "polymarket_us",
+   "sport": "tennis",
+   "spread": 0.01,
+   "stake": 0.0,
+   "start": "2026-11-27T17:10:00+00:00",
+   "start_source": null,
+   "status": "open",
+   "tier": "utr",
+   "uncovered": null,
+   "untraded": false,
+   "url": "https://polymarket.us/event/utr-desfra-mentad-2026-11-24",
+   "venue": "polymarket_us",
+   "venue_start": null
+  },
+  {
+   "bet": false,
+   "date": "2026-11-28",
+   "edge": 0.0,
+   "id": "cmd_market:KXAAAGASCDOH-26NOV28-MC",
+   "label": "Will gas prices show a minimal change?",
+   "liquidity": null,
+   "logged": "2026-11-27T13:14:14+00:00",
+   "market_id": "KXAAAGASCDOH-26NOV28-MC",
+   "pick": null,
+   "pnl": 0.0,
+   "price": null,
+   "price_a": 0.07,
+   "price_b": 0.98,
+   "price_draw": null,
+   "prob_a": 0.07,
+   "result": null,
+   "settled": null,
+   "side_a": "Minimal change",
+   "side_b": "No",
+   "source": "cmd_market",
+   "sport": "commodities",
+   "spread": null,
+   "stake": 0.0,
+   "start": "2026-11-28T15:00:00+00:00",
+   "start_source": null,
+   "status": "open",
+   "uncovered": null,
+   "untraded": false,
+   "url": "https://kalshi.com/markets/kxaaagascdoh",
+   "venue": "kalshi_binary",
+   "venue_start": null
+  },
+  {
+   "bet": false,
+   "date": "2026-11-28",
+   "edge": 0.0,
+   "id": "cmd_market:KXAAAGASCDMO-26NOV28-MC",
+   "label": "Will gas prices show a minimal change?",
+   "liquidity": null,
+   "logged": "2026-11-27T13:14:14+00:00",
+   "market_id": "KXAAAGASCDMO-26NOV28-MC",
+   "pick": null,
+   "pnl": 0.0,
+   "price": null,
+   "price_a": 0.11,
+   "price_b": 0.98,
+   "price_draw": null,
+   "prob_a": 0.11,
+   "result": null,
+   "settled": null,
+   "side_a": "Minimal change",
+   "side_b": "No",
+   "source": "cmd_market",
+   "sport": "commodities",
+   "spread": null,
+   "stake": 0.0,
+   "start": "2026-11-28T15:00:00+00:00",
+   "start_source": null,
+   "status": "open",
+   "uncovered": null,
+   "untraded": false,
+   "url": "https://kalshi.com/markets/kxaaagascdmo",
+   "venue": "kalshi_binary",
+   "venue_start": null
+  },
+  {
+   "bet": false,
+   "date": "2026-11-28",
+   "edge": 0.0,
+   "id": "cmd_market:KXAAAGASCDWY-26NOV28-MC",
+   "label": "Will gas prices show a minimal change?",
+   "liquidity": null,
+   "logged": "2026-11-27T13:14:14+00:00",
+   "market_id": "KXAAAGASCDWY-26NOV28-MC",
+   "pick": null,
+   "pnl": 0.0,
+   "price": null,
+   "price_a": 0.11,
+   "price_b": 0.99,
+   "price_draw": null,
+   "prob_a": 0.11,
+   "result": null,
+   "settled": null,
+   "side_a": "Minimal change",
+   "side_b": "No",
+   "source": "cmd_market",
+   "sport": "commodities",
+   "spread": null,
+   "stake": 0.0,
+   "start": "2026-11-28T15:00:00+00:00",
+   "start_source": null,
+   "status": "open",
+   "uncovered": null,
+   "untraded": false,
+   "url": "https://kalshi.com/markets/kxaaagascdwy",
+   "venue": "kalshi_binary",
+   "venue_start": null
+  },
+  {
+   "bet": false,
+   "date": "2026-11-28",
+   "edge": 0.0,
+   "id": "cmd_market:KXAAAGASCDWY-26NOV28-LD",
+   "label": "Will gas prices show a large decrease?",
+   "liquidity": null,
+   "logged": "2026-11-27T13:14:14+00:00",
+   "market_id": "KXAAAGASCDWY-26NOV28-LD",
+   "pick": null,
+   "pnl": 0.0,
+   "price": null,
+   "price_a": 0.94,
+   "price_b": 0.16,
+   "price_draw": null,
+   "prob_a": 0.94,
+   "result": null,
+   "settled": null,
+   "side_a": "Large decrease",
+   "side_b": "No",
+   "source": "cmd_market",
+   "sport": "commodities",
+   "spread": null,
+   "stake": 0.0,
+   "start": "2026-11-28T15:00:00+00:00",
+   "start_source": null,
+   "status": "open",
+   "uncovered": null,
+   "untraded": false,
+   "url": "https://kalshi.com/markets/kxaaagascdwy",
+   "venue": "kalshi_binary",
+   "venue_start": null
   }
  ],
  "retired": {
@@ -479616,10 +479902,10 @@
   },
   "polymarket_us": {
    "bets": 0,
-   "brier_n": 20494,
-   "brier_sum": 3818.611363779856,
+   "brier_n": 20496,
+   "brier_sum": 3819.004613779856,
    "pnl": 0.0,
-   "quotes": 21010,
+   "quotes": 21012,
    "settled": 0,
    "staked": 0.0,
    "won": 0
