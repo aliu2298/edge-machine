@@ -114,11 +114,24 @@
       "read_at": "2026-11-26T19:34:22+00:00",
       "reason": "no S&P rung in the 90-98c, 3c-spread, 25-contract rule at that minute",
       "status": "no_combo"
+    },
+    {
+      "crypto": {
+        "ask": 0.8,
+        "gap_min": 0.8,
+        "label": "Ripple price at Nov 27, 2026 at 5pm EST?",
+        "logged": "2026-11-27T19:33:20+00:00",
+        "ticker": "KXXRPD-26NOV2717-T0.9599"
+      },
+      "day": "2026-11-27",
+      "read_at": "2026-11-27T19:34:06+00:00",
+      "reason": "no S&P rung in the 90-98c, 3c-spread, 25-contract rule at that minute",
+      "status": "no_combo"
     }
   ],
   "error": null,
   "key": "combo_crypto_sp_no",
-  "last_run": "2026-11-27T19:25:17+00:00",
+  "last_run": "2026-11-27T19:34:06+00:00",
   "registered": "2026-11-21",
   "version": "combo-v1"
 }
