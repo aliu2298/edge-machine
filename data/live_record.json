@@ -1,5 +1,5 @@
 {
- "generated": "2026-11-27T03:07Z",
+ "generated": "2026-11-27T04:07Z",
  "lane_note": "own-state lanes: each entry as a trade after fees (the lane's own fill, the sells it logged, the unsold remainder at the market's settled result); a bet is flat when exited at cost (within +-2% before or after fees), won above +2% after fees, else lost. Entries with a tip before 2026-11-06 18:07Z are reconstructed from the exchange order list; later ones use the sell fills the follower logged",
  "lanes": {
   "arg_dip": [],
@@ -7064,9 +7064,19 @@
      "side": "yes",
      "st": "won",
      "w": 1.01
+    },
+    {
+     "id": "econ_nc_yes:KXAAAGASD-26NOV27-3.5450",
+     "ko": "2026-11-27T04:59",
+     "r": null,
+     "side": "yes",
+     "st": "open",
+     "w": 0.98
     }
    ],
-   "refused": {}
+   "refused": {
+    "econ_nc_yes:KXDIESELD-26NOV27-T5.700": "price outside the band at the follower's read"
+   }
   },
   "ere_o15|soccer_o15": {
    "entered": "2026-11-22T19:19:22+00:00",
@@ -7331,6 +7341,14 @@
      "side": "no",
      "st": "lost",
      "w": 15.89
+    },
+    {
+     "id": "mls_fade_home:KXMLSGAME-26NOV28PORDAL-POR",
+     "ko": "2026-11-29T03:30",
+     "r": null,
+     "side": "no",
+     "st": "open",
+     "w": 16.17
     }
    ],
    "refused": {}
