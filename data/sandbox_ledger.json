@@ -33,10 +33,10 @@
    "kalshi_venue": 275
   },
   "economics": {
-   "kalshi_venue": 34
+   "kalshi_venue": 30
   },
   "finance": {
-   "kalshi_venue": 30
+   "kalshi_venue": 15
   },
   "mma": {
    "kalshi_venue": 0,
@@ -61,7 +61,7 @@
     "offered": 8,
     "picked": 1
    },
-   "kalshi_venue": 238,
+   "kalshi_venue": 218,
    "polymarket_us": 0,
    "polymarket_us_listed": 0,
    "polymarket_us_priced": 0
@@ -108,18 +108,18 @@
   },
   "soccer_ftts": {
    "ftts_lineup_lag": {
-    "offered": 96,
+    "offered": 80,
     "picked": 0
    },
    "ftts_market": {
-    "offered": 96,
-    "picked": 96
+    "offered": 80,
+    "picked": 80
    },
    "ftts_no_70_80": {
-    "offered": 96,
+    "offered": 80,
     "picked": 0
    },
-   "kalshi_venue": 96
+   "kalshi_venue": 80
   },
   "soccer_o05": {
    "kalshi_venue": 0,
@@ -201,7 +201,7 @@
    "kalshi_venue": 160,
    "mls_fade_home": {
     "offered": 16,
-    "picked": 1
+    "picked": 0
    }
   },
   "soccer_p05_cup": {
@@ -322,8 +322,8 @@
   "tennis": {
    "kalshi_venue": 0,
    "polymarket_us": 40,
-   "polymarket_us_listed": 170,
-   "polymarket_us_priced": 44
+   "polymarket_us_listed": 171,
+   "polymarket_us_priced": 41
   },
   "tennis_combo": {
    "combo": 0,
@@ -338,43 +338,43 @@
  "meta": {
   "created": "2026-09-10T04:42:15+00:00",
   "lane_reads": {
-   "boxing": "2026-11-27T23:46:16+00:00",
-   "commodities": "2026-11-27T23:46:16+00:00",
-   "commodities_fav": "2026-11-27T23:46:16+00:00",
-   "cricket": "2026-11-27T23:46:16+00:00",
-   "crypto": "2026-11-27T23:46:16+00:00",
-   "crypto_fav": "2026-11-27T23:46:16+00:00",
-   "economics": "2026-11-27T23:46:16+00:00",
-   "finance": "2026-11-27T23:46:16+00:00",
+   "boxing": "2026-11-27T23:52:34+00:00",
+   "commodities": "2026-11-27T23:52:34+00:00",
+   "commodities_fav": "2026-11-27T23:52:34+00:00",
+   "cricket": "2026-11-27T23:52:34+00:00",
+   "crypto": "2026-11-27T23:52:34+00:00",
+   "crypto_fav": "2026-11-27T23:52:34+00:00",
+   "economics": "2026-11-27T23:52:34+00:00",
+   "finance": "2026-11-27T23:52:34+00:00",
    "mma": "2026-11-21T20:10:14+00:00",
-   "nfl": "2026-11-27T23:46:16+00:00",
-   "nhl_pl": "2026-11-27T23:46:16+00:00",
-   "nhl_rest": "2026-11-27T23:46:16+00:00",
-   "soccer": "2026-11-27T23:46:16+00:00",
-   "soccer_btts": "2026-11-27T23:46:16+00:00",
-   "soccer_btts_cup": "2026-11-27T23:46:16+00:00",
+   "nfl": "2026-11-27T23:52:34+00:00",
+   "nhl_pl": "2026-11-27T23:52:34+00:00",
+   "nhl_rest": "2026-11-27T23:52:34+00:00",
+   "soccer": "2026-11-27T23:52:34+00:00",
+   "soccer_btts": "2026-11-27T23:52:34+00:00",
+   "soccer_btts_cup": "2026-11-27T23:52:34+00:00",
    "soccer_btts_intl": "2026-11-17T23:27:07+00:00",
-   "soccer_corners": "2026-11-27T23:46:16+00:00",
-   "soccer_ftts": "2026-11-27T23:46:16+00:00",
-   "soccer_o15": "2026-11-27T23:46:16+00:00",
-   "soccer_o15_cup": "2026-11-27T23:46:16+00:00",
+   "soccer_corners": "2026-11-27T23:52:34+00:00",
+   "soccer_ftts": "2026-11-27T23:52:34+00:00",
+   "soccer_o15": "2026-11-27T23:52:34+00:00",
+   "soccer_o15_cup": "2026-11-27T23:52:34+00:00",
    "soccer_o15_intl": "2026-11-17T23:27:07+00:00",
-   "soccer_o25": "2026-11-27T23:46:16+00:00",
-   "soccer_o25_cup": "2026-11-27T23:46:16+00:00",
+   "soccer_o25": "2026-11-27T23:52:34+00:00",
+   "soccer_o25_cup": "2026-11-27T23:52:34+00:00",
    "soccer_o25_intl": "2026-11-17T23:27:07+00:00",
-   "soccer_p05": "2026-11-27T23:46:16+00:00",
-   "soccer_p05_cup": "2026-11-27T23:46:16+00:00",
+   "soccer_p05": "2026-11-27T23:52:34+00:00",
+   "soccer_p05_cup": "2026-11-27T23:52:34+00:00",
    "soccer_p05_intl": "2026-11-17T23:27:07+00:00",
-   "soccer_team1": "2026-11-27T23:46:16+00:00",
+   "soccer_team1": "2026-11-27T23:52:34+00:00",
    "soccer_team1_cup": "2026-11-26T19:54:07+00:00",
    "soccer_team1_intl": "2026-11-17T19:33:51+00:00",
-   "soccer_team2": "2026-11-27T23:46:16+00:00",
+   "soccer_team2": "2026-11-27T23:52:34+00:00",
    "soccer_team2_cup": "2026-11-26T19:54:07+00:00",
    "soccer_team2_intl": "2026-11-17T19:33:51+00:00",
-   "soccer_u35": "2026-11-27T23:46:16+00:00",
-   "soccer_u35_cup": "2026-11-27T23:46:16+00:00",
+   "soccer_u35": "2026-11-27T23:52:34+00:00",
+   "soccer_u35_cup": "2026-11-27T23:52:34+00:00",
    "soccer_u35_intl": "2026-11-17T23:27:07+00:00",
-   "tennis": "2026-11-27T23:46:16+00:00",
+   "tennis": "2026-11-27T23:52:34+00:00",
    "tennis_pmcombo": "2026-10-13T22:45:29+00:00"
   },
   "lane_skips": {
@@ -711,7 +711,7 @@
    }
   },
   "odds_api": {
-   "at": "2026-11-27T23:46:16+00:00",
+   "at": "2026-11-27T23:52:34+00:00",
    "remaining": 175,
    "used": 325
   },
@@ -732,7 +732,7 @@
     "start": "2026-09-28T22:15:10Z"
    }
   ],
-  "runs": 3104,
+  "runs": 3105,
   "tennis_shortlist": {
    "audit": [
     {
@@ -744,7 +744,7 @@
    "daily_limit": 3,
    "day": "2026-11-02"
   },
-  "updated": "2026-11-27T23:46:46+00:00"
+  "updated": "2026-11-27T23:53:02+00:00"
  },
  "quotes": [
   {
@@ -225713,39 +225713,6 @@
   },
   {
    "bet": false,
-   "date": "2026-11-20",
-   "edge": -0.02,
-   "id": "polymarket_us:aec-boxing-laupri-mickot-2026-11-20",
-   "label": "Lauren Price vs Michaela Kotaskova",
-   "liquidity": null,
-   "logged": "2026-11-18T19:10:26+00:00",
-   "market_id": "aec-boxing-laupri-mickot-2026-11-20",
-   "pick": null,
-   "pnl": 0.0,
-   "price": null,
-   "price_a": 0.97,
-   "price_b": 0.07,
-   "price_draw": null,
-   "prob_a": 0.95,
-   "result": "a",
-   "settled": "2026-11-20T23:48:43+00:00",
-   "side_a": "Lauren Price",
-   "side_b": "Michaela Kotaskova",
-   "source": "polymarket_us",
-   "sport": "boxing",
-   "spread": 0.04,
-   "stake": 0.0,
-   "start": "2026-11-20T20:30:00+00:00",
-   "start_source": "pinnacle",
-   "status": "graded",
-   "uncovered": null,
-   "untraded": false,
-   "url": "https://polymarket.us/event/boxing-laupri-mickot-2026-11-20",
-   "venue": "polymarket_us",
-   "venue_start": "2026-11-20T19:00:00+00:00"
-  },
-  {
-   "bet": false,
    "date": "2026-11-22",
    "edge": -0.05,
    "espn_away": "Real Sociedad",
@@ -259913,40 +259880,6 @@
    "untraded": false,
    "url": "https://kalshi.com/markets/kxtacaportbtts",
    "venue": "kalshi_binary",
-   "venue_start": null
-  },
-  {
-   "bet": false,
-   "date": "2026-11-20",
-   "edge": -0.005,
-   "id": "polymarket_us:aec-wta-guimar-andgar-2026-11-20",
-   "label": "Guiomar Maristany vs Andrea Lazaro Garcia",
-   "liquidity": null,
-   "logged": "2026-11-20T18:11:29+00:00",
-   "market_id": "aec-wta-guimar-andgar-2026-11-20",
-   "pick": null,
-   "pnl": 0.0,
-   "price": null,
-   "price_a": 0.65,
-   "price_b": 0.36,
-   "price_draw": null,
-   "prob_a": 0.645,
-   "result": "a",
-   "settled": "2026-11-20T23:48:57+00:00",
-   "side_a": "Guiomar Maristany",
-   "side_b": "Andrea Lazaro Garcia",
-   "source": "polymarket_us",
-   "sport": "tennis",
-   "spread": 0.01,
-   "stake": 0.0,
-   "start": "2026-11-20T20:30:00+00:00",
-   "start_source": null,
-   "status": "graded",
-   "tier": "wta",
-   "uncovered": null,
-   "untraded": false,
-   "url": "https://polymarket.us/event/wta-guimar-andgar-2026-11-20",
-   "venue": "polymarket_us",
    "venue_start": null
   },
   {
@@ -375744,7 +375677,7 @@
   },
   {
    "bet": true,
-   "close_at": "2026-11-27T23:46:16+00:00",
+   "close_at": "2026-11-27T23:52:34+00:00",
    "close_price": 0.54,
    "date": "2026-11-28",
    "edge": null,
@@ -410825,7 +410758,7 @@
   },
   {
    "bet": true,
-   "close_at": "2026-11-27T23:46:16+00:00",
+   "close_at": "2026-11-27T23:52:34+00:00",
    "close_price": 0.56,
    "date": "2026-11-29",
    "edge": null,
@@ -422559,7 +422492,7 @@
   },
   {
    "bet": true,
-   "close_at": "2026-11-27T23:46:16+00:00",
+   "close_at": "2026-11-27T23:52:34+00:00",
    "close_price": 0.8,
    "date": "2026-11-28",
    "edge": null,
@@ -452759,7 +452692,7 @@
   },
   {
    "bet": true,
-   "close_at": "2026-11-27T23:46:16+00:00",
+   "close_at": "2026-11-27T23:52:34+00:00",
    "close_price": 0.47,
    "date": "2026-11-30",
    "edge": null,
@@ -468530,7 +468463,7 @@
   },
   {
    "bet": true,
-   "close_at": "2026-11-27T23:46:16+00:00",
+   "close_at": "2026-11-27T23:52:34+00:00",
    "close_price": 0.64,
    "date": "2026-11-28",
    "edge": null,
@@ -473091,7 +473024,7 @@
   },
   {
    "bet": true,
-   "close_at": "2026-11-27T23:46:16+00:00",
+   "close_at": "2026-11-27T23:52:34+00:00",
    "close_price": 0.62,
    "date": "2026-12-01",
    "edge": null,
@@ -477028,7 +476961,7 @@
   },
   {
    "bet": true,
-   "close_at": "2026-11-27T23:46:16+00:00",
+   "close_at": "2026-11-27T23:52:34+00:00",
    "close_price": 0.24,
    "date": "2026-11-28",
    "edge": null,
@@ -477149,7 +477082,7 @@
   },
   {
    "bet": true,
-   "close_at": "2026-11-27T23:46:16+00:00",
+   "close_at": "2026-11-27T23:52:34+00:00",
    "close_price": 0.1,
    "date": "2026-11-28",
    "edge": null,
@@ -479735,6 +479668,39 @@
    "url": "https://kalshi.com/markets/kxmlsftts",
    "venue": "kalshi_binary",
    "venue_start": null
+  },
+  {
+   "bet": false,
+   "date": "2026-11-28",
+   "edge": -0.015,
+   "id": "polymarket_us:aec-atp-edurib-juaser-2026-11-28",
+   "label": "Eduardo Ribeiro vs Juan Manuel La Serna",
+   "liquidity": null,
+   "logged": "2026-11-27T23:52:33+00:00",
+   "market_id": "aec-atp-edurib-juaser-2026-11-28",
+   "pick": null,
+   "pnl": 0.0,
+   "price": null,
+   "price_a": 0.5,
+   "price_b": 0.53,
+   "price_draw": null,
+   "prob_a": 0.485,
+   "result": null,
+   "settled": null,
+   "side_a": "Eduardo Ribeiro",
+   "side_b": "Juan Manuel La Serna",
+   "source": "polymarket_us",
+   "sport": "tennis",
+   "spread": 0.03,
+   "stake": 0.0,
+   "start": "2026-11-28T15:10:00+00:00",
+   "start_source": null,
+   "status": "open",
+   "uncovered": null,
+   "untraded": false,
+   "url": "https://polymarket.us/event/atp-edurib-juaser-2026-11-28",
+   "venue": "polymarket_us",
+   "venue_start": null
   }
  ],
  "retired": {
@@ -480110,10 +480076,10 @@
   },
   "polymarket_us": {
    "bets": 0,
-   "brier_n": 20642,
-   "brier_sum": 3843.6831637798555,
+   "brier_n": 20644,
+   "brier_sum": 3843.8116887798556,
    "pnl": 0.0,
-   "quotes": 21165,
+   "quotes": 21167,
    "settled": 0,
    "staked": 0.0,
    "won": 0
