@@ -1,6 +1,6 @@
 {
  "error": null,
- "last_run": "2026-11-27T23:00:28.813814+00:00",
+ "last_run": "2026-11-27T23:30:28.795833+00:00",
  "rules": {
   "R1": {
    "picks": [
@@ -5902,16 +5902,33 @@
      "ticker": "KXNBATEAMTOTAL-26NOV25SASPOR-SAS115",
      "title": "San Antonio over 114.5 points",
      "why": "SA O-D- v POR O-D- \u00b7 both D\u2212 \u00b7 115+ NO 0.50"
+    },
+    {
+     "game": "401909330",
+     "id": "R7:KXNBATEAMTOTAL-26NOV27ATLBOS-ATL110",
+     "labels": {
+      "away": "O+D-",
+      "away_h1": "O-D-",
+      "home": "O-D-",
+      "home_h1": "O-D-"
+     },
+     "logged": "2026-11-27T23:30:28.795833+00:00",
+     "match": "ATL @ BOS",
+     "price": 0.57,
+     "rule": "R7",
+     "side": "no",
+     "start": "2026-11-28T01:00Z",
+     "status": "open",
+     "strike": 109.5,
+     "team": "ATL",
+     "ticker": "KXNBATEAMTOTAL-26NOV27ATLBOS-ATL110",
+     "title": "Atlanta over 109.5 points",
+     "why": "ATL O+D- v BOS O-D- \u00b7 both D\u2212 \u00b7 110+ NO 0.57"
     }
    ]
   }
  },
  "runs": [
-  {
-   "at": "2026-11-22T22:30:24.290144+00:00",
-   "due": 4,
-   "new": 0
-  },
   {
    "at": "2026-11-22T23:00:28.020465+00:00",
    "due": 3,
@@ -6161,6 +6178,11 @@
    "at": "2026-11-27T23:00:28.813814+00:00",
    "due": 4,
    "new": 0
+  },
+  {
+   "at": "2026-11-27T23:30:28.795833+00:00",
+   "due": 5,
+   "new": 1
   }
  ],
  "version": "nba-rules-v1"
