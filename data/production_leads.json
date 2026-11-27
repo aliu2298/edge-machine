@@ -1,5 +1,5 @@
 {
- "board_built_at": "2026-11-27T00:17:03+00:00",
+ "board_built_at": "2026-11-27T00:34:42+00:00",
  "corners_selections": {
   "kalshi:26NOV24RMAPSV": "2026-11-24|Real Madrid|PSV Eindhoven|10+ corners \u00b7 Corners total fade, Champions League",
   "kalshi:26NOV25SPOMUN": "2026-11-25|Sporting CP|Manchester United|7+ corners \u00b7 Corners total fade, Champions League",
@@ -111,41 +111,6 @@
    "sandbox_quote": "crypto_fav_band_below:KXETHD-26NOV2017-T1619.99",
    "source": "crypto_fav_band_below",
    "sport": "crypto_fav",
-   "status": "hit"
-  },
-  "2026-11-20|Orlando City SC|FC Cincinnati|FC Cincinnati +0.5 (Orlando City SC not to win) \u00b7 MLS: fade the home side priced 0.40-0.45": {
-   "away": "FC Cincinnati",
-   "bet": {
-    "kind": "win_no",
-    "team": "Orlando City SC"
-   },
-   "date": "2026-11-20",
-   "edge_at_log": null,
-   "first_seen": "2026-11-19",
-   "headline": "FC Cincinnati +0.5 (Orlando City SC not to win)",
-   "home": "Orlando City SC",
-   "id": "2026-11-20|Orlando City SC|FC Cincinnati|FC Cincinnati +0.5 (Orlando City SC not to win) \u00b7 MLS: fade the home side priced 0.40-0.45",
-   "kickoff": "2026-11-20T00:30Z",
-   "lane": "production",
-   "league": "MLS",
-   "match": "Orlando City SC v FC Cincinnati",
-   "pair": "mls_fade_home|soccer_p05",
-   "price_at_log": 0.61,
-   "published_at": "2026-11-20T02:47:04+00:00",
-   "published_late": false,
-   "published_min_before_kickoff": null,
-   "route": {
-    "claim": "FC Cincinnati +0.5 (Orlando City SC not to win)",
-    "event": "KXMLSGAME-26NOV19ORLCIN",
-    "market": "KXMLSGAME-26NOV19ORLCIN-ORL",
-    "outcome": "Orlando",
-    "outcome_side": "no",
-    "price_at_log": 0.61,
-    "venue": "kalshi"
-   },
-   "sandbox_quote": "mls_fade_home:KXMLSGAME-26NOV19ORLCIN-ORL",
-   "source": "mls_fade_home",
-   "sport": "soccer_p05",
    "status": "hit"
   },
   "2026-11-21|KXBTCD-26NOV2117-T60499.99|Below $60,500 at the close \u00b7 Crypto favourite band, below": {
@@ -968,7 +933,7 @@
    "kickoff": "2026-11-28T15:30Z",
    "lane": "production",
    "last_seen": "2026-11-27",
-   "last_seen_at": "2026-11-27T00:17:03+00:00",
+   "last_seen_at": "2026-11-27T00:34:42+00:00",
    "league": "Eredivisie",
    "match": "Excelsior v Telstar",
    "pair": "ere_o15|soccer_o15",
@@ -1005,7 +970,7 @@
    "kickoff": "2026-11-29T03:30Z",
    "lane": "production",
    "last_seen": "2026-11-27",
-   "last_seen_at": "2026-11-27T00:17:03+00:00",
+   "last_seen_at": "2026-11-27T00:34:42+00:00",
    "league": "MLS",
    "match": "Portland Timbers v FC Dallas",
    "pair": "mls_fade_home|soccer_p05",
@@ -1111,9 +1076,9 @@
    "ready_at": "2026-10-16T17:17:38+00:00",
    "route": "moved by hand on 2026-10-16",
    "routing": {
-    "leads": 4,
+    "leads": 3,
     "problem": null,
-    "routed": 4,
+    "routed": 3,
     "unlisted": 0,
     "unrouted": 0,
     "unverified": 0,
@@ -1269,5 +1234,5 @@
  "stage": "production",
  "unlisted_skipped": 0,
  "unverified_kickoff_skipped": 0,
- "updated_at": "2026-11-27T00:17:03+00:00"
+ "updated_at": "2026-11-27T00:34:42+00:00"
 }
