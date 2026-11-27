@@ -9,7 +9,7 @@
    0.97
   ]
  },
- "board_built_at": "2026-11-27T18:02:17+00:00",
+ "board_built_at": "2026-11-27T18:17:30+00:00",
  "collector_error": null,
  "collector_healthy": {
   "st_t1h": true,
@@ -342,6 +342,44 @@
    "source": "st_t1h",
    "sport": "soccer_team2",
    "status": "hit"
+  },
+  "2026-11-27|Brest|Paris FC|Brest to score 2+ \u00b7 T1 matches \u00b7 home team 2+ goals": {
+   "away": "Paris FC",
+   "bet": {
+    "kind": "team_gte",
+    "n": 2,
+    "team": "Brest"
+   },
+   "date": "2026-11-27",
+   "edge_at_log": null,
+   "first_seen": "2026-11-27",
+   "headline": "Brest to score 2+",
+   "home": "Brest",
+   "id": "2026-11-27|Brest|Paris FC|Brest to score 2+ \u00b7 T1 matches \u00b7 home team 2+ goals",
+   "kickoff": "2026-11-27T19:45Z",
+   "lane": "production",
+   "last_seen": "2026-11-27",
+   "last_seen_at": "2026-11-27T18:17:30+00:00",
+   "league": "Ligue 1",
+   "match": "Brest v Paris FC",
+   "pair": "st_t1h|soccer_team2",
+   "price_at_log": 0.32,
+   "published_at": "2026-11-27T18:17:30+00:00",
+   "published_late": false,
+   "published_min_before_kickoff": 87,
+   "route": {
+    "claim": "Brest to score 2+",
+    "event": "KXLIGUE1TEAMTOTAL-26NOV27STBPAR",
+    "market": "KXLIGUE1TEAMTOTAL-26NOV27STBPAR-STB2",
+    "outcome": "Stade Brest 29 over 1.5 goals",
+    "outcome_side": "yes",
+    "price_at_log": 0.32,
+    "venue": "kalshi"
+   },
+   "sandbox_quote": "st_t1h:KXLIGUE1TEAMTOTAL-26NOV27STBPAR-STB2",
+   "source": "st_t1h",
+   "sport": "soccer_team2",
+   "status": "pending"
   }
  },
  "pairs": {
@@ -352,9 +390,9 @@
    "ready_at": "2026-11-08T12:00:00+00:00",
    "route": "moved by hand on 2026-11-08",
    "routing": {
-    "leads": 6,
+    "leads": 7,
     "problem": null,
-    "routed": 6,
+    "routed": 7,
     "unlisted": 0,
     "unrouted": 0,
     "unverified": 0,
@@ -366,7 +404,7 @@
    "sandbox_roi_fee": 0.2796,
    "timing": {
     "late": [],
-    "timed": 0,
+    "timed": 1,
     "under_target": 0
    }
   },
@@ -400,5 +438,5 @@
  "stage": "production",
  "unlisted_skipped": 0,
  "unverified_kickoff_skipped": 0,
- "updated_at": "2026-11-27T18:02:17+00:00"
+ "updated_at": "2026-11-27T18:17:30+00:00"
 }
