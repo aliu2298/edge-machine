@@ -1,6 +1,6 @@
 {
  "error": null,
- "last_run": "2026-11-27T18:02:01.037650+00:00",
+ "last_run": "2026-11-27T18:17:02.458232+00:00",
  "rules": {
   "A1": {
    "picks": [
@@ -2755,6 +2755,29 @@
      "ticker": "KXLIGUE1TOTAL-26NOV21NICPSG-3",
      "title": "Will over 2.5 goals be scored?",
      "why": "Nice O+D- v Paris Saint-Germain O+D- \u00b7 Over 2.5 YES 0.72"
+    },
+    {
+     "ask": 0.51,
+     "bid": 0.5,
+     "event": "KXLIGUE1TOTAL-26NOV27STBPAR",
+     "group": "B",
+     "id": "B6:KXLIGUE1TOTAL-26NOV27STBPAR",
+     "labels": {
+      "away": "O+D-",
+      "home": "O+D-"
+     },
+     "league": "Ligue 1",
+     "line": 2.5,
+     "logged": "2026-11-27T18:17:02.458232+00:00",
+     "match": "Brest v Paris FC",
+     "price": 0.51,
+     "rule": "B6",
+     "side": "yes",
+     "start": "2026-11-27T19:45Z",
+     "status": "open",
+     "ticker": "KXLIGUE1TOTAL-26NOV27STBPAR-3",
+     "title": "Will over 2.5 goals be scored?",
+     "why": "Brest O+D- v Paris FC O+D- \u00b7 Over 2.5 YES 0.51"
     }
    ]
   },
@@ -5769,14 +5792,6 @@
  },
  "runs": [
   {
-   "at": "2026-11-24T18:01:43.349031+00:00",
-   "candidates": 0,
-   "due": 0,
-   "labelled": 0,
-   "matched": 0,
-   "new": 0
-  },
-  {
    "at": "2026-11-24T18:16:59.361361+00:00",
    "candidates": 0,
    "due": 1,
@@ -6175,6 +6190,14 @@
    "labelled": 2,
    "matched": 0,
    "new": 0
+  },
+  {
+   "at": "2026-11-27T18:17:02.458232+00:00",
+   "candidates": 1,
+   "due": 4,
+   "labelled": 4,
+   "matched": 1,
+   "new": 1
   }
  ],
  "version": "soccer-rules-v1"
