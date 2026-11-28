@@ -1801,6 +1801,10 @@
    "mirror": "entered",
    "pool": "entered"
   },
+  "[\"sandbox\", \"team2_ranked\", [\"team2_ranked:KXEPLTEAMTOTAL-26NOV28LEECOV-LEE2\", \"a\"]]": {
+   "at": "2026-11-28T03:34:30.138770+00:00",
+   "pool": "entered"
+  },
   "[\"sandbox\", \"team2_ranked\", [\"team2_ranked:KXLALIGATEAMTOTAL-26NOV06SEVALA-SEV2\", \"a\"]]": {
    "at": "2026-11-05T21:49:22.360613+00:00",
    "pool": "entered"
@@ -7351,7 +7355,7 @@
  ],
  "first_run": "2026-11-05T03:09:04.962721+00:00",
  "lane": "superpack",
- "last_run": "2026-11-28T03:12:22.056170+00:00",
+ "last_run": "2026-11-28T03:34:30.138770+00:00",
  "mirror": [
   {
    "contract": "KXAAAGASD-26NOV06-4.0700",
@@ -21563,14 +21567,14 @@
    ],
    "pid": "[\"sandbox\", \"mls_fade_home\", [\"mls_fade_home:KXMLSGAME-26NOV27CLBMIA-CLB\", \"b\"]]",
    "price": 0.6,
-   "profit": null,
+   "profit": -1.0,
    "scope": "soccer_p05",
-   "settled": null,
+   "settled": "2026-11-28T03:34:26+00:00",
    "side": "b",
    "snapshot": null,
    "sport": "Soccer",
    "src": "sandbox",
-   "status": "open"
+   "status": "lost"
   },
   {
    "contract": "KXDFBPOKALTOTAL-26DEC01HOKKOE-4",
@@ -21711,6 +21715,29 @@
    "scope": "soccer_o15",
    "settled": null,
    "side": "b",
+   "snapshot": null,
+   "sport": "Soccer",
+   "src": "sandbox",
+   "status": "open"
+  },
+  {
+   "contract": "KXEPLTEAMTOTAL-26NOV28LEECOV-LEE2",
+   "entered_at": "2026-11-28T03:34:30.138770+00:00",
+   "entities": [
+    "Leeds United"
+   ],
+   "id": "superpack:[\"sandbox\", \"team2_ranked\", [\"team2_ranked:KXEPLTEAMTOTAL-26NOV28LEECOV-LEE2\", \"a\"]]",
+   "lane": "team2_ranked",
+   "logged": "2026-11-28T03:34:09+00:00",
+   "matched": [
+    "Leeds United"
+   ],
+   "pid": "[\"sandbox\", \"team2_ranked\", [\"team2_ranked:KXEPLTEAMTOTAL-26NOV28LEECOV-LEE2\", \"a\"]]",
+   "price": 0.62,
+   "profit": null,
+   "scope": "soccer_team2",
+   "settled": null,
+   "side": "a",
    "snapshot": null,
    "sport": "Soccer",
    "src": "sandbox",
