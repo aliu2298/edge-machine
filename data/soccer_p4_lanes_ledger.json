@@ -1,6 +1,6 @@
 {
  "error": null,
- "last_run": "2026-11-28T05:00:32.519967+00:00",
+ "last_run": "2026-11-28T06:00:33.592313+00:00",
  "matches": [
   {
    "day": "2026-11-19",
@@ -3909,6 +3909,50 @@
    "logged": "2026-11-28T04:00:38.524917+00:00",
    "timed": 1,
    "title": "Columbus Crew v Inter Miami CF",
+   "version": "soccerp4-v1"
+  },
+  {
+   "day": "2026-11-27",
+   "entries": [
+    {
+     "ask": 0.59,
+     "bid": 0.58,
+     "kind": "GAME",
+     "maker": {
+      "cost": 0.59,
+      "filled": false,
+      "roi": null
+     },
+     "mom": "pre",
+     "name": "Vancouver",
+     "score": "0-0",
+     "side": "no",
+     "taker": {
+      "cost": 0.61,
+      "depth": 715.99,
+      "filled": true,
+      "roi": -1.0
+     },
+     "team": "away",
+     "ticker": "KXMLSGAME-26NOV27RSLVAN-VAN",
+     "ts": 1795831200,
+     "v2": true,
+     "won": false
+    }
+   ],
+   "espn_id": "401933725",
+   "event": "KXMLSGAME-26NOV27RSLVAN",
+   "goals": 1,
+   "ht": null,
+   "ko": 1795834800,
+   "labels": {
+    "away": "O+D-",
+    "home": "O-D-"
+   },
+   "league": "MLS",
+   "logged": "2026-11-28T06:00:33.592313+00:00",
+   "timed": 0,
+   "title": "Real Salt Lake v Vancouver Whitecaps",
    "version": "soccerp4-v1"
   }
  ],
