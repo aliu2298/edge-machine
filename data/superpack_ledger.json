@@ -1711,6 +1711,10 @@
    "at": "2026-11-21T13:04:07.484927+00:00",
    "pool": "entered"
   },
+  "[\"sandbox\", \"liga_u15_dog_24h\", [\"liga_u15_dog_24h:KXLALIGATOTAL-26NOV28ELCATM-2\", \"b\"]]": {
+   "at": "2026-11-28T16:34:07.839903+00:00",
+   "pool": "entered"
+  },
   "[\"sandbox\", \"liga_u15_dog_24h\", [\"liga_u15_dog_24h:KXLALIGATOTAL-26NOV28RMAALA-2\", \"b\"]]": {
    "at": "2026-11-27T20:05:12.499884+00:00",
    "pool": "entered"
@@ -7630,7 +7634,7 @@
  ],
  "first_run": "2026-11-05T03:09:04.962721+00:00",
  "lane": "superpack",
- "last_run": "2026-11-28T16:20:31.052527+00:00",
+ "last_run": "2026-11-28T16:34:07.839903+00:00",
  "mirror": [
   {
    "contract": "KXAAAGASD-26NOV06-4.0700",
@@ -22761,6 +22765,31 @@
    "price": 0.56,
    "profit": null,
    "scope": "soccer_p05",
+   "settled": null,
+   "side": "b",
+   "snapshot": null,
+   "sport": "Soccer",
+   "src": "sandbox",
+   "status": "open"
+  },
+  {
+   "contract": "KXLALIGATOTAL-26NOV28ELCATM-2",
+   "entered_at": "2026-11-28T16:34:07.839903+00:00",
+   "entities": [
+    "Elche",
+    "Atl\u00e9tico Madrid"
+   ],
+   "id": "superpack:[\"sandbox\", \"liga_u15_dog_24h\", [\"liga_u15_dog_24h:KXLALIGATOTAL-26NOV28ELCATM-2\", \"b\"]]",
+   "lane": "liga_u15_dog_24h",
+   "logged": "2026-11-28T16:33:45+00:00",
+   "matched": [
+    "Atl\u00e9tico Madrid",
+    "Elche"
+   ],
+   "pid": "[\"sandbox\", \"liga_u15_dog_24h\", [\"liga_u15_dog_24h:KXLALIGATOTAL-26NOV28ELCATM-2\", \"b\"]]",
+   "price": 0.2,
+   "profit": null,
+   "scope": "soccer_o15",
    "settled": null,
    "side": "b",
    "snapshot": null,
