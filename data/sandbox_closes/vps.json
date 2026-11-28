@@ -91,14 +91,19 @@
    "price": 0.63
   },
   "corners_fav_no:KXEPLCORNERS-26NOV28LEECOV-11": {
-   "at": "2026-11-28T14:01:48+00:00",
-   "lead_min": 58.2,
+   "at": "2026-11-28T14:16:49+00:00",
+   "lead_min": 43.2,
    "price": 0.65
   },
   "corners_fav_no:KXLALIGACORNERS-26NOV22GETATM-11": {
    "at": "2026-11-22T19:54:08+00:00",
    "lead_min": 5.9,
    "price": 0.68
+  },
+  "corners_fav_no:KXLALIGACORNERS-26NOV28MCFATH-11": {
+   "at": "2026-11-28T14:16:49+00:00",
+   "lead_min": 58.2,
+   "price": 0.6
   },
   "corners_fav_no:KXUCLCORNERS-26NOV24COMAEK-11": {
    "at": "2026-11-24T19:46:48+00:00",
@@ -525,6 +530,11 @@
    "lead_min": 6.9,
    "price": 0.52
   },
+  "liga_btts_even:KXLALIGABTTS-26NOV28MCFATH-BTTS": {
+   "at": "2026-11-28T14:16:49+00:00",
+   "lead_min": 58.2,
+   "price": 0.54
+  },
   "liga_u15_dog_24h:KXLALIGATOTAL-26NOV21RMARCC-2": {
    "at": "2026-11-21T19:49:41+00:00",
    "lead_min": 10.3,
@@ -566,8 +576,8 @@
    "price": 0.64
   },
   "team2_ranked:KXEPLTEAMTOTAL-26NOV28LEECOV-LEE2": {
-   "at": "2026-11-28T14:01:48+00:00",
-   "lead_min": 58.2,
+   "at": "2026-11-28T14:16:49+00:00",
+   "lead_min": 43.2,
    "price": 0.61
   },
   "team2_ranked:KXLALIGATEAMTOTAL-26NOV20ATHESP-ATH2": {
@@ -621,5 +631,5 @@
    "price": 0.76
   }
  },
- "updated": "2026-11-28T14:01:48+00:00"
+ "updated": "2026-11-28T14:16:49+00:00"
 }
