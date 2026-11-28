@@ -8,9 +8,9 @@
  },
  "error": null,
  "games_through": "2026-11-25",
- "last_live_read": "2026-11-27T23:30:29.035599+00:00",
- "last_run": "2026-11-27T23:30:29.035599+00:00",
- "last_settle": "2026-11-27T23:30:29.035599+00:00",
+ "last_live_read": "2026-11-28T00:00:34.690727+00:00",
+ "last_run": "2026-11-28T00:00:34.690727+00:00",
+ "last_settle": "2026-11-28T00:00:34.690727+00:00",
  "looks": {
   "401909314": {
    "at": "2026-11-24T23:30:33.063986+00:00",
@@ -332,6 +332,79 @@
     "4Q over: wide": 1
    }
   },
+  "401909327": {
+   "at": "2026-11-28T00:00:34.690727+00:00",
+   "entered": {
+    "1H over blind": 1,
+    "1H under blind": 1,
+    "1Q over blind": 1,
+    "1Q under": 1,
+    "1Q under blind": 1,
+    "2H under blind": 1,
+    "2Q over blind": 1,
+    "2Q under blind": 1,
+    "3Q over": 1,
+    "3Q over blind": 1,
+    "3Q under blind": 1,
+    "4Q over blind": 1,
+    "4Q under blind": 1
+   },
+   "game": "MIL @ DET",
+   "lead_min": 29.4,
+   "night": "2026-11-27",
+   "priced": 11,
+   "skipped": {
+    "2H over: wide": 1
+   }
+  },
+  "401909328": {
+   "at": "2026-11-28T00:00:34.690727+00:00",
+   "entered": {
+    "1H over": 1,
+    "1H over blind": 1,
+    "1H under blind": 1,
+    "1Q over blind": 1,
+    "1Q under blind": 1,
+    "3Q over blind": 1,
+    "3Q under blind": 1,
+    "4Q under blind": 1
+   },
+   "game": "PHI @ IND",
+   "lead_min": 29.4,
+   "night": "2026-11-27",
+   "priced": 7,
+   "skipped": {
+    "2H over: wide": 1,
+    "2H under: wide": 1,
+    "2Q over: wide": 1,
+    "2Q under: wide": 1,
+    "4Q over: wide": 1
+   }
+  },
+  "401909329": {
+   "at": "2026-11-28T00:00:34.690727+00:00",
+   "entered": {
+    "1H over blind": 1,
+    "1H under blind": 1,
+    "1Q over blind": 1,
+    "1Q under blind": 1,
+    "2Q over blind": 1,
+    "2Q under": 1,
+    "2Q under blind": 1,
+    "3Q over blind": 1,
+    "3Q under blind": 1,
+    "4Q over blind": 1,
+    "4Q under blind": 1
+   },
+   "game": "BKN @ TOR",
+   "lead_min": 29.4,
+   "night": "2026-11-27",
+   "priced": 10,
+   "skipped": {
+    "2H over: wide": 1,
+    "2H under: wide": 1
+   }
+  },
   "401910036": {
    "at": "2026-11-23T23:30:00+00:00",
    "backfilled": true,
@@ -634,6 +707,33 @@
      "ticker": "KXNBA1HTOTAL-26NOV27MIANYK-106",
      "v1_line": 104.5,
      "value": 0.1491
+    },
+    {
+     "ask": 0.88,
+     "bid": 0.84,
+     "direction": "over",
+     "entered": "2026-11-28T00:00:34.690727+00:00",
+     "game": "PHI @ IND",
+     "game_id": "401909328",
+     "games": 18,
+     "id": "nba_qlines_v2_1H_over_cushion:KXNBA1HTOTAL-26NOV27PHIIND-105",
+     "kind": "cushion",
+     "lead_min": 29.4,
+     "line": 104.5,
+     "night": "2026-11-27",
+     "offset": 0.0,
+     "price": 0.88,
+     "rate": 0.9444,
+     "rule": "nba_qlines_v2_1H_over_cushion",
+     "rung": 104.5,
+     "section": "1H",
+     "side": "yes",
+     "start": "2026-11-28T00:30:00+00:00",
+     "status": "open",
+     "team": "IND",
+     "ticker": "KXNBA1HTOTAL-26NOV27PHIIND-105",
+     "v1_line": 104.5,
+     "value": 0.057
     }
    ]
   },
@@ -665,6 +765,33 @@
      "ticker": "KXNBA1HTOTAL-26NOV27MIANYK-104",
      "v1_line": 104.5,
      "value": 0.1696
+    },
+    {
+     "ask": 0.88,
+     "bid": 0.84,
+     "direction": "over",
+     "entered": "2026-11-28T00:00:34.690727+00:00",
+     "game": "PHI @ IND",
+     "game_id": "401909328",
+     "games": 18,
+     "id": "nba_qlines_v2_1H_over_value:KXNBA1HTOTAL-26NOV27PHIIND-105",
+     "kind": "value",
+     "lead_min": 29.4,
+     "line": 104.5,
+     "night": "2026-11-27",
+     "offset": 0.0,
+     "price": 0.88,
+     "rate": 0.9444,
+     "rule": "nba_qlines_v2_1H_over_value",
+     "rung": 104.5,
+     "section": "1H",
+     "side": "yes",
+     "start": "2026-11-28T00:30:00+00:00",
+     "status": "open",
+     "team": "IND",
+     "ticker": "KXNBA1HTOTAL-26NOV27PHIIND-105",
+     "v1_line": 104.5,
+     "value": 0.057
     }
    ]
   },
@@ -740,7 +867,35 @@
    "picks": []
   },
   "nba_qlines_v2_1Q_under_value": {
-   "picks": []
+   "picks": [
+    {
+     "ask": 0.23,
+     "bid": 0.21,
+     "direction": "under",
+     "entered": "2026-11-28T00:00:34.690727+00:00",
+     "game": "MIL @ DET",
+     "game_id": "401909327",
+     "games": 19,
+     "id": "nba_qlines_v2_1Q_under_value:KXNBA1QTOTAL-26NOV27MILDET-61",
+     "kind": "value",
+     "lead_min": 29.4,
+     "line": 59.5,
+     "night": "2026-11-27",
+     "offset": -1.0,
+     "price": 0.79,
+     "rate": 1.0,
+     "rule": "nba_qlines_v2_1Q_under_value",
+     "rung": 60.5,
+     "section": "1Q",
+     "side": "no",
+     "start": "2026-11-28T00:30:00+00:00",
+     "status": "open",
+     "team": "MIL",
+     "ticker": "KXNBA1QTOTAL-26NOV27MILDET-61",
+     "v1_line": 59.5,
+     "value": 0.1983
+    }
+   ]
   },
   "nba_qlines_v2_2H_over_cushion": {
    "picks": []
@@ -789,16 +944,128 @@
    ]
   },
   "nba_qlines_v2_2Q_under_cushion": {
-   "picks": []
+   "picks": [
+    {
+     "ask": 0.17,
+     "bid": 0.12,
+     "direction": "under",
+     "entered": "2026-11-28T00:00:34.690727+00:00",
+     "game": "BKN @ TOR",
+     "game_id": "401909329",
+     "games": 17,
+     "id": "nba_qlines_v2_2Q_under_cushion:KXNBA2QTOTAL-26NOV27BKNTOR-64",
+     "kind": "cushion",
+     "lead_min": 29.4,
+     "line": 63.5,
+     "night": "2026-11-27",
+     "offset": -0.0,
+     "price": 0.88,
+     "rate": 0.9412,
+     "rule": "nba_qlines_v2_2Q_under_cushion",
+     "rung": 63.5,
+     "section": "2Q",
+     "side": "no",
+     "start": "2026-11-28T00:30:00+00:00",
+     "status": "open",
+     "team": "TOR",
+     "ticker": "KXNBA2QTOTAL-26NOV27BKNTOR-64",
+     "v1_line": 63.5,
+     "value": 0.0538
+    }
+   ]
   },
   "nba_qlines_v2_2Q_under_value": {
-   "picks": []
+   "picks": [
+    {
+     "ask": 0.11,
+     "bid": 0.06,
+     "direction": "under",
+     "entered": "2026-11-28T00:00:34.690727+00:00",
+     "game": "BKN @ TOR",
+     "game_id": "401909329",
+     "games": 17,
+     "id": "nba_qlines_v2_2Q_under_value:KXNBA2QTOTAL-26NOV27BKNTOR-66",
+     "kind": "value",
+     "lead_min": 29.4,
+     "line": 63.5,
+     "night": "2026-11-27",
+     "offset": -2.0,
+     "price": 0.94,
+     "rate": 1.0,
+     "rule": "nba_qlines_v2_2Q_under_value",
+     "rung": 65.5,
+     "section": "2Q",
+     "side": "no",
+     "start": "2026-11-28T00:30:00+00:00",
+     "status": "open",
+     "team": "TOR",
+     "ticker": "KXNBA2QTOTAL-26NOV27BKNTOR-66",
+     "v1_line": 63.5,
+     "value": 0.056
+    }
+   ]
   },
   "nba_qlines_v2_3Q_over_cushion": {
-   "picks": []
+   "picks": [
+    {
+     "ask": 0.63,
+     "bid": 0.58,
+     "direction": "over",
+     "entered": "2026-11-28T00:00:34.690727+00:00",
+     "game": "MIL @ DET",
+     "game_id": "401909327",
+     "games": 19,
+     "id": "nba_qlines_v2_3Q_over_cushion:KXNBA3QTOTAL-26NOV27MILDET-55",
+     "kind": "cushion",
+     "lead_min": 29.4,
+     "line": 53.5,
+     "night": "2026-11-27",
+     "offset": 1.0,
+     "price": 0.63,
+     "rate": 0.9474,
+     "rule": "nba_qlines_v2_3Q_over_cushion",
+     "rung": 54.5,
+     "section": "3Q",
+     "side": "yes",
+     "start": "2026-11-28T00:30:00+00:00",
+     "status": "open",
+     "team": "MIL",
+     "ticker": "KXNBA3QTOTAL-26NOV27MILDET-55",
+     "v1_line": 53.5,
+     "value": 0.301
+    }
+   ]
   },
   "nba_qlines_v2_3Q_over_value": {
-   "picks": []
+   "picks": [
+    {
+     "ask": 0.63,
+     "bid": 0.58,
+     "direction": "over",
+     "entered": "2026-11-28T00:00:34.690727+00:00",
+     "game": "MIL @ DET",
+     "game_id": "401909327",
+     "games": 19,
+     "id": "nba_qlines_v2_3Q_over_value:KXNBA3QTOTAL-26NOV27MILDET-55",
+     "kind": "value",
+     "lead_min": 29.4,
+     "line": 53.5,
+     "night": "2026-11-27",
+     "offset": 1.0,
+     "price": 0.63,
+     "rate": 0.9474,
+     "rule": "nba_qlines_v2_3Q_over_value",
+     "rung": 54.5,
+     "section": "3Q",
+     "side": "yes",
+     "start": "2026-11-28T00:30:00+00:00",
+     "status": "open",
+     "team": "MIL",
+     "ticker": "KXNBA3QTOTAL-26NOV27MILDET-55",
+     "v1_line": 53.5,
+     "value": 0.301
+    }
+   ]
   },
   "nba_qlines_v2_3Q_under_cushion": {
    "picks": []
@@ -1227,6 +1494,35 @@
       "NY": "10/18"
      },
      "ticker": "KXNBA1HTOTAL-26NOV27MIANYK-106"
+    },
+    {
+     "ask": 0.88,
+     "bid": 0.84,
+     "direction": "over",
+     "entered": "2026-11-28T00:00:34.690727+00:00",
+     "game": "PHI @ IND",
+     "game_id": "401909328",
+     "id": "qlines_1H_over:KXNBA1HTOTAL-26NOV27PHIIND-105",
+     "lead_min": 29.4,
+     "line": 104.5,
+     "matches": "qlines_1H_over_blind:KXNBA1HTOTAL-26NOV27PHIIND-105",
+     "night": "2026-11-27",
+     "offset": 0,
+     "price": 0.88,
+     "qualifying": [
+      "IND"
+     ],
+     "rule": "qlines_1H_over",
+     "rung": 104.5,
+     "section": "1H",
+     "side": "yes",
+     "start": "2026-11-28T00:30:00+00:00",
+     "status": "open",
+     "teams": {
+      "IND": "17/18",
+      "PHI": "16/19"
+     },
+     "ticker": "KXNBA1HTOTAL-26NOV27PHIIND-105"
     }
    ]
   },
@@ -1936,6 +2232,81 @@
       "NY": "10/18"
      },
      "ticker": "KXNBA1HTOTAL-26NOV27MIANYK-106"
+    },
+    {
+     "ask": 0.54,
+     "bid": 0.53,
+     "direction": "over",
+     "entered": "2026-11-28T00:00:34.690727+00:00",
+     "game": "MIL @ DET",
+     "game_id": "401909327",
+     "id": "qlines_1H_over_blind:KXNBA1HTOTAL-26NOV27MILDET-106",
+     "lead_min": 29.4,
+     "line": 104.5,
+     "night": "2026-11-27",
+     "offset": 1,
+     "price": 0.54,
+     "rule": "qlines_1H_over_blind",
+     "rung": 105.5,
+     "section": "1H",
+     "side": "yes",
+     "start": "2026-11-28T00:30:00+00:00",
+     "status": "open",
+     "teams": {
+      "DET": "9/17",
+      "MIL": "11/19"
+     },
+     "ticker": "KXNBA1HTOTAL-26NOV27MILDET-106"
+    },
+    {
+     "ask": 0.88,
+     "bid": 0.84,
+     "direction": "over",
+     "entered": "2026-11-28T00:00:34.690727+00:00",
+     "game": "PHI @ IND",
+     "game_id": "401909328",
+     "id": "qlines_1H_over_blind:KXNBA1HTOTAL-26NOV27PHIIND-105",
+     "lead_min": 29.4,
+     "line": 104.5,
+     "night": "2026-11-27",
+     "offset": 0,
+     "price": 0.88,
+     "rule": "qlines_1H_over_blind",
+     "rung": 104.5,
+     "section": "1H",
+     "side": "yes",
+     "start": "2026-11-28T00:30:00+00:00",
+     "status": "open",
+     "teams": {
+      "IND": "17/18",
+      "PHI": "16/19"
+     },
+     "ticker": "KXNBA1HTOTAL-26NOV27PHIIND-105"
+    },
+    {
+     "ask": 0.69,
+     "bid": 0.66,
+     "direction": "over",
+     "entered": "2026-11-28T00:00:34.690727+00:00",
+     "game": "BKN @ TOR",
+     "game_id": "401909329",
+     "id": "qlines_1H_over_blind:KXNBA1HTOTAL-26NOV27BKNTOR-106",
+     "lead_min": 29.4,
+     "line": 104.5,
+     "night": "2026-11-27",
+     "offset": 1,
+     "price": 0.69,
+     "rule": "qlines_1H_over_blind",
+     "rung": 105.5,
+     "section": "1H",
+     "side": "yes",
+     "start": "2026-11-28T00:30:00+00:00",
+     "status": "open",
+     "teams": {
+      "BKN": "13/17",
+      "TOR": "11/17"
+     },
+     "ticker": "KXNBA1HTOTAL-26NOV27BKNTOR-106"
     }
    ]
   },
@@ -2746,6 +3117,81 @@
       "NY": "17/18"
      },
      "ticker": "KXNBA1HTOTAL-26NOV27MIANYK-120"
+    },
+    {
+     "ask": 0.14,
+     "bid": 0.11,
+     "direction": "under",
+     "entered": "2026-11-28T00:00:34.690727+00:00",
+     "game": "MIL @ DET",
+     "game_id": "401909327",
+     "id": "qlines_1H_under_blind:KXNBA1HTOTAL-26NOV27MILDET-120",
+     "lead_min": 29.4,
+     "line": 119.5,
+     "night": "2026-11-27",
+     "offset": 0,
+     "price": 0.89,
+     "rule": "qlines_1H_under_blind",
+     "rung": 119.5,
+     "section": "1H",
+     "side": "no",
+     "start": "2026-11-28T00:30:00+00:00",
+     "status": "open",
+     "teams": {
+      "DET": "13/17",
+      "MIL": "16/19"
+     },
+     "ticker": "KXNBA1HTOTAL-26NOV27MILDET-120"
+    },
+    {
+     "ask": 0.47,
+     "bid": 0.45,
+     "direction": "under",
+     "entered": "2026-11-28T00:00:34.690727+00:00",
+     "game": "PHI @ IND",
+     "game_id": "401909328",
+     "id": "qlines_1H_under_blind:KXNBA1HTOTAL-26NOV27PHIIND-119",
+     "lead_min": 29.4,
+     "line": 119.5,
+     "night": "2026-11-27",
+     "offset": 1,
+     "price": 0.55,
+     "rule": "qlines_1H_under_blind",
+     "rung": 118.5,
+     "section": "1H",
+     "side": "no",
+     "start": "2026-11-28T00:30:00+00:00",
+     "status": "open",
+     "teams": {
+      "IND": "11/18",
+      "PHI": "12/19"
+     },
+     "ticker": "KXNBA1HTOTAL-26NOV27PHIIND-119"
+    },
+    {
+     "ask": 0.26,
+     "bid": 0.24,
+     "direction": "under",
+     "entered": "2026-11-28T00:00:34.690727+00:00",
+     "game": "BKN @ TOR",
+     "game_id": "401909329",
+     "id": "qlines_1H_under_blind:KXNBA1HTOTAL-26NOV27BKNTOR-120",
+     "lead_min": 29.4,
+     "line": 119.5,
+     "night": "2026-11-27",
+     "offset": 0,
+     "price": 0.76,
+     "rule": "qlines_1H_under_blind",
+     "rung": 119.5,
+     "section": "1H",
+     "side": "no",
+     "start": "2026-11-28T00:30:00+00:00",
+     "status": "open",
+     "teams": {
+      "BKN": "8/17",
+      "TOR": "13/17"
+     },
+     "ticker": "KXNBA1HTOTAL-26NOV27BKNTOR-120"
     }
    ]
   },
@@ -3458,6 +3904,81 @@
       "NY": "12/18"
      },
      "ticker": "KXNBA1QTOTAL-26NOV27MIANYK-53"
+    },
+    {
+     "ask": 0.58,
+     "bid": 0.56,
+     "direction": "over",
+     "entered": "2026-11-28T00:00:34.690727+00:00",
+     "game": "MIL @ DET",
+     "game_id": "401909327",
+     "id": "qlines_1Q_over_blind:KXNBA1QTOTAL-26NOV27MILDET-53",
+     "lead_min": 29.4,
+     "line": 51.5,
+     "night": "2026-11-27",
+     "offset": 1,
+     "price": 0.58,
+     "rule": "qlines_1Q_over_blind",
+     "rung": 52.5,
+     "section": "1Q",
+     "side": "yes",
+     "start": "2026-11-28T00:30:00+00:00",
+     "status": "open",
+     "teams": {
+      "DET": "11/17",
+      "MIL": "10/19"
+     },
+     "ticker": "KXNBA1QTOTAL-26NOV27MILDET-53"
+    },
+    {
+     "ask": 0.84,
+     "bid": 0.8,
+     "direction": "over",
+     "entered": "2026-11-28T00:00:34.690727+00:00",
+     "game": "PHI @ IND",
+     "game_id": "401909328",
+     "id": "qlines_1Q_over_blind:KXNBA1QTOTAL-26NOV27PHIIND-52",
+     "lead_min": 29.4,
+     "line": 51.5,
+     "night": "2026-11-27",
+     "offset": 0,
+     "price": 0.84,
+     "rule": "qlines_1Q_over_blind",
+     "rung": 51.5,
+     "section": "1Q",
+     "side": "yes",
+     "start": "2026-11-28T00:30:00+00:00",
+     "status": "open",
+     "teams": {
+      "IND": "13/18",
+      "PHI": "15/19"
+     },
+     "ticker": "KXNBA1QTOTAL-26NOV27PHIIND-52"
+    },
+    {
+     "ask": 0.73,
+     "bid": 0.69,
+     "direction": "over",
+     "entered": "2026-11-28T00:00:34.690727+00:00",
+     "game": "BKN @ TOR",
+     "game_id": "401909329",
+     "id": "qlines_1Q_over_blind:KXNBA1QTOTAL-26NOV27BKNTOR-52",
+     "lead_min": 29.4,
+     "line": 51.5,
+     "night": "2026-11-27",
+     "offset": 0,
+     "price": 0.73,
+     "rule": "qlines_1Q_over_blind",
+     "rung": 51.5,
+     "section": "1Q",
+     "side": "yes",
+     "start": "2026-11-28T00:30:00+00:00",
+     "status": "open",
+     "teams": {
+      "BKN": "11/17",
+      "TOR": "14/17"
+     },
+     "ticker": "KXNBA1QTOTAL-26NOV27BKNTOR-52"
     }
    ]
   },
@@ -3532,6 +4053,35 @@
       "MIL": "17/18"
      },
      "ticker": "KXNBA1QTOTAL-26NOV25BKNMIL-59"
+    },
+    {
+     "ask": 0.32,
+     "bid": 0.29,
+     "direction": "under",
+     "entered": "2026-11-28T00:00:34.690727+00:00",
+     "game": "MIL @ DET",
+     "game_id": "401909327",
+     "id": "qlines_1Q_under:KXNBA1QTOTAL-26NOV27MILDET-59",
+     "lead_min": 29.4,
+     "line": 59.5,
+     "matches": "qlines_1Q_under_blind:KXNBA1QTOTAL-26NOV27MILDET-59",
+     "night": "2026-11-27",
+     "offset": 1,
+     "price": 0.71,
+     "qualifying": [
+      "MIL"
+     ],
+     "rule": "qlines_1Q_under",
+     "rung": 58.5,
+     "section": "1Q",
+     "side": "no",
+     "start": "2026-11-28T00:30:00+00:00",
+     "status": "open",
+     "teams": {
+      "DET": "11/17",
+      "MIL": "18/19"
+     },
+     "ticker": "KXNBA1QTOTAL-26NOV27MILDET-59"
     }
    ]
   },
@@ -4241,6 +4791,81 @@
       "NY": "14/18"
      },
      "ticker": "KXNBA1QTOTAL-26NOV27MIANYK-59"
+    },
+    {
+     "ask": 0.32,
+     "bid": 0.29,
+     "direction": "under",
+     "entered": "2026-11-28T00:00:34.690727+00:00",
+     "game": "MIL @ DET",
+     "game_id": "401909327",
+     "id": "qlines_1Q_under_blind:KXNBA1QTOTAL-26NOV27MILDET-59",
+     "lead_min": 29.4,
+     "line": 59.5,
+     "night": "2026-11-27",
+     "offset": 1,
+     "price": 0.71,
+     "rule": "qlines_1Q_under_blind",
+     "rung": 58.5,
+     "section": "1Q",
+     "side": "no",
+     "start": "2026-11-28T00:30:00+00:00",
+     "status": "open",
+     "teams": {
+      "DET": "11/17",
+      "MIL": "18/19"
+     },
+     "ticker": "KXNBA1QTOTAL-26NOV27MILDET-59"
+    },
+    {
+     "ask": 0.51,
+     "bid": 0.49,
+     "direction": "under",
+     "entered": "2026-11-28T00:00:34.690727+00:00",
+     "game": "PHI @ IND",
+     "game_id": "401909328",
+     "id": "qlines_1Q_under_blind:KXNBA1QTOTAL-26NOV27PHIIND-60",
+     "lead_min": 29.4,
+     "line": 59.5,
+     "night": "2026-11-27",
+     "offset": 0,
+     "price": 0.51,
+     "rule": "qlines_1Q_under_blind",
+     "rung": 59.5,
+     "section": "1Q",
+     "side": "no",
+     "start": "2026-11-28T00:30:00+00:00",
+     "status": "open",
+     "teams": {
+      "IND": "11/18",
+      "PHI": "13/19"
+     },
+     "ticker": "KXNBA1QTOTAL-26NOV27PHIIND-60"
+    },
+    {
+     "ask": 0.38,
+     "bid": 0.34,
+     "direction": "under",
+     "entered": "2026-11-28T00:00:34.690727+00:00",
+     "game": "BKN @ TOR",
+     "game_id": "401909329",
+     "id": "qlines_1Q_under_blind:KXNBA1QTOTAL-26NOV27BKNTOR-60",
+     "lead_min": 29.4,
+     "line": 59.5,
+     "night": "2026-11-27",
+     "offset": 0,
+     "price": 0.66,
+     "rule": "qlines_1Q_under_blind",
+     "rung": 59.5,
+     "section": "1Q",
+     "side": "no",
+     "start": "2026-11-28T00:30:00+00:00",
+     "status": "open",
+     "teams": {
+      "BKN": "11/17",
+      "TOR": "14/17"
+     },
+     "ticker": "KXNBA1QTOTAL-26NOV27BKNTOR-60"
     }
    ]
   },
@@ -4959,6 +5584,31 @@
       "PHX": "9/16"
      },
      "ticker": "KXNBA2HTOTAL-26NOV25PHXHOU-116"
+    },
+    {
+     "ask": 0.44,
+     "bid": 0.41,
+     "direction": "under",
+     "entered": "2026-11-28T00:00:34.690727+00:00",
+     "game": "MIL @ DET",
+     "game_id": "401909327",
+     "id": "qlines_2H_under_blind:KXNBA2HTOTAL-26NOV27MILDET-115",
+     "lead_min": 29.4,
+     "line": 115.5,
+     "night": "2026-11-27",
+     "offset": 1,
+     "price": 0.59,
+     "rule": "qlines_2H_under_blind",
+     "rung": 114.5,
+     "section": "2H",
+     "side": "no",
+     "start": "2026-11-28T00:30:00+00:00",
+     "status": "open",
+     "teams": {
+      "DET": "11/17",
+      "MIL": "6/19"
+     },
+     "ticker": "KXNBA2HTOTAL-26NOV27MILDET-115"
     }
    ]
   },
@@ -5717,6 +6367,56 @@
       "SA": "13/18"
      },
      "ticker": "KXNBA2QTOTAL-26NOV25SASPOR-51"
+    },
+    {
+     "ask": 0.62,
+     "bid": 0.57,
+     "direction": "over",
+     "entered": "2026-11-28T00:00:34.690727+00:00",
+     "game": "MIL @ DET",
+     "game_id": "401909327",
+     "id": "qlines_2Q_over_blind:KXNBA2QTOTAL-26NOV27MILDET-51",
+     "lead_min": 29.4,
+     "line": 50.5,
+     "night": "2026-11-27",
+     "offset": 0,
+     "price": 0.62,
+     "rule": "qlines_2Q_over_blind",
+     "rung": 50.5,
+     "section": "2Q",
+     "side": "yes",
+     "start": "2026-11-28T00:30:00+00:00",
+     "status": "open",
+     "teams": {
+      "DET": "10/17",
+      "MIL": "14/19"
+     },
+     "ticker": "KXNBA2QTOTAL-26NOV27MILDET-51"
+    },
+    {
+     "ask": 0.67,
+     "bid": 0.63,
+     "direction": "over",
+     "entered": "2026-11-28T00:00:34.690727+00:00",
+     "game": "BKN @ TOR",
+     "game_id": "401909329",
+     "id": "qlines_2Q_over_blind:KXNBA2QTOTAL-26NOV27BKNTOR-52",
+     "lead_min": 29.4,
+     "line": 50.5,
+     "night": "2026-11-27",
+     "offset": 1,
+     "price": 0.67,
+     "rule": "qlines_2Q_over_blind",
+     "rung": 51.5,
+     "section": "2Q",
+     "side": "yes",
+     "start": "2026-11-28T00:30:00+00:00",
+     "status": "open",
+     "teams": {
+      "BKN": "14/17",
+      "TOR": "11/17"
+     },
+     "ticker": "KXNBA2QTOTAL-26NOV27BKNTOR-52"
     }
    ]
   },
@@ -5967,6 +6667,35 @@
       "PHX": "11/16"
      },
      "ticker": "KXNBA2QTOTAL-26NOV25PHXHOU-63"
+    },
+    {
+     "ask": 0.17,
+     "bid": 0.12,
+     "direction": "under",
+     "entered": "2026-11-28T00:00:34.690727+00:00",
+     "game": "BKN @ TOR",
+     "game_id": "401909329",
+     "id": "qlines_2Q_under:KXNBA2QTOTAL-26NOV27BKNTOR-64",
+     "lead_min": 29.4,
+     "line": 63.5,
+     "matches": "qlines_2Q_under_blind:KXNBA2QTOTAL-26NOV27BKNTOR-64",
+     "night": "2026-11-27",
+     "offset": 0,
+     "price": 0.88,
+     "qualifying": [
+      "TOR"
+     ],
+     "rule": "qlines_2Q_under",
+     "rung": 63.5,
+     "section": "2Q",
+     "side": "no",
+     "start": "2026-11-28T00:30:00+00:00",
+     "status": "open",
+     "teams": {
+      "BKN": "10/17",
+      "TOR": "16/17"
+     },
+     "ticker": "KXNBA2QTOTAL-26NOV27BKNTOR-64"
     }
    ]
   },
@@ -6586,6 +7315,56 @@
       "NY": "16/18"
      },
      "ticker": "KXNBA2QTOTAL-26NOV27MIANYK-63"
+    },
+    {
+     "ask": 0.13,
+     "bid": 0.08,
+     "direction": "under",
+     "entered": "2026-11-28T00:00:34.690727+00:00",
+     "game": "MIL @ DET",
+     "game_id": "401909327",
+     "id": "qlines_2Q_under_blind:KXNBA2QTOTAL-26NOV27MILDET-63",
+     "lead_min": 29.4,
+     "line": 63.5,
+     "night": "2026-11-27",
+     "offset": 1,
+     "price": 0.92,
+     "rule": "qlines_2Q_under_blind",
+     "rung": 62.5,
+     "section": "2Q",
+     "side": "no",
+     "start": "2026-11-28T00:30:00+00:00",
+     "status": "open",
+     "teams": {
+      "DET": "15/17",
+      "MIL": "14/19"
+     },
+     "ticker": "KXNBA2QTOTAL-26NOV27MILDET-63"
+    },
+    {
+     "ask": 0.17,
+     "bid": 0.12,
+     "direction": "under",
+     "entered": "2026-11-28T00:00:34.690727+00:00",
+     "game": "BKN @ TOR",
+     "game_id": "401909329",
+     "id": "qlines_2Q_under_blind:KXNBA2QTOTAL-26NOV27BKNTOR-64",
+     "lead_min": 29.4,
+     "line": 63.5,
+     "night": "2026-11-27",
+     "offset": 0,
+     "price": 0.88,
+     "rule": "qlines_2Q_under_blind",
+     "rung": 63.5,
+     "section": "2Q",
+     "side": "no",
+     "start": "2026-11-28T00:30:00+00:00",
+     "status": "open",
+     "teams": {
+      "BKN": "10/17",
+      "TOR": "16/17"
+     },
+     "ticker": "KXNBA2QTOTAL-26NOV27BKNTOR-64"
     }
    ]
   },
@@ -6732,6 +7511,35 @@
       "MIL": "18/18"
      },
      "ticker": "KXNBA3QTOTAL-26NOV25BKNMIL-55"
+    },
+    {
+     "ask": 0.63,
+     "bid": 0.58,
+     "direction": "over",
+     "entered": "2026-11-28T00:00:34.690727+00:00",
+     "game": "MIL @ DET",
+     "game_id": "401909327",
+     "id": "qlines_3Q_over:KXNBA3QTOTAL-26NOV27MILDET-55",
+     "lead_min": 29.4,
+     "line": 53.5,
+     "matches": "qlines_3Q_over_blind:KXNBA3QTOTAL-26NOV27MILDET-55",
+     "night": "2026-11-27",
+     "offset": 1,
+     "price": 0.63,
+     "qualifying": [
+      "MIL"
+     ],
+     "rule": "qlines_3Q_over",
+     "rung": 54.5,
+     "section": "3Q",
+     "side": "yes",
+     "start": "2026-11-28T00:30:00+00:00",
+     "status": "open",
+     "teams": {
+      "DET": "9/17",
+      "MIL": "18/19"
+     },
+     "ticker": "KXNBA3QTOTAL-26NOV27MILDET-55"
     }
    ]
   },
@@ -7351,6 +8159,81 @@
       "NY": "8/18"
      },
      "ticker": "KXNBA3QTOTAL-26NOV27MIANYK-54"
+    },
+    {
+     "ask": 0.63,
+     "bid": 0.58,
+     "direction": "over",
+     "entered": "2026-11-28T00:00:34.690727+00:00",
+     "game": "MIL @ DET",
+     "game_id": "401909327",
+     "id": "qlines_3Q_over_blind:KXNBA3QTOTAL-26NOV27MILDET-55",
+     "lead_min": 29.4,
+     "line": 53.5,
+     "night": "2026-11-27",
+     "offset": 1,
+     "price": 0.63,
+     "rule": "qlines_3Q_over_blind",
+     "rung": 54.5,
+     "section": "3Q",
+     "side": "yes",
+     "start": "2026-11-28T00:30:00+00:00",
+     "status": "open",
+     "teams": {
+      "DET": "9/17",
+      "MIL": "18/19"
+     },
+     "ticker": "KXNBA3QTOTAL-26NOV27MILDET-55"
+    },
+    {
+     "ask": 0.62,
+     "bid": 0.59,
+     "direction": "over",
+     "entered": "2026-11-28T00:00:34.690727+00:00",
+     "game": "PHI @ IND",
+     "game_id": "401909328",
+     "id": "qlines_3Q_over_blind:KXNBA3QTOTAL-26NOV27PHIIND-54",
+     "lead_min": 29.4,
+     "line": 53.5,
+     "night": "2026-11-27",
+     "offset": 0,
+     "price": 0.62,
+     "rule": "qlines_3Q_over_blind",
+     "rung": 53.5,
+     "section": "3Q",
+     "side": "yes",
+     "start": "2026-11-28T00:30:00+00:00",
+     "status": "open",
+     "teams": {
+      "IND": "14/18",
+      "PHI": "12/19"
+     },
+     "ticker": "KXNBA3QTOTAL-26NOV27PHIIND-54"
+    },
+    {
+     "ask": 0.49,
+     "bid": 0.45,
+     "direction": "over",
+     "entered": "2026-11-28T00:00:34.690727+00:00",
+     "game": "BKN @ TOR",
+     "game_id": "401909329",
+     "id": "qlines_3Q_over_blind:KXNBA3QTOTAL-26NOV27BKNTOR-55",
+     "lead_min": 29.4,
+     "line": 53.5,
+     "night": "2026-11-27",
+     "offset": 1,
+     "price": 0.49,
+     "rule": "qlines_3Q_over_blind",
+     "rung": 54.5,
+     "section": "3Q",
+     "side": "yes",
+     "start": "2026-11-28T00:30:00+00:00",
+     "status": "open",
+     "teams": {
+      "BKN": "10/17",
+      "TOR": "12/17"
+     },
+     "ticker": "KXNBA3QTOTAL-26NOV27BKNTOR-55"
     }
    ]
   },
@@ -8041,6 +8924,81 @@
       "NY": "16/18"
      },
      "ticker": "KXNBA3QTOTAL-26NOV27MIANYK-64"
+    },
+    {
+     "ask": 0.2,
+     "bid": 0.16,
+     "direction": "under",
+     "entered": "2026-11-28T00:00:34.690727+00:00",
+     "game": "MIL @ DET",
+     "game_id": "401909327",
+     "id": "qlines_3Q_under_blind:KXNBA3QTOTAL-26NOV27MILDET-65",
+     "lead_min": 29.4,
+     "line": 64.5,
+     "night": "2026-11-27",
+     "offset": 0,
+     "price": 0.84,
+     "rule": "qlines_3Q_under_blind",
+     "rung": 64.5,
+     "section": "3Q",
+     "side": "no",
+     "start": "2026-11-28T00:30:00+00:00",
+     "status": "open",
+     "teams": {
+      "DET": "14/17",
+      "MIL": "9/19"
+     },
+     "ticker": "KXNBA3QTOTAL-26NOV27MILDET-65"
+    },
+    {
+     "ask": 0.2,
+     "bid": 0.15,
+     "direction": "under",
+     "entered": "2026-11-28T00:00:34.690727+00:00",
+     "game": "PHI @ IND",
+     "game_id": "401909328",
+     "id": "qlines_3Q_under_blind:KXNBA3QTOTAL-26NOV27PHIIND-64",
+     "lead_min": 29.4,
+     "line": 64.5,
+     "night": "2026-11-27",
+     "offset": 1,
+     "price": 0.85,
+     "rule": "qlines_3Q_under_blind",
+     "rung": 63.5,
+     "section": "3Q",
+     "side": "no",
+     "start": "2026-11-28T00:30:00+00:00",
+     "status": "open",
+     "teams": {
+      "IND": "15/18",
+      "PHI": "16/19"
+     },
+     "ticker": "KXNBA3QTOTAL-26NOV27PHIIND-64"
+    },
+    {
+     "ask": 0.11,
+     "bid": 0.07,
+     "direction": "under",
+     "entered": "2026-11-28T00:00:34.690727+00:00",
+     "game": "BKN @ TOR",
+     "game_id": "401909329",
+     "id": "qlines_3Q_under_blind:KXNBA3QTOTAL-26NOV27BKNTOR-65",
+     "lead_min": 29.4,
+     "line": 64.5,
+     "night": "2026-11-27",
+     "offset": 0,
+     "price": 0.93,
+     "rule": "qlines_3Q_under_blind",
+     "rung": 64.5,
+     "section": "3Q",
+     "side": "no",
+     "start": "2026-11-28T00:30:00+00:00",
+     "status": "open",
+     "teams": {
+      "BKN": "15/17",
+      "TOR": "15/17"
+     },
+     "ticker": "KXNBA3QTOTAL-26NOV27BKNTOR-65"
     }
    ]
   },
@@ -8684,6 +9642,56 @@
       "SAC": "14/17"
      },
      "ticker": "KXNBA4QTOTAL-26NOV25SACGSW-50"
+    },
+    {
+     "ask": 0.76,
+     "bid": 0.72,
+     "direction": "over",
+     "entered": "2026-11-28T00:00:34.690727+00:00",
+     "game": "MIL @ DET",
+     "game_id": "401909327",
+     "id": "qlines_4Q_over_blind:KXNBA4QTOTAL-26NOV27MILDET-50",
+     "lead_min": 29.4,
+     "line": 48.5,
+     "night": "2026-11-27",
+     "offset": 1,
+     "price": 0.76,
+     "rule": "qlines_4Q_over_blind",
+     "rung": 49.5,
+     "section": "4Q",
+     "side": "yes",
+     "start": "2026-11-28T00:30:00+00:00",
+     "status": "open",
+     "teams": {
+      "DET": "11/17",
+      "MIL": "16/19"
+     },
+     "ticker": "KXNBA4QTOTAL-26NOV27MILDET-50"
+    },
+    {
+     "ask": 0.7,
+     "bid": 0.65,
+     "direction": "over",
+     "entered": "2026-11-28T00:00:34.690727+00:00",
+     "game": "BKN @ TOR",
+     "game_id": "401909329",
+     "id": "qlines_4Q_over_blind:KXNBA4QTOTAL-26NOV27BKNTOR-49",
+     "lead_min": 29.4,
+     "line": 48.5,
+     "night": "2026-11-27",
+     "offset": 0,
+     "price": 0.7,
+     "rule": "qlines_4Q_over_blind",
+     "rung": 48.5,
+     "section": "4Q",
+     "side": "yes",
+     "start": "2026-11-28T00:30:00+00:00",
+     "status": "open",
+     "teams": {
+      "BKN": "13/17",
+      "TOR": "15/17"
+     },
+     "ticker": "KXNBA4QTOTAL-26NOV27BKNTOR-49"
     }
    ]
   },
@@ -9619,6 +10627,81 @@
       "NY": "15/18"
      },
      "ticker": "KXNBA4QTOTAL-26NOV27MIANYK-62"
+    },
+    {
+     "ask": 0.23,
+     "bid": 0.22,
+     "direction": "under",
+     "entered": "2026-11-28T00:00:34.690727+00:00",
+     "game": "MIL @ DET",
+     "game_id": "401909327",
+     "id": "qlines_4Q_under_blind:KXNBA4QTOTAL-26NOV27MILDET-62",
+     "lead_min": 29.4,
+     "line": 62.5,
+     "night": "2026-11-27",
+     "offset": 1,
+     "price": 0.78,
+     "rule": "qlines_4Q_under_blind",
+     "rung": 61.5,
+     "section": "4Q",
+     "side": "no",
+     "start": "2026-11-28T00:30:00+00:00",
+     "status": "open",
+     "teams": {
+      "DET": "14/17",
+      "MIL": "15/19"
+     },
+     "ticker": "KXNBA4QTOTAL-26NOV27MILDET-62"
+    },
+    {
+     "ask": 0.22,
+     "bid": 0.17,
+     "direction": "under",
+     "entered": "2026-11-28T00:00:34.690727+00:00",
+     "game": "PHI @ IND",
+     "game_id": "401909328",
+     "id": "qlines_4Q_under_blind:KXNBA4QTOTAL-26NOV27PHIIND-62",
+     "lead_min": 29.4,
+     "line": 62.5,
+     "night": "2026-11-27",
+     "offset": 1,
+     "price": 0.83,
+     "rule": "qlines_4Q_under_blind",
+     "rung": 61.5,
+     "section": "4Q",
+     "side": "no",
+     "start": "2026-11-28T00:30:00+00:00",
+     "status": "open",
+     "teams": {
+      "IND": "13/18",
+      "PHI": "16/19"
+     },
+     "ticker": "KXNBA4QTOTAL-26NOV27PHIIND-62"
+    },
+    {
+     "ask": 0.13,
+     "bid": 0.08,
+     "direction": "under",
+     "entered": "2026-11-28T00:00:34.690727+00:00",
+     "game": "BKN @ TOR",
+     "game_id": "401909329",
+     "id": "qlines_4Q_under_blind:KXNBA4QTOTAL-26NOV27BKNTOR-63",
+     "lead_min": 29.4,
+     "line": 62.5,
+     "night": "2026-11-27",
+     "offset": 0,
+     "price": 0.92,
+     "rule": "qlines_4Q_under_blind",
+     "rung": 62.5,
+     "section": "4Q",
+     "side": "no",
+     "start": "2026-11-28T00:30:00+00:00",
+     "status": "open",
+     "teams": {
+      "BKN": "13/17",
+      "TOR": "15/17"
+     },
+     "ticker": "KXNBA4QTOTAL-26NOV27BKNTOR-63"
     }
    ]
   }
@@ -9851,6 +10934,12 @@
    "due": 1,
    "games": 0,
    "new": 16
+  },
+  {
+   "at": "2026-11-28T00:00:34.690727+00:00",
+   "due": 3,
+   "games": 0,
+   "new": 39
   }
  ],
  "schedule": [
