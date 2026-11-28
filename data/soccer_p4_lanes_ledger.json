@@ -1,6 +1,6 @@
 {
  "error": null,
- "last_run": "2026-11-28T03:00:33.073152+00:00",
+ "last_run": "2026-11-28T04:00:38.524917+00:00",
  "matches": [
   {
    "day": "2026-11-19",
@@ -3814,6 +3814,101 @@
    "logged": "2026-11-27T23:00:32.783840+00:00",
    "timed": 3,
    "title": "Maritimo v C.D. Nacional",
+   "version": "soccerp4-v1"
+  },
+  {
+   "day": "2026-11-27",
+   "entries": [
+    {
+     "ask": 0.64,
+     "bid": 0.63,
+     "kind": "GAME",
+     "maker": {
+      "cost": 0.64,
+      "filled": true,
+      "roi": -1.0
+     },
+     "mom": "pre",
+     "name": "Columbus",
+     "score": "0-0",
+     "side": "no",
+     "taker": {
+      "cost": 0.66,
+      "depth": 22049.02,
+      "filled": true,
+      "roi": -1.0
+     },
+     "team": "home",
+     "ticker": "KXMLSGAME-26NOV27CLBMIA-CLB",
+     "ts": 1795824000,
+     "v2": true,
+     "won": false
+    },
+    {
+     "ask": 0.6,
+     "bid": 0.59,
+     "kind": "GAME",
+     "maker": {
+      "cost": 0.6,
+      "filled": false,
+      "roi": null
+     },
+     "mom": "pre",
+     "name": "Miami",
+     "score": "0-0",
+     "side": "no",
+     "taker": {
+      "cost": 0.62,
+      "depth": 16871.66,
+      "filled": true,
+      "roi": 0.6129
+     },
+     "team": "away",
+     "ticker": "KXMLSGAME-26NOV27CLBMIA-MIA",
+     "ts": 1795824000,
+     "v2": true,
+     "won": true
+    },
+    {
+     "ask": 0.9,
+     "bid": 0.89,
+     "kind": "TOTAL",
+     "maker": {
+      "cost": 0.9,
+      "filled": true,
+      "roi": 0.1111
+     },
+     "mom": "m75",
+     "name": "Over 1.5 goals scored",
+     "score": "0-0",
+     "side": "no",
+     "strike": 1.5,
+     "taker": {
+      "cost": 0.91,
+      "depth": 1268.74,
+      "filled": true,
+      "roi": 0.0989
+     },
+     "team": null,
+     "ticker": "KXMLSTOTAL-26NOV27CLBMIA-2",
+     "ts": 1795834515,
+     "v2": true,
+     "won": true
+    }
+   ],
+   "espn_id": "401933727",
+   "event": "KXMLSGAME-26NOV27CLBMIA",
+   "goals": 1,
+   "ht": 1795831815,
+   "ko": 1795827600,
+   "labels": {
+    "away": "O+D-",
+    "home": "O+D-"
+   },
+   "league": "MLS",
+   "logged": "2026-11-28T04:00:38.524917+00:00",
+   "timed": 1,
+   "title": "Columbus Crew v Inter Miami CF",
    "version": "soccerp4-v1"
   }
  ],
