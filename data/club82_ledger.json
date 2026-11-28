@@ -304,13 +304,6 @@
    },
    {
     "median": 0.0,
-    "n": 18,
-    "name": "Real Betis",
-    "rate": 0.5,
-    "safe": 0.5
-   },
-   {
-    "median": 0.0,
     "n": 12,
     "name": "Sassuolo",
     "rate": 0.5,
@@ -605,10 +598,17 @@
    },
    {
     "median": -0.5,
-    "n": 12,
+    "n": 13,
     "name": "Rayo Vallecano",
-    "rate": 0.3333,
+    "rate": 0.3077,
     "safe": null
+   },
+   {
+    "median": -0.5,
+    "n": 19,
+    "name": "Real Betis",
+    "rate": 0.4737,
+    "safe": 0.5
    },
    {
     "median": -0.5,
@@ -985,9 +985,9 @@
    },
    {
     "median": 1.5,
-    "n": 18,
+    "n": 19,
     "name": "Real Betis",
-    "rate": 0.7222,
+    "rate": 0.7368,
     "safe": 5.5
    },
    {
@@ -1251,9 +1251,9 @@
    },
    {
     "median": 0.5,
-    "n": 12,
+    "n": 13,
     "name": "Rayo Vallecano",
-    "rate": 0.75,
+    "rate": 0.7692,
     "safe": 5.5
    },
    {
@@ -1560,8 +1560,8 @@
   ]
  },
  "error": null,
- "games_through": "2026-11-27",
- "last_run": "2026-11-28T14:30:29.180669+00:00",
+ "games_through": "2026-11-28",
+ "last_run": "2026-11-28T15:00:30.620325+00:00",
  "registered": "2026-11-23",
  "rules": {
   "club82_tt15": {
@@ -4849,10 +4849,14 @@
    "at": "2026-11-28T14:30:29.180669+00:00",
    "due": 1,
    "new": 0
+  },
+  {
+   "at": "2026-11-28T15:00:30.620325+00:00",
+   "due": 0,
+   "new": 0
   }
  ],
  "schedule": [
-  "2026-11-28T14:30Z",
   "2026-11-28T15:00Z",
   "2026-11-28T15:15Z",
   "2026-11-28T16:15Z",
@@ -4901,10 +4905,10 @@
    },
    {
     "hits": 4,
-    "n": 12,
+    "n": 13,
     "name": "Rayo Vallecano",
     "qualifies": false,
-    "rate": 0.3333333333333333,
+    "rate": 0.3076923076923077,
     "since": null
    },
    {
@@ -5005,10 +5009,10 @@
    },
    {
     "hits": 9,
-    "n": 18,
+    "n": 19,
     "name": "Real Betis",
     "qualifies": false,
-    "rate": 0.5,
+    "rate": 0.47368421052631576,
     "since": null
    },
    {
@@ -5790,11 +5794,11 @@
     "since": null
    },
    {
-    "hits": 9,
-    "n": 12,
+    "hits": 10,
+    "n": 13,
     "name": "Rayo Vallecano",
     "qualifies": false,
-    "rate": 0.75,
+    "rate": 0.7692307692307693,
     "since": null
    },
    {
@@ -5894,11 +5898,11 @@
     "since": null
    },
    {
-    "hits": 13,
-    "n": 18,
+    "hits": 14,
+    "n": 19,
     "name": "Real Betis",
     "qualifies": false,
-    "rate": 0.7222222222222222,
+    "rate": 0.7368421052631579,
     "since": null
    },
    {
