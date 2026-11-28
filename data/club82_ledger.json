@@ -1561,7 +1561,7 @@
  },
  "error": null,
  "games_through": "2026-11-28",
- "last_run": "2026-11-28T16:00:37.461926+00:00",
+ "last_run": "2026-11-28T16:15:29.054739+00:00",
  "registered": "2026-11-23",
  "rules": {
   "club82_tt15": {
@@ -3563,6 +3563,58 @@
      "team": "Lens",
      "team_side": "away",
      "ticker": "KXLIGUE1TEAMTOTAL-26NOV28ANGRCL-RCL2"
+    },
+    {
+     "ask": 0.31,
+     "bid": 0.3,
+     "event": "KXSERIEATEAMTOTAL-26NOV28TORLAZ",
+     "id": "club82_tt15_blind:KXSERIEATEAMTOTAL-26NOV28TORLAZ:home",
+     "kind": "tt15",
+     "lead_min": 44.5,
+     "league": "Serie A",
+     "line": 1.5,
+     "logged": "2026-11-28T16:15:29.054739+00:00",
+     "match": "Torino v Lazio",
+     "opponent": "Lazio",
+     "price": 0.31,
+     "qualifying": false,
+     "rates": {
+      "away": "9/12",
+      "home": "4/12"
+     },
+     "rule": "club82_tt15_blind",
+     "side": "yes",
+     "start": "2026-11-28T17:00Z",
+     "status": "open",
+     "team": "Torino",
+     "team_side": "home",
+     "ticker": "KXSERIEATEAMTOTAL-26NOV28TORLAZ-TOR2"
+    },
+    {
+     "ask": 0.48,
+     "bid": 0.47,
+     "event": "KXSERIEATEAMTOTAL-26NOV28TORLAZ",
+     "id": "club82_tt15_blind:KXSERIEATEAMTOTAL-26NOV28TORLAZ:away",
+     "kind": "tt15",
+     "lead_min": 44.5,
+     "league": "Serie A",
+     "line": 1.5,
+     "logged": "2026-11-28T16:15:29.054739+00:00",
+     "match": "Torino v Lazio",
+     "opponent": "Torino",
+     "price": 0.48,
+     "qualifying": false,
+     "rates": {
+      "away": "9/12",
+      "home": "4/12"
+     },
+     "rule": "club82_tt15_blind",
+     "side": "yes",
+     "start": "2026-11-28T17:00Z",
+     "status": "open",
+     "team": "Lazio",
+     "team_side": "away",
+     "ticker": "KXSERIEATEAMTOTAL-26NOV28TORLAZ-LAZ2"
     }
    ]
   },
@@ -3706,6 +3758,32 @@
      "start": "2026-11-28T15:00Z",
      "status": "open",
      "ticker": "KXEPLTOTAL-26NOV28LEECOV-4"
+    },
+    {
+     "ask": 0.3,
+     "bid": 0.29,
+     "event": "KXSERIEATOTAL-26NOV28TORLAZ",
+     "id": "club82_u35:KXSERIEATOTAL-26NOV28TORLAZ",
+     "kind": "u35",
+     "lead_min": 44.5,
+     "league": "Serie A",
+     "line": 3.5,
+     "logged": "2026-11-28T16:15:29.054739+00:00",
+     "match": "Torino v Lazio",
+     "matches": "club82_u35_blind:KXSERIEATOTAL-26NOV28TORLAZ",
+     "price": 0.71,
+     "qualifying_teams": [
+      "Torino"
+     ],
+     "rates": {
+      "away": "9/12",
+      "home": "10/12"
+     },
+     "rule": "club82_u35",
+     "side": "no",
+     "start": "2026-11-28T17:00Z",
+     "status": "open",
+     "ticker": "KXSERIEATOTAL-26NOV28TORLAZ-4"
     }
    ]
   },
@@ -4544,6 +4622,29 @@
      "start": "2026-11-28T16:15Z",
      "status": "open",
      "ticker": "KXLIGUE1TOTAL-26NOV28ANGRCL-4"
+    },
+    {
+     "ask": 0.3,
+     "bid": 0.29,
+     "event": "KXSERIEATOTAL-26NOV28TORLAZ",
+     "id": "club82_u35_blind:KXSERIEATOTAL-26NOV28TORLAZ",
+     "kind": "u35",
+     "lead_min": 44.5,
+     "league": "Serie A",
+     "line": 3.5,
+     "logged": "2026-11-28T16:15:29.054739+00:00",
+     "match": "Torino v Lazio",
+     "price": 0.71,
+     "qualifying": true,
+     "rates": {
+      "away": "9/12",
+      "home": "10/12"
+     },
+     "rule": "club82_u35_blind",
+     "side": "no",
+     "start": "2026-11-28T17:00Z",
+     "status": "open",
+     "ticker": "KXSERIEATOTAL-26NOV28TORLAZ-4"
     }
    ]
   },
@@ -4641,6 +4742,34 @@
      "ticker": "KXEPLTOTAL-26NOV28LEECOV-4",
      "v1_line": 3.5,
      "value": 0.1132
+    },
+    {
+     "ask": 0.3,
+     "bid": 0.29,
+     "event": "KXSERIEATOTAL-26NOV28TORLAZ",
+     "games": 12,
+     "id": "club82_v2_u35_cushion:KXSERIEATOTAL-26NOV28TORLAZ-4",
+     "kind": "u35",
+     "kind_v2": "cushion",
+     "lead_min": 44.5,
+     "league": "Serie A",
+     "line": 3.5,
+     "logged": "2026-11-28T16:15:29.054739+00:00",
+     "match": "Torino v Lazio",
+     "price": 0.71,
+     "qualifying_teams": [
+      "Torino"
+     ],
+     "rate": 0.8333,
+     "rated_team": "Torino",
+     "rule": "club82_v2_u35_cushion",
+     "rung": 3.5,
+     "side": "no",
+     "start": "2026-11-28T17:00Z",
+     "status": "open",
+     "ticker": "KXSERIEATOTAL-26NOV28TORLAZ-4",
+     "v1_line": 3.5,
+     "value": 0.1088
     }
    ]
   },
@@ -4732,6 +4861,34 @@
      "ticker": "KXEPLTOTAL-26NOV28LEECOV-4",
      "v1_line": 3.5,
      "value": 0.1132
+    },
+    {
+     "ask": 0.3,
+     "bid": 0.29,
+     "event": "KXSERIEATOTAL-26NOV28TORLAZ",
+     "games": 12,
+     "id": "club82_v2_u35_value:KXSERIEATOTAL-26NOV28TORLAZ-4",
+     "kind": "u35",
+     "kind_v2": "value",
+     "lead_min": 44.5,
+     "league": "Serie A",
+     "line": 3.5,
+     "logged": "2026-11-28T16:15:29.054739+00:00",
+     "match": "Torino v Lazio",
+     "price": 0.71,
+     "qualifying_teams": [
+      "Torino"
+     ],
+     "rate": 0.8333,
+     "rated_team": "Torino",
+     "rule": "club82_v2_u35_value",
+     "rung": 3.5,
+     "side": "no",
+     "start": "2026-11-28T17:00Z",
+     "status": "open",
+     "ticker": "KXSERIEATOTAL-26NOV28TORLAZ-4",
+     "v1_line": 3.5,
+     "value": 0.1088
     }
    ]
   }
@@ -4966,6 +5123,11 @@
    "at": "2026-11-28T16:00:37.461926+00:00",
    "due": 0,
    "new": 0
+  },
+  {
+   "at": "2026-11-28T16:15:29.054739+00:00",
+   "due": 1,
+   "new": 6
   }
  ],
  "schedule": [
