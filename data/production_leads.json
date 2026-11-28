@@ -1,5 +1,5 @@
 {
- "board_built_at": "2026-11-28T16:10:18+00:00",
+ "board_built_at": "2026-11-28T16:20:30+00:00",
  "corners_selections": {
   "kalshi:26NOV24RMAPSV": "2026-11-24|Real Madrid|PSV Eindhoven|10+ corners \u00b7 Corners total fade, Champions League",
   "kalshi:26NOV25SPOMUN": "2026-11-25|Sporting CP|Manchester United|7+ corners \u00b7 Corners total fade, Champions League",
@@ -918,6 +918,43 @@
    "sport": "soccer_p05",
    "status": "miss"
   },
+  "2026-11-28|Houston Dynamo FC|San Jose Earthquakes|San Jose Earthquakes +0.5 (Houston Dynamo FC not to win) \u00b7 MLS: fade the home side priced 0.40-0.45": {
+   "away": "San Jose Earthquakes",
+   "bet": {
+    "kind": "win_no",
+    "team": "Houston Dynamo FC"
+   },
+   "date": "2026-11-28",
+   "edge_at_log": null,
+   "first_seen": "2026-11-28",
+   "headline": "San Jose Earthquakes +0.5 (Houston Dynamo FC not to win)",
+   "home": "Houston Dynamo FC",
+   "id": "2026-11-28|Houston Dynamo FC|San Jose Earthquakes|San Jose Earthquakes +0.5 (Houston Dynamo FC not to win) \u00b7 MLS: fade the home side priced 0.40-0.45",
+   "kickoff": "2026-11-28T19:30Z",
+   "lane": "production",
+   "last_seen": "2026-11-28",
+   "last_seen_at": "2026-11-28T16:20:30+00:00",
+   "league": "MLS",
+   "match": "Houston Dynamo FC v San Jose Earthquakes",
+   "pair": "mls_fade_home|soccer_p05",
+   "price_at_log": 0.56,
+   "published_at": "2026-11-28T16:20:30+00:00",
+   "published_late": false,
+   "published_min_before_kickoff": 189,
+   "route": {
+    "claim": "San Jose Earthquakes +0.5 (Houston Dynamo FC not to win)",
+    "event": "KXMLSGAME-26NOV28HOUSJ",
+    "market": "KXMLSGAME-26NOV28HOUSJ-HOU",
+    "outcome": "Houston",
+    "outcome_side": "no",
+    "price_at_log": 0.56,
+    "venue": "kalshi"
+   },
+   "sandbox_quote": "mls_fade_home:KXMLSGAME-26NOV28HOUSJ-HOU",
+   "source": "mls_fade_home",
+   "sport": "soccer_p05",
+   "status": "pending"
+  },
   "2026-11-29|Portland Timbers|FC Dallas|FC Dallas +0.5 (Portland Timbers not to win) \u00b7 MLS: fade the home side priced 0.40-0.45": {
    "away": "FC Dallas",
    "bet": {
@@ -933,7 +970,7 @@
    "kickoff": "2026-11-29T03:30Z",
    "lane": "production",
    "last_seen": "2026-11-28",
-   "last_seen_at": "2026-11-28T16:10:18+00:00",
+   "last_seen_at": "2026-11-28T16:20:30+00:00",
    "league": "MLS",
    "match": "Portland Timbers v FC Dallas",
    "pair": "mls_fade_home|soccer_p05",
@@ -970,7 +1007,7 @@
    "kickoff": "2026-12-01T17:00Z",
    "lane": "production",
    "last_seen": "2026-11-28",
-   "last_seen_at": "2026-11-28T16:10:18+00:00",
+   "last_seen_at": "2026-11-28T16:20:30+00:00",
    "league": "DFB Pokal",
    "match": "Holstein Kiel v FC Cologne",
    "pair": "u35_low_scoring|soccer_u35_cup",
@@ -1076,9 +1113,9 @@
    "ready_at": "2026-10-16T17:17:38+00:00",
    "route": "moved by hand on 2026-10-16",
    "routing": {
-    "leads": 4,
+    "leads": 5,
     "problem": null,
-    "routed": 4,
+    "routed": 5,
     "unlisted": 0,
     "unrouted": 0,
     "unverified": 0,
@@ -1090,7 +1127,7 @@
    "sandbox_roi_fee": 0.0034,
    "timing": {
     "late": [],
-    "timed": 1,
+    "timed": 2,
     "under_target": 0
    }
   },
@@ -1234,5 +1271,5 @@
  "stage": "production",
  "unlisted_skipped": 0,
  "unverified_kickoff_skipped": 0,
- "updated_at": "2026-11-28T16:10:18+00:00"
+ "updated_at": "2026-11-28T16:20:30+00:00"
 }
