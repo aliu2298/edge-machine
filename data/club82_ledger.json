@@ -129,9 +129,9 @@
    },
    {
     "median": 0.5,
-    "n": 12,
+    "n": 13,
     "name": "Frosinone",
-    "rate": 0.5833,
+    "rate": 0.6154,
     "safe": null
    },
    {
@@ -591,9 +591,9 @@
    },
    {
     "median": -0.5,
-    "n": 12,
+    "n": 13,
     "name": "Parma",
-    "rate": 0.1667,
+    "rate": 0.1538,
     "safe": null
    },
    {
@@ -1139,9 +1139,9 @@
    },
    {
     "median": 0.5,
-    "n": 12,
+    "n": 13,
     "name": "Frosinone",
-    "rate": 0.5833,
+    "rate": 0.6154,
     "safe": 6.5
    },
    {
@@ -1244,9 +1244,9 @@
    },
    {
     "median": 0.5,
-    "n": 12,
+    "n": 13,
     "name": "Parma",
-    "rate": 0.9167,
+    "rate": 0.9231,
     "safe": 3.5
    },
    {
@@ -1561,7 +1561,7 @@
  },
  "error": null,
  "games_through": "2026-11-28",
- "last_run": "2026-11-28T15:30:27.953680+00:00",
+ "last_run": "2026-11-28T16:00:37.461926+00:00",
  "registered": "2026-11-23",
  "rules": {
   "club82_tt15": {
@@ -3102,16 +3102,19 @@
      "logged": "2026-11-28T13:15:33.895271+00:00",
      "match": "Frosinone v Parma",
      "opponent": "Parma",
+     "payout": 1.0,
      "price": 0.73,
+     "profit": 34.45,
      "qualifying": false,
      "rates": {
       "away": "2/12",
       "home": "7/12"
      },
      "rule": "club82_tt15_blind",
+     "settled": "2026-11-28T16:00:37.461926+00:00",
      "side": "yes",
      "start": "2026-11-28T14:00Z",
-     "status": "open",
+     "status": "won",
      "team": "Frosinone",
      "team_side": "home",
      "ticker": "KXSERIEATEAMTOTAL-26NOV28FROPAR-FRO2"
@@ -3128,16 +3131,19 @@
      "logged": "2026-11-28T13:15:33.895271+00:00",
      "match": "Frosinone v Parma",
      "opponent": "Frosinone",
+     "payout": 0.0,
      "price": 0.29,
+     "profit": -100.0,
      "qualifying": false,
      "rates": {
       "away": "2/12",
       "home": "7/12"
      },
      "rule": "club82_tt15_blind",
+     "settled": "2026-11-28T16:00:37.461926+00:00",
      "side": "yes",
      "start": "2026-11-28T14:00Z",
-     "status": "open",
+     "status": "lost",
      "team": "Parma",
      "team_side": "away",
      "ticker": "KXSERIEATEAMTOTAL-26NOV28FROPAR-PAR2"
@@ -3632,7 +3638,9 @@
      "logged": "2026-11-28T13:15:33.895271+00:00",
      "match": "Frosinone v Parma",
      "matches": "club82_u35_blind:KXSERIEATOTAL-26NOV28FROPAR",
+     "payout": 1.0,
      "price": 0.51,
+     "profit": 89.58,
      "qualifying_teams": [
       "Parma"
      ],
@@ -3641,9 +3649,10 @@
       "home": "7/12"
      },
      "rule": "club82_u35",
+     "settled": "2026-11-28T16:00:37.461926+00:00",
      "side": "no",
      "start": "2026-11-28T14:00Z",
-     "status": "open",
+     "status": "won",
      "ticker": "KXSERIEATOTAL-26NOV28FROPAR-4"
     },
     {
@@ -4337,16 +4346,19 @@
      "line": 3.5,
      "logged": "2026-11-28T13:15:33.895271+00:00",
      "match": "Frosinone v Parma",
+     "payout": 1.0,
      "price": 0.51,
+     "profit": 89.58,
      "qualifying": true,
      "rates": {
       "away": "11/12",
       "home": "7/12"
      },
      "rule": "club82_u35_blind",
+     "settled": "2026-11-28T16:00:37.461926+00:00",
      "side": "no",
      "start": "2026-11-28T14:00Z",
-     "status": "open",
+     "status": "won",
      "ticker": "KXSERIEATOTAL-26NOV28FROPAR-4"
     },
     {
@@ -4556,7 +4568,9 @@
      "line": 3.5,
      "logged": "2026-11-28T13:15:33.895271+00:00",
      "match": "Frosinone v Parma",
+     "payout": 1.0,
      "price": 0.51,
+     "profit": 89.58,
      "qualifying_teams": [
       "Parma"
      ],
@@ -4564,9 +4578,10 @@
      "rated_team": "Parma",
      "rule": "club82_v2_u35_cushion",
      "rung": 3.5,
+     "settled": "2026-11-28T16:00:37.461926+00:00",
      "side": "no",
      "start": "2026-11-28T14:00Z",
-     "status": "open",
+     "status": "won",
      "ticker": "KXSERIEATOTAL-26NOV28FROPAR-4",
      "v1_line": 3.5,
      "value": 0.3892
@@ -4644,7 +4659,9 @@
      "line": 3.5,
      "logged": "2026-11-28T13:15:33.895271+00:00",
      "match": "Frosinone v Parma",
+     "payout": 1.0,
      "price": 0.51,
+     "profit": 89.58,
      "qualifying_teams": [
       "Parma"
      ],
@@ -4652,9 +4669,10 @@
      "rated_team": "Parma",
      "rule": "club82_v2_u35_value",
      "rung": 3.5,
+     "settled": "2026-11-28T16:00:37.461926+00:00",
      "side": "no",
      "start": "2026-11-28T14:00Z",
-     "status": "open",
+     "status": "won",
      "ticker": "KXSERIEATOTAL-26NOV28FROPAR-4",
      "v1_line": 3.5,
      "value": 0.3892
@@ -4943,6 +4961,11 @@
    "at": "2026-11-28T15:30:27.953680+00:00",
    "due": 1,
    "new": 3
+  },
+  {
+   "at": "2026-11-28T16:00:37.461926+00:00",
+   "due": 0,
+   "new": 0
   }
  ],
  "schedule": [
@@ -5313,10 +5336,10 @@
    },
    {
     "hits": 2,
-    "n": 12,
+    "n": 13,
     "name": "Parma",
     "qualifies": false,
-    "rate": 0.16666666666666666,
+    "rate": 0.15384615384615385,
     "since": null
    },
    {
@@ -5448,11 +5471,11 @@
     "since": null
    },
    {
-    "hits": 7,
-    "n": 12,
+    "hits": 8,
+    "n": 13,
     "name": "Frosinone",
     "qualifies": false,
-    "rate": 0.5833333333333334,
+    "rate": 0.6153846153846154,
     "since": null
    },
    {
@@ -6202,11 +6225,11 @@
     "since": "2026-10-25"
    },
    {
-    "hits": 11,
-    "n": 12,
+    "hits": 12,
+    "n": 13,
     "name": "Parma",
     "qualifies": true,
-    "rate": 0.9166666666666666,
+    "rate": 0.9230769230769231,
     "since": "2026-10-24"
    },
    {
@@ -6338,11 +6361,11 @@
     "since": null
    },
    {
-    "hits": 7,
-    "n": 12,
+    "hits": 8,
+    "n": 13,
     "name": "Frosinone",
     "qualifies": false,
-    "rate": 0.5833333333333334,
+    "rate": 0.6153846153846154,
     "since": null
    },
    {
