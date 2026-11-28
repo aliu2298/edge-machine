@@ -1,5 +1,5 @@
 {
- "generated": "2026-11-28T16:07Z",
+ "generated": "2026-11-28T17:07Z",
  "lane_note": "own-state lanes: each entry as a trade after fees (the lane's own fill, the sells it logged, the unsold remainder at the market's settled result); a bet is flat when exited at cost (within +-2% before or after fees), won above +2% after fees, else lost. Entries with a tip before 2026-11-06 18:07Z are reconstructed from the exchange order list; later ones use the sell fills the follower logged",
  "lanes": {
   "arg_dip": [],
@@ -7544,7 +7544,7 @@
      "r": -1.0,
      "side": "no",
      "st": "lost",
-     "w": 1.05
+     "w": 1.03
     },
     {
      "id": "mls_fade_home:KXMLSGAME-26OCT17NECHI-NE",
@@ -7552,7 +7552,7 @@
      "r": -1.0,
      "side": "no",
      "st": "lost",
-     "w": 1.02
+     "w": 1.0
     },
     {
      "id": "mls_fade_home:KXMLSGAME-26OCT17HOUDAL-HOU",
@@ -7560,7 +7560,7 @@
      "r": 0.6748,
      "side": "no",
      "st": "won",
-     "w": 0.98
+     "w": 0.97
     },
     {
      "id": "mls_fade_home:KXMLSGAME-26OCT17LAGSD-LAG",
@@ -7568,7 +7568,7 @@
      "r": 0.7624,
      "side": "no",
      "st": "won",
-     "w": 0.93
+     "w": 0.92
     },
     {
      "id": "mls_fade_home:KXMLSGAME-26OCT17PORCOL-POR",
@@ -7576,7 +7576,7 @@
      "r": 0.7624,
      "side": "no",
      "st": "won",
-     "w": 0.93
+     "w": 0.92
     },
     {
      "id": "mls_fade_home:KXMLSGAME-26OCT18CINCLB-CIN",
@@ -7584,7 +7584,7 @@
      "r": 0.6213,
      "side": "no",
      "st": "won",
-     "w": 1.02
+     "w": 1.0
     },
     {
      "id": "mls_fade_home:KXMLSGAME-26OCT24ORLNYC-ORL",
@@ -7592,7 +7592,7 @@
      "r": 0.6748,
      "side": "no",
      "st": "won",
-     "w": 0.98
+     "w": 0.97
     },
     {
      "id": "mls_fade_home:KXMLSGAME-26OCT24HOUMIN-HOU",
@@ -7600,7 +7600,7 @@
      "r": 0.7322,
      "side": "no",
      "st": "won",
-     "w": 0.95
+     "w": 0.94
     },
     {
      "id": "mls_fade_home:KXMLSGAME-26OCT24SKCATX-SKC",
@@ -7608,7 +7608,7 @@
      "r": 0.7322,
      "side": "no",
      "st": "won",
-     "w": 0.95
+     "w": 0.94
     },
     {
      "id": "mls_fade_home:KXMLSGAME-26OCT24RSLSTL-RSL",
@@ -7616,7 +7616,7 @@
      "r": -1.0,
      "side": "no",
      "st": "lost",
-     "w": 1.02
+     "w": 1.0
     },
     {
      "id": "mls_fade_home:KXMLSGAME-26OCT24SDSEA-SD",
@@ -7624,7 +7624,7 @@
      "r": 0.703,
      "side": "no",
      "st": "won",
-     "w": 0.97
+     "w": 0.95
     },
     {
      "id": "mls_fade_home:KXMLSGAME-26OCT28DALCLB-DAL",
@@ -7632,7 +7632,7 @@
      "r": 0.8605,
      "side": "no",
      "st": "won",
-     "w": 0.89
+     "w": 0.87
     },
     {
      "id": "mls_fade_home:KXMLSGAME-26OCT28SJCOL-SJ",
@@ -7640,7 +7640,7 @@
      "r": 0.7322,
      "side": "no",
      "st": "won",
-     "w": 0.95
+     "w": 0.94
     },
     {
      "id": "mls_fade_home:KXMLSGAME-26OCT31CINPHI-CIN",
@@ -7648,7 +7648,7 @@
      "r": -1.0,
      "side": "no",
      "st": "lost",
-     "w": 1.02
+     "w": 1.0
     },
     {
      "id": "mls_fade_home:KXMLSGAME-26OCT31SJRSL-SJ",
@@ -7656,7 +7656,7 @@
      "r": -1.0,
      "side": "no",
      "st": "lost",
-     "w": 1.0
+     "w": 0.98
     },
     {
      "id": "mls_fade_home:KXMLSGAME-26OCT31COLCHI-COL",
@@ -7664,7 +7664,7 @@
      "r": 0.6474,
      "side": "no",
      "st": "won",
-     "w": 1.0
+     "w": 0.98
     },
     {
      "id": "mls_fade_home:KXMLSGAME-26NOV01ATLTOR-ATL",
@@ -7672,7 +7672,7 @@
      "r": -1.0,
      "side": "no",
      "st": "lost",
-     "w": 0.97
+     "w": 0.95
     },
     {
      "id": "mls_fade_home:KXMLSGAME-26NOV07HOUSTL-HOU",
@@ -7680,7 +7680,7 @@
      "r": 0.6213,
      "side": "no",
      "st": "won",
-     "w": 16.26
+     "w": 16.0
     },
     {
      "id": "mls_fade_home:KXMLSGAME-26NOV19ORLCIN-ORL",
@@ -7688,7 +7688,7 @@
      "r": 0.5959,
      "side": "no",
      "st": "won",
-     "w": 15.48
+     "w": 15.24
     },
     {
      "id": "mls_fade_home:KXMLSGAME-26NOV23STLLAFC-STL",
@@ -7696,7 +7696,7 @@
      "r": -1.0,
      "side": "no",
      "st": "lost",
-     "w": 16.26
+     "w": 16.0
     },
     {
      "id": "mls_fade_home:KXMLSGAME-26NOV24SJHOU-SJ",
@@ -7704,7 +7704,7 @@
      "r": -1.0,
      "side": "no",
      "st": "lost",
-     "w": 15.89
+     "w": 15.64
     },
     {
      "id": "mls_fade_home:KXMLSGAME-26NOV27CLBMIA-CLB",
@@ -7712,7 +7712,15 @@
      "r": -1.0,
      "side": "no",
      "st": "lost",
-     "w": 15.74
+     "w": 15.49
+    },
+    {
+     "id": "mls_fade_home:KXMLSGAME-26NOV28HOUSJ-HOU",
+     "ko": "2026-11-28T19:30",
+     "r": null,
+     "side": "no",
+     "st": "open",
+     "w": 15.91
     },
     {
      "id": "mls_fade_home:KXMLSGAME-26NOV28PORDAL-POR",
@@ -7720,7 +7728,7 @@
      "r": null,
      "side": "no",
      "st": "open",
-     "w": 16.17
+     "w": 15.91
     }
    ],
    "refused": {}
@@ -8078,9 +8086,9 @@
     {
      "id": "st_t7:KXEPLTEAMTOTAL-26NOV28LEECOV-LEE3",
      "ko": "2026-11-28T15:00",
-     "r": null,
+     "r": -1.0,
      "side": "no",
-     "st": "open",
+     "st": "lost",
      "w": 12.93
     }
    ],
