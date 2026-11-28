@@ -1,6 +1,6 @@
 {
  "error": null,
- "last_run": "2026-11-28T16:31:45.131084+00:00",
+ "last_run": "2026-11-28T17:17:16.381143+00:00",
  "rules": {
   "T1": {
    "picks": [
@@ -4194,11 +4194,14 @@
      "logged": "2026-11-28T13:32:23.699924+00:00",
      "match": "Manchester United v Brentford",
      "opponent": "Manchester United",
+     "payout": 1.0,
      "price": 0.45,
+     "profit": 113.98,
      "rule": "T4",
+     "settled": "2026-11-28T17:17:16.381143+00:00",
      "side": "yes",
      "start": "2026-11-28T15:00Z",
-     "status": "open",
+     "status": "won",
      "sub": "Brentford over 1.5 goals",
      "team": "Brentford",
      "team_side": "away",
@@ -5922,11 +5925,14 @@
      "logged": "2026-11-28T13:32:23.699924+00:00",
      "match": "Leeds United v Coventry City",
      "opponent": "Coventry City",
+     "payout": 0.0,
      "price": 0.69,
+     "profit": -100.0,
      "rule": "T7",
+     "settled": "2026-11-28T17:17:16.381143+00:00",
      "side": "no",
      "start": "2026-11-28T15:00Z",
-     "status": "open",
+     "status": "lost",
      "sub": "Leeds United over 2.5 goals",
      "team": "Leeds United",
      "team_side": "home",
@@ -5949,11 +5955,14 @@
      "logged": "2026-11-28T13:32:23.699924+00:00",
      "match": "Leeds United v Coventry City",
      "opponent": "Leeds United",
+     "payout": 1.0,
      "price": 0.96,
+     "profit": 3.88,
      "rule": "T7",
+     "settled": "2026-11-28T17:17:16.381143+00:00",
      "side": "no",
      "start": "2026-11-28T15:00Z",
-     "status": "open",
+     "status": "won",
      "sub": "Coventry over 2.5 goals",
      "team": "Coventry City",
      "team_side": "away",
@@ -6354,14 +6363,6 @@
  },
  "runs": [
   {
-   "at": "2026-11-24T00:02:25.668552+00:00",
-   "candidates": 1,
-   "due": 1,
-   "labelled": 1,
-   "matched": 1,
-   "new": 0
-  },
-  {
    "at": "2026-11-24T16:17:11.994242+00:00",
    "candidates": 0,
    "due": 2,
@@ -6759,6 +6760,14 @@
    "due": 5,
    "labelled": 5,
    "matched": 3,
+   "new": 0
+  },
+  {
+   "at": "2026-11-28T17:17:16.381143+00:00",
+   "candidates": 0,
+   "due": 0,
+   "labelled": 0,
+   "matched": 0,
    "new": 0
   }
  ],
