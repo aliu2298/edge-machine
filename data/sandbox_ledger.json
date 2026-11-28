@@ -8,10 +8,10 @@
   },
   "commodities": {
    "cmd_market": {
-    "offered": 210,
-    "picked": 210
+    "offered": 250,
+    "picked": 250
    },
-   "kalshi_venue": 210
+   "kalshi_venue": 250
   },
   "commodities_fav": {
    "kalshi_venue": 240
@@ -33,7 +33,7 @@
    "kalshi_venue": 275
   },
   "economics": {
-   "kalshi_venue": 27
+   "kalshi_venue": 8
   },
   "finance": {
    "kalshi_venue": 30
@@ -61,7 +61,7 @@
     "offered": 8,
     "picked": 1
    },
-   "kalshi_venue": 267,
+   "kalshi_venue": 226,
    "polymarket_us": 0,
    "polymarket_us_listed": 0,
    "polymarket_us_priced": 0
@@ -79,10 +79,10 @@
   },
   "soccer_btts_cup": {
    "btts_market": {
-    "offered": 35,
-    "picked": 35
+    "offered": 34,
+    "picked": 34
    },
-   "kalshi_venue": 35
+   "kalshi_venue": 34
   },
   "soccer_btts_intl": {
    "btts_market": {
@@ -156,10 +156,10 @@
   },
   "soccer_o15_cup": {
    "goals_market": {
-    "offered": 35,
-    "picked": 35
+    "offered": 34,
+    "picked": 34
    },
-   "kalshi_venue": 35
+   "kalshi_venue": 34
   },
   "soccer_o15_intl": {
    "goals_market": {
@@ -181,10 +181,10 @@
   },
   "soccer_o25_cup": {
    "goals_market": {
-    "offered": 35,
-    "picked": 35
+    "offered": 34,
+    "picked": 34
    },
-   "kalshi_venue": 35
+   "kalshi_venue": 34
   },
   "soccer_o25_intl": {
    "goals_market": {
@@ -206,10 +206,10 @@
   },
   "soccer_p05_cup": {
    "goals_market": {
-    "offered": 99,
-    "picked": 99
+    "offered": 97,
+    "picked": 97
    },
-   "kalshi_venue": 99
+   "kalshi_venue": 97
   },
   "soccer_p05_intl": {
    "goals_market": {
@@ -299,12 +299,12 @@
   },
   "soccer_u35_cup": {
    "goals_market": {
-    "offered": 35,
-    "picked": 35
+    "offered": 34,
+    "picked": 34
    },
-   "kalshi_venue": 35,
+   "kalshi_venue": 34,
    "u35_low_scoring": {
-    "offered": 35,
+    "offered": 34,
     "picked": 1
    }
   },
@@ -322,59 +322,59 @@
   "tennis": {
    "kalshi_venue": 0,
    "polymarket_us": 40,
-   "polymarket_us_listed": 156,
-   "polymarket_us_priced": 36
+   "polymarket_us_listed": 160,
+   "polymarket_us_priced": 37
   },
   "tennis_combo": {
    "combo": 0,
    "legs": 0
   },
   "tennis_pmcombo": {
-   "combo": 6,
-   "legs": 7
+   "combo": 8,
+   "legs": 8
   }
  },
  "feed_status": {},
  "meta": {
   "created": "2026-09-10T04:42:15+00:00",
   "lane_reads": {
-   "boxing": "2026-11-28T12:27:31+00:00",
-   "commodities": "2026-11-28T12:27:31+00:00",
-   "commodities_fav": "2026-11-28T12:27:31+00:00",
-   "cricket": "2026-11-28T12:27:31+00:00",
-   "crypto": "2026-11-28T12:27:31+00:00",
-   "crypto_fav": "2026-11-28T12:27:31+00:00",
-   "economics": "2026-11-28T12:27:31+00:00",
-   "finance": "2026-11-28T12:27:31+00:00",
+   "boxing": "2026-11-28T12:35:02+00:00",
+   "commodities": "2026-11-28T12:35:02+00:00",
+   "commodities_fav": "2026-11-28T12:35:02+00:00",
+   "cricket": "2026-11-28T12:35:02+00:00",
+   "crypto": "2026-11-28T12:35:02+00:00",
+   "crypto_fav": "2026-11-28T12:35:02+00:00",
+   "economics": "2026-11-28T12:35:02+00:00",
+   "finance": "2026-11-28T12:35:02+00:00",
    "mma": "2026-11-21T20:10:14+00:00",
-   "nfl": "2026-11-28T12:27:31+00:00",
-   "nhl_pl": "2026-11-28T12:27:31+00:00",
-   "nhl_rest": "2026-11-28T12:27:31+00:00",
-   "soccer": "2026-11-28T12:27:31+00:00",
-   "soccer_btts": "2026-11-28T12:27:31+00:00",
-   "soccer_btts_cup": "2026-11-28T12:27:31+00:00",
+   "nfl": "2026-11-28T12:35:02+00:00",
+   "nhl_pl": "2026-11-28T12:35:02+00:00",
+   "nhl_rest": "2026-11-28T12:35:02+00:00",
+   "soccer": "2026-11-28T12:35:02+00:00",
+   "soccer_btts": "2026-11-28T12:35:02+00:00",
+   "soccer_btts_cup": "2026-11-28T12:35:02+00:00",
    "soccer_btts_intl": "2026-11-17T23:27:07+00:00",
-   "soccer_corners": "2026-11-28T12:27:31+00:00",
-   "soccer_ftts": "2026-11-28T12:27:31+00:00",
-   "soccer_o15": "2026-11-28T12:27:31+00:00",
-   "soccer_o15_cup": "2026-11-28T12:27:31+00:00",
+   "soccer_corners": "2026-11-28T12:35:02+00:00",
+   "soccer_ftts": "2026-11-28T12:35:02+00:00",
+   "soccer_o15": "2026-11-28T12:35:02+00:00",
+   "soccer_o15_cup": "2026-11-28T12:35:02+00:00",
    "soccer_o15_intl": "2026-11-17T23:27:07+00:00",
-   "soccer_o25": "2026-11-28T12:27:31+00:00",
-   "soccer_o25_cup": "2026-11-28T12:27:31+00:00",
+   "soccer_o25": "2026-11-28T12:35:02+00:00",
+   "soccer_o25_cup": "2026-11-28T12:35:02+00:00",
    "soccer_o25_intl": "2026-11-17T23:27:07+00:00",
-   "soccer_p05": "2026-11-28T12:27:31+00:00",
-   "soccer_p05_cup": "2026-11-28T12:27:31+00:00",
+   "soccer_p05": "2026-11-28T12:35:02+00:00",
+   "soccer_p05_cup": "2026-11-28T12:35:02+00:00",
    "soccer_p05_intl": "2026-11-17T23:27:07+00:00",
-   "soccer_team1": "2026-11-28T12:27:31+00:00",
+   "soccer_team1": "2026-11-28T12:35:02+00:00",
    "soccer_team1_cup": "2026-11-26T19:54:07+00:00",
    "soccer_team1_intl": "2026-11-17T19:33:51+00:00",
-   "soccer_team2": "2026-11-28T12:27:31+00:00",
+   "soccer_team2": "2026-11-28T12:35:02+00:00",
    "soccer_team2_cup": "2026-11-26T19:54:07+00:00",
    "soccer_team2_intl": "2026-11-17T19:33:51+00:00",
-   "soccer_u35": "2026-11-28T12:27:31+00:00",
-   "soccer_u35_cup": "2026-11-28T12:27:31+00:00",
+   "soccer_u35": "2026-11-28T12:35:02+00:00",
+   "soccer_u35_cup": "2026-11-28T12:35:02+00:00",
    "soccer_u35_intl": "2026-11-17T23:27:07+00:00",
-   "tennis": "2026-11-28T12:27:31+00:00",
+   "tennis": "2026-11-28T12:35:02+00:00",
    "tennis_pmcombo": "2026-10-13T22:45:29+00:00"
   },
   "lane_skips": {
@@ -709,14 +709,14 @@
      "start": "2026-11-27T20:00:00+00:00"
     },
     "kalshi:26NOV28MUNBRE": {
-     "at": "2026-11-28T12:27:30.953936+00:00",
+     "at": "2026-11-28T12:35:01.955264+00:00",
      "label": "Manchester United v Brentford",
      "league": "Premier League",
      "reason": "no clear favourite: 0.42 de-vigged, under 0.55",
      "start": "2026-11-28T15:00:00+00:00"
     },
     "kalshi:26NOV28RBBRVC": {
-     "at": "2026-11-28T12:27:30.953936+00:00",
+     "at": "2026-11-28T12:35:01.955264+00:00",
      "label": "Real Betis v Rayo Vallecano",
      "league": "La Liga",
      "reason": "no rung with a No ask of 0.60 or more and a No book 5c or tighter",
@@ -725,7 +725,7 @@
    }
   },
   "odds_api": {
-   "at": "2026-11-28T12:27:31+00:00",
+   "at": "2026-11-28T12:35:02+00:00",
    "remaining": 175,
    "used": 325
   },
@@ -746,7 +746,7 @@
     "start": "2026-09-28T22:15:10Z"
    }
   ],
-  "runs": 3157,
+  "runs": 3158,
   "tennis_shortlist": {
    "audit": [
     {
@@ -758,7 +758,7 @@
    "daily_limit": 3,
    "day": "2026-11-02"
   },
-  "updated": "2026-11-28T12:27:51+00:00"
+  "updated": "2026-11-28T12:35:24+00:00"
  },
  "quotes": [
   {
@@ -249082,44 +249082,6 @@
   {
    "bet": false,
    "date": "2026-11-21",
-   "edge": -0.015,
-   "espn_away": "Gaziantep FK",
-   "espn_home": "Genclerbirligi",
-   "event": "KXSUPERLIGBTTS-26NOV21GENGAZ",
-   "id": "btts_market:KXSUPERLIGBTTS-26NOV21GENGAZ-BTTS",
-   "kalshi_title": "Both Teams To Score",
-   "label": "Genclerbirligi v Gaziantep FK: both teams to score",
-   "league": "Turkish Super Lig",
-   "liquidity": null,
-   "logged": "2026-11-20T11:16:46+00:00",
-   "market_id": "KXSUPERLIGBTTS-26NOV21GENGAZ-BTTS",
-   "pick": null,
-   "pnl": 0.0,
-   "price": null,
-   "price_a": 0.6,
-   "price_b": 0.43,
-   "price_draw": null,
-   "prob_a": 0.585,
-   "result": "b",
-   "settled": "2026-11-21T12:33:35+00:00",
-   "side_a": "Yes",
-   "side_b": "No",
-   "source": "btts_market",
-   "sport": "soccer_btts",
-   "spread": null,
-   "stake": 0.0,
-   "start": "2026-11-21T10:30:00+00:00",
-   "start_source": "espn",
-   "status": "graded",
-   "uncovered": null,
-   "untraded": false,
-   "url": "https://kalshi.com/markets/kxsuperligbtts",
-   "venue": "kalshi_binary",
-   "venue_start": null
-  },
-  {
-   "bet": false,
-   "date": "2026-11-21",
    "edge": -0.02,
    "espn_away": "Casa Pia",
    "espn_home": "Atl\u00e9tico CP",
@@ -249152,44 +249114,6 @@
    "uncovered": null,
    "untraded": false,
    "url": "https://kalshi.com/markets/kxtacaportbtts",
-   "venue": "kalshi_binary",
-   "venue_start": null
-  },
-  {
-   "bet": false,
-   "date": "2026-11-21",
-   "edge": -0.01,
-   "espn_away": "Gaziantep FK",
-   "espn_home": "Genclerbirligi",
-   "event": "KXSUPERLIGTOTAL-26NOV21GENGAZ",
-   "id": "goals_market:KXSUPERLIGTOTAL-26NOV21GENGAZ-2",
-   "kalshi_title": "Over 1.5 goals scored",
-   "label": "Genclerbirligi v Gaziantep FK: over 1.5 goals",
-   "league": "Turkish Super Lig",
-   "liquidity": null,
-   "logged": "2026-11-20T11:16:46+00:00",
-   "market_id": "KXSUPERLIGTOTAL-26NOV21GENGAZ-2",
-   "pick": null,
-   "pnl": 0.0,
-   "price": null,
-   "price_a": 0.79,
-   "price_b": 0.23,
-   "price_draw": null,
-   "prob_a": 0.78,
-   "result": "b",
-   "settled": "2026-11-21T12:33:35+00:00",
-   "side_a": "Yes",
-   "side_b": "No",
-   "source": "goals_market",
-   "sport": "soccer_o15",
-   "spread": null,
-   "stake": 0.0,
-   "start": "2026-11-21T10:30:00+00:00",
-   "start_source": "espn",
-   "status": "graded",
-   "uncovered": null,
-   "untraded": false,
-   "url": "https://kalshi.com/markets/kxsuperligtotal",
    "venue": "kalshi_binary",
    "venue_start": null
   },
@@ -249235,44 +249159,6 @@
    "bet": false,
    "date": "2026-11-21",
    "edge": -0.01,
-   "espn_away": "Gaziantep FK",
-   "espn_home": "Genclerbirligi",
-   "event": "KXSUPERLIGTOTAL-26NOV21GENGAZ",
-   "id": "goals_market:KXSUPERLIGTOTAL-26NOV21GENGAZ-3",
-   "kalshi_title": "Over 2.5 goals scored",
-   "label": "Genclerbirligi v Gaziantep FK: over 2.5 goals",
-   "league": "Turkish Super Lig",
-   "liquidity": null,
-   "logged": "2026-11-20T11:16:46+00:00",
-   "market_id": "KXSUPERLIGTOTAL-26NOV21GENGAZ-3",
-   "pick": null,
-   "pnl": 0.0,
-   "price": null,
-   "price_a": 0.55,
-   "price_b": 0.47,
-   "price_draw": null,
-   "prob_a": 0.54,
-   "result": "b",
-   "settled": "2026-11-21T12:33:35+00:00",
-   "side_a": "Yes",
-   "side_b": "No",
-   "source": "goals_market",
-   "sport": "soccer_o25",
-   "spread": null,
-   "stake": 0.0,
-   "start": "2026-11-21T10:30:00+00:00",
-   "start_source": "espn",
-   "status": "graded",
-   "uncovered": null,
-   "untraded": false,
-   "url": "https://kalshi.com/markets/kxsuperligtotal",
-   "venue": "kalshi_binary",
-   "venue_start": null
-  },
-  {
-   "bet": false,
-   "date": "2026-11-21",
-   "edge": -0.01,
    "espn_away": "Casa Pia",
    "espn_home": "Atl\u00e9tico CP",
    "event": "KXTACAPORTTOTAL-26NOV21ATLCAS",
@@ -249304,44 +249190,6 @@
    "uncovered": null,
    "untraded": false,
    "url": "https://kalshi.com/markets/kxtacaporttotal",
-   "venue": "kalshi_binary",
-   "venue_start": null
-  },
-  {
-   "bet": false,
-   "date": "2026-11-21",
-   "edge": -0.01,
-   "espn_away": "Gaziantep FK",
-   "espn_home": "Genclerbirligi",
-   "event": "KXSUPERLIGTOTAL-26NOV21GENGAZ",
-   "id": "goals_market:KXSUPERLIGTOTAL-26NOV21GENGAZ-4",
-   "kalshi_title": "Over 3.5 goals scored",
-   "label": "Genclerbirligi v Gaziantep FK: over 3.5 goals",
-   "league": "Turkish Super Lig",
-   "liquidity": null,
-   "logged": "2026-11-20T11:16:46+00:00",
-   "market_id": "KXSUPERLIGTOTAL-26NOV21GENGAZ-4",
-   "pick": null,
-   "pnl": 0.0,
-   "price": null,
-   "price_a": 0.33,
-   "price_b": 0.69,
-   "price_draw": null,
-   "prob_a": 0.32,
-   "result": "b",
-   "settled": "2026-11-21T12:33:35+00:00",
-   "side_a": "Yes",
-   "side_b": "No",
-   "source": "goals_market",
-   "sport": "soccer_u35",
-   "spread": null,
-   "stake": 0.0,
-   "start": "2026-11-21T10:30:00+00:00",
-   "start_source": "espn",
-   "status": "graded",
-   "uncovered": null,
-   "untraded": false,
-   "url": "https://kalshi.com/markets/kxsuperligtotal",
    "venue": "kalshi_binary",
    "venue_start": null
   },
@@ -255083,40 +254931,6 @@
    "untraded": false,
    "url": "https://kalshi.com/markets/kxlaligacorners",
    "venue": "kalshi_binary",
-   "venue_start": null
-  },
-  {
-   "bet": false,
-   "date": "2026-11-20",
-   "edge": -0.005,
-   "id": "polymarket_us:aec-utr-wigbal-ionnic-2026-11-20",
-   "label": "Wiger Nordas, Baltazar vs Ion, Nicola",
-   "liquidity": null,
-   "logged": "2026-11-20T16:04:07+00:00",
-   "market_id": "aec-utr-wigbal-ionnic-2026-11-20",
-   "pick": null,
-   "pnl": 0.0,
-   "price": null,
-   "price_a": 0.38,
-   "price_b": 0.63,
-   "price_draw": null,
-   "prob_a": 0.375,
-   "result": "a",
-   "settled": "2026-11-21T12:33:41+00:00",
-   "side_a": "Wiger Nordas, Baltazar",
-   "side_b": "Ion, Nicola",
-   "source": "polymarket_us",
-   "sport": "tennis",
-   "spread": 0.01,
-   "stake": 0.0,
-   "start": "2026-11-20T17:20:00+00:00",
-   "start_source": null,
-   "status": "graded",
-   "tier": "utr",
-   "uncovered": null,
-   "untraded": false,
-   "url": "https://polymarket.us/event/utr-wigbal-ionnic-2026-11-20",
-   "venue": "polymarket_us",
    "venue_start": null
   },
   {
@@ -262758,40 +262572,6 @@
   {
    "bet": false,
    "date": "2026-11-21",
-   "edge": -0.005,
-   "id": "polymarket_us:aec-utr-hatpet-capchr-2026-11-20",
-   "label": "Hatton, Peter vs Capacci, Christian",
-   "liquidity": null,
-   "logged": "2026-11-21T05:04:05+00:00",
-   "market_id": "aec-utr-hatpet-capchr-2026-11-20",
-   "pick": null,
-   "pnl": 0.0,
-   "price": null,
-   "price_a": 0.7,
-   "price_b": 0.31,
-   "price_draw": null,
-   "prob_a": 0.695,
-   "result": "a",
-   "settled": "2026-11-21T12:33:42+00:00",
-   "side_a": "Hatton, Peter",
-   "side_b": "Capacci, Christian",
-   "source": "polymarket_us",
-   "sport": "tennis",
-   "spread": 0.01,
-   "stake": 0.0,
-   "start": "2026-11-21T10:30:00+00:00",
-   "start_source": null,
-   "status": "graded",
-   "tier": "utr",
-   "uncovered": null,
-   "untraded": false,
-   "url": "https://polymarket.us/event/utr-hatpet-capchr-2026-11-20",
-   "venue": "polymarket_us",
-   "venue_start": null
-  },
-  {
-   "bet": false,
-   "date": "2026-11-21",
    "edge": -0.02,
    "id": "polymarket_us:aec-utr-zmaden-admama-2026-11-20",
    "label": "Zmak, Deni vs Admiraal, Amadatus",
@@ -262820,40 +262600,6 @@
    "uncovered": null,
    "untraded": false,
    "url": "https://polymarket.us/event/utr-zmaden-admama-2026-11-20",
-   "venue": "polymarket_us",
-   "venue_start": null
-  },
-  {
-   "bet": false,
-   "date": "2026-11-21",
-   "edge": -0.005,
-   "id": "polymarket_us:aec-utr-vanmar-tacgab-2026-11-21",
-   "label": "van der Merwe, Marc vs Tacanho, Gabriel",
-   "liquidity": null,
-   "logged": "2026-11-21T05:04:05+00:00",
-   "market_id": "aec-utr-vanmar-tacgab-2026-11-21",
-   "pick": null,
-   "pnl": 0.0,
-   "price": null,
-   "price_a": 0.86,
-   "price_b": 0.15,
-   "price_draw": null,
-   "prob_a": 0.855,
-   "result": "a",
-   "settled": "2026-11-21T12:33:43+00:00",
-   "side_a": "van der Merwe, Marc",
-   "side_b": "Tacanho, Gabriel",
-   "source": "polymarket_us",
-   "sport": "tennis",
-   "spread": 0.01,
-   "stake": 0.0,
-   "start": "2026-11-21T10:30:00+00:00",
-   "start_source": null,
-   "status": "graded",
-   "tier": "utr",
-   "uncovered": null,
-   "untraded": false,
-   "url": "https://polymarket.us/event/utr-vanmar-tacgab-2026-11-21",
    "venue": "polymarket_us",
    "venue_start": null
   },
@@ -371217,7 +370963,7 @@
   },
   {
    "bet": true,
-   "close_at": "2026-11-28T12:27:31+00:00",
+   "close_at": "2026-11-28T12:35:02+00:00",
    "close_price": 0.55,
    "date": "2026-11-28",
    "edge": null,
@@ -406298,7 +406044,7 @@
   },
   {
    "bet": true,
-   "close_at": "2026-11-28T12:27:31+00:00",
+   "close_at": "2026-11-28T12:35:02+00:00",
    "close_price": 0.56,
    "date": "2026-11-29",
    "edge": null,
@@ -418032,7 +417778,7 @@
   },
   {
    "bet": true,
-   "close_at": "2026-11-28T12:27:31+00:00",
+   "close_at": "2026-11-28T12:35:02+00:00",
    "close_price": 0.79,
    "date": "2026-11-28",
    "edge": null,
@@ -448233,7 +447979,7 @@
   },
   {
    "bet": true,
-   "close_at": "2026-11-28T12:27:31+00:00",
+   "close_at": "2026-11-28T12:35:02+00:00",
    "close_price": 0.47,
    "date": "2026-11-30",
    "edge": null,
@@ -468565,7 +468311,7 @@
   },
   {
    "bet": true,
-   "close_at": "2026-11-28T12:27:31+00:00",
+   "close_at": "2026-11-28T12:35:02+00:00",
    "close_price": 0.62,
    "date": "2026-12-01",
    "edge": null,
@@ -472502,7 +472248,7 @@
   },
   {
    "bet": true,
-   "close_at": "2026-11-28T12:27:31+00:00",
+   "close_at": "2026-11-28T12:35:02+00:00",
    "close_price": 0.23,
    "date": "2026-11-28",
    "edge": null,
@@ -472623,8 +472369,8 @@
   },
   {
    "bet": true,
-   "close_at": "2026-11-28T12:27:31+00:00",
-   "close_price": 0.11,
+   "close_at": "2026-11-28T12:35:02+00:00",
+   "close_price": 0.1,
    "date": "2026-11-28",
    "edge": null,
    "espn_away": "Alav\u00e9s",
@@ -473015,8 +472761,8 @@
    "price_b": 0.36,
    "price_draw": null,
    "prob_a": 0.665,
-   "result": null,
-   "settled": null,
+   "result": "b",
+   "settled": "2026-11-28T12:35:12+00:00",
    "side_a": "Kris van Wyk",
    "side_b": "Sebastiano Cocola",
    "source": "polymarket_us",
@@ -473025,7 +472771,7 @@
    "stake": 0.0,
    "start": "2026-11-28T09:00:00+00:00",
    "start_source": null,
-   "status": "open",
+   "status": "graded",
    "tier": "itfme",
    "uncovered": null,
    "untraded": false,
@@ -476787,7 +476533,7 @@
   },
   {
    "bet": true,
-   "close_at": "2026-11-28T12:27:31+00:00",
+   "close_at": "2026-11-28T12:35:02+00:00",
    "close_price": 0.63,
    "date": "2026-11-28",
    "edge": null,
@@ -479149,7 +478895,7 @@
   },
   {
    "bet": true,
-   "close_at": "2026-11-28T12:27:31+00:00",
+   "close_at": "2026-11-28T12:35:02+00:00",
    "close_price": 0.63,
    "date": "2026-11-28",
    "edge": null,
@@ -479223,7 +478969,7 @@
   },
   {
    "bet": true,
-   "close_at": "2026-11-28T12:27:31+00:00",
+   "close_at": "2026-11-28T12:35:02+00:00",
    "close_price": 0.61,
    "date": "2026-11-28",
    "edge": null,
@@ -479598,6 +479344,74 @@
    "url": "https://polymarket.us/event/itfme-murdel-lauroc-2026-11-28",
    "venue": "polymarket_us",
    "venue_start": null
+  },
+  {
+   "bet": false,
+   "date": "2026-11-28",
+   "edge": -0.02,
+   "id": "polymarket_us:aec-utr-desfra-carluc-2026-11-28",
+   "label": "Descotte, Matias Franco vs Carraro, Luciano",
+   "liquidity": null,
+   "logged": "2026-11-28T12:35:01+00:00",
+   "market_id": "aec-utr-desfra-carluc-2026-11-28",
+   "pick": null,
+   "pnl": 0.0,
+   "price": null,
+   "price_a": 0.12,
+   "price_b": 0.92,
+   "price_draw": null,
+   "prob_a": 0.1,
+   "result": null,
+   "settled": null,
+   "side_a": "Descotte, Matias Franco",
+   "side_b": "Carraro, Luciano",
+   "source": "polymarket_us",
+   "sport": "tennis",
+   "spread": 0.04,
+   "stake": 0.0,
+   "start": "2026-11-28T18:30:00+00:00",
+   "start_source": null,
+   "status": "open",
+   "tier": "utr",
+   "uncovered": null,
+   "untraded": false,
+   "url": "https://polymarket.us/event/utr-desfra-carluc-2026-11-28",
+   "venue": "polymarket_us",
+   "venue_start": null
+  },
+  {
+   "bet": false,
+   "date": "2026-11-28",
+   "edge": -0.025,
+   "id": "polymarket_us:aec-utr-linlor-vankmar-2026-11-28",
+   "label": "Lingua Lavallen, Alejo Lorenzo vs Vankan, Marlon",
+   "liquidity": null,
+   "logged": "2026-11-28T12:35:01+00:00",
+   "market_id": "aec-utr-linlor-vankmar-2026-11-28",
+   "pick": null,
+   "pnl": 0.0,
+   "price": null,
+   "price_a": 0.38,
+   "price_b": 0.67,
+   "price_draw": null,
+   "prob_a": 0.355,
+   "result": null,
+   "settled": null,
+   "side_a": "Lingua Lavallen, Alejo Lorenzo",
+   "side_b": "Vankan, Marlon",
+   "source": "polymarket_us",
+   "sport": "tennis",
+   "spread": 0.05,
+   "stake": 0.0,
+   "start": "2026-11-28T18:30:00+00:00",
+   "start_source": null,
+   "status": "open",
+   "tier": "utr",
+   "uncovered": null,
+   "untraded": false,
+   "url": "https://polymarket.us/event/utr-linlor-vankmar-2026-11-28",
+   "venue": "polymarket_us",
+   "venue_start": null
   }
  ],
  "retired": {
@@ -479623,10 +479437,10 @@
   },
   "btts_market": {
    "bets": 0,
-   "brier_n": 1252,
-   "brier_sum": 303.6959999999996,
+   "brier_n": 1253,
+   "brier_sum": 304.03822499999956,
    "pnl": 0.0,
-   "quotes": 1281,
+   "quotes": 1282,
    "settled": 0,
    "staked": 0.0,
    "won": 0
@@ -479753,10 +479567,10 @@
   },
   "goals_market": {
    "bets": 0,
-   "brier_n": 9310,
-   "brier_sum": 1799.2386250000131,
+   "brier_n": 9313,
+   "brier_sum": 1800.2410250000132,
    "pnl": 0.0,
-   "quotes": 9481,
+   "quotes": 9484,
    "settled": 0,
    "staked": 0.0,
    "won": 0
@@ -479973,10 +479787,10 @@
   },
   "polymarket_us": {
    "bets": 0,
-   "brier_n": 20720,
-   "brier_sum": 3859.271488779856,
+   "brier_n": 20723,
+   "brier_sum": 3859.7761637798562,
    "pnl": 0.0,
-   "quotes": 21244,
+   "quotes": 21247,
    "settled": 0,
    "staked": 0.0,
    "won": 0
