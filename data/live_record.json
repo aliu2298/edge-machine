@@ -1,5 +1,5 @@
 {
- "generated": "2026-11-28T01:07Z",
+ "generated": "2026-11-28T02:07Z",
  "lane_note": "own-state lanes: each entry as a trade after fees (the lane's own fill, the sells it logged, the unsold remainder at the market's settled result); a bet is flat when exited at cost (within +-2% before or after fees), won above +2% after fees, else lost. Entries with a tip before 2026-11-06 18:07Z are reconstructed from the exchange order list; later ones use the sell fills the follower logged",
  "lanes": {
   "arg_dip": [],
@@ -5879,7 +5879,7 @@
     "hold_r": null,
     "id": "KXNBAWINMARGIN-26NOV27MIANYK-MIA1TO5",
     "ko": "2026-11-28T00:00",
-    "legs": "",
+    "legs": "2x",
     "r": null,
     "side": "yes",
     "src": "fills",
@@ -5891,7 +5891,7 @@
     "hold_r": null,
     "id": "KXNBAWINMARGIN-26NOV27MIANYK-MIA6TO10",
     "ko": "2026-11-28T00:00",
-    "legs": "",
+    "legs": "2x",
     "r": null,
     "side": "yes",
     "src": "fills",
@@ -5963,7 +5963,7 @@
     "hold_r": null,
     "id": "KXNBAWINMARGIN-26NOV27PHIIND-PHI11TO20",
     "ko": "2026-11-28T00:30",
-    "legs": "",
+    "legs": "2x",
     "r": null,
     "side": "yes",
     "src": "fills",
@@ -6113,6 +6113,78 @@
     "src": "fills",
     "st": "open",
     "w": 0.94
+   },
+   {
+    "g": null,
+    "hold_r": null,
+    "id": "KXNBAWINMARGIN-26NOV27LALSAS-LAL1TO5",
+    "ko": "2026-11-28T02:30",
+    "legs": "",
+    "r": null,
+    "side": "yes",
+    "src": "fills",
+    "st": "open",
+    "w": 0.95
+   },
+   {
+    "g": null,
+    "hold_r": null,
+    "id": "KXNBAWINMARGIN-26NOV27LALSAS-LAL6TO10",
+    "ko": "2026-11-28T02:30",
+    "legs": "",
+    "r": null,
+    "side": "yes",
+    "src": "fills",
+    "st": "open",
+    "w": 1.03
+   },
+   {
+    "g": null,
+    "hold_r": null,
+    "id": "KXNBAWINMARGIN-26NOV27LALSAS-SAS6TO10",
+    "ko": "2026-11-28T02:30",
+    "legs": "",
+    "r": null,
+    "side": "yes",
+    "src": "fills",
+    "st": "open",
+    "w": 0.88
+   },
+   {
+    "g": null,
+    "hold_r": null,
+    "id": "KXNBAWINMARGIN-26NOV27NOPLAC-LAC1TO5",
+    "ko": "2026-11-28T02:30",
+    "legs": "",
+    "r": null,
+    "side": "yes",
+    "src": "fills",
+    "st": "open",
+    "w": 1.02
+   },
+   {
+    "g": null,
+    "hold_r": null,
+    "id": "KXNBAWINMARGIN-26NOV27NOPLAC-LAC6TO10",
+    "ko": "2026-11-28T02:30",
+    "legs": "",
+    "r": null,
+    "side": "yes",
+    "src": "fills",
+    "st": "open",
+    "w": 0.94
+   },
+   {
+    "g": null,
+    "hold_r": null,
+    "id": "KXNBAWINMARGIN-26NOV27NOPLAC-NOP6TO10",
+    "ko": "2026-11-28T02:30",
+    "legs": "",
+    "r": null,
+    "side": "yes",
+    "src": "fills",
+    "st": "open",
+    "w": 1.0
    }
   ],
   "o35_cheap_no": [
