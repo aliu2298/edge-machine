@@ -1,6 +1,6 @@
 {
  "error": null,
- "last_run": "2026-11-28T00:00:36.366968+00:00",
+ "last_run": "2026-11-28T00:30:29.850800+00:00",
  "rules": {
   "R1": {
    "picks": [
@@ -5968,16 +5968,55 @@
      "ticker": "KXNBATEAMTOTAL-26NOV27MEMMIN-MEM110",
      "title": "Memphis over 109.5 points",
      "why": "MEM O+D- v MIN O+D- \u00b7 both D\u2212 \u00b7 110+ NO 0.54"
+    },
+    {
+     "game": "401909332",
+     "id": "R7:KXNBATEAMTOTAL-26NOV27DALPHX-PHX115",
+     "labels": {
+      "away": "O-D-",
+      "away_h1": "O-D-",
+      "home": "O+D-",
+      "home_h1": "O+D+"
+     },
+     "logged": "2026-11-28T00:30:29.850800+00:00",
+     "match": "DAL @ PHX",
+     "price": 0.51,
+     "rule": "R7",
+     "side": "no",
+     "start": "2026-11-28T02:00Z",
+     "status": "open",
+     "strike": 114.5,
+     "team": "PHX",
+     "ticker": "KXNBATEAMTOTAL-26NOV27DALPHX-PHX115",
+     "title": "Phoenix over 114.5 points",
+     "why": "PHX O+D- v DAL O-D- \u00b7 both D\u2212 \u00b7 115+ NO 0.51"
+    },
+    {
+     "game": "401909332",
+     "id": "R7:KXNBATEAMTOTAL-26NOV27DALPHX-DAL110",
+     "labels": {
+      "away": "O-D-",
+      "away_h1": "O-D-",
+      "home": "O+D-",
+      "home_h1": "O+D+"
+     },
+     "logged": "2026-11-28T00:30:29.850800+00:00",
+     "match": "DAL @ PHX",
+     "price": 0.45,
+     "rule": "R7",
+     "side": "no",
+     "start": "2026-11-28T02:00Z",
+     "status": "open",
+     "strike": 109.5,
+     "team": "DAL",
+     "ticker": "KXNBATEAMTOTAL-26NOV27DALPHX-DAL110",
+     "title": "Dallas over 109.5 points",
+     "why": "DAL O-D- v PHX O+D- \u00b7 both D\u2212 \u00b7 110+ NO 0.45"
     }
    ]
   }
  },
  "runs": [
-  {
-   "at": "2026-11-22T23:30:27.740056+00:00",
-   "due": 4,
-   "new": 0
-  },
   {
    "at": "2026-11-22T23:56:39.239393+00:00",
    "due": 1,
@@ -6226,6 +6265,11 @@
   {
    "at": "2026-11-28T00:00:36.366968+00:00",
    "due": 5,
+   "new": 2
+  },
+  {
+   "at": "2026-11-28T00:30:29.850800+00:00",
+   "due": 3,
    "new": 2
   }
  ],
