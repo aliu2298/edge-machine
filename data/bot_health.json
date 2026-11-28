@@ -6,8 +6,8 @@
   "rule": "LOW under the threshold set on the server"
  },
  "engine": {
-  "beat_age_s": 55,
-  "cycle": 182,
+  "beat_age_s": 15,
+  "cycle": 188,
   "last_error": null,
   "mode": "LIVE",
   "service_active": true,
@@ -22,52 +22,52 @@
  "feeds": {
   "production": {
    "actionable": 2,
-   "age_min": 12,
+   "age_min": 4,
    "leads": 28,
    "problems": 0,
    "status": "HTTP 200"
   },
   "production_challenger": {
    "actionable": 0,
-   "age_min": 12,
+   "age_min": 1,
    "leads": 47,
    "problems": 0,
-   "status": "HTTP 304 (cached)"
+   "status": "HTTP 200"
   },
   "production_econ": {
    "actionable": 0,
-   "age_min": 13,
+   "age_min": 1,
    "leads": 9,
    "problems": 0,
-   "status": "HTTP 304 (cached)"
+   "status": "HTTP 200"
   },
   "production_gas_week": {
    "actionable": 0,
-   "age_min": 12,
+   "age_min": 1,
    "leads": 0,
    "problems": 0,
-   "status": "HTTP 304 (cached)"
+   "status": "HTTP 200"
   },
   "production_nba_value": {
    "actionable": 0,
-   "age_min": 21,
+   "age_min": 1,
    "leads": 0,
    "problems": 0,
-   "status": "HTTP 304 (cached)"
+   "status": "HTTP 200"
   },
   "production_soccer_rules": {
    "actionable": 0,
-   "age_min": 21,
+   "age_min": 6,
    "leads": 3,
    "problems": 0,
-   "status": "HTTP 304 (cached)"
+   "status": "HTTP 200"
   },
   "production_soccer_team_rules": {
-   "actionable": 0,
-   "age_min": 21,
-   "leads": 10,
+   "actionable": 2,
+   "age_min": 6,
+   "leads": 12,
    "problems": 0,
-   "status": "HTTP 304 (cached)"
+   "status": "HTTP 200"
   }
  },
  "loss_cap": {
@@ -75,16 +75,16 @@
   "state": "ok"
  },
  "orders_24h": {
-  "kalshi": 4
+  "kalshi": 5
  },
  "pnl_sign": {
   "today": "down",
   "yesterday": "down"
  },
- "published_at": "2026-11-28T13:23:03+00:00",
+ "published_at": "2026-11-28T14:23:03+00:00",
  "schema": 1,
  "server": {
-  "backup_age_h": 6.9,
+  "backup_age_h": 7.9,
   "disk_pct": 36,
   "jobs": {
    "bot-backup": {
@@ -100,6 +100,6 @@
     "timer": "active"
    }
   },
-  "mem_free_mb": 544
+  "mem_free_mb": 537
  }
 }
