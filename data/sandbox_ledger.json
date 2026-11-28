@@ -14,10 +14,10 @@
    "kalshi_venue": 400
   },
   "commodities_fav": {
-   "kalshi_venue": 240
+   "kalshi_venue": 180
   },
   "cricket": {
-   "kalshi_venue": 5,
+   "kalshi_venue": 4,
    "polymarket_us": 11,
    "polymarket_us_listed": 11,
    "polymarket_us_priced": 3
@@ -36,7 +36,7 @@
    "kalshi_venue": 38
   },
   "finance": {
-   "kalshi_venue": 45
+   "kalshi_venue": 46
   },
   "mma": {
    "kalshi_venue": 0,
@@ -61,7 +61,7 @@
     "offered": 8,
     "picked": 2
    },
-   "kalshi_venue": 255,
+   "kalshi_venue": 226,
    "polymarket_us": 0,
    "polymarket_us_listed": 0,
    "polymarket_us_priced": 0
@@ -79,10 +79,10 @@
   },
   "soccer_btts_cup": {
    "btts_market": {
-    "offered": 32,
-    "picked": 32
+    "offered": 33,
+    "picked": 33
    },
-   "kalshi_venue": 32
+   "kalshi_venue": 33
   },
   "soccer_btts_intl": {
    "btts_market": {
@@ -108,18 +108,18 @@
   },
   "soccer_ftts": {
    "ftts_lineup_lag": {
-    "offered": 76,
+    "offered": 88,
     "picked": 0
    },
    "ftts_market": {
-    "offered": 76,
-    "picked": 76
+    "offered": 88,
+    "picked": 88
    },
    "ftts_no_70_80": {
-    "offered": 76,
+    "offered": 88,
     "picked": 0
    },
-   "kalshi_venue": 76
+   "kalshi_venue": 88
   },
   "soccer_o05": {
    "kalshi_venue": 0,
@@ -156,10 +156,10 @@
   },
   "soccer_o15_cup": {
    "goals_market": {
-    "offered": 32,
-    "picked": 32
+    "offered": 33,
+    "picked": 33
    },
-   "kalshi_venue": 32
+   "kalshi_venue": 33
   },
   "soccer_o15_intl": {
    "goals_market": {
@@ -181,10 +181,10 @@
   },
   "soccer_o25_cup": {
    "goals_market": {
-    "offered": 32,
-    "picked": 32
+    "offered": 33,
+    "picked": 33
    },
-   "kalshi_venue": 32
+   "kalshi_venue": 33
   },
   "soccer_o25_intl": {
    "goals_market": {
@@ -201,7 +201,7 @@
    "kalshi_venue": 152,
    "mls_fade_home": {
     "offered": 12,
-    "picked": 0
+    "picked": 1
    }
   },
   "soccer_p05_cup": {
@@ -299,12 +299,12 @@
   },
   "soccer_u35_cup": {
    "goals_market": {
-    "offered": 32,
-    "picked": 32
+    "offered": 33,
+    "picked": 33
    },
-   "kalshi_venue": 32,
+   "kalshi_venue": 33,
    "u35_low_scoring": {
-    "offered": 32,
+    "offered": 33,
     "picked": 1
    }
   },
@@ -322,7 +322,7 @@
   "tennis": {
    "kalshi_venue": 0,
    "polymarket_us": 40,
-   "polymarket_us_listed": 213,
+   "polymarket_us_listed": 211,
    "polymarket_us_priced": 29
   },
   "tennis_combo": {
@@ -338,43 +338,43 @@
  "meta": {
   "created": "2026-09-10T04:42:15+00:00",
   "lane_reads": {
-   "boxing": "2026-11-28T14:03:24+00:00",
-   "commodities": "2026-11-28T14:03:24+00:00",
-   "commodities_fav": "2026-11-28T14:03:24+00:00",
-   "cricket": "2026-11-28T14:03:24+00:00",
-   "crypto": "2026-11-28T14:03:24+00:00",
-   "crypto_fav": "2026-11-28T14:03:24+00:00",
-   "economics": "2026-11-28T14:03:24+00:00",
-   "finance": "2026-11-28T14:03:24+00:00",
+   "boxing": "2026-11-28T14:10:40+00:00",
+   "commodities": "2026-11-28T14:10:40+00:00",
+   "commodities_fav": "2026-11-28T14:10:40+00:00",
+   "cricket": "2026-11-28T14:10:40+00:00",
+   "crypto": "2026-11-28T14:10:40+00:00",
+   "crypto_fav": "2026-11-28T14:10:40+00:00",
+   "economics": "2026-11-28T14:10:40+00:00",
+   "finance": "2026-11-28T14:10:40+00:00",
    "mma": "2026-11-21T20:10:14+00:00",
-   "nfl": "2026-11-28T14:03:24+00:00",
-   "nhl_pl": "2026-11-28T14:03:24+00:00",
-   "nhl_rest": "2026-11-28T14:03:24+00:00",
-   "soccer": "2026-11-28T14:03:24+00:00",
-   "soccer_btts": "2026-11-28T14:03:24+00:00",
-   "soccer_btts_cup": "2026-11-28T14:03:24+00:00",
+   "nfl": "2026-11-28T14:10:40+00:00",
+   "nhl_pl": "2026-11-28T14:10:40+00:00",
+   "nhl_rest": "2026-11-28T14:10:40+00:00",
+   "soccer": "2026-11-28T14:10:40+00:00",
+   "soccer_btts": "2026-11-28T14:10:40+00:00",
+   "soccer_btts_cup": "2026-11-28T14:10:40+00:00",
    "soccer_btts_intl": "2026-11-17T23:27:07+00:00",
-   "soccer_corners": "2026-11-28T14:03:24+00:00",
-   "soccer_ftts": "2026-11-28T14:03:24+00:00",
-   "soccer_o15": "2026-11-28T14:03:24+00:00",
-   "soccer_o15_cup": "2026-11-28T14:03:24+00:00",
+   "soccer_corners": "2026-11-28T14:10:40+00:00",
+   "soccer_ftts": "2026-11-28T14:10:40+00:00",
+   "soccer_o15": "2026-11-28T14:10:40+00:00",
+   "soccer_o15_cup": "2026-11-28T14:10:40+00:00",
    "soccer_o15_intl": "2026-11-17T23:27:07+00:00",
-   "soccer_o25": "2026-11-28T14:03:24+00:00",
-   "soccer_o25_cup": "2026-11-28T14:03:24+00:00",
+   "soccer_o25": "2026-11-28T14:10:40+00:00",
+   "soccer_o25_cup": "2026-11-28T14:10:40+00:00",
    "soccer_o25_intl": "2026-11-17T23:27:07+00:00",
-   "soccer_p05": "2026-11-28T14:03:24+00:00",
-   "soccer_p05_cup": "2026-11-28T14:03:24+00:00",
+   "soccer_p05": "2026-11-28T14:10:40+00:00",
+   "soccer_p05_cup": "2026-11-28T14:10:40+00:00",
    "soccer_p05_intl": "2026-11-17T23:27:07+00:00",
-   "soccer_team1": "2026-11-28T14:03:24+00:00",
+   "soccer_team1": "2026-11-28T14:10:40+00:00",
    "soccer_team1_cup": "2026-11-26T19:54:07+00:00",
    "soccer_team1_intl": "2026-11-17T19:33:51+00:00",
-   "soccer_team2": "2026-11-28T14:03:24+00:00",
+   "soccer_team2": "2026-11-28T14:10:40+00:00",
    "soccer_team2_cup": "2026-11-26T19:54:07+00:00",
    "soccer_team2_intl": "2026-11-17T19:33:51+00:00",
-   "soccer_u35": "2026-11-28T14:03:24+00:00",
-   "soccer_u35_cup": "2026-11-28T14:03:24+00:00",
+   "soccer_u35": "2026-11-28T14:10:40+00:00",
+   "soccer_u35_cup": "2026-11-28T14:10:40+00:00",
    "soccer_u35_intl": "2026-11-17T23:27:07+00:00",
-   "tennis": "2026-11-28T14:03:24+00:00",
+   "tennis": "2026-11-28T14:10:40+00:00",
    "tennis_pmcombo": "2026-10-13T22:45:29+00:00"
   },
   "lane_skips": {
@@ -709,14 +709,14 @@
      "start": "2026-11-27T20:00:00+00:00"
     },
     "kalshi:26NOV28IPSAVL": {
-     "at": "2026-11-28T14:03:23.351616+00:00",
+     "at": "2026-11-28T14:10:39.499868+00:00",
      "label": "Ipswich Town v Aston Villa",
      "league": "Premier League",
      "reason": "no clear favourite: 0.47 de-vigged, under 0.55",
      "start": "2026-11-28T17:30:00+00:00"
     },
     "kalshi:26NOV28MUNBRE": {
-     "at": "2026-11-28T14:03:23.351616+00:00",
+     "at": "2026-11-28T14:10:39.499868+00:00",
      "label": "Manchester United v Brentford",
      "league": "Premier League",
      "reason": "no clear favourite: 0.42 de-vigged, under 0.55",
@@ -732,7 +732,7 @@
    }
   },
   "odds_api": {
-   "at": "2026-11-28T14:03:24+00:00",
+   "at": "2026-11-28T14:10:40+00:00",
    "remaining": 175,
    "used": 325
   },
@@ -753,7 +753,7 @@
     "start": "2026-09-28T22:15:10Z"
    }
   ],
-  "runs": 3166,
+  "runs": 3167,
   "tennis_shortlist": {
    "audit": [
     {
@@ -765,7 +765,7 @@
    "daily_limit": 3,
    "day": "2026-11-02"
   },
-  "updated": "2026-11-28T14:03:47+00:00"
+  "updated": "2026-11-28T14:11:04+00:00"
  },
  "quotes": [
   {
@@ -261319,40 +261319,6 @@
   {
    "bet": false,
    "date": "2026-11-21",
-   "edge": -0.02,
-   "id": "polymarket_us:aec-itfme-azioua-giuper-2026-11-21",
-   "label": "Aziz Ouakaa vs Giulio Perego",
-   "liquidity": null,
-   "logged": "2026-11-21T00:07:53+00:00",
-   "market_id": "aec-itfme-azioua-giuper-2026-11-21",
-   "pick": null,
-   "pnl": 0.0,
-   "price": null,
-   "price_a": 0.56,
-   "price_b": 0.48,
-   "price_draw": null,
-   "prob_a": 0.54,
-   "result": "b",
-   "settled": "2026-11-21T14:04:13+00:00",
-   "side_a": "Aziz Ouakaa",
-   "side_b": "Giulio Perego",
-   "source": "polymarket_us",
-   "sport": "tennis",
-   "spread": 0.04,
-   "stake": 0.0,
-   "start": "2026-11-21T09:30:00+00:00",
-   "start_source": null,
-   "status": "graded",
-   "tier": "itfme",
-   "uncovered": null,
-   "untraded": false,
-   "url": "https://polymarket.us/event/itfme-azioua-giuper-2026-11-21",
-   "venue": "polymarket_us",
-   "venue_start": null
-  },
-  {
-   "bet": false,
-   "date": "2026-11-21",
    "edge": -0.015,
    "id": "polymarket_us:aec-itfwo-miksto-gremin-2026-11-21",
    "label": "Mika Stojsavljevic vs Greet Minnen",
@@ -261681,41 +261647,6 @@
    "uncovered": null,
    "untraded": false,
    "url": "https://polymarket.us/event/wtadb-falkowkubka-hennemzaar-2026-11-21",
-   "venue": "polymarket_us",
-   "venue_start": null
-  },
-  {
-   "bet": false,
-   "date": "2026-11-21",
-   "edge": -0.005,
-   "id": "polymarket_us:aec-atp-nisbas-ottvir-2026-11-21",
-   "label": "Nishesh Basavareddy vs Otto Virtanen",
-   "liquidity": null,
-   "logged": "2026-11-21T02:40:18+00:00",
-   "market_id": "aec-atp-nisbas-ottvir-2026-11-21",
-   "pick": null,
-   "pnl": 0.0,
-   "price": null,
-   "price_a": 0.54,
-   "price_b": 0.47,
-   "price_draw": null,
-   "prob_a": 0.535,
-   "result": "b",
-   "settled": "2026-11-21T14:11:01+00:00",
-   "side_a": "Nishesh Basavareddy",
-   "side_b": "Otto Virtanen",
-   "source": "polymarket_us",
-   "sport": "tennis",
-   "spread": 0.01,
-   "stake": 0.0,
-   "start": "2026-11-21T12:10:00+00:00",
-   "start_source": null,
-   "status": "graded",
-   "tier": "atpch",
-   "tour": "atpch",
-   "uncovered": null,
-   "untraded": false,
-   "url": "https://polymarket.us/event/atp-nisbas-ottvir-2026-11-21",
    "venue": "polymarket_us",
    "venue_start": null
   },
@@ -370378,7 +370309,7 @@
   },
   {
    "bet": true,
-   "close_at": "2026-11-28T14:03:24+00:00",
+   "close_at": "2026-11-28T14:10:40+00:00",
    "close_price": 0.54,
    "date": "2026-11-28",
    "edge": null,
@@ -405459,7 +405390,7 @@
   },
   {
    "bet": true,
-   "close_at": "2026-11-28T14:03:24+00:00",
+   "close_at": "2026-11-28T14:10:40+00:00",
    "close_price": 0.57,
    "date": "2026-11-29",
    "edge": null,
@@ -417193,7 +417124,7 @@
   },
   {
    "bet": true,
-   "close_at": "2026-11-28T14:03:24+00:00",
+   "close_at": "2026-11-28T14:10:40+00:00",
    "close_price": 0.79,
    "date": "2026-11-28",
    "edge": null,
@@ -447394,7 +447325,7 @@
   },
   {
    "bet": true,
-   "close_at": "2026-11-28T14:03:24+00:00",
+   "close_at": "2026-11-28T14:10:40+00:00",
    "close_price": 0.47,
    "date": "2026-11-30",
    "edge": null,
@@ -467726,7 +467657,7 @@
   },
   {
    "bet": true,
-   "close_at": "2026-11-28T14:03:24+00:00",
+   "close_at": "2026-11-28T14:10:40+00:00",
    "close_price": 0.62,
    "date": "2026-12-01",
    "edge": null,
@@ -467887,8 +467818,8 @@
    "price_b": 0.62,
    "price_draw": null,
    "prob_a": 0.405,
-   "result": null,
-   "settled": null,
+   "result": "b",
+   "settled": "2026-11-28T14:10:45+00:00",
    "side_a": "Semen Pankin",
    "side_b": "Giorgio Tabacco",
    "source": "polymarket_us",
@@ -467897,7 +467828,7 @@
    "stake": 0.0,
    "start": "2026-11-28T11:10:00+00:00",
    "start_source": null,
-   "status": "open",
+   "status": "graded",
    "uncovered": null,
    "untraded": false,
    "url": "https://polymarket.us/event/atp-sempan-giotab-2026-11-28",
@@ -471663,7 +471594,7 @@
   },
   {
    "bet": true,
-   "close_at": "2026-11-28T14:03:24+00:00",
+   "close_at": "2026-11-28T14:10:40+00:00",
    "close_price": 0.23,
    "date": "2026-11-28",
    "edge": null,
@@ -471784,8 +471715,8 @@
   },
   {
    "bet": true,
-   "close_at": "2026-11-28T14:03:24+00:00",
-   "close_price": 0.11,
+   "close_at": "2026-11-28T14:10:40+00:00",
+   "close_price": 0.1,
    "date": "2026-11-28",
    "edge": null,
    "espn_away": "Alav\u00e9s",
@@ -475948,7 +475879,7 @@
   },
   {
    "bet": true,
-   "close_at": "2026-11-28T14:03:24+00:00",
+   "close_at": "2026-11-28T14:10:40+00:00",
    "close_price": 0.61,
    "date": "2026-11-28",
    "edge": null,
@@ -478310,7 +478241,7 @@
   },
   {
    "bet": true,
-   "close_at": "2026-11-28T14:03:24+00:00",
+   "close_at": "2026-11-28T14:10:40+00:00",
    "close_price": 0.65,
    "date": "2026-11-28",
    "edge": null,
@@ -478384,7 +478315,7 @@
   },
   {
    "bet": true,
-   "close_at": "2026-11-28T14:03:24+00:00",
+   "close_at": "2026-11-28T14:10:40+00:00",
    "close_price": 0.6,
    "date": "2026-11-28",
    "edge": null,
@@ -479180,7 +479111,7 @@
   },
   {
    "bet": true,
-   "close_at": "2026-11-28T14:03:24+00:00",
+   "close_at": "2026-11-28T14:10:40+00:00",
    "close_price": 0.24,
    "date": "2026-11-29",
    "edge": null,
@@ -479225,8 +479156,8 @@
   },
   {
    "bet": true,
-   "close_at": "2026-11-28T14:03:24+00:00",
-   "close_price": 0.69,
+   "close_at": "2026-11-28T14:10:40+00:00",
+   "close_price": 0.7,
    "date": "2026-11-28",
    "edge": null,
    "espn_away": "Atl\u00e9tico Madrid",
@@ -479704,10 +479635,10 @@
   },
   "polymarket_us": {
    "bets": 0,
-   "brier_n": 20729,
-   "brier_sum": 3860.586713779856,
+   "brier_n": 20731,
+   "brier_sum": 3861.164538779856,
    "pnl": 0.0,
-   "quotes": 21254,
+   "quotes": 21256,
    "settled": 0,
    "staked": 0.0,
    "won": 0
