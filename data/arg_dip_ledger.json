@@ -6667,9 +6667,9 @@
   ]
  },
  "lane": "arg_goalless_dip",
- "last_run": "2026-11-27T22:59:42.194303+00:00",
+ "last_run": "2026-11-28T05:00:06.566813+00:00",
  "observations": {
-  "at": "2026-11-27T22:59:42.194303+00:00",
+  "at": "2026-11-28T05:00:06.566813+00:00",
   "errors": [],
   "new": 0,
   "skipped": 0,
@@ -6687,6 +6687,17 @@
   "KXARGPREMDIVTOTAL-26OCT31RIECAT": "pregame ask unverified: 0 contracts traded at or through the ask within 60 minutes (under 10)",
   "KXARGPREMDIVTOTAL-26OCT31VELSLA": "pregame ask unverified: 9.09 contracts traded at or through the ask within 60 minutes (under 10)"
  },
- "upcoming": [],
+ "upcoming": [
+  {
+   "event": "KXARGPREMDIVTOTAL-26NOV28VELCAI",
+   "kickoff": 1795906800,
+   "title": "Velez Sarsfield vs Independiente Avellaneda: Total Goals"
+  },
+  {
+   "event": "KXARGPREMDIVTOTAL-26NOV28IACCRIV",
+   "kickoff": 1795914000,
+   "title": "Instituto Cordoba vs River Plate: Total Goals"
+  }
+ ],
  "version": "argdip-v1"
 }
