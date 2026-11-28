@@ -1934,6 +1934,8 @@
   "KXBOXING-26NOV27PEREZODIASE": "2026-11-27T21:00:44.048353+00:00",
   "KXBOXING-26NOV27SPOMERCOLMEN": "2026-11-27T20:00:42.103827+00:00",
   "KXBOXING-26NOV27XHOXHAGIUSTI": "2026-11-27T22:00:39.508248+00:00",
+  "KXBOXING-26NOV28KARADOSCHULT": "2026-11-28T15:00:46.595379+00:00",
+  "KXBOXING-26NOV28OUDRISFECHNE": "2026-11-28T15:00:46.595379+00:00",
   "KXBOXING-26OCT23ULDEDACAPARE": "2026-10-27T04:45:21.662265+00:00",
   "KXBOXING-26OCT31CALVARMBILLI": "2026-10-31T20:06:27.383501+00:00",
   "KXBOXING-26OCT31DELGADBIYARS": "2026-11-01T01:57:46.281274+00:00",
@@ -1944,16 +1946,16 @@
   "KXBOXING-26OCT31TSUTSUROJAS": "2026-10-31T20:06:27.383501+00:00"
  },
  "lane": "boxing_cheap_dog",
- "last_success": "2026-11-28T14:00:45.312155+00:00",
+ "last_success": "2026-11-28T15:00:46.595379+00:00",
  "observations": {
-  "at": "2026-11-28T14:00:45.312155+00:00",
+  "at": "2026-11-28T15:00:46.595379+00:00",
   "entered": 0,
-  "events": 2,
+  "events": 4,
   "filled": 0,
   "no_start": 0,
-  "skipped": 0,
+  "skipped": 4,
   "unverified": 1,
-  "waiting": 18
+  "waiting": 16
  },
  "skips": {
   "KXBOXING-26NOV06AOKUSOKHAHRA-AOKUSO": {
@@ -2927,6 +2929,30 @@
    "reason": "no quote with a 5c spread and a YES ask of 0.03-0.15 in the hour-before window",
    "start": "2026-11-27T22:00:00+00:00",
    "word": "Labinot Xhoxhaj"
+  },
+  "KXBOXING-26NOV28KARADOSCHULT-KARADO": {
+   "event": "KXBOXING-26NOV28KARADOSCHULT",
+   "reason": "no quote with a 5c spread and a YES ask of 0.03-0.15 in the hour-before window",
+   "start": "2026-11-28T15:40:00+00:00",
+   "word": "Ozan Karadogan"
+  },
+  "KXBOXING-26NOV28KARADOSCHULT-SCHULT": {
+   "event": "KXBOXING-26NOV28KARADOSCHULT",
+   "reason": "no quote with a 5c spread and a YES ask of 0.03-0.15 in the hour-before window",
+   "start": "2026-11-28T15:40:00+00:00",
+   "word": "Max Schultz"
+  },
+  "KXBOXING-26NOV28OUDRISFECHNE-FECHNE": {
+   "event": "KXBOXING-26NOV28OUDRISFECHNE",
+   "reason": "no quote with a 5c spread and a YES ask of 0.03-0.15 in the hour-before window",
+   "start": "2026-11-28T15:20:00+00:00",
+   "word": "Antonio Fechner"
+  },
+  "KXBOXING-26NOV28OUDRISFECHNE-OUDRIS": {
+   "event": "KXBOXING-26NOV28OUDRISFECHNE",
+   "reason": "no quote with a 5c spread and a YES ask of 0.03-0.15 in the hour-before window",
+   "start": "2026-11-28T15:20:00+00:00",
+   "word": "Ayman Oudriss"
   },
   "KXBOXING-26OCT23ULDEDACAPARE-CAPARE": {
    "event": "KXBOXING-26OCT23ULDEDACAPARE",
