@@ -1,7 +1,7 @@
 {
  "box_through": "2026-11-26",
  "error": null,
- "last_run": "2026-11-28T01:00:28.499206+00:00",
+ "last_run": "2026-11-28T01:15:30.228880+00:00",
  "looks": {
   "401909305": {
    "at": "2026-11-20T22:45:25.302540+00:00",
@@ -531,6 +531,84 @@
    },
    "spread": -4.5,
    "usable": 155
+  },
+  "401909333": {
+   "at": "2026-11-28T01:15:30.228880+00:00",
+   "batch": 4,
+   "entered": {
+    "spotter_fade": 0,
+    "spotter_hold": 0,
+    "spotter_spike": 0
+   },
+   "game": "LAL @ SA",
+   "night": "2026-11-27",
+   "out": 60,
+   "skipped": {
+    "listed out": 8,
+    "no quote": 4,
+    "outside 5-60c": 63,
+    "wide": 19
+   },
+   "spread": -6.5,
+   "usable": 143
+  },
+  "401909334": {
+   "at": "2026-11-28T01:15:30.228880+00:00",
+   "batch": 4,
+   "entered": {
+    "spotter_fade": 0,
+    "spotter_hold": 0,
+    "spotter_spike": 0
+   },
+   "game": "DEN @ UTAH",
+   "night": "2026-11-27",
+   "out": 60,
+   "skipped": {
+    "no player match": 5,
+    "no quote": 8,
+    "outside 5-60c": 68,
+    "wide": 23
+   },
+   "spread": 9.5,
+   "usable": 145
+  },
+  "401909335": {
+   "at": "2026-11-28T01:15:30.228880+00:00",
+   "batch": 4,
+   "entered": {
+    "spotter_fade": 0,
+    "spotter_hold": 0,
+    "spotter_spike": 0
+   },
+   "game": "NO @ LAC",
+   "night": "2026-11-27",
+   "out": 60,
+   "skipped": {
+    "no quote": 12,
+    "outside 5-60c": 76,
+    "wide": 27
+   },
+   "spread": -2.5,
+   "usable": 167
+  },
+  "401909336": {
+   "at": "2026-11-28T01:15:30.228880+00:00",
+   "batch": 4,
+   "entered": {
+    "spotter_fade": 0,
+    "spotter_hold": 0,
+    "spotter_spike": 0
+   },
+   "game": "GS @ POR",
+   "night": "2026-11-27",
+   "out": 60,
+   "skipped": {
+    "no quote": 3,
+    "outside 5-60c": 72,
+    "wide": 12
+   },
+   "spread": -8.5,
+   "usable": 145
   },
   "401910007": {
    "at": "2026-11-18T23:12:11.631686+00:00",
@@ -14739,12 +14817,6 @@
  },
  "runs": [
   {
-   "at": "2026-11-25T22:30:30.250072+00:00",
-   "box": 0,
-   "due": 0,
-   "new": 0
-  },
-  {
    "at": "2026-11-25T22:43:57.642213+00:00",
    "box": 0,
    "due": 1,
@@ -15043,10 +15115,15 @@
    "box": 0,
    "due": 0,
    "new": 0
+  },
+  {
+   "at": "2026-11-28T01:15:30.228880+00:00",
+   "box": 0,
+   "due": 4,
+   "new": 0
   }
  ],
  "schedule": [
-  "2026-11-28T01:00:00+00:00",
   "2026-11-28T01:30:00+00:00",
   "2026-11-28T02:00:00+00:00",
   "2026-11-28T02:30:00+00:00",
