@@ -1,44 +1,6 @@
 {
  "calendar": [
   {
-   "date": "2026-11-17",
-   "eps_forecast": "$1.67",
-   "fiscal_q": "Sep/2026",
-   "kpi": [],
-   "mentions": [
-    "KXEARNINGSMENTIONDIS-26NOV17"
-   ],
-   "n_ests": "9",
-   "name": "Walt Disney Company (The)",
-   "perp": "KXDISPERP",
-   "sym": "DIS",
-   "time": "pre-market"
-  },
-  {
-   "date": "2026-11-17",
-   "eps_forecast": "$3.86",
-   "fiscal_q": "Oct/2026",
-   "kpi": [],
-   "mentions": [],
-   "n_ests": "11",
-   "name": "Home Depot, Inc. (The)",
-   "perp": "KXHDPERP",
-   "sym": "HD",
-   "time": "pre-market"
-  },
-  {
-   "date": "2026-11-17",
-   "eps_forecast": "$2.49",
-   "fiscal_q": "Oct/2026",
-   "kpi": [],
-   "mentions": [],
-   "n_ests": "14",
-   "name": "NVIDIA Corporation",
-   "perp": "KXNVDAPERP",
-   "sym": "NVDA",
-   "time": "after-hours"
-  },
-  {
    "date": "2026-11-18",
    "eps_forecast": "$0.52",
    "fiscal_q": "Oct/2026",
@@ -258,7 +220,7 @@
    "time": "after-hours"
   }
  ],
- "calendar_at": "2026-11-28T04:00:35Z",
+ "calendar_at": "2026-11-28T05:00:30Z",
  "kpi_reads": [
   {
    "at": "2026-11-07T03:49:31Z",
@@ -7201,9 +7163,19 @@
     "width": 685185.185185194
    },
    "sym": "COST"
+  },
+  {
+   "at": "2026-11-28T05:01:21Z",
+   "event": "KXCOST-26DECCARDS",
+   "read": {
+    "median": 151356250.0,
+    "rungs": 10,
+    "width": 685185.185185194
+   },
+   "sym": "COST"
   }
  ],
- "last_run": "2026-11-28T04:01:40Z",
+ "last_run": "2026-11-28T05:01:24Z",
  "predictions": [
   {
    "call": {
