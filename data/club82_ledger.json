@@ -87,9 +87,9 @@
    },
    {
     "median": 0.5,
-    "n": 11,
+    "n": 12,
     "name": "Brentford",
-    "rate": 0.5455,
+    "rate": 0.5833,
     "safe": 0.5
    },
    {
@@ -389,13 +389,6 @@
    {
     "median": -0.5,
     "n": 11,
-    "name": "Coventry City",
-    "rate": 0.2727,
-    "safe": null
-   },
-   {
-    "median": -0.5,
-    "n": 11,
     "name": "Crystal Palace",
     "rate": 0.3636,
     "safe": null
@@ -507,9 +500,9 @@
    },
    {
     "median": -0.5,
-    "n": 11,
+    "n": 12,
     "name": "Leeds United",
-    "rate": 0.1818,
+    "rate": 0.25,
     "safe": null
    },
    {
@@ -556,9 +549,9 @@
    },
    {
     "median": -0.5,
-    "n": 16,
+    "n": 17,
     "name": "Manchester United",
-    "rate": 0.375,
+    "rate": 0.3529,
     "safe": null
    },
    {
@@ -692,6 +685,13 @@
     "n": 5,
     "name": "Viking FK",
     "rate": 0.4,
+    "safe": null
+   },
+   {
+    "median": -1.0,
+    "n": 12,
+    "name": "Coventry City",
+    "rate": 0.25,
     "safe": null
    },
    {
@@ -922,9 +922,9 @@
    },
    {
     "median": 1.5,
-    "n": 11,
+    "n": 12,
     "name": "Leeds United",
-    "rate": 0.8182,
+    "rate": 0.8333,
     "safe": 3.5
    },
    {
@@ -1097,9 +1097,9 @@
    },
    {
     "median": 0.5,
-    "n": 11,
+    "n": 12,
     "name": "Brentford",
-    "rate": 0.7273,
+    "rate": 0.6667,
     "safe": 4.5
    },
    {
@@ -1336,6 +1336,13 @@
    {
     "median": 0.0,
     "n": 12,
+    "name": "Coventry City",
+    "rate": 0.5,
+    "safe": 5.5
+   },
+   {
+    "median": 0.0,
+    "n": 12,
     "name": "Fiorentina",
     "rate": 0.5,
     "safe": 4.5
@@ -1346,13 +1353,6 @@
     "name": "Manchester City",
     "rate": 0.5,
     "safe": 6.5
-   },
-   {
-    "median": 0.0,
-    "n": 16,
-    "name": "Manchester United",
-    "rate": 0.5,
-    "safe": 5.5
    },
    {
     "median": 0.0,
@@ -1402,13 +1402,6 @@
     "name": "Borussia M\u00f6nchengladbach",
     "rate": 0.4545,
     "safe": 6.5
-   },
-   {
-    "median": -0.5,
-    "n": 11,
-    "name": "Coventry City",
-    "rate": 0.4545,
-    "safe": 5.5
    },
    {
     "median": -0.5,
@@ -1464,6 +1457,13 @@
     "n": 11,
     "name": "Mainz",
     "rate": 0.3636,
+    "safe": 5.5
+   },
+   {
+    "median": -0.5,
+    "n": 17,
+    "name": "Manchester United",
+    "rate": 0.4706,
     "safe": 5.5
    },
    {
@@ -1561,7 +1561,7 @@
  },
  "error": null,
  "games_through": "2026-11-28",
- "last_run": "2026-11-28T16:45:26.402512+00:00",
+ "last_run": "2026-11-28T16:55:53.061550+00:00",
  "registered": "2026-11-23",
  "rules": {
   "club82_tt15": {
@@ -5485,6 +5485,11 @@
    "at": "2026-11-28T16:45:26.402512+00:00",
    "due": 3,
    "new": 12
+  },
+  {
+   "at": "2026-11-28T16:55:53.061550+00:00",
+   "due": 3,
+   "new": 0
   }
  ],
  "schedule": [
@@ -5631,10 +5636,10 @@
    },
    {
     "hits": 3,
-    "n": 11,
+    "n": 12,
     "name": "Coventry City",
     "qualifies": false,
-    "rate": 0.2727272727272727,
+    "rate": 0.25,
     "since": null
    },
    {
@@ -5663,10 +5668,10 @@
    },
    {
     "hits": 6,
-    "n": 16,
+    "n": 17,
     "name": "Manchester United",
     "qualifies": false,
-    "rate": 0.375,
+    "rate": 0.35294117647058826,
     "since": null
    },
    {
@@ -5710,11 +5715,11 @@
     "since": null
    },
    {
-    "hits": 2,
-    "n": 11,
+    "hits": 3,
+    "n": 12,
     "name": "Leeds United",
     "qualifies": false,
-    "rate": 0.18181818181818182,
+    "rate": 0.25,
     "since": null
    },
    {
@@ -5742,11 +5747,11 @@
     "since": null
    },
    {
-    "hits": 6,
-    "n": 11,
+    "hits": 7,
+    "n": 12,
     "name": "Brentford",
     "qualifies": false,
-    "rate": 0.5454545454545454,
+    "rate": 0.5833333333333334,
     "since": null
    },
    {
@@ -6520,11 +6525,11 @@
     "since": "2026-10-13"
    },
    {
-    "hits": 5,
-    "n": 11,
+    "hits": 6,
+    "n": 12,
     "name": "Coventry City",
     "qualifies": false,
-    "rate": 0.45454545454545453,
+    "rate": 0.5,
     "since": null
    },
    {
@@ -6553,10 +6558,10 @@
    },
    {
     "hits": 8,
-    "n": 16,
+    "n": 17,
     "name": "Manchester United",
     "qualifies": false,
-    "rate": 0.5,
+    "rate": 0.47058823529411764,
     "since": null
    },
    {
@@ -6600,11 +6605,11 @@
     "since": null
    },
    {
-    "hits": 9,
-    "n": 11,
+    "hits": 10,
+    "n": 12,
     "name": "Leeds United",
     "qualifies": true,
-    "rate": 0.8181818181818182,
+    "rate": 0.8333333333333334,
     "since": "2026-10-25"
    },
    {
@@ -6633,10 +6638,10 @@
    },
    {
     "hits": 8,
-    "n": 11,
+    "n": 12,
     "name": "Brentford",
     "qualifies": false,
-    "rate": 0.7272727272727273,
+    "rate": 0.6666666666666666,
     "since": null
    },
    {
