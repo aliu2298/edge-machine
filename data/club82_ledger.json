@@ -1561,7 +1561,7 @@
  },
  "error": null,
  "games_through": "2026-11-28",
- "last_run": "2026-11-28T15:00:30.620325+00:00",
+ "last_run": "2026-11-28T15:30:27.953680+00:00",
  "registered": "2026-11-23",
  "rules": {
   "club82_tt15": {
@@ -3044,16 +3044,19 @@
      "logged": "2026-11-28T12:15:28.194217+00:00",
      "match": "Real Betis v Rayo Vallecano",
      "opponent": "Rayo Vallecano",
+     "payout": 0.0,
      "price": 0.64,
+     "profit": -100.0,
      "qualifying": false,
      "rates": {
       "away": "4/12",
       "home": "9/18"
      },
      "rule": "club82_tt15_blind",
+     "settled": "2026-11-28T15:30:27.953680+00:00",
      "side": "yes",
      "start": "2026-11-28T13:00Z",
-     "status": "open",
+     "status": "lost",
      "team": "Real Betis",
      "team_side": "home",
      "ticker": "KXLALIGATEAMTOTAL-26NOV28RBBRVC-RBB2"
@@ -3070,16 +3073,19 @@
      "logged": "2026-11-28T12:15:28.194217+00:00",
      "match": "Real Betis v Rayo Vallecano",
      "opponent": "Real Betis",
+     "payout": 0.0,
      "price": 0.32,
+     "profit": -100.0,
      "qualifying": false,
      "rates": {
       "away": "4/12",
       "home": "9/18"
      },
      "rule": "club82_tt15_blind",
+     "settled": "2026-11-28T15:30:27.953680+00:00",
      "side": "yes",
      "start": "2026-11-28T13:00Z",
-     "status": "open",
+     "status": "lost",
      "team": "Rayo Vallecano",
      "team_side": "away",
      "ticker": "KXLALIGATEAMTOTAL-26NOV28RBBRVC-RVC2"
@@ -3499,6 +3505,58 @@
      "team": "Athletic Club",
      "team_side": "away",
      "ticker": "KXLALIGATEAMTOTAL-26NOV28MCFATH-ATH2"
+    },
+    {
+     "ask": 0.26,
+     "bid": 0.25,
+     "event": "KXLIGUE1TEAMTOTAL-26NOV28ANGRCL",
+     "id": "club82_tt15_blind:KXLIGUE1TEAMTOTAL-26NOV28ANGRCL:home",
+     "kind": "tt15",
+     "lead_min": 44.5,
+     "league": "Ligue 1",
+     "line": 1.5,
+     "logged": "2026-11-28T15:30:27.953680+00:00",
+     "match": "Angers v Lens",
+     "opponent": "Lens",
+     "price": 0.26,
+     "qualifying": false,
+     "rates": {
+      "away": "6/16",
+      "home": "3/11"
+     },
+     "rule": "club82_tt15_blind",
+     "side": "yes",
+     "start": "2026-11-28T16:15Z",
+     "status": "open",
+     "team": "Angers",
+     "team_side": "home",
+     "ticker": "KXLIGUE1TEAMTOTAL-26NOV28ANGRCL-ANG2"
+    },
+    {
+     "ask": 0.57,
+     "bid": 0.55,
+     "event": "KXLIGUE1TEAMTOTAL-26NOV28ANGRCL",
+     "id": "club82_tt15_blind:KXLIGUE1TEAMTOTAL-26NOV28ANGRCL:away",
+     "kind": "tt15",
+     "lead_min": 44.5,
+     "league": "Ligue 1",
+     "line": 1.5,
+     "logged": "2026-11-28T15:30:27.953680+00:00",
+     "match": "Angers v Lens",
+     "opponent": "Angers",
+     "price": 0.57,
+     "qualifying": false,
+     "rates": {
+      "away": "6/16",
+      "home": "3/11"
+     },
+     "rule": "club82_tt15_blind",
+     "side": "yes",
+     "start": "2026-11-28T16:15Z",
+     "status": "open",
+     "team": "Lens",
+     "team_side": "away",
+     "ticker": "KXLIGUE1TEAMTOTAL-26NOV28ANGRCL-RCL2"
     }
    ]
   },
@@ -4253,16 +4311,19 @@
      "line": 3.5,
      "logged": "2026-11-28T12:15:28.194217+00:00",
      "match": "Real Betis v Rayo Vallecano",
+     "payout": 1.0,
      "price": 0.58,
+     "profit": 67.49,
      "qualifying": false,
      "rates": {
       "away": "9/12",
       "home": "13/18"
      },
      "rule": "club82_u35_blind",
+     "settled": "2026-11-28T15:30:27.953680+00:00",
      "side": "no",
      "start": "2026-11-28T13:00Z",
-     "status": "open",
+     "status": "won",
      "ticker": "KXLALIGATOTAL-26NOV28RBBRVC-4"
     },
     {
@@ -4448,6 +4509,29 @@
      "start": "2026-11-28T15:15Z",
      "status": "open",
      "ticker": "KXLALIGATOTAL-26NOV28MCFATH-4"
+    },
+    {
+     "ask": 0.31,
+     "bid": 0.3,
+     "event": "KXLIGUE1TOTAL-26NOV28ANGRCL",
+     "id": "club82_u35_blind:KXLIGUE1TOTAL-26NOV28ANGRCL",
+     "kind": "u35",
+     "lead_min": 44.5,
+     "league": "Ligue 1",
+     "line": 3.5,
+     "logged": "2026-11-28T15:30:27.953680+00:00",
+     "match": "Angers v Lens",
+     "price": 0.7,
+     "qualifying": false,
+     "rates": {
+      "away": "10/16",
+      "home": "7/11"
+     },
+     "rule": "club82_u35_blind",
+     "side": "no",
+     "start": "2026-11-28T16:15Z",
+     "status": "open",
+     "ticker": "KXLIGUE1TOTAL-26NOV28ANGRCL-4"
     }
    ]
   },
@@ -4854,11 +4938,14 @@
    "at": "2026-11-28T15:00:30.620325+00:00",
    "due": 0,
    "new": 0
+  },
+  {
+   "at": "2026-11-28T15:30:27.953680+00:00",
+   "due": 1,
+   "new": 3
   }
  ],
  "schedule": [
-  "2026-11-28T15:00Z",
-  "2026-11-28T15:15Z",
   "2026-11-28T16:15Z",
   "2026-11-28T17:00Z",
   "2026-11-28T17:30Z",
@@ -4874,7 +4961,8 @@
   "2026-11-29T16:15Z",
   "2026-11-29T16:30Z",
   "2026-11-29T17:00Z",
-  "2026-11-29T17:30Z"
+  "2026-11-29T17:30Z",
+  "2026-11-29T18:30Z"
  ],
  "skips": {},
  "tracker": {
