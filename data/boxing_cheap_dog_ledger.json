@@ -1839,9 +1839,11 @@
    "ask_check": {
     "book": null,
     "first_quotes": false,
+    "how": "print",
     "last_trade": 0.03,
+    "printed": 3849.93,
     "source": "replayed",
-    "status": "checking"
+    "status": "verified"
    },
    "bid": 0.02,
    "entry_at": "2026-11-28T15:01:00+00:00",
@@ -1877,9 +1879,11 @@
    "ask_check": {
     "book": 0,
     "first_quotes": false,
+    "how": "print",
     "last_trade": 0.09,
+    "printed": 6438.52,
     "source": "live",
-    "status": "checking"
+    "status": "verified"
    },
    "bid": 0.04,
    "book": {
@@ -2086,9 +2090,13 @@
   "KXBOXING-26NOV27PEREZODIASE": "2026-11-27T21:00:44.048353+00:00",
   "KXBOXING-26NOV27SPOMERCOLMEN": "2026-11-27T20:00:42.103827+00:00",
   "KXBOXING-26NOV27XHOXHAGIUSTI": "2026-11-27T22:00:39.508248+00:00",
+  "KXBOXING-26NOV28BAERKHUDOY": "2026-11-28T17:15:44.044851+00:00",
+  "KXBOXING-26NOV28COMARTKNORPP": "2026-11-28T17:15:44.044851+00:00",
   "KXBOXING-26NOV28JASHARPEREZ": "2026-11-28T16:00:40.201434+00:00",
   "KXBOXING-26NOV28KARADOSCHULT": "2026-11-28T15:00:46.595379+00:00",
+  "KXBOXING-26NOV28KRAUSDEINES": "2026-11-28T17:15:44.044851+00:00",
   "KXBOXING-26NOV28OUDRISFECHNE": "2026-11-28T15:00:46.595379+00:00",
+  "KXBOXING-26NOV28ROQUEWINTER": "2026-11-28T17:15:44.044851+00:00",
   "KXBOXING-26NOV28SASZIKKORTE": "2026-11-28T16:00:40.201434+00:00",
   "KXBOXING-26NOV28SENIORCHEREJ": "2026-11-28T16:00:40.201434+00:00",
   "KXBOXING-26OCT23ULDEDACAPARE": "2026-10-27T04:45:21.662265+00:00",
@@ -2101,16 +2109,16 @@
   "KXBOXING-26OCT31TSUTSUROJAS": "2026-10-31T20:06:27.383501+00:00"
  },
  "lane": "boxing_cheap_dog",
- "last_success": "2026-11-28T16:00:40.201434+00:00",
+ "last_success": "2026-11-28T17:15:44.044851+00:00",
  "observations": {
-  "at": "2026-11-28T16:00:40.201434+00:00",
-  "entered": 3,
-  "events": 5,
-  "filled": 2,
+  "at": "2026-11-28T17:15:44.044851+00:00",
+  "entered": 0,
+  "events": 9,
+  "filled": 0,
   "no_start": 0,
-  "skipped": 3,
+  "skipped": 8,
   "unverified": 1,
-  "waiting": 13
+  "waiting": 9
  },
  "skips": {
   "KXBOXING-26NOV06AOKUSOKHAHRA-AOKUSO": {
@@ -3085,6 +3093,30 @@
    "start": "2026-11-27T22:00:00+00:00",
    "word": "Labinot Xhoxhaj"
   },
+  "KXBOXING-26NOV28BAERKHUDOY-BAER": {
+   "event": "KXBOXING-26NOV28BAERKHUDOY",
+   "reason": "no quote with a 5c spread and a YES ask of 0.03-0.15 in the hour-before window",
+   "start": "2026-11-28T17:00:00+00:00",
+   "word": "Daniel Baer"
+  },
+  "KXBOXING-26NOV28BAERKHUDOY-KHUDOY": {
+   "event": "KXBOXING-26NOV28BAERKHUDOY",
+   "reason": "no quote with a 5c spread and a YES ask of 0.03-0.15 in the hour-before window",
+   "start": "2026-11-28T17:00:00+00:00",
+   "word": "Arman Khudoyan"
+  },
+  "KXBOXING-26NOV28COMARTKNORPP-COMART": {
+   "event": "KXBOXING-26NOV28COMARTKNORPP",
+   "reason": "no quote with a 5c spread and a YES ask of 0.03-0.15 in the hour-before window",
+   "start": "2026-11-28T17:20:00+00:00",
+   "word": "Serkay Comart"
+  },
+  "KXBOXING-26NOV28COMARTKNORPP-KNORPP": {
+   "event": "KXBOXING-26NOV28COMARTKNORPP",
+   "reason": "no quote with a 5c spread and a YES ask of 0.03-0.15 in the hour-before window",
+   "start": "2026-11-28T17:20:00+00:00",
+   "word": "Willi Knorpp"
+  },
   "KXBOXING-26NOV28JASHARPEREZ-JASHAR": {
    "event": "KXBOXING-26NOV28JASHARPEREZ",
    "reason": "no quote with a 5c spread and a YES ask of 0.03-0.15 in the hour-before window",
@@ -3103,6 +3135,18 @@
    "start": "2026-11-28T15:40:00+00:00",
    "word": "Max Schultz"
   },
+  "KXBOXING-26NOV28KRAUSDEINES-DEINES": {
+   "event": "KXBOXING-26NOV28KRAUSDEINES",
+   "reason": "no quote with a 5c spread and a YES ask of 0.03-0.15 in the hour-before window",
+   "start": "2026-11-28T17:40:00+00:00",
+   "word": "Adam Deines"
+  },
+  "KXBOXING-26NOV28KRAUSDEINES-KRAUS": {
+   "event": "KXBOXING-26NOV28KRAUSDEINES",
+   "reason": "no quote with a 5c spread and a YES ask of 0.03-0.15 in the hour-before window",
+   "start": "2026-11-28T17:40:00+00:00",
+   "word": "Gradus Kraus"
+  },
   "KXBOXING-26NOV28OUDRISFECHNE-FECHNE": {
    "event": "KXBOXING-26NOV28OUDRISFECHNE",
    "reason": "no quote with a 5c spread and a YES ask of 0.03-0.15 in the hour-before window",
@@ -3114,6 +3158,18 @@
    "reason": "no quote with a 5c spread and a YES ask of 0.03-0.15 in the hour-before window",
    "start": "2026-11-28T15:20:00+00:00",
    "word": "Ayman Oudriss"
+  },
+  "KXBOXING-26NOV28ROQUEWINTER-ROQUE": {
+   "event": "KXBOXING-26NOV28ROQUEWINTER",
+   "reason": "no quote with a 5c spread and a YES ask of 0.03-0.15 in the hour-before window",
+   "start": "2026-11-28T17:40:00+00:00",
+   "word": "Angel Roque"
+  },
+  "KXBOXING-26NOV28ROQUEWINTER-WINTER": {
+   "event": "KXBOXING-26NOV28ROQUEWINTER",
+   "reason": "no quote with a 5c spread and a YES ask of 0.03-0.15 in the hour-before window",
+   "start": "2026-11-28T17:40:00+00:00",
+   "word": "Sinohai Winterstein"
   },
   "KXBOXING-26NOV28SASZIKKORTE-SASZIK": {
    "event": "KXBOXING-26NOV28SASZIKKORTE",
