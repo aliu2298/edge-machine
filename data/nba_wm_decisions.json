@@ -13462,6 +13462,19 @@
    "yes_ask": 0.17,
    "yes_bid": 0.16
   },
+  "no:KXNBAWINMARGIN-26NOV27DENUTA-UTA11TO20": {
+   "bot_version": "wm-nofade-v4",
+   "bucket": "UTA11TO20",
+   "decided_at": "2026-11-28T01:45:57+00:00",
+   "event": "KXNBAWINMARGIN-26NOV27DENUTA",
+   "lane": "nba_wm_nofade",
+   "outcome": "skip",
+   "rule_ok": false,
+   "slate": "26NOV27",
+   "ticker": "KXNBAWINMARGIN-26NOV27DENUTA-UTA11TO20",
+   "tip": "2026-11-28T02:30:00+00:00",
+   "why": "no tight read inside the entry window"
+  },
   "no:KXNBAWINMARGIN-26NOV27DENUTA-UTA1TO5": {
    "bot_version": "wm-nofade-v4",
    "bucket": "UTA1TO5",
@@ -13477,6 +13490,19 @@
    "why": "NO price 0.96 outside 10-95c",
    "yes_ask": 0.09,
    "yes_bid": 0.04
+  },
+  "no:KXNBAWINMARGIN-26NOV27DENUTA-UTA21PLUS": {
+   "bot_version": "wm-nofade-v4",
+   "bucket": "UTA21PLUS",
+   "decided_at": "2026-11-28T01:45:57+00:00",
+   "event": "KXNBAWINMARGIN-26NOV27DENUTA",
+   "lane": "nba_wm_nofade",
+   "outcome": "skip",
+   "rule_ok": false,
+   "slate": "26NOV27",
+   "ticker": "KXNBAWINMARGIN-26NOV27DENUTA-UTA21PLUS",
+   "tip": "2026-11-28T02:30:00+00:00",
+   "why": "no tight read inside the entry window"
   },
   "no:KXNBAWINMARGIN-26NOV27DENUTA-UTA6TO10": {
    "bot_version": "wm-nofade-v4",
@@ -13529,6 +13555,19 @@
    "why": null,
    "yes_ask": 0.1,
    "yes_bid": 0.08
+  },
+  "no:KXNBAWINMARGIN-26NOV27GSWPOR-GSW21PLUS": {
+   "bot_version": "wm-nofade-v4",
+   "bucket": "GSW21PLUS",
+   "decided_at": "2026-11-28T01:45:57+00:00",
+   "event": "KXNBAWINMARGIN-26NOV27GSWPOR",
+   "lane": "nba_wm_nofade",
+   "outcome": "skip",
+   "rule_ok": false,
+   "slate": "26NOV27",
+   "ticker": "KXNBAWINMARGIN-26NOV27GSWPOR-GSW21PLUS",
+   "tip": "2026-11-28T02:30:00+00:00",
+   "why": "no tight read inside the entry window"
   },
   "no:KXNBAWINMARGIN-26NOV27GSWPOR-GSW6TO10": {
    "bot_version": "wm-nofade-v4",
@@ -13662,6 +13701,19 @@
    "why": "ceded to wm-yes-v4 (Bucket Priority bp-v3, 1-5)",
    "yes_ask": 0.13,
    "yes_bid": 0.11
+  },
+  "no:KXNBAWINMARGIN-26NOV27LALSAS-LAL21PLUS": {
+   "bot_version": "wm-nofade-v4",
+   "bucket": "LAL21PLUS",
+   "decided_at": "2026-11-28T01:45:57+00:00",
+   "event": "KXNBAWINMARGIN-26NOV27LALSAS",
+   "lane": "nba_wm_nofade",
+   "outcome": "skip",
+   "rule_ok": false,
+   "slate": "26NOV27",
+   "ticker": "KXNBAWINMARGIN-26NOV27LALSAS-LAL21PLUS",
+   "tip": "2026-11-28T02:30:00+00:00",
+   "why": "no tight read inside the entry window"
   },
   "no:KXNBAWINMARGIN-26NOV27LALSAS-LAL6TO10": {
    "P": 0.93,
@@ -14182,6 +14234,25 @@
    "why": "NO price 0.96 outside 10-95c",
    "yes_ask": 0.06,
    "yes_bid": 0.04
+  },
+  "no:KXNBAWINMARGIN-26NOV27NOPLAC-LAC11TO20": {
+   "P": 0.87,
+   "bot_version": "wm-nofade-v4",
+   "bucket": "LAC11TO20",
+   "decided_at": "2026-11-28T01:40:03+00:00",
+   "depth": 1.0,
+   "event": "KXNBAWINMARGIN-26NOV27NOPLAC",
+   "lane": "nba_wm_nofade",
+   "limit": 0.57,
+   "outcome": "skip",
+   "rule_ok": false,
+   "slate": "26NOV27",
+   "spread": 0.04,
+   "ticker": "KXNBAWINMARGIN-26NOV27NOPLAC-LAC11TO20",
+   "tip": "2026-11-28T02:30:00+00:00",
+   "why": "ask check: 1 contracts offered at or under 0.87 (under 10)",
+   "yes_ask": 0.17,
+   "yes_bid": 0.13
   },
   "no:KXNBAWINMARGIN-26NOV27NOPLAC-LAC1TO5": {
    "P": 0.87,
@@ -23966,6 +24037,19 @@
    "yes_ask": 0.17,
    "yes_bid": 0.16
   },
+  "yes:KXNBAWINMARGIN-26NOV27DENUTA-UTA11TO20": {
+   "bot_version": "wm-yes-v4",
+   "bucket": "UTA11TO20",
+   "decided_at": "2026-11-28T01:45:57+00:00",
+   "event": "KXNBAWINMARGIN-26NOV27DENUTA",
+   "lane": "nba_winmargin_live",
+   "outcome": "skip",
+   "rule_ok": false,
+   "slate": "26NOV27",
+   "ticker": "KXNBAWINMARGIN-26NOV27DENUTA-UTA11TO20",
+   "tip": "2026-11-28T02:30:00+00:00",
+   "why": "no tight read inside the entry window"
+  },
   "yes:KXNBAWINMARGIN-26NOV27DENUTA-UTA1TO5": {
    "bot_version": "wm-yes-v4",
    "bucket": "UTA1TO5",
@@ -24530,6 +24614,24 @@
    "yes_ask": 0.06,
    "yes_bid": 0.04
   },
+  "yes:KXNBAWINMARGIN-26NOV27NOPLAC-LAC11TO20": {
+   "bot_version": "wm-yes-v4",
+   "bucket": "LAC11TO20",
+   "decided_at": "2026-11-28T01:40:03+00:00",
+   "depth": 1.0,
+   "event": "KXNBAWINMARGIN-26NOV27NOPLAC",
+   "fav_share": 0.5587,
+   "lane": "nba_winmargin_live",
+   "outcome": "skip",
+   "rule_ok": false,
+   "slate": "26NOV27",
+   "spread": 0.04,
+   "ticker": "KXNBAWINMARGIN-26NOV27NOPLAC-LAC11TO20",
+   "tip": "2026-11-28T02:30:00+00:00",
+   "why": "ask check: 1 contracts offered at or under 0.17 (under 10)",
+   "yes_ask": 0.17,
+   "yes_bid": 0.13
+  },
   "yes:KXNBAWINMARGIN-26NOV27NOPLAC-LAC1TO5": {
    "bot_version": "wm-yes-v4",
    "bucket": "LAC1TO5",
@@ -24756,6 +24858,6 @@
    "yes_bid": 0.12
   }
  },
- "updated_at": "2026-11-28T01:36:12+00:00",
+ "updated_at": "2026-11-28T01:45:57+00:00",
  "version": 1
 }
