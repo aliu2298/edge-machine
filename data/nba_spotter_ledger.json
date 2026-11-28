@@ -1,7 +1,7 @@
 {
  "box_through": "2026-11-26",
  "error": null,
- "last_run": "2026-11-28T01:30:28.992829+00:00",
+ "last_run": "2026-11-28T02:00:32.301391+00:00",
  "looks": {
   "401909305": {
    "at": "2026-11-20T22:45:25.302540+00:00",
@@ -6064,6 +6064,7 @@
     {
      "bid": 0.52,
      "entered": "2026-11-27T22:45:33.880329+00:00",
+     "fee_in": 0.0175,
      "game": "MIA @ NY",
      "game_id": "401909326",
      "id": "spotter_fade_blind:KXNBAAST-26NOV27MIANYK-MIAKTHOMPSON11-2",
@@ -6071,15 +6072,20 @@
      "matches": "spotter_fade:KXNBAPRA-26NOV27MIANYK-NYKJHART3-25",
      "night": "2026-11-27",
      "p": null,
+     "payout": 0.0,
      "pid": "6475",
      "player": "Klay Thompson",
      "price": 0.48,
+     "profit": -0.4975,
+     "ret": -1.0,
      "rule": "spotter_fade_blind",
      "rung": 2,
+     "settled": "2026-11-28T02:00:32.301391+00:00",
      "side": "no",
+     "sold": false,
      "start": "2026-11-28T00:00:00+00:00",
      "stat": "ast",
-     "status": "open",
+     "status": "lost",
      "team": "MIA",
      "ticker": "KXNBAAST-26NOV27MIANYK-MIAKTHOMPSON11-2",
      "unit": "assists",
@@ -12384,20 +12390,28 @@
      "bid": 0.47,
      "edge": 0.0616,
      "entered": "2026-11-27T22:45:33.880329+00:00",
+     "fee_in": 0.0175,
      "game": "MIA @ NY",
      "game_id": "401909326",
      "id": "spotter_spike:KXNBAAST-26NOV27MIANYK-NYKJHART3-6",
      "lead_min": 74.4,
      "night": "2026-11-27",
      "p": 0.5616,
+     "payout": 1.0,
      "pid": "3062679",
      "player": "Josh Hart",
      "price": 0.49,
+     "profit": 0.4711,
+     "ret": 0.9283,
      "rule": "spotter_spike",
      "rung": 6,
+     "settled": "2026-11-28T02:00:32.301391+00:00",
+     "sold": true,
+     "sold_at": "2026-11-28T00:57:44+00:00",
+     "sold_price": 0.98,
      "start": "2026-11-28T00:00:00+00:00",
      "stat": "ast",
-     "status": "open",
+     "status": "won",
      "target": 0.98,
      "team": "NY",
      "ticker": "KXNBAAST-26NOV27MIANYK-NYKJHART3-6",
@@ -14817,12 +14831,6 @@
  },
  "runs": [
   {
-   "at": "2026-11-25T22:45:29.783375+00:00",
-   "box": 0,
-   "due": 0,
-   "new": 0
-  },
-  {
    "at": "2026-11-25T23:00:30.915870+00:00",
    "box": 0,
    "due": 0,
@@ -15121,10 +15129,15 @@
    "box": 0,
    "due": 0,
    "new": 0
+  },
+  {
+   "at": "2026-11-28T02:00:32.301391+00:00",
+   "box": 0,
+   "due": 0,
+   "new": 0
   }
  ],
  "schedule": [
-  "2026-11-28T01:30:00+00:00",
   "2026-11-28T02:00:00+00:00",
   "2026-11-28T02:30:00+00:00",
   "2026-11-28T02:30:00+00:00",
