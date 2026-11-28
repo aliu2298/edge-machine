@@ -73,9 +73,9 @@
    },
    {
     "median": 0.5,
-    "n": 15,
+    "n": 16,
     "name": "Bayern Munich",
-    "rate": 0.8,
+    "rate": 0.75,
     "safe": 0.5
    },
    {
@@ -311,9 +311,9 @@
    },
    {
     "median": -0.5,
-    "n": 10,
+    "n": 11,
     "name": "1. FC Union Berlin",
-    "rate": 0.1,
+    "rate": 0.0909,
     "safe": null
    },
    {
@@ -430,10 +430,10 @@
    },
    {
     "median": -0.5,
-    "n": 10,
+    "n": 11,
     "name": "FC Cologne",
-    "rate": 0.2,
-    "safe": null
+    "rate": 0.2727,
+    "safe": 0.5
    },
    {
     "median": -0.5,
@@ -549,9 +549,9 @@
    },
    {
     "median": -0.5,
-    "n": 10,
+    "n": 11,
     "name": "Mainz",
-    "rate": 0.4,
+    "rate": 0.4545,
     "safe": 0.5
    },
    {
@@ -612,9 +612,9 @@
    },
    {
     "median": -0.5,
-    "n": 10,
+    "n": 11,
     "name": "SV Elversberg",
-    "rate": 0.4,
+    "rate": 0.3636,
     "safe": null
    },
    {
@@ -696,13 +696,6 @@
    },
    {
     "median": -1.0,
-    "n": 10,
-    "name": "Hamburg SV",
-    "rate": 0.3,
-    "safe": null
-   },
-   {
-    "median": -1.0,
     "n": 12,
     "name": "Nottingham Forest",
     "rate": 0.3333,
@@ -738,16 +731,23 @@
    },
    {
     "median": -1.5,
-    "n": 10,
-    "name": "SC Paderborn 07",
-    "rate": 0.3,
+    "n": 11,
+    "name": "Hamburg SV",
+    "rate": 0.2727,
     "safe": null
    },
    {
     "median": -1.5,
-    "n": 10,
+    "n": 11,
+    "name": "SC Paderborn 07",
+    "rate": 0.3636,
+    "safe": null
+   },
+   {
+    "median": -1.5,
+    "n": 11,
     "name": "Schalke 04",
-    "rate": 0.1,
+    "rate": 0.0909,
     "safe": null
    },
    {
@@ -800,13 +800,6 @@
     "name": "Valencia",
     "rate": 0.6923,
     "safe": 4.5
-   },
-   {
-    "median": 2.0,
-    "n": 10,
-    "name": "Schalke 04",
-    "rate": 0.9,
-    "safe": 3.5
    },
    {
     "median": 1.5,
@@ -993,6 +986,13 @@
    {
     "median": 1.5,
     "n": 11,
+    "name": "Schalke 04",
+    "rate": 0.8182,
+    "safe": 3.5
+   },
+   {
+    "median": 1.5,
+    "n": 11,
     "name": "Sunderland",
     "rate": 0.8182,
     "safe": 3.5
@@ -1040,24 +1040,10 @@
     "safe": 4.5
    },
    {
-    "median": 1.0,
-    "n": 10,
-    "name": "FC Cologne",
-    "rate": 0.8,
-    "safe": 5.5
-   },
-   {
-    "median": 1.0,
-    "n": 10,
-    "name": "SC Paderborn 07",
-    "rate": 0.6,
-    "safe": 4.5
-   },
-   {
     "median": 0.5,
-    "n": 10,
+    "n": 11,
     "name": "1. FC Union Berlin",
-    "rate": 0.5,
+    "rate": 0.5455,
     "safe": 6.5
    },
    {
@@ -1128,6 +1114,13 @@
     "n": 17,
     "name": "Como",
     "rate": 0.5882,
+    "safe": 5.5
+   },
+   {
+    "median": 0.5,
+    "n": 11,
+    "name": "FC Cologne",
+    "rate": 0.7273,
     "safe": 5.5
    },
    {
@@ -1272,6 +1265,13 @@
    },
    {
     "median": 0.5,
+    "n": 11,
+    "name": "SC Paderborn 07",
+    "rate": 0.5455,
+    "safe": 4.5
+   },
+   {
+    "median": 0.5,
     "n": 12,
     "name": "Sassuolo",
     "rate": 0.5833,
@@ -1362,13 +1362,6 @@
     "safe": 5.5
    },
    {
-    "median": 0.0,
-    "n": 10,
-    "name": "SV Elversberg",
-    "rate": 0.5,
-    "safe": 7.5
-   },
-   {
     "median": -0.5,
     "n": 5,
     "name": "AEK Athens",
@@ -1398,9 +1391,9 @@
    },
    {
     "median": -0.5,
-    "n": 15,
+    "n": 16,
     "name": "Bayern Munich",
-    "rate": 0.4,
+    "rate": 0.4375,
     "safe": 6.5
    },
    {
@@ -1454,9 +1447,9 @@
    },
    {
     "median": -0.5,
-    "n": 10,
+    "n": 11,
     "name": "Hamburg SV",
-    "rate": 0.4,
+    "rate": 0.4545,
     "safe": 5.5
    },
    {
@@ -1465,6 +1458,13 @@
     "name": "LASK Linz",
     "rate": 0.4,
     "safe": null
+   },
+   {
+    "median": -0.5,
+    "n": 11,
+    "name": "Mainz",
+    "rate": 0.3636,
+    "safe": 5.5
    },
    {
     "median": -0.5,
@@ -1485,6 +1485,13 @@
     "n": 14,
     "name": "Racing Santander",
     "rate": 0.4286,
+    "safe": 5.5
+   },
+   {
+    "median": -0.5,
+    "n": 11,
+    "name": "SV Elversberg",
+    "rate": 0.4545,
     "safe": 5.5
    },
    {
@@ -1537,13 +1544,6 @@
     "safe": 5.5
    },
    {
-    "median": -1.0,
-    "n": 10,
-    "name": "Mainz",
-    "rate": 0.3,
-    "safe": 7.5
-   },
-   {
     "median": -1.5,
     "n": 18,
     "name": "Barcelona",
@@ -1561,7 +1561,7 @@
  },
  "error": null,
  "games_through": "2026-11-28",
- "last_run": "2026-11-28T16:15:29.054739+00:00",
+ "last_run": "2026-11-28T16:45:26.402512+00:00",
  "registered": "2026-11-23",
  "rules": {
   "club82_tt15": {
@@ -3160,16 +3160,19 @@
      "logged": "2026-11-28T13:45:28.281601+00:00",
      "match": "FC Cologne v SV Elversberg",
      "opponent": "SV Elversberg",
+     "payout": 1.0,
      "price": 0.54,
+     "profit": 79.41,
      "qualifying": false,
      "rates": {
       "away": "4/10",
       "home": "2/10"
      },
      "rule": "club82_tt15_blind",
+     "settled": "2026-11-28T16:45:26.402512+00:00",
      "side": "yes",
      "start": "2026-11-28T14:30Z",
-     "status": "open",
+     "status": "won",
      "team": "FC Cologne",
      "team_side": "home",
      "ticker": "KXBUNDESLIGATEAMTOTAL-26NOV28KOESVE-KOE2"
@@ -3186,16 +3189,19 @@
      "logged": "2026-11-28T13:45:28.281601+00:00",
      "match": "FC Cologne v SV Elversberg",
      "opponent": "FC Cologne",
+     "payout": 0.0,
      "price": 0.35,
+     "profit": -100.0,
      "qualifying": false,
      "rates": {
       "away": "4/10",
       "home": "2/10"
      },
      "rule": "club82_tt15_blind",
+     "settled": "2026-11-28T16:45:26.402512+00:00",
      "side": "yes",
      "start": "2026-11-28T14:30Z",
-     "status": "open",
+     "status": "lost",
      "team": "SV Elversberg",
      "team_side": "away",
      "ticker": "KXBUNDESLIGATEAMTOTAL-26NOV28KOESVE-SVE2"
@@ -3212,16 +3218,19 @@
      "logged": "2026-11-28T13:45:28.281601+00:00",
      "match": "Hamburg SV v Bayern Munich",
      "opponent": "Bayern Munich",
+     "payout": 0.0,
      "price": 0.26,
+     "profit": -100.0,
      "qualifying": false,
      "rates": {
       "away": "12/15",
       "home": "3/10"
      },
      "rule": "club82_tt15_blind",
+     "settled": "2026-11-28T16:45:26.402512+00:00",
      "side": "yes",
      "start": "2026-11-28T14:30Z",
-     "status": "open",
+     "status": "lost",
      "team": "Hamburg SV",
      "team_side": "home",
      "ticker": "KXBUNDESLIGATEAMTOTAL-26NOV28HSVBMU-HSV2"
@@ -3238,16 +3247,19 @@
      "logged": "2026-11-28T13:45:28.281601+00:00",
      "match": "Hamburg SV v Bayern Munich",
      "opponent": "Hamburg SV",
+     "payout": 0.0,
      "price": 0.73,
+     "profit": -100.0,
      "qualifying": false,
      "rates": {
       "away": "12/15",
       "home": "3/10"
      },
      "rule": "club82_tt15_blind",
+     "settled": "2026-11-28T16:45:26.402512+00:00",
      "side": "yes",
      "start": "2026-11-28T14:30Z",
-     "status": "open",
+     "status": "lost",
      "team": "Bayern Munich",
      "team_side": "away",
      "ticker": "KXBUNDESLIGATEAMTOTAL-26NOV28HSVBMU-BMU2"
@@ -3264,16 +3276,19 @@
      "logged": "2026-11-28T13:45:28.281601+00:00",
      "match": "Mainz v 1. FC Union Berlin",
      "opponent": "1. FC Union Berlin",
+     "payout": 1.0,
      "price": 0.68,
+     "profit": 43.84,
      "qualifying": false,
      "rates": {
       "away": "1/10",
       "home": "4/10"
      },
      "rule": "club82_tt15_blind",
+     "settled": "2026-11-28T16:45:26.402512+00:00",
      "side": "yes",
      "start": "2026-11-28T14:30Z",
-     "status": "open",
+     "status": "won",
      "team": "Mainz",
      "team_side": "home",
      "ticker": "KXBUNDESLIGATEAMTOTAL-26NOV28M05UNI-M052"
@@ -3290,16 +3305,19 @@
      "logged": "2026-11-28T13:45:28.281601+00:00",
      "match": "Mainz v 1. FC Union Berlin",
      "opponent": "Mainz",
+     "payout": 0.0,
      "price": 0.26,
+     "profit": -100.0,
      "qualifying": false,
      "rates": {
       "away": "1/10",
       "home": "4/10"
      },
      "rule": "club82_tt15_blind",
+     "settled": "2026-11-28T16:45:26.402512+00:00",
      "side": "yes",
      "start": "2026-11-28T14:30Z",
-     "status": "open",
+     "status": "lost",
      "team": "1. FC Union Berlin",
      "team_side": "away",
      "ticker": "KXBUNDESLIGATEAMTOTAL-26NOV28M05UNI-UNI2"
@@ -3316,16 +3334,19 @@
      "logged": "2026-11-28T13:45:28.281601+00:00",
      "match": "SC Paderborn 07 v Schalke 04",
      "opponent": "Schalke 04",
+     "payout": 1.0,
      "price": 0.44,
+     "profit": 118.7,
      "qualifying": false,
      "rates": {
       "away": "1/10",
       "home": "3/10"
      },
      "rule": "club82_tt15_blind",
+     "settled": "2026-11-28T16:45:26.402512+00:00",
      "side": "yes",
      "start": "2026-11-28T14:30Z",
-     "status": "open",
+     "status": "won",
      "team": "SC Paderborn 07",
      "team_side": "home",
      "ticker": "KXBUNDESLIGATEAMTOTAL-26NOV28PADSCH-PAD2"
@@ -3342,16 +3363,19 @@
      "logged": "2026-11-28T13:45:28.281601+00:00",
      "match": "SC Paderborn 07 v Schalke 04",
      "opponent": "SC Paderborn 07",
+     "payout": 0.0,
      "price": 0.46,
+     "profit": -100.0,
      "qualifying": false,
      "rates": {
       "away": "1/10",
       "home": "3/10"
      },
      "rule": "club82_tt15_blind",
+     "settled": "2026-11-28T16:45:26.402512+00:00",
      "side": "yes",
      "start": "2026-11-28T14:30Z",
-     "status": "open",
+     "status": "lost",
      "team": "Schalke 04",
      "team_side": "away",
      "ticker": "KXBUNDESLIGATEAMTOTAL-26NOV28PADSCH-SCH2"
@@ -3615,6 +3639,162 @@
      "team": "Lazio",
      "team_side": "away",
      "ticker": "KXSERIEATEAMTOTAL-26NOV28TORLAZ-LAZ2"
+    },
+    {
+     "ask": 0.39,
+     "bid": 0.38,
+     "event": "KXEPLTEAMTOTAL-26NOV28IPSAVL",
+     "id": "club82_tt15_blind:KXEPLTEAMTOTAL-26NOV28IPSAVL:home",
+     "kind": "tt15",
+     "lead_min": 44.6,
+     "league": "Premier League",
+     "line": 1.5,
+     "logged": "2026-11-28T16:45:26.402512+00:00",
+     "match": "Ipswich Town v Aston Villa",
+     "opponent": "Aston Villa",
+     "price": 0.39,
+     "qualifying": false,
+     "rates": {
+      "away": "7/16",
+      "home": "6/11"
+     },
+     "rule": "club82_tt15_blind",
+     "side": "yes",
+     "start": "2026-11-28T17:30Z",
+     "status": "open",
+     "team": "Ipswich Town",
+     "team_side": "home",
+     "ticker": "KXEPLTEAMTOTAL-26NOV28IPSAVL-IPS2"
+    },
+    {
+     "ask": 0.55,
+     "bid": 0.53,
+     "event": "KXEPLTEAMTOTAL-26NOV28IPSAVL",
+     "id": "club82_tt15_blind:KXEPLTEAMTOTAL-26NOV28IPSAVL:away",
+     "kind": "tt15",
+     "lead_min": 44.6,
+     "league": "Premier League",
+     "line": 1.5,
+     "logged": "2026-11-28T16:45:26.402512+00:00",
+     "match": "Ipswich Town v Aston Villa",
+     "opponent": "Ipswich Town",
+     "price": 0.55,
+     "qualifying": false,
+     "rates": {
+      "away": "7/16",
+      "home": "6/11"
+     },
+     "rule": "club82_tt15_blind",
+     "side": "yes",
+     "start": "2026-11-28T17:30Z",
+     "status": "open",
+     "team": "Aston Villa",
+     "team_side": "away",
+     "ticker": "KXEPLTEAMTOTAL-26NOV28IPSAVL-AVL2"
+    },
+    {
+     "ask": 0.22,
+     "bid": 0.21,
+     "event": "KXLALIGATEAMTOTAL-26NOV28ELCATM",
+     "id": "club82_tt15_blind:KXLALIGATEAMTOTAL-26NOV28ELCATM:home",
+     "kind": "tt15",
+     "lead_min": 44.6,
+     "league": "La Liga",
+     "line": 1.5,
+     "logged": "2026-11-28T16:45:26.402512+00:00",
+     "match": "Elche v Atl\u00e9tico Madrid",
+     "opponent": "Atl\u00e9tico Madrid",
+     "price": 0.22,
+     "qualifying": false,
+     "rates": {
+      "away": "11/18",
+      "home": "5/13"
+     },
+     "rule": "club82_tt15_blind",
+     "side": "yes",
+     "start": "2026-11-28T17:30Z",
+     "status": "open",
+     "team": "Elche",
+     "team_side": "home",
+     "ticker": "KXLALIGATEAMTOTAL-26NOV28ELCATM-ELC2"
+    },
+    {
+     "ask": 0.65,
+     "bid": 0.64,
+     "event": "KXLALIGATEAMTOTAL-26NOV28ELCATM",
+     "id": "club82_tt15_blind:KXLALIGATEAMTOTAL-26NOV28ELCATM:away",
+     "kind": "tt15",
+     "lead_min": 44.6,
+     "league": "La Liga",
+     "line": 1.5,
+     "logged": "2026-11-28T16:45:26.402512+00:00",
+     "match": "Elche v Atl\u00e9tico Madrid",
+     "opponent": "Elche",
+     "price": 0.65,
+     "qualifying": false,
+     "rates": {
+      "away": "11/18",
+      "home": "5/13"
+     },
+     "rule": "club82_tt15_blind",
+     "side": "yes",
+     "start": "2026-11-28T17:30Z",
+     "status": "open",
+     "team": "Atl\u00e9tico Madrid",
+     "team_side": "away",
+     "ticker": "KXLALIGATEAMTOTAL-26NOV28ELCATM-ATM2"
+    },
+    {
+     "ask": 0.68,
+     "bid": 0.66,
+     "event": "KXBUNDESLIGATEAMTOTAL-26NOV28VFBSGE",
+     "id": "club82_tt15_blind:KXBUNDESLIGATEAMTOTAL-26NOV28VFBSGE:home",
+     "kind": "tt15",
+     "lead_min": 44.6,
+     "league": "Bundesliga",
+     "line": 1.5,
+     "logged": "2026-11-28T16:45:26.402512+00:00",
+     "match": "VfB Stuttgart v Eintracht Frankfurt",
+     "opponent": "Eintracht Frankfurt",
+     "price": 0.68,
+     "qualifying": false,
+     "rates": {
+      "away": "5/10",
+      "home": "6/15"
+     },
+     "rule": "club82_tt15_blind",
+     "side": "yes",
+     "start": "2026-11-28T17:30Z",
+     "status": "open",
+     "team": "VfB Stuttgart",
+     "team_side": "home",
+     "ticker": "KXBUNDESLIGATEAMTOTAL-26NOV28VFBSGE-VFB2"
+    },
+    {
+     "ask": 0.47,
+     "bid": 0.46,
+     "event": "KXBUNDESLIGATEAMTOTAL-26NOV28VFBSGE",
+     "id": "club82_tt15_blind:KXBUNDESLIGATEAMTOTAL-26NOV28VFBSGE:away",
+     "kind": "tt15",
+     "lead_min": 44.6,
+     "league": "Bundesliga",
+     "line": 1.5,
+     "logged": "2026-11-28T16:45:26.402512+00:00",
+     "match": "VfB Stuttgart v Eintracht Frankfurt",
+     "opponent": "VfB Stuttgart",
+     "price": 0.47,
+     "qualifying": false,
+     "rates": {
+      "away": "5/10",
+      "home": "6/15"
+     },
+     "rule": "club82_tt15_blind",
+     "side": "yes",
+     "start": "2026-11-28T17:30Z",
+     "status": "open",
+     "team": "Eintracht Frankfurt",
+     "team_side": "away",
+     "ticker": "KXBUNDESLIGATEAMTOTAL-26NOV28VFBSGE-SGE2"
     }
    ]
   },
@@ -3719,7 +3899,9 @@
      "logged": "2026-11-28T13:45:28.281601+00:00",
      "match": "SC Paderborn 07 v Schalke 04",
      "matches": "club82_u35_blind:KXBUNDESLIGATOTAL-26NOV28PADSCH",
+     "payout": 0.0,
      "price": 0.64,
+     "profit": -100.0,
      "qualifying_teams": [
       "Schalke 04"
      ],
@@ -3728,9 +3910,10 @@
       "home": "6/10"
      },
      "rule": "club82_u35",
+     "settled": "2026-11-28T16:45:26.402512+00:00",
      "side": "no",
      "start": "2026-11-28T14:30Z",
-     "status": "open",
+     "status": "lost",
      "ticker": "KXBUNDESLIGATOTAL-26NOV28PADSCH-4"
     },
     {
@@ -3784,6 +3967,32 @@
      "start": "2026-11-28T17:00Z",
      "status": "open",
      "ticker": "KXSERIEATOTAL-26NOV28TORLAZ-4"
+    },
+    {
+     "ask": 0.36,
+     "bid": 0.35,
+     "event": "KXLALIGATOTAL-26NOV28ELCATM",
+     "id": "club82_u35:KXLALIGATOTAL-26NOV28ELCATM",
+     "kind": "u35",
+     "lead_min": 44.6,
+     "league": "La Liga",
+     "line": 3.5,
+     "logged": "2026-11-28T16:45:26.402512+00:00",
+     "match": "Elche v Atl\u00e9tico Madrid",
+     "matches": "club82_u35_blind:KXLALIGATOTAL-26NOV28ELCATM",
+     "price": 0.65,
+     "qualifying_teams": [
+      "Atl\u00e9tico Madrid"
+     ],
+     "rates": {
+      "away": "15/18",
+      "home": "8/13"
+     },
+     "rule": "club82_u35",
+     "side": "no",
+     "start": "2026-11-28T17:30Z",
+     "status": "open",
+     "ticker": "KXLALIGATOTAL-26NOV28ELCATM-4"
     }
    ]
   },
@@ -4450,16 +4659,19 @@
      "line": 3.5,
      "logged": "2026-11-28T13:45:28.281601+00:00",
      "match": "FC Cologne v SV Elversberg",
+     "payout": 0.0,
      "price": 0.64,
+     "profit": -100.0,
      "qualifying": false,
      "rates": {
       "away": "5/10",
       "home": "8/10"
      },
      "rule": "club82_u35_blind",
+     "settled": "2026-11-28T16:45:26.402512+00:00",
      "side": "no",
      "start": "2026-11-28T14:30Z",
-     "status": "open",
+     "status": "lost",
      "ticker": "KXBUNDESLIGATOTAL-26NOV28KOESVE-4"
     },
     {
@@ -4473,16 +4685,19 @@
      "line": 3.5,
      "logged": "2026-11-28T13:45:28.281601+00:00",
      "match": "Hamburg SV v Bayern Munich",
+     "payout": 1.0,
      "price": 0.56,
+     "profit": 73.24,
      "qualifying": false,
      "rates": {
       "away": "6/15",
       "home": "4/10"
      },
      "rule": "club82_u35_blind",
+     "settled": "2026-11-28T16:45:26.402512+00:00",
      "side": "no",
      "start": "2026-11-28T14:30Z",
-     "status": "open",
+     "status": "won",
      "ticker": "KXBUNDESLIGATOTAL-26NOV28HSVBMU-4"
     },
     {
@@ -4496,16 +4711,19 @@
      "line": 3.5,
      "logged": "2026-11-28T13:45:28.281601+00:00",
      "match": "Mainz v 1. FC Union Berlin",
+     "payout": 1.0,
      "price": 0.59,
+     "profit": 64.76,
      "qualifying": false,
      "rates": {
       "away": "5/10",
       "home": "3/10"
      },
      "rule": "club82_u35_blind",
+     "settled": "2026-11-28T16:45:26.402512+00:00",
      "side": "no",
      "start": "2026-11-28T14:30Z",
-     "status": "open",
+     "status": "won",
      "ticker": "KXBUNDESLIGATOTAL-26NOV28M05UNI-4"
     },
     {
@@ -4519,16 +4737,19 @@
      "line": 3.5,
      "logged": "2026-11-28T13:45:28.281601+00:00",
      "match": "SC Paderborn 07 v Schalke 04",
+     "payout": 0.0,
      "price": 0.64,
+     "profit": -100.0,
      "qualifying": true,
      "rates": {
       "away": "9/10",
       "home": "6/10"
      },
      "rule": "club82_u35_blind",
+     "settled": "2026-11-28T16:45:26.402512+00:00",
      "side": "no",
      "start": "2026-11-28T14:30Z",
-     "status": "open",
+     "status": "lost",
      "ticker": "KXBUNDESLIGATOTAL-26NOV28PADSCH-4"
     },
     {
@@ -4645,6 +4866,75 @@
      "start": "2026-11-28T17:00Z",
      "status": "open",
      "ticker": "KXSERIEATOTAL-26NOV28TORLAZ-4"
+    },
+    {
+     "ask": 0.39,
+     "bid": 0.38,
+     "event": "KXEPLTOTAL-26NOV28IPSAVL",
+     "id": "club82_u35_blind:KXEPLTOTAL-26NOV28IPSAVL",
+     "kind": "u35",
+     "lead_min": 44.6,
+     "league": "Premier League",
+     "line": 3.5,
+     "logged": "2026-11-28T16:45:26.402512+00:00",
+     "match": "Ipswich Town v Aston Villa",
+     "price": 0.62,
+     "qualifying": false,
+     "rates": {
+      "away": "9/16",
+      "home": "7/11"
+     },
+     "rule": "club82_u35_blind",
+     "side": "no",
+     "start": "2026-11-28T17:30Z",
+     "status": "open",
+     "ticker": "KXEPLTOTAL-26NOV28IPSAVL-4"
+    },
+    {
+     "ask": 0.36,
+     "bid": 0.35,
+     "event": "KXLALIGATOTAL-26NOV28ELCATM",
+     "id": "club82_u35_blind:KXLALIGATOTAL-26NOV28ELCATM",
+     "kind": "u35",
+     "lead_min": 44.6,
+     "league": "La Liga",
+     "line": 3.5,
+     "logged": "2026-11-28T16:45:26.402512+00:00",
+     "match": "Elche v Atl\u00e9tico Madrid",
+     "price": 0.65,
+     "qualifying": true,
+     "rates": {
+      "away": "15/18",
+      "home": "8/13"
+     },
+     "rule": "club82_u35_blind",
+     "side": "no",
+     "start": "2026-11-28T17:30Z",
+     "status": "open",
+     "ticker": "KXLALIGATOTAL-26NOV28ELCATM-4"
+    },
+    {
+     "ask": 0.56,
+     "bid": 0.55,
+     "event": "KXBUNDESLIGATOTAL-26NOV28VFBSGE",
+     "id": "club82_u35_blind:KXBUNDESLIGATOTAL-26NOV28VFBSGE",
+     "kind": "u35",
+     "lead_min": 44.6,
+     "league": "Bundesliga",
+     "line": 3.5,
+     "logged": "2026-11-28T16:45:26.402512+00:00",
+     "match": "VfB Stuttgart v Eintracht Frankfurt",
+     "price": 0.45,
+     "qualifying": false,
+     "rates": {
+      "away": "3/10",
+      "home": "10/15"
+     },
+     "rule": "club82_u35_blind",
+     "side": "no",
+     "start": "2026-11-28T17:30Z",
+     "status": "open",
+     "ticker": "KXBUNDESLIGATOTAL-26NOV28VFBSGE-4"
     }
    ]
   },
@@ -4700,7 +4990,9 @@
      "line": 3.5,
      "logged": "2026-11-28T13:45:28.281601+00:00",
      "match": "SC Paderborn 07 v Schalke 04",
+     "payout": 0.0,
      "price": 0.64,
+     "profit": -100.0,
      "qualifying_teams": [
       "Schalke 04"
      ],
@@ -4708,9 +5000,10 @@
      "rated_team": "Schalke 04",
      "rule": "club82_v2_u35_cushion",
      "rung": 3.5,
+     "settled": "2026-11-28T16:45:26.402512+00:00",
      "side": "no",
      "start": "2026-11-28T14:30Z",
-     "status": "open",
+     "status": "lost",
      "ticker": "KXBUNDESLIGATOTAL-26NOV28PADSCH-4",
      "v1_line": 3.5,
      "value": 0.2438
@@ -4770,6 +5063,34 @@
      "ticker": "KXSERIEATOTAL-26NOV28TORLAZ-4",
      "v1_line": 3.5,
      "value": 0.1088
+    },
+    {
+     "ask": 0.36,
+     "bid": 0.35,
+     "event": "KXLALIGATOTAL-26NOV28ELCATM",
+     "games": 18,
+     "id": "club82_v2_u35_cushion:KXLALIGATOTAL-26NOV28ELCATM-4",
+     "kind": "u35",
+     "kind_v2": "cushion",
+     "lead_min": 44.6,
+     "league": "La Liga",
+     "line": 3.5,
+     "logged": "2026-11-28T16:45:26.402512+00:00",
+     "match": "Elche v Atl\u00e9tico Madrid",
+     "price": 0.65,
+     "qualifying_teams": [
+      "Atl\u00e9tico Madrid"
+     ],
+     "rate": 0.8333,
+     "rated_team": "Atl\u00e9tico Madrid",
+     "rule": "club82_v2_u35_cushion",
+     "rung": 3.5,
+     "side": "no",
+     "start": "2026-11-28T17:30Z",
+     "status": "open",
+     "ticker": "KXLALIGATOTAL-26NOV28ELCATM-4",
+     "v1_line": 3.5,
+     "value": 0.1673
     }
    ]
   },
@@ -4819,7 +5140,9 @@
      "line": 3.5,
      "logged": "2026-11-28T13:45:28.281601+00:00",
      "match": "SC Paderborn 07 v Schalke 04",
+     "payout": 0.0,
      "price": 0.64,
+     "profit": -100.0,
      "qualifying_teams": [
       "Schalke 04"
      ],
@@ -4827,9 +5150,10 @@
      "rated_team": "Schalke 04",
      "rule": "club82_v2_u35_value",
      "rung": 3.5,
+     "settled": "2026-11-28T16:45:26.402512+00:00",
      "side": "no",
      "start": "2026-11-28T14:30Z",
-     "status": "open",
+     "status": "lost",
      "ticker": "KXBUNDESLIGATOTAL-26NOV28PADSCH-4",
      "v1_line": 3.5,
      "value": 0.2438
@@ -4889,6 +5213,34 @@
      "ticker": "KXSERIEATOTAL-26NOV28TORLAZ-4",
      "v1_line": 3.5,
      "value": 0.1088
+    },
+    {
+     "ask": 0.19,
+     "bid": 0.18,
+     "event": "KXLALIGATOTAL-26NOV28ELCATM",
+     "games": 18,
+     "id": "club82_v2_u35_value:KXLALIGATOTAL-26NOV28ELCATM-5",
+     "kind": "u35",
+     "kind_v2": "value",
+     "lead_min": 44.6,
+     "league": "La Liga",
+     "line": 3.5,
+     "logged": "2026-11-28T16:45:26.402512+00:00",
+     "match": "Elche v Atl\u00e9tico Madrid",
+     "price": 0.82,
+     "qualifying_teams": [
+      "Atl\u00e9tico Madrid"
+     ],
+     "rate": 1.0,
+     "rated_team": "Atl\u00e9tico Madrid",
+     "rule": "club82_v2_u35_value",
+     "rung": 4.5,
+     "side": "no",
+     "start": "2026-11-28T17:30Z",
+     "status": "open",
+     "ticker": "KXLALIGATOTAL-26NOV28ELCATM-5",
+     "v1_line": 3.5,
+     "value": 0.1696
     }
    ]
   }
@@ -5128,10 +5480,14 @@
    "at": "2026-11-28T16:15:29.054739+00:00",
    "due": 1,
    "new": 6
+  },
+  {
+   "at": "2026-11-28T16:45:26.402512+00:00",
+   "due": 3,
+   "new": 12
   }
  ],
  "schedule": [
-  "2026-11-28T16:15Z",
   "2026-11-28T17:00Z",
   "2026-11-28T17:30Z",
   "2026-11-28T19:45Z",
@@ -5147,7 +5503,8 @@
   "2026-11-29T16:30Z",
   "2026-11-29T17:00Z",
   "2026-11-29T17:30Z",
-  "2026-11-29T18:30Z"
+  "2026-11-29T18:30Z",
+  "2026-11-29T19:45Z"
  ],
  "skips": {},
  "tracker": {
@@ -5778,10 +6135,10 @@
    },
    {
     "hits": 12,
-    "n": 15,
+    "n": 16,
     "name": "Bayern Munich",
     "qualifies": false,
-    "rate": 0.8,
+    "rate": 0.75,
     "since": null
    },
    {
@@ -5794,10 +6151,10 @@
    },
    {
     "hits": 1,
-    "n": 10,
+    "n": 11,
     "name": "1. FC Union Berlin",
     "qualifies": false,
-    "rate": 0.1,
+    "rate": 0.09090909090909091,
     "since": null
    },
    {
@@ -5809,11 +6166,11 @@
     "since": null
    },
    {
-    "hits": 2,
-    "n": 10,
+    "hits": 3,
+    "n": 11,
     "name": "FC Cologne",
     "qualifies": false,
-    "rate": 0.2,
+    "rate": 0.2727272727272727,
     "since": null
    },
    {
@@ -5825,19 +6182,19 @@
     "since": null
    },
    {
-    "hits": 4,
-    "n": 10,
+    "hits": 5,
+    "n": 11,
     "name": "Mainz",
     "qualifies": false,
-    "rate": 0.4,
+    "rate": 0.45454545454545453,
     "since": null
    },
    {
-    "hits": 3,
-    "n": 10,
+    "hits": 4,
+    "n": 11,
     "name": "SC Paderborn 07",
     "qualifies": false,
-    "rate": 0.3,
+    "rate": 0.36363636363636365,
     "since": null
    },
    {
@@ -5858,10 +6215,10 @@
    },
    {
     "hits": 4,
-    "n": 10,
+    "n": 11,
     "name": "SV Elversberg",
     "qualifies": false,
-    "rate": 0.4,
+    "rate": 0.36363636363636365,
     "since": null
    },
    {
@@ -5882,10 +6239,10 @@
    },
    {
     "hits": 3,
-    "n": 10,
+    "n": 11,
     "name": "Hamburg SV",
     "qualifies": false,
-    "rate": 0.3,
+    "rate": 0.2727272727272727,
     "since": null
    },
    {
@@ -5914,10 +6271,10 @@
    },
    {
     "hits": 1,
-    "n": 10,
+    "n": 11,
     "name": "Schalke 04",
     "qualifies": false,
-    "rate": 0.1,
+    "rate": 0.09090909090909091,
     "since": null
    },
    {
@@ -6667,11 +7024,11 @@
     "since": null
    },
    {
-    "hits": 6,
-    "n": 15,
+    "hits": 7,
+    "n": 16,
     "name": "Bayern Munich",
     "qualifies": false,
-    "rate": 0.4,
+    "rate": 0.4375,
     "since": null
    },
    {
@@ -6683,11 +7040,11 @@
     "since": null
    },
    {
-    "hits": 5,
-    "n": 10,
+    "hits": 6,
+    "n": 11,
     "name": "1. FC Union Berlin",
     "qualifies": false,
-    "rate": 0.5,
+    "rate": 0.5454545454545454,
     "since": null
    },
    {
@@ -6700,10 +7057,10 @@
    },
    {
     "hits": 8,
-    "n": 10,
+    "n": 11,
     "name": "FC Cologne",
     "qualifies": false,
-    "rate": 0.8,
+    "rate": 0.7272727272727273,
     "since": null
    },
    {
@@ -6715,19 +7072,19 @@
     "since": null
    },
    {
-    "hits": 3,
-    "n": 10,
+    "hits": 4,
+    "n": 11,
     "name": "Mainz",
     "qualifies": false,
-    "rate": 0.3,
+    "rate": 0.36363636363636365,
     "since": null
    },
    {
     "hits": 6,
-    "n": 10,
+    "n": 11,
     "name": "SC Paderborn 07",
     "qualifies": false,
-    "rate": 0.6,
+    "rate": 0.5454545454545454,
     "since": null
    },
    {
@@ -6748,10 +7105,10 @@
    },
    {
     "hits": 5,
-    "n": 10,
+    "n": 11,
     "name": "SV Elversberg",
     "qualifies": false,
-    "rate": 0.5,
+    "rate": 0.45454545454545453,
     "since": null
    },
    {
@@ -6771,11 +7128,11 @@
     "since": null
    },
    {
-    "hits": 4,
-    "n": 10,
+    "hits": 5,
+    "n": 11,
     "name": "Hamburg SV",
     "qualifies": false,
-    "rate": 0.4,
+    "rate": 0.45454545454545453,
     "since": null
    },
    {
@@ -6804,10 +7161,10 @@
    },
    {
     "hits": 9,
-    "n": 10,
+    "n": 11,
     "name": "Schalke 04",
     "qualifies": true,
-    "rate": 0.9,
+    "rate": 0.8181818181818182,
     "since": "2026-10-31"
    },
    {
