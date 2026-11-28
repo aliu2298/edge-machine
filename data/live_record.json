@@ -1,5 +1,5 @@
 {
- "generated": "2026-11-28T15:07Z",
+ "generated": "2026-11-28T16:07Z",
  "lane_note": "own-state lanes: each entry as a trade after fees (the lane's own fill, the sells it logged, the unsold remainder at the market's settled result); a bet is flat when exited at cost (within +-2% before or after fees), won above +2% after fees, else lost. Entries with a tip before 2026-11-06 18:07Z are reconstructed from the exchange order list; later ones use the sell fills the follower logged",
  "lanes": {
   "arg_dip": [],
@@ -7432,9 +7432,9 @@
     {
      "id": "econ_nc_yes:KXDIESELD-26NOV28-T5.665",
      "ko": "2026-11-28T04:59",
-     "r": null,
+     "r": 0.1034,
      "side": "yes",
-     "st": "open",
+     "st": "won",
      "w": 0.93
     }
    ],
@@ -7931,7 +7931,7 @@
      "r": 0.8265,
      "side": "yes",
      "st": "won",
-     "w": 0.6
+     "w": 1.0
     },
     {
      "id": "sr_c4:KXSERIEATOTAL-26NOV08GENACM-3",
@@ -7939,7 +7939,15 @@
      "r": 1.187,
      "side": "yes",
      "st": "won",
-     "w": 1.0
+     "w": 1.67
+    },
+    {
+     "id": "sr_c4:KXSERIEATOTAL-26NOV28TORLAZ-3",
+     "ko": "2026-11-28T17:00",
+     "r": null,
+     "side": "yes",
+     "st": "open",
+     "w": 0.96
     }
    ],
    "refused": {}
@@ -8077,7 +8085,6 @@
     }
    ],
    "refused": {
-    "st_t7:KXEPLTEAMTOTAL-26NOV28LEECOV-COV3": "price above the cap",
     "st_t7:KXMLSTEAMTOTAL-26NOV22CHICLT-CLT3": "price above the cap"
    }
   },
