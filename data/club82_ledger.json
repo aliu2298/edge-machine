@@ -353,9 +353,9 @@
    },
    {
     "median": -0.5,
-    "n": 12,
+    "n": 13,
     "name": "Athletic Club",
-    "rate": 0.3333,
+    "rate": 0.3846,
     "safe": null
    },
    {
@@ -556,9 +556,9 @@
    },
    {
     "median": -0.5,
-    "n": 13,
+    "n": 14,
     "name": "M\u00e1laga",
-    "rate": 0.0769,
+    "rate": 0.1429,
     "safe": null
    },
    {
@@ -817,9 +817,9 @@
    },
    {
     "median": 1.5,
-    "n": 12,
+    "n": 13,
     "name": "Athletic Club",
-    "rate": 0.75,
+    "rate": 0.6923,
     "safe": 4.5
    },
    {
@@ -950,9 +950,9 @@
    },
    {
     "median": 1.5,
-    "n": 13,
+    "n": 14,
     "name": "M\u00e1laga",
-    "rate": 0.7692,
+    "rate": 0.7143,
     "safe": 4.5
    },
    {
@@ -1561,7 +1561,7 @@
  },
  "error": null,
  "games_through": "2026-11-28",
- "last_run": "2026-11-28T16:55:53.061550+00:00",
+ "last_run": "2026-11-28T17:15:28.888961+00:00",
  "registered": "2026-11-23",
  "rules": {
   "club82_tt15": {
@@ -3392,16 +3392,19 @@
      "logged": "2026-11-28T14:15:29.502943+00:00",
      "match": "Leeds United v Coventry City",
      "opponent": "Coventry City",
+     "payout": 1.0,
      "price": 0.61,
+     "profit": 59.58,
      "qualifying": false,
      "rates": {
       "away": "3/11",
       "home": "2/11"
      },
      "rule": "club82_tt15_blind",
+     "settled": "2026-11-28T17:15:28.888961+00:00",
      "side": "yes",
      "start": "2026-11-28T15:00Z",
-     "status": "open",
+     "status": "won",
      "team": "Leeds United",
      "team_side": "home",
      "ticker": "KXEPLTEAMTOTAL-26NOV28LEECOV-LEE2"
@@ -3418,16 +3421,19 @@
      "logged": "2026-11-28T14:15:29.502943+00:00",
      "match": "Leeds United v Coventry City",
      "opponent": "Leeds United",
+     "payout": 0.0,
      "price": 0.21,
+     "profit": -100.0,
      "qualifying": false,
      "rates": {
       "away": "3/11",
       "home": "2/11"
      },
      "rule": "club82_tt15_blind",
+     "settled": "2026-11-28T17:15:28.888961+00:00",
      "side": "yes",
      "start": "2026-11-28T15:00Z",
-     "status": "open",
+     "status": "lost",
      "team": "Coventry City",
      "team_side": "away",
      "ticker": "KXEPLTEAMTOTAL-26NOV28LEECOV-COV2"
@@ -3444,16 +3450,19 @@
      "logged": "2026-11-28T14:15:29.502943+00:00",
      "match": "Manchester United v Brentford",
      "opponent": "Brentford",
+     "payout": 0.0,
      "price": 0.51,
+     "profit": -100.0,
      "qualifying": false,
      "rates": {
       "away": "6/11",
       "home": "6/16"
      },
      "rule": "club82_tt15_blind",
+     "settled": "2026-11-28T17:15:28.888961+00:00",
      "side": "yes",
      "start": "2026-11-28T15:00Z",
-     "status": "open",
+     "status": "lost",
      "team": "Manchester United",
      "team_side": "home",
      "ticker": "KXEPLTEAMTOTAL-26NOV28MUNBRE-MUN2"
@@ -3470,16 +3479,19 @@
      "logged": "2026-11-28T14:15:29.502943+00:00",
      "match": "Manchester United v Brentford",
      "opponent": "Manchester United",
+     "payout": 1.0,
      "price": 0.44,
+     "profit": 118.7,
      "qualifying": false,
      "rates": {
       "away": "6/11",
       "home": "6/16"
      },
      "rule": "club82_tt15_blind",
+     "settled": "2026-11-28T17:15:28.888961+00:00",
      "side": "yes",
      "start": "2026-11-28T15:00Z",
-     "status": "open",
+     "status": "won",
      "team": "Brentford",
      "team_side": "away",
      "ticker": "KXEPLTEAMTOTAL-26NOV28MUNBRE-BRE2"
@@ -3928,7 +3940,9 @@
      "logged": "2026-11-28T14:15:29.502943+00:00",
      "match": "Leeds United v Coventry City",
      "matches": "club82_u35_blind:KXEPLTOTAL-26NOV28LEECOV",
+     "payout": 1.0,
      "price": 0.69,
+     "profit": 41.85,
      "qualifying_teams": [
       "Leeds United"
      ],
@@ -3937,9 +3951,10 @@
       "home": "9/11"
      },
      "rule": "club82_u35",
+     "settled": "2026-11-28T17:15:28.888961+00:00",
      "side": "no",
      "start": "2026-11-28T15:00Z",
-     "status": "open",
+     "status": "won",
      "ticker": "KXEPLTOTAL-26NOV28LEECOV-4"
     },
     {
@@ -4763,16 +4778,19 @@
      "line": 3.5,
      "logged": "2026-11-28T14:15:29.502943+00:00",
      "match": "Leeds United v Coventry City",
+     "payout": 1.0,
      "price": 0.69,
+     "profit": 41.85,
      "qualifying": true,
      "rates": {
       "away": "5/11",
       "home": "9/11"
      },
      "rule": "club82_u35_blind",
+     "settled": "2026-11-28T17:15:28.888961+00:00",
      "side": "no",
      "start": "2026-11-28T15:00Z",
-     "status": "open",
+     "status": "won",
      "ticker": "KXEPLTOTAL-26NOV28LEECOV-4"
     },
     {
@@ -4786,16 +4804,19 @@
      "line": 3.5,
      "logged": "2026-11-28T14:15:29.502943+00:00",
      "match": "Manchester United v Brentford",
+     "payout": 0.0,
      "price": 0.62,
+     "profit": -100.0,
      "qualifying": false,
      "rates": {
       "away": "8/11",
       "home": "8/16"
      },
      "rule": "club82_u35_blind",
+     "settled": "2026-11-28T17:15:28.888961+00:00",
      "side": "no",
      "start": "2026-11-28T15:00Z",
-     "status": "open",
+     "status": "lost",
      "ticker": "KXEPLTOTAL-26NOV28MUNBRE-4"
     },
     {
@@ -5021,7 +5042,9 @@
      "line": 3.5,
      "logged": "2026-11-28T14:15:29.502943+00:00",
      "match": "Leeds United v Coventry City",
+     "payout": 1.0,
      "price": 0.69,
+     "profit": 41.85,
      "qualifying_teams": [
       "Leeds United"
      ],
@@ -5029,9 +5052,10 @@
      "rated_team": "Leeds United",
      "rule": "club82_v2_u35_cushion",
      "rung": 3.5,
+     "settled": "2026-11-28T17:15:28.888961+00:00",
      "side": "no",
      "start": "2026-11-28T15:00Z",
-     "status": "open",
+     "status": "won",
      "ticker": "KXEPLTOTAL-26NOV28LEECOV-4",
      "v1_line": 3.5,
      "value": 0.1132
@@ -5171,7 +5195,9 @@
      "line": 3.5,
      "logged": "2026-11-28T14:15:29.502943+00:00",
      "match": "Leeds United v Coventry City",
+     "payout": 1.0,
      "price": 0.69,
+     "profit": 41.85,
      "qualifying_teams": [
       "Leeds United"
      ],
@@ -5179,9 +5205,10 @@
      "rated_team": "Leeds United",
      "rule": "club82_v2_u35_value",
      "rung": 3.5,
+     "settled": "2026-11-28T17:15:28.888961+00:00",
      "side": "no",
      "start": "2026-11-28T15:00Z",
-     "status": "open",
+     "status": "won",
      "ticker": "KXEPLTOTAL-26NOV28LEECOV-4",
      "v1_line": 3.5,
      "value": 0.1132
@@ -5490,10 +5517,14 @@
    "at": "2026-11-28T16:55:53.061550+00:00",
    "due": 3,
    "new": 0
+  },
+  {
+   "at": "2026-11-28T17:15:28.888961+00:00",
+   "due": 0,
+   "new": 0
   }
  ],
  "schedule": [
-  "2026-11-28T17:00Z",
   "2026-11-28T17:30Z",
   "2026-11-28T19:45Z",
   "2026-11-28T20:00Z",
@@ -5509,7 +5540,8 @@
   "2026-11-29T17:00Z",
   "2026-11-29T17:30Z",
   "2026-11-29T18:30Z",
-  "2026-11-29T19:45Z"
+  "2026-11-29T19:45Z",
+  "2026-11-29T20:00Z"
  ],
  "skips": {},
  "tracker": {
@@ -5603,11 +5635,11 @@
     "since": null
    },
    {
-    "hits": 1,
-    "n": 13,
+    "hits": 2,
+    "n": 14,
     "name": "M\u00e1laga",
     "qualifies": false,
-    "rate": 0.07692307692307693,
+    "rate": 0.14285714285714285,
     "since": null
    },
    {
@@ -5723,11 +5755,11 @@
     "since": null
    },
    {
-    "hits": 4,
-    "n": 12,
+    "hits": 5,
+    "n": 13,
     "name": "Athletic Club",
     "qualifies": false,
-    "rate": 0.3333333333333333,
+    "rate": 0.38461538461538464,
     "since": null
    },
    {
@@ -6494,10 +6526,10 @@
    },
    {
     "hits": 10,
-    "n": 13,
+    "n": 14,
     "name": "M\u00e1laga",
     "qualifies": false,
-    "rate": 0.7692307692307693,
+    "rate": 0.7142857142857143,
     "since": null
    },
    {
@@ -6614,10 +6646,10 @@
    },
    {
     "hits": 9,
-    "n": 12,
+    "n": 13,
     "name": "Athletic Club",
     "qualifies": false,
-    "rate": 0.75,
+    "rate": 0.6923076923076923,
     "since": null
    },
    {
