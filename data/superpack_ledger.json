@@ -1102,6 +1102,10 @@
    "at": "2026-11-28T12:04:16.729037+00:00",
    "pool": "entered"
   },
+  "[\"sandbox\", \"corners_fav_no\", [\"corners_fav_no:KXLALIGACORNERS-26NOV28RMAALA-12\", \"b\"]]": {
+   "at": "2026-11-28T16:03:34.452648+00:00",
+   "pool": "entered"
+  },
   "[\"sandbox\", \"corners_fav_no\", [\"corners_fav_no:KXUCLCORNERS-26NOV24COMAEK-11\", \"b\"]]": {
    "at": "2026-11-24T16:30:19.957317+00:00",
    "pool": "entered"
@@ -7521,7 +7525,7 @@
  ],
  "first_run": "2026-11-05T03:09:04.962721+00:00",
  "lane": "superpack",
- "last_run": "2026-11-28T15:48:31.800202+00:00",
+ "last_run": "2026-11-28T16:03:34.452648+00:00",
  "mirror": [
   {
    "contract": "KXAAAGASD-26NOV06-4.0700",
@@ -22534,6 +22538,31 @@
    "snapshot": null,
    "sport": "Soccer",
    "src": "soccer_rules_ledger.json",
+   "status": "open"
+  },
+  {
+   "contract": "KXLALIGACORNERS-26NOV28RMAALA-12",
+   "entered_at": "2026-11-28T16:03:34.452648+00:00",
+   "entities": [
+    "Real Madrid",
+    "Alav\u00e9s"
+   ],
+   "id": "superpack:[\"sandbox\", \"corners_fav_no\", [\"corners_fav_no:KXLALIGACORNERS-26NOV28RMAALA-12\", \"b\"]]",
+   "lane": "corners_fav_no",
+   "logged": "2026-11-28T16:03:14+00:00",
+   "matched": [
+    "Alav\u00e9s",
+    "Real Madrid"
+   ],
+   "pid": "[\"sandbox\", \"corners_fav_no\", [\"corners_fav_no:KXLALIGACORNERS-26NOV28RMAALA-12\", \"b\"]]",
+   "price": 0.69,
+   "profit": null,
+   "scope": "soccer_corners",
+   "settled": null,
+   "side": "b",
+   "snapshot": null,
+   "sport": "Soccer",
+   "src": "sandbox",
    "status": "open"
   }
  ],
